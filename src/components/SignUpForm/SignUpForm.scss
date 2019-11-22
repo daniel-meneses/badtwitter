@@ -1,0 +1,42 @@
+.signup-form {
+  height: 500px;
+  width: 900px;
+  background: blue;
+  .signup-input {
+    position: relative;
+    border: yellow solid 2px;
+    height: 80px;
+    width: 400px;
+    float:left;
+    padding: 12px;
+    input {
+      position: relative;
+      display: block;
+      margin-top: 20px;
+      height: 40px;
+      width: 96%;
+      font-size: 14px;
+    }
+    h6 {
+      margin-top: 4px;
+      font-size: 16px;
+    }
+    span {
+      position: absolute;
+      top: 50px;
+      left: 20px;
+      z-index: 999;
+      transition: all 100ms linear;
+      pointer-events: none;
+    }
+  }
+}
+
+#isFocused {
+    position: absolute;
+    left: 40px;
+    top: 10px;
+    font-size: 11px;
+    transform:scale(2);
+    transition: all 100ms linear;
+}
