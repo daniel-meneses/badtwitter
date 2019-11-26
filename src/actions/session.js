@@ -121,6 +121,15 @@ export function getUserById(data) {
     });
 }
 
+export function postLike(data) {
+  return dispatch => api.post('/like', data)
+    .then((response) => {
+      dispatch({ type: "ADD_USER_PROFILE", response });
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
 
 
 export const unauthenticate = () => ({ type: session.AUTHENTICATION_FAILURE });
