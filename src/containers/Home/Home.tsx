@@ -1,9 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router'
-import { logout, postMessage, addFriend, deleteFriend, updateRequest, getAllUsers } from '../../actions/session.js'
+import { logout, postMessage, addFriend, deleteFriend, updateRequest, getAllUsers, getGlobalFeed, postLike } from '../../actions/session.js'
 import { getList } from '../../actions/subscription.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
+import PostMini from '../../components/PostMini/PostMini';
 import SubscriptionRequest from '../../components/SubscriptionRequest/SubscriptionRequest';
 
 class Home extends React.Component<any, any> {
@@ -15,6 +16,7 @@ class Home extends React.Component<any, any> {
   componentDidMount() {
     this.getList();
     this.props.getAllUsers();
+    this.props.getGlobalFeed();
   }
 
   logOut = () => {
@@ -38,6 +40,14 @@ class Home extends React.Component<any, any> {
     this.props.deleteFriend({user_id: 7});
   }
 
+  getGlobalFeed =  () => {
+    this.props.getGlobalFeed()
+  }
+
+  submitPostLike = (e: any) => {
+    this.props.postLike({post_id: e.target.id});
+  }
+
   updateRequest = (e: any) => {
     let user_id = e.currentTarget.parentNode.getAttribute("data-key")
     let pay = {user_id: user_id}
@@ -47,7 +57,7 @@ class Home extends React.Component<any, any> {
 
 
   public render() {
-
+    console.log(this.props.feed)
       return (
           <div>
               This is home
@@ -75,6 +85,18 @@ class Home extends React.Component<any, any> {
                   <span>Was nill</span>
                 }
               </div>
+
+              <div>
+                { this.props.feed.length ?
+                  this.props.feed.map((p :any) =>
+                  <PostMini key={p.id}
+                            post={p}
+                            onClick={this.submitPostLike}
+                            />)
+                  :
+                  <span>Was nill</span>
+                }
+              </div>
           </div>
       );
   }
@@ -82,9 +104,10 @@ class Home extends React.Component<any, any> {
 
 function mapStateToProps(state :any) {
   return {
-    request_list: state.subscription.subscription_requests
+    request_list: state.subscription.subscription_requests,
+    feed: state.feed.global_feed
   }
 }
 
 export default withRouter(connect(mapStateToProps
-  , { logout, postMessage, addFriend, getList, deleteFriend, updateRequest, getAllUsers })(Home) as any);
+  , { logout, postMessage, addFriend, getList, deleteFriend, updateRequest, getAllUsers , getGlobalFeed, postLike })(Home) as any);

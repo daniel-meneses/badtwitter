@@ -104,7 +104,7 @@ export function updateRequest(data) {
 export function getAllUsers(data) {
   return dispatch => api.fetch('/users', data)
     .then((response) => {
-      console.log(response)
+      //console.log()
     })
     .catch((e) => {
       console.log(e)
@@ -124,7 +124,18 @@ export function getUserById(data) {
 export function postLike(data) {
   return dispatch => api.post('/like', data)
     .then((response) => {
-      dispatch({ type: "ADD_USER_PROFILE", response });
+      console.log(response)
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
+export function getGlobalFeed() {
+  return dispatch => api.fetch('/global_feed')
+    .then((response) => {
+      console.log(response)
+      dispatch({ type: "SET_GLOBAL_FEED", response });
     })
     .catch((e) => {
       console.log(e)
