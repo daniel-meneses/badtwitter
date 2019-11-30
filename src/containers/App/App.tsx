@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
+import { withRouter } from 'react-router'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import store from '../../store/store.js';
 import Home from '../Home/Home';
+import NavBar from '../../components/NavBar/NavBar';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import UserProfile from '../UserProfile/UserProfile';
+import Inbox from '../Inbox/Inbox';
 import { connect } from 'react-redux';
 import { authenticate , unauthenticate} from '../../actions/session';
 
@@ -20,13 +23,23 @@ class App extends React.Component<any, any> {
     }
   }
 
+  handleNavLogoClick = () => {
+    console.log("You clicked on logo!")
+  }
+
+  handleSettingsClick = () => {
+    console.log("You clicked on settings!")
+  }
+
   render() {
     let token = localStorage.getItem('token_refresh')
       return (
           <Router>
             <div className="App">
+              <NavBar title="home" logoClick={this.handleNavLogoClick} settingsClick={this.handleSettingsClick}/>
               <Route path='/signup' exact component={SignUp}/>
               <Route path='/user/:id' exact component={UserProfile}/>
+              <Route path='/inbox' component={Inbox}/>
               <Route exact path="/" render={() => (
                 token ? ( <Home/> ) : ( <Redirect to="/signup"/> )
               )}/>

@@ -71,7 +71,7 @@ export function addFriend(data) {
 }
 
 export function getList() {
-  return dispatch => api.fetch('/feed')
+  return dispatch => api.fetch('/subscribe')
     .then((response) => {
       console.log(response)
     })
@@ -81,7 +81,6 @@ export function getList() {
 }
 
 export function deleteFriend(data) {
-  console.log(data)
   return dispatch => api.delete('/subscribe', data)
     .then((response) => {
       console.log(response)
@@ -91,8 +90,8 @@ export function deleteFriend(data) {
     });
 }
 
-export function updateRequest(data) {
-  return dispatch => api.post('/subscribe/update', data)
+export function updateFollowerRequest(data) {
+  return dispatch => api.post('/followers/update', data)
     .then((response) => {
       console.log(response)
     })

@@ -9,12 +9,13 @@ export default function PostMiniComponent(props: any) {
   }
 
   return (
-      <div className='postmini-component'>
+      <div className='pm-comp'>
         <h3>{props.post.first_name + " " + props.post.last_name} </h3>
         <p>{props.post.post} </p>
+        <div className='pm-comp-ft'>
         <span id={props.post.id} onClick={handleLike}>Likes: {props.post.likes}</span>
-        <span>Views: {props.post.views}</span>
-        <span>Created: {props.post.created} </span>
+        <span>{props.post.created} </span>
+        </div>
       </div>
   );
 }
