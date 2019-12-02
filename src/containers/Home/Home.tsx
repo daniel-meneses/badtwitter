@@ -37,10 +37,16 @@ class Home extends React.Component<any, any> {
     this.props.addFriend({user_id: 4})
   }
 
+  handlePostUserClick = (userId: number) => {
+    this.props.history.push("/user/" + userId)
+  }
+
   public render() {
       return (
           <div className={'g-fd'}>
-              <button onClick={this.logOut}>LOGOUT</button>
+              <div className='s-comp'>
+              Sidebar Container
+              </div>
                 <div className='f-comp'>
                   <PostForm className='f-pf-comp' submitMessage={this.sendPost}/>
                     <div>
@@ -49,11 +55,15 @@ class Home extends React.Component<any, any> {
                         <PostMini key={p.id}
                                   post={p}
                                   onClick={this.submitPostLike}
+                                  handlePostUserClick={this.handlePostUserClick}
                                   />)
                         :
                         <span>Feed Empty</span>
                       }
                     </div>
+                  </div>
+                  <div className='e-comp'>
+                  Explore Container
                   </div>
           </div>
       );
