@@ -1,7 +1,8 @@
 import React from 'react';
 import './Home.scss';
 import { withRouter } from 'react-router'
-import { logout, postMessage, getGlobalFeed, postLike, addFriend } from '../../actions/session.js'
+import { logout, postMessage, getGlobalFeed, postLike, postFollowRequest } from '../../actions/session.js'
+import { getAllPendingSubscriptionRequests } from '../../actions/subscription.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import PostMini from '../../components/PostMini/PostMini';
@@ -15,6 +16,7 @@ class Home extends React.Component<any, any> {
 
   componentDidMount() {
     this.props.getGlobalFeed();
+    this.props.getAllPendingSubscriptionRequests();
   }
 
   logOut = () => {
@@ -34,7 +36,7 @@ class Home extends React.Component<any, any> {
   }
 
   addFriend = () => {
-    this.props.addFriend({user_id: 4})
+    this.props.postFollowRequest({user_id: 4})
   }
 
   handlePostUserClick = (userId: number) => {
@@ -42,10 +44,12 @@ class Home extends React.Component<any, any> {
   }
 
   public render() {
+    console.log(this.props.pendingSubscriptionRequests);
       return (
           <div className={'g-fd'}>
               <div className='s-comp'>
               Sidebar Container
+              <button onClick={this.logOut}>LogOut</button>
               </div>
                 <div className='f-comp'>
                   <PostForm className='f-pf-comp' submitMessage={this.sendPost}/>
@@ -54,7 +58,7 @@ class Home extends React.Component<any, any> {
                         this.props.feed.map((p :any) =>
                         <PostMini key={p.id}
                                   post={p}
-                                  onClick={this.submitPostLike}
+                                  handleLike={this.submitPostLike}
                                   handlePostUserClick={this.handlePostUserClick}
                                   />)
                         :
@@ -72,9 +76,10 @@ class Home extends React.Component<any, any> {
 
 function mapStateToProps(state :any) {
   return {
-    feed: state.feed.global_feed
+    feed: state.feed.global_feed,
+    pendingSubscriptionRequests: state.subscription.subscription_requests
   }
 }
 
 export default withRouter(connect(mapStateToProps
-  , { logout, postMessage, getGlobalFeed, postLike, addFriend })(Home) as any);
+  , { logout, postMessage, getGlobalFeed, postLike, postFollowRequest, getAllPendingSubscriptionRequests })(Home) as any);

@@ -7,7 +7,6 @@ export default function SubscriptionRequest(props: any) {
   }
 
   console.log(props.subscription.id)
-  console.log("OIOIO")
 
   return (
       <div className='post-component' data-key={props.subscription.id}>

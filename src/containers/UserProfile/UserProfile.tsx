@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
-import { getUserById, postLike } from '../../actions/session.js'
+import { getUserById, postLike, postSubscriptionRequest } from '../../actions/session.js'
 import { bindActionCreators } from 'redux'
 import PostMiniComponent from '../../components/PostMini/PostMini';
 
@@ -20,6 +20,14 @@ class UserProfile extends React.Component<any, any> {
       this.props.postLike({post_id: e.target.id});
     }
 
+    handlePostUserClick = (e: any) => {
+      console.log("Hey")
+    }
+
+    submitFollowRequest = () => {
+      this.props.postSubscriptionRequest(this.props.userProfile.id)
+    }
+
     public render() {
       console.log(this.props.userProfile)
       var a: Array<any> = []
@@ -32,7 +40,8 @@ class UserProfile extends React.Component<any, any> {
                 <span>{this.props.userProfile.email}</span>
                 <span>{this.props.userProfile.first_name}</span>
                 <span>{this.props.userProfile.last_name}</span>
-                { a.map(a => <PostMiniComponent onClick={this.submitLike} key={a.id} post={a} />) }
+                <button onClick={this.submitFollowRequest}>Request Follow</button>
+                { a.map(a => <PostMiniComponent handleLike={this.submitLike} key={a.id} post={a} handlePostUserClick={this.handlePostUserClick} />) }
             </div>
         );
     }
@@ -45,7 +54,7 @@ function mapStateToProps(state :any) {
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getUserById, postLike}, dispatch)
+  return bindActionCreators({getUserById, postLike, postSubscriptionRequest}, dispatch)
   }
 
 export default withRouter(connect(mapStateToProps

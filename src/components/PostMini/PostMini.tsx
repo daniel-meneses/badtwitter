@@ -7,7 +7,7 @@ export default function PostMiniComponent(props: any) {
   const handleLike = (e: any) => {
     console.log(hasBeenLiked)
     setHasBeenLiked(true);
-    props.onClick(e);
+    props.handleLike(e);
   }
 
   const handleUserClick = (e: any) => {

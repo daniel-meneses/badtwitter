@@ -60,8 +60,18 @@ export function postMessage(data) {
     });
 }
 
-export function addFriend(data) {
+export function postFollowRequest(data) {
   return dispatch => api.post('/subscribe', data)
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
+export function postSubscriptionRequest(data) {
+  return dispatch => api.post('/subscribe', {user_id: data})
     .then((response) => {
       console.log(response)
     })
