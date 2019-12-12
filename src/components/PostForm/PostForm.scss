@@ -1,0 +1,14 @@
+.p-form {
+  width: 600px;
+  padding: 10px;
+  text-align: left;
+  input {
+    &[type=text] {
+      width: 99%;
+      overflow: auto;
+    }
+    &[type=submit] {
+      width: 50px;
+    }
+  }
+}

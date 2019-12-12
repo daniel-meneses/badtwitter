@@ -1,0 +1,30 @@
+.g-fd {
+  position: relative;
+  width: inherit;
+  display: block;
+  border: 1px green solid;
+}
+
+.f-comp {
+  width: 600px;
+  left: 20vw;
+  position: absolute;
+  display: inline;
+  border: 1px green solid;
+}
+
+.e-comp {
+  position: absolute;
+  display: inline;
+  width: 400px;
+  left: calc( 20vw + 600px );
+  border: 4px purple purple;
+}
+
+.s-comp {
+  left:0;
+  position: absolute;
+  display: inline;
+  width: 20vw;
+  border: 4px purple purple;
+}

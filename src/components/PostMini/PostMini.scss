@@ -1,0 +1,39 @@
+.pm-comp {
+  border: solid red 1px;
+  width: 600px;
+  padding: 10px;
+  text-align: left;
+  flex-basis: content;
+  overflow: auto;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(240, 245, 245);
+    transition: background-color 0.2s linear;
+
+  }
+  h3 {
+    display:inline-block;
+    margin: 0;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+    border: solid purple 1px;
+  }
+  p {
+    margin: 0;
+    padding: 4px;
+    overflow: auto;
+    border: solid red 1px;
+  }
+  .pm-comp-ft {
+    border: solid red 1px;
+    span {
+      display: block;
+      float: left;
+      min-width: 20%;
+      border: solid red 1px;
+    }
+  }
+
+}

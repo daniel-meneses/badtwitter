@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./PostForm.scss";
 
 export default function PostForm(props: any) {
   const [message, setMessage] = useState("");
@@ -13,14 +14,17 @@ export default function PostForm(props: any) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='signup-form'>
-      <span>Say Something</span>
-        <input
-          value={message}
-          type="text"
-          onChange={e => handleInputChange(e)}
-        />
-      <input type="submit" value="Submit" />
-    </form>
+    <div className="p-form">
+      <form onSubmit={handleSubmit} >
+          <input
+            value={message}
+            type="text"
+            onChange={e => handleInputChange(e)}
+          />
+          <div className="p-form-ft">
+            <input type="submit" value="Submit" />
+          </div>
+      </form>
+    </div>
   );
 }

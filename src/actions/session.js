@@ -9,6 +9,10 @@ function setCurrentUser(dispatch, response) {
   dispatch({ type: session.AUTHENTICATION_SUCCESS, response });
 }
 
+function setAccessToken(response) {
+  if (response.token_access) {localStorage.setItem('token_access', JSON.stringify(response.token_access))}
+}
+
 export function login(data, history) {
   return dispatch => api.post('/sessions', data)
     .then((response) => {
@@ -41,12 +45,12 @@ export function logout(history) {
 export function authenticate() {
   return dispatch => api.post('/sessions/refresh')
     .then((response) => {
-      setCurrentUser(dispatch, response);
+      setAccessToken(response);
     })
     .catch((e) => {
       console.log(e)
-      //localStorage.removeItem('token');
-      //window.location = '/login';
+    //  localStorage.removeItem('token');
+    //  window.location = '/login';
     });
 }
 
@@ -60,7 +64,7 @@ export function postMessage(data) {
     });
 }
 
-export function addFriend(data) {
+export function postFollowRequest(data) {
   return dispatch => api.post('/subscribe', data)
     .then((response) => {
       console.log(response)
@@ -70,8 +74,19 @@ export function addFriend(data) {
     });
 }
 
+export function postSubscriptionRequest(data) {
+  return dispatch => api.post('/subscribe', {user_id: data})
+    .then((response) => {
+      dispatch({ type: "PENDING_SUBSCRIPTION_REQUESTS", response });
+      console.log(response)
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
 export function getList() {
-  return dispatch => api.fetch('/feed')
+  return dispatch => api.fetch('/subscribe')
     .then((response) => {
       console.log(response)
     })
@@ -81,7 +96,6 @@ export function getList() {
 }
 
 export function deleteFriend(data) {
-  console.log(data)
   return dispatch => api.delete('/subscribe', data)
     .then((response) => {
       console.log(response)
@@ -91,8 +105,8 @@ export function deleteFriend(data) {
     });
 }
 
-export function updateRequest(data) {
-  return dispatch => api.post('/subscribe/update', data)
+export function updateFollowerRequest(data) {
+  return dispatch => api.post('/followers/update', data)
     .then((response) => {
       console.log(response)
     })
@@ -104,7 +118,7 @@ export function updateRequest(data) {
 export function getAllUsers(data) {
   return dispatch => api.fetch('/users', data)
     .then((response) => {
-      console.log(response)
+      //console.log()
     })
     .catch((e) => {
       console.log(e)
@@ -121,6 +135,25 @@ export function getUserById(data) {
     });
 }
 
+export function postLike(data) {
+  return dispatch => api.post('/like', data)
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
+export function getGlobalFeed() {
+  return dispatch => api.fetch('/global_feed')
+    .then((response) => {
+      dispatch({ type: "SET_GLOBAL_FEED", response });
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
 
 
 export const unauthenticate = () => ({ type: session.AUTHENTICATION_FAILURE });

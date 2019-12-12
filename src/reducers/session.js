@@ -3,9 +3,7 @@ import * as session from '../constants/session.js';
 const initialState = {
   isAuthenticated: false,
   willAuthenticate: true,
-  currentUser: {},
-  socket: null,
-  all_users: []
+  currentUser: {}
 };
 
 export default function (state = initialState, action) {
@@ -16,13 +14,11 @@ export default function (state = initialState, action) {
         willAuthenticate: true,
       };
     case session.AUTHENTICATION_SUCCESS:
-    console.log("AUTHENTICATION_SUCCESS was hit" )
-    console.log(action.response.data)
       return {
         ...state,
         willAuthenticate: false,
         isAuthenticated: true,
-        currentUser: action.response.data,
+        currentUser: action.response.user,
       };
     case session.AUTHENTICATION_FAILURE:
       return {
@@ -34,18 +30,7 @@ export default function (state = initialState, action) {
         ...state,
         willAuthenticate: false,
         isAuthenticated: false,
-        currentUser: {},
-        socket: null,
-      };
-    case session.SOCKET_CONNECTED:
-      return {
-        ...state,
-        socket: action.socket,
-      };
-    case "GET_ALL_USERS":
-      return {
-        ...state,
-        all_users: action.users,
+        currentUser: {}
       };
     default:
       return state;
