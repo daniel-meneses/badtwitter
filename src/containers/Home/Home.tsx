@@ -44,7 +44,6 @@ class Home extends React.Component<any, any> {
   }
 
   public render() {
-    console.log(this.props.pendingSubscriptionRequests);
       return (
           <div className={'g-fd'}>
               <div className='s-comp'>
@@ -77,8 +76,7 @@ class Home extends React.Component<any, any> {
 function mapStateToProps(state :any) {
   return {
     feed: state.feed.global_feed,
-    pendingSubscriptionRequests: state.subscription.subscription_requests
-  }
+    pendingSubscriptionRequests: state.subscription.subscription_requests  }
 }
 
 export default withRouter(connect(mapStateToProps

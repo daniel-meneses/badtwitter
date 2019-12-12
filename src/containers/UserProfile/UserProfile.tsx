@@ -21,7 +21,6 @@ class UserProfile extends React.Component<any, any> {
     }
 
     handlePostUserClick = (e: any) => {
-      console.log("Hey")
     }
 
     submitFollowRequest = () => {
@@ -29,7 +28,6 @@ class UserProfile extends React.Component<any, any> {
     }
 
     public render() {
-      console.log(this.props.userProfile)
       var a: Array<any> = []
       if (this.props.userProfile.posts) {
         a = this.props.userProfile.posts
@@ -40,7 +38,7 @@ class UserProfile extends React.Component<any, any> {
                 <span>{this.props.userProfile.email}</span>
                 <span>{this.props.userProfile.first_name}</span>
                 <span>{this.props.userProfile.last_name}</span>
-                <button onClick={this.submitFollowRequest}>Request Follow</button>
+                <button onClick={this.submitFollowRequest}>{this.props.pendingSubRequests.includes(this.props.userProfile.id) ? "Pending" : "Request Follow"}</button>
                 { a.map(a => <PostMiniComponent handleLike={this.submitLike} key={a.id} post={a} handlePostUserClick={this.handlePostUserClick} />) }
             </div>
         );
@@ -49,7 +47,9 @@ class UserProfile extends React.Component<any, any> {
 
 function mapStateToProps(state :any) {
   return {
-    userProfile: state.profile.profile
+    userProfile: state.profile.profile,
+    pendingSubRequests: state.subscription.subscription_requests,
+    stateTree: state
   }
 }
 

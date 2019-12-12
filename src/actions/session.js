@@ -9,6 +9,10 @@ function setCurrentUser(dispatch, response) {
   dispatch({ type: session.AUTHENTICATION_SUCCESS, response });
 }
 
+function setAccessToken(response) {
+  if (response.token_access) {localStorage.setItem('token_access', JSON.stringify(response.token_access))}
+}
+
 export function login(data, history) {
   return dispatch => api.post('/sessions', data)
     .then((response) => {
@@ -41,12 +45,12 @@ export function logout(history) {
 export function authenticate() {
   return dispatch => api.post('/sessions/refresh')
     .then((response) => {
-      setCurrentUser(dispatch, response);
+      setAccessToken(response);
     })
     .catch((e) => {
       console.log(e)
-      //localStorage.removeItem('token');
-      //window.location = '/login';
+    //  localStorage.removeItem('token');
+    //  window.location = '/login';
     });
 }
 
@@ -73,6 +77,7 @@ export function postFollowRequest(data) {
 export function postSubscriptionRequest(data) {
   return dispatch => api.post('/subscribe', {user_id: data})
     .then((response) => {
+      dispatch({ type: "PENDING_SUBSCRIPTION_REQUESTS", response });
       console.log(response)
     })
     .catch((e) => {
@@ -143,7 +148,6 @@ export function postLike(data) {
 export function getGlobalFeed() {
   return dispatch => api.fetch('/global_feed')
     .then((response) => {
-      console.log(response)
       dispatch({ type: "SET_GLOBAL_FEED", response });
     })
     .catch((e) => {

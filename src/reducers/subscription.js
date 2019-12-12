@@ -7,10 +7,9 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case "PENDING_SUBSCRIPTION_REQUESTS":
-    console.log(action.response.data)
       return {
         ...state,
-        subscription_requests: action.response.data,
+        subscription_requests: action.response,
       };
     default:
       return state;
