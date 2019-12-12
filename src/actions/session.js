@@ -1,12 +1,10 @@
 import api from '../api/api.js';
-import * as session from '../constants/session.js';
-const url = 'https://localhost:4000/api/v1';
+import * as act from '../constants/acts.js';
 
 function setCurrentUser(dispatch, response) {
   if (response.token_refresh) {localStorage.setItem('token_refresh', JSON.stringify(response.token_refresh))}
-  if (response.token_access) {localStorage.setItem('token_access', JSON.stringify(response.token_access))}
-  // response is weird
-  dispatch({ type: session.AUTHENTICATION_SUCCESS, response });
+  if (response.token_access) {setAccessToken(response)}
+  dispatch({ type: act.AUTHENTICATION_SUCCESS, response });
 }
 
 function setAccessToken(response) {
@@ -36,7 +34,7 @@ export function logout(history) {
     .then(() => {
       localStorage.removeItem('token_access');
       localStorage.removeItem('token_refresh');
-      dispatch({ type: session.LOGOUT });
+      dispatch({ type: act.LOGOUT });
     //  window.location = "/signup";
     })
     .catch(err => console.log(err));
@@ -49,76 +47,16 @@ export function authenticate() {
     })
     .catch((e) => {
       console.log(e)
-    //  localStorage.removeItem('token');
-    //  window.location = '/login';
+      localStorage.removeItem('token');
+      window.location = '/login';
     });
 }
-
-export function postMessage(data) {
-  return dispatch => api.post('/post', data)
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function postFollowRequest(data) {
-  return dispatch => api.post('/subscribe', data)
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function postSubscriptionRequest(data) {
-  return dispatch => api.post('/subscribe', {user_id: data})
-    .then((response) => {
-      dispatch({ type: "PENDING_SUBSCRIPTION_REQUESTS", response });
-      console.log(response)
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function getList() {
-  return dispatch => api.fetch('/subscribe')
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function deleteFriend(data) {
-  return dispatch => api.delete('/subscribe', data)
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
+export const unauthenticate = () => ({ type: act.AUTHENTICATION_FAILURE });
 
 export function updateFollowerRequest(data) {
   return dispatch => api.post('/followers/update', data)
     .then((response) => {
       console.log(response)
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function getAllUsers(data) {
-  return dispatch => api.fetch('/users', data)
-    .then((response) => {
-      //console.log()
     })
     .catch((e) => {
       console.log(e)
@@ -154,6 +92,3 @@ export function getGlobalFeed() {
       console.log(e)
     });
 }
-
-
-export const unauthenticate = () => ({ type: session.AUTHENTICATION_FAILURE });

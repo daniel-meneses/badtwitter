@@ -1,20 +1,31 @@
 import api from '../api/api.js';
-const url = 'https://localhost:4000/api/v1';
+import * as act from '../constants/acts.js';
 
-export function getAllPendingFollowRequests() {
-  return dispatch => api.fetch('/subscribe')
+export function postSubscriptionRequest(data) {
+  return dispatch => api.post('/subscribe', {user_id: data})
     .then((response) => {
-      dispatch({ type: "PENDING_SUBSCRIPTION_REQUESTS", response });
+      dispatch({ type: act.PENDING_SUBSCRIPTION_REQUESTS, response });
+      console.log(response)
     })
     .catch((e) => {
       console.log(e)
     });
 }
 
-export function getAllPendingSubscriptionRequests() {
+export function getPendingSubscriptionRequests() {
   return dispatch => api.fetch('/subscribe')
     .then((response) => {
-      dispatch({ type: "PENDING_SUBSCRIPTION_REQUESTS", response });
+      dispatch({ type: act.PENDING_SUBSCRIPTION_REQUESTS, response });
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
+export function deleteSubscription(data) {
+  return dispatch => api.delete('/subscribe', data)
+    .then((response) => {
+      console.log(response)
     })
     .catch((e) => {
       console.log(e)

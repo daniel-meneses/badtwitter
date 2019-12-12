@@ -1,7 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
-import { getUserById, postLike, postSubscriptionRequest } from '../../actions/session.js'
+import { getUserById, postLike } from '../../actions/session.js'
+import { postSubscriptionRequest } from '../../actions/subscription.js'
 import { bindActionCreators } from 'redux'
 import PostMiniComponent from '../../components/PostMini/PostMini';
 
@@ -48,8 +49,7 @@ class UserProfile extends React.Component<any, any> {
 function mapStateToProps(state :any) {
   return {
     userProfile: state.profile.profile,
-    pendingSubRequests: state.subscription.subscription_requests,
-    stateTree: state
+    pendingSubRequests: state.subscription.subscription_requests
   }
 }
 

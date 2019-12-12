@@ -1,8 +1,9 @@
 import React from 'react';
 import './Home.scss';
 import { withRouter } from 'react-router'
-import { logout, postMessage, getGlobalFeed, postLike, postFollowRequest } from '../../actions/session.js'
-import { getAllPendingSubscriptionRequests } from '../../actions/subscription.js'
+import { logout, getGlobalFeed, postLike } from '../../actions/session.js'
+import { getPendingSubscriptionRequests, postSubscriptionRequest } from '../../actions/subscription.js'
+import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import PostMini from '../../components/PostMini/PostMini';
@@ -16,7 +17,7 @@ class Home extends React.Component<any, any> {
 
   componentDidMount() {
     this.props.getGlobalFeed();
-    this.props.getAllPendingSubscriptionRequests();
+    this.props.getPendingSubscriptionRequests();
   }
 
   logOut = () => {
@@ -80,4 +81,4 @@ function mapStateToProps(state :any) {
 }
 
 export default withRouter(connect(mapStateToProps
-  , { logout, postMessage, getGlobalFeed, postLike, postFollowRequest, getAllPendingSubscriptionRequests })(Home) as any);
+  , { logout, postMessage, getGlobalFeed, postLike, postSubscriptionRequest, getPendingSubscriptionRequests })(Home) as any);

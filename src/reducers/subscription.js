@@ -1,4 +1,4 @@
-import * as session from '../constants/session.js';
+import * as act from '../constants/acts.js';
 
 const initialState = {
   subscription_requests: []
@@ -6,7 +6,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case "PENDING_SUBSCRIPTION_REQUESTS":
+    case act.PENDING_SUBSCRIPTION_REQUESTS:
       return {
         ...state,
         subscription_requests: action.response,
