@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import "./PostMini.scss";
 
 export default function PostMiniComponent(props: any) {
-  const [hasBeenLiked, setHasBeenLiked] = useState(false);
 
   const handleLike = (e: any) => {
-    console.log(hasBeenLiked)
-    setHasBeenLiked(true);
     props.handleLike(e);
   }
 
@@ -18,14 +15,15 @@ export default function PostMiniComponent(props: any) {
   const handlePostClick = (e: any) => {
 
   }
+  var post = props.post;
 
   return (
-      <div className='pm-comp' data-key={props.post.id} onClick={handlePostClick}>
-        <h3 data-key={props.post.user_id} onClick={handleUserClick}>{props.post.first_name + " " + props.post.last_name} </h3>
-        <p>{props.post.post} </p>
+      <div className='pm-comp' data-key={post.id} onClick={handlePostClick}>
+        <h3 data-key={post.user_id} onClick={handleUserClick}>{post.first_name + " " + post.last_name} </h3>
+        <p>{post.post} </p>
         <div className='pm-comp-ft'>
-        <span id={props.post.id} className={hasBeenLiked ? "pm-comp-liked" : "pm-comp-l"} onClick={handleLike}>Likes: {props.post.likes}</span>
-        <span>{props.post.created} </span>
+        <span id={post.id} className={props.hasBeenLiked ? "pm-comp-liked" : "pm-comp-l"} onClick={handleLike}>{props.hasBeenLiked? "Liked!" : "Like?"} + Likes: {post.likes}</span>
+        <span>{post.created} </span>
         </div>
       </div>
   );

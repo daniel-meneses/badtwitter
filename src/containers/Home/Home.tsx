@@ -1,8 +1,9 @@
 import React from 'react';
 import './Home.scss';
 import { withRouter } from 'react-router'
-import { logout, getGlobalFeed, postLike } from '../../actions/session.js'
+import { logout, getGlobalFeed } from '../../actions/session.js'
 import { getPendingSubscriptionRequests, postSubscriptionRequest } from '../../actions/subscription.js'
+import { getAllUserLikes, postLike} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
@@ -18,6 +19,7 @@ class Home extends React.Component<any, any> {
   componentDidMount() {
     this.props.getGlobalFeed();
     this.props.getPendingSubscriptionRequests();
+    this.props.getAllUserLikes();
   }
 
   logOut = () => {
@@ -60,6 +62,7 @@ class Home extends React.Component<any, any> {
                                   post={p}
                                   handleLike={this.submitPostLike}
                                   handlePostUserClick={this.handlePostUserClick}
+                                  hasBeenLiked={this.props.hasBeenLiked.includes(p.id)}
                                   />)
                         :
                         <span>Feed Empty</span>
@@ -77,8 +80,10 @@ class Home extends React.Component<any, any> {
 function mapStateToProps(state :any) {
   return {
     feed: state.feed.global_feed,
-    pendingSubscriptionRequests: state.subscription.subscription_requests  }
+    pendingSubscriptionRequests: state.subscription.subscription_requests,
+    hasBeenLiked: state.post.hasBeenLiked
+  }
 }
 
 export default withRouter(connect(mapStateToProps
-  , { logout, postMessage, getGlobalFeed, postLike, postSubscriptionRequest, getPendingSubscriptionRequests })(Home) as any);
+  , { logout, postMessage, getGlobalFeed, postLike, postSubscriptionRequest, getPendingSubscriptionRequests, getAllUserLikes })(Home) as any);

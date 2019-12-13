@@ -47,8 +47,8 @@ export function authenticate() {
     })
     .catch((e) => {
       console.log(e)
-      localStorage.removeItem('token');
-      window.location = '/login';
+    //  localStorage.removeItem('token');
+    //  window.location = '/login';
     });
 }
 export const unauthenticate = () => ({ type: act.AUTHENTICATION_FAILURE });
@@ -67,16 +67,6 @@ export function getUserById(data) {
   return dispatch => api.fetch('/user/' + data)
     .then((response) => {
       dispatch({ type: "ADD_USER_PROFILE", response });
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function postLike(data) {
-  return dispatch => api.post('/like', data)
-    .then((response) => {
-      console.log(response)
     })
     .catch((e) => {
       console.log(e)

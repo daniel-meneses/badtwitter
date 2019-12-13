@@ -18,7 +18,7 @@ const store = createStore(
 // https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
 store.subscribe(throttle(() => {
   var state = store.getState();
-  console.log(state.subscription.subscription_requests)
+  //console.log(state)
   saveStateToLocal({
     subscription: { subscription_requests: state.subscription.subscription_requests },
     session: { currentUser: state.session.currentUser }
