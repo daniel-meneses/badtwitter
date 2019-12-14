@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { getUserById } from '../../actions/session.js'
 import { postSubscriptionRequest } from '../../actions/subscription.js'
-import { getAllUserLikes, postLike} from '../../actions/like.js'
+import { getAllUserLikes, postLike, deleteLike} from '../../actions/like.js'
 import { bindActionCreators } from 'redux'
 import PostMiniComponent from '../../components/PostMini/PostMini';
 
@@ -19,8 +19,12 @@ class UserProfile extends React.Component<any, any> {
       this.props.getUserById(this.props.match.params.id);
     }
 
-    submitLike = (e: any) => {
-      this.props.postLike({post_id: e.target.id});
+    handleLike = (e: any, hasBeenLiked: Boolean) => {
+      if (hasBeenLiked) {
+        this.props.deleteLike({post_id: e.target.id});
+      } else {
+        this.props.postLike({post_id: e.target.id});
+      }
     }
 
     handlePostUserClick = (e: any) => {
@@ -44,7 +48,12 @@ class UserProfile extends React.Component<any, any> {
                 <span>{userProfile.first_name}</span>
                 <span>{userProfile.last_name}</span>
                 <button disabled={isRequestPending} className={'request-button'} onClick={this.submitFollowRequest}>{isRequestPending ? "Pending" : "Request Follow"}</button>
-                { a.map(a => <PostMiniComponent handleLike={this.submitLike} key={a.id} post={a} hasBeenLiked={this.props.hasBeenLiked.includes(a.id)} handlePostUserClick={this.handlePostUserClick} />) }
+                { a.map(a => <PostMiniComponent
+                              key={a.id} post={a}
+                              handleLike={this.props.postLike}
+                              handleUnlike={this.props.deleteLike}
+                              hasBeenLiked={this.props.hasBeenLiked.includes(a.id)}
+                              handlePostUserClick={this.handlePostUserClick} />) }
             </div>
         );
     }
@@ -59,7 +68,7 @@ function mapStateToProps(state :any) {
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getUserById, postLike, postSubscriptionRequest}, dispatch)
+  return bindActionCreators({getUserById, postLike, postSubscriptionRequest, deleteLike}, dispatch)
   }
 
 export default withRouter(connect(mapStateToProps
