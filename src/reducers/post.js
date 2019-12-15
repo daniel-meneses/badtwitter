@@ -5,7 +5,17 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case "HAS_BEEN_LIKED":
+    case "LIKE_POST_SUCCESS":
+      return {
+        ...state,
+        hasBeenLiked: [...state.hasBeenLiked, action.response.post_id],
+      };
+    case "DELETE_POST_SUCCESS":
+      return {
+        ...state,
+        hasBeenLiked: state.hasBeenLiked.filter(hasBeenLiked => hasBeenLiked !== action.response.post_id)
+      };
+    case "UPDATE_HAS_BEEN_LIKED":
       return {
         ...state,
         hasBeenLiked: action.response,
