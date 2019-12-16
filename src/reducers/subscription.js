@@ -9,10 +9,10 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case act.PENDING_SUBSCRIPTION_REQUESTS:
+    case "SUBSCRIPTION_REQUEST_SUCCESS":
       return {
         ...state,
-        subscription_requests: action.response,
+        subscription_requests: [...state.subscription_requests, action.response.subject_id],
       };
     case "UPDATE_ACCEPTED_SUBSCRIPTIONS":
       return {

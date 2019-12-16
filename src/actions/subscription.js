@@ -4,7 +4,7 @@ import * as act from '../constants/acts.js';
 export function postSubscriptionRequest(data) {
   return dispatch => api.post('/subscribe', {user_id: data})
     .then((response) => {
-      //dispatch({ type: act.PENDING_SUBSCRIPTION_REQUESTS, response });
+      dispatch({ type: "SUBSCRIPTION_REQUEST_SUCCESS", response });
       console.log(response)
     })
     .catch((e) => {
@@ -22,8 +22,8 @@ export function getPendingSubscriptionRequests() {
     });
 }
 
-export function getFollowRequests(data) {
-  return dispatch => api.fetch('/followers', data)
+export function getFollowRequests() {
+  return dispatch => api.fetch('/followers')
     .then((response) => {
       dispatch({ type: "GET_FOLLOWER_REQUESTS_SUCCESS", response });
       console.log(response)

@@ -16,7 +16,7 @@ class Inbox extends React.Component<any, any> {
     }
 
     componentDidMount() {
-      this.props.getFollowRequests({accepted: false});
+      this.props.getFollowRequests();
     }
 
     updateFollowerRequest = (e: any) => {
@@ -34,7 +34,6 @@ class Inbox extends React.Component<any, any> {
 
 
     public render() {
-      this.props.followerRequests.map((req: any) => console.log(req))
         return (
             <div>
             <span>SUBSCRIPTION REQUESTS</span>
