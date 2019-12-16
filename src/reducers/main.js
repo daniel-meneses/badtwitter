@@ -14,5 +14,6 @@ const mainReducer = combineReducers({
 });
 
 export default function (state, action) {
+  console.log(state)
   return mainReducer(state,action);
 }

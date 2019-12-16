@@ -6,8 +6,6 @@ export default function SubscriptionRequest(props: any) {
     let a = e.currentTarget.parentNode.getAttribute("data-key");
   }
 
-  console.log(props.subscription.id)
-
   return (
       <div className='post-component' data-key={props.subscription.id}>
         <span>{props.subscription.first_name + props.subscription.last_name}</span>

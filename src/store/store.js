@@ -20,7 +20,8 @@ store.subscribe(throttle(() => {
   var state = store.getState();
   //console.log(state)
   saveStateToLocal({
-    subscription: { subscription_requests: state.subscription.subscription_requests },
+    subscription: { subscription_requests: state.subscription.subscription_requests,
+                    follower_requests: state.subscription.follower_requests},
     session: { currentUser: state.session.currentUser }
   });
 }, 1000));

@@ -8,6 +8,7 @@ import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import PostMini from '../../components/PostMini/PostMini';
+import Inbox from '../Inbox/Inbox';
 import SubscriptionRequest from '../../components/SubscriptionRequest/SubscriptionRequest';
 
 class Home extends React.Component<any, any> {
@@ -48,6 +49,7 @@ class Home extends React.Component<any, any> {
               <div className='s-comp'>
               Sidebar Container
               <button onClick={this.logOut}>LogOut</button>
+              <Inbox />
               </div>
                 <div className='f-comp'>
                   <PostForm className='f-pf-comp' submitMessage={this.sendPost}/>
