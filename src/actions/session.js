@@ -53,16 +53,6 @@ export function authenticate() {
 }
 export const unauthenticate = () => ({ type: act.AUTHENTICATION_FAILURE });
 
-export function updateFollowerRequest(data) {
-  return dispatch => api.post('/followers/update', data)
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
 export function getUserById(data) {
   return dispatch => api.fetch('/user/' + data)
     .then((response) => {

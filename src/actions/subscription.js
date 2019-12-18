@@ -12,20 +12,10 @@ export function postSubscriptionRequest(data) {
     });
 }
 
-export function getPendingSubscriptionRequests() {
-  return dispatch => api.fetch('/subscribe')
+export function getPendingSubscriptionRequests(data) {
+  return dispatch => api.fetch('/subscription', data)
     .then((response) => {
-      dispatch({ type: act.PENDING_SUBSCRIPTION_REQUESTS, response });
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function getFollowRequests() {
-  return dispatch => api.fetch('/followers')
-    .then((response) => {
-      dispatch({ type: "GET_FOLLOWER_REQUESTS_SUCCESS", response });
+      dispatch({ type: "GET_PENDING_SUBSCRIPTION_REQUESTS_SUCCESS", response });
       console.log(response)
     })
     .catch((e) => {
@@ -33,10 +23,21 @@ export function getFollowRequests() {
     });
 }
 
-export function acceptFollowRequest(data) {
-  return dispatch => api.post('/follow', data)
+export function getFollowRequests(data) {
+  return dispatch => api.fetch('/followers', data)
     .then((response) => {
-      //dispatch({ type: act.PENDING_SUBSCRIPTION_REQUESTS, response });
+      dispatch({ type: "GET_PENDING_FOLLOW_REQUESTS_SUCCESS", response });
+      console.log(response)
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
+export function updateFollowerRequest(data) {
+  return dispatch => api.post('/followers/update', data)
+    .then((response) => {
+      dispatch({ type: "UPDATE_FOLLOWER_REQUESTS_SUCCESS", response})
       console.log(response)
     })
     .catch((e) => {
@@ -47,6 +48,7 @@ export function acceptFollowRequest(data) {
 export function deleteSubscription(data) {
   return dispatch => api.delete('/subscribe', data)
     .then((response) => {
+      dispatch({ type: "UPDATE_FOLLOWER_REQUESTS_SUCCESS", response})
       console.log(response)
     })
     .catch((e) => {
