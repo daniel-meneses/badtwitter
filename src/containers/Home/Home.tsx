@@ -79,7 +79,7 @@ class Home extends React.Component<any, any> {
 function mapStateToProps(state :any) {
   return {
     feed: state.feed.global_feed,
-    pendingSubscriptionRequests: state.subscription.subscription_requests,
+    pendingSubscriptionRequests: state.subscription.subscription_request_ids,
     hasBeenLiked: state.post.hasBeenLiked
   }
 }

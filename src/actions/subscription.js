@@ -5,7 +5,6 @@ export function postSubscriptionRequest(data) {
   return dispatch => api.post('/subscribe', {user_id: data})
     .then((response) => {
       dispatch({ type: "SUBSCRIPTION_REQUEST_SUCCESS", response });
-      console.log(response)
     })
     .catch((e) => {
       console.log(e)
@@ -16,7 +15,6 @@ export function getPendingSubscriptionRequests(data) {
   return dispatch => api.fetch('/subscription', data)
     .then((response) => {
       dispatch({ type: "GET_PENDING_SUBSCRIPTION_REQUESTS_SUCCESS", response });
-      console.log(response)
     })
     .catch((e) => {
       console.log(e)
@@ -24,6 +22,7 @@ export function getPendingSubscriptionRequests(data) {
 }
 
 export function getFollowRequests(data) {
+  console.log(data)
   return dispatch => api.fetch('/followers', data)
     .then((response) => {
       dispatch({ type: "GET_PENDING_FOLLOW_REQUESTS_SUCCESS", response });

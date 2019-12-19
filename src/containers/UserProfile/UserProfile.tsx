@@ -64,7 +64,7 @@ class UserProfile extends React.Component<any, any> {
 function mapStateToProps(state :any) {
   return {
     userProfile: state.profile.profile,
-    pendingSubRequests: state.subscription.subscription_requests.data,
+    pendingSubRequests: state.subscription.subscription_requests,
     hasBeenLiked: state.post.hasBeenLiked
   }
 }

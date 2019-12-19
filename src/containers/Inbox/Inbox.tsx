@@ -26,18 +26,16 @@ class Inbox extends React.Component<any, any> {
     }
 
     public render() {
+      var followRequests:object  = this.props.followerRequests ? this.props.followerRequests : {};
         return (
             <div>
             <span>SUBSCRIPTION REQUESTS</span>
-            { this.props.followerRequests.length ?
-              this.props.followerRequests.map((req :any) =>
-              <FollowRequest key={req.id}
-                             id={req.id}
-                             user={req.user}
-                             handleFollowRequest={this.updateFollowerRequest}/>)
-              :
-              <span>Was nill</span>
-            }
+            {
+              Object.values(followRequests).map(values =>
+                <FollowRequest key={values}
+                               request={values}
+                               handleFollowRequest={this.updateFollowerRequest}/>
+            )}
             </div>
         );
     }
@@ -45,8 +43,8 @@ class Inbox extends React.Component<any, any> {
 
 function mapStateToProps(state :any) {
   return {
-    request_list: state.subscription.subscription_requests,
-    followerRequests: state.subscription.follower_requests
+    request_list: state.subscription.subscription_request_ids,
+    followerRequests: state.subscription.follower_request_users
   }
 }
 
