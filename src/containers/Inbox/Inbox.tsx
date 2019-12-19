@@ -31,9 +31,9 @@ class Inbox extends React.Component<any, any> {
             <div>
             <span>SUBSCRIPTION REQUESTS</span>
             {
-              Object.values(followRequests).map(values =>
-                <FollowRequest key={values}
-                               request={values}
+              Object.values(followRequests).map(req =>
+                <FollowRequest key={req.id}
+                               request={req}
                                handleFollowRequest={this.updateFollowerRequest}/>
             )}
             </div>
