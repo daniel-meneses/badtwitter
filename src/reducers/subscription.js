@@ -44,7 +44,7 @@ export default function (state = initialState, action) {
     case act.UPDATE_FOLLOWER_REQUESTS_SUCCESS:
       return {
         ...state,
-        follower_requests: state.follower_requests.filter(req => req !== action.response.user_id),
+        follower_request_ids: state.follower_request_ids.filter(req => Object.keys(req).map(Number)[0] !== action.response.user_id),
       };
     default:
       return state;
