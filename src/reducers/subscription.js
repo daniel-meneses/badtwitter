@@ -13,7 +13,7 @@ export default function (state = initialState, action) {
     case act.SUBSCRIPTION_REQUEST_SUCCESS:
       return {
         ...state,
-        subscription_request_ids: [...state.subscription_request_ids, action.response.id],
+        subscription_request_ids: [...state.subscription_request_ids, Object.keys(action.response.data).map(Number)[0]],
       };
     case act.GET_PENDING_SUBSCRIPTION_REQUESTS_SUCCESS:
       return {

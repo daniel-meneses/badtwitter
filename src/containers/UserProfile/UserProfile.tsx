@@ -35,10 +35,13 @@ class UserProfile extends React.Component<any, any> {
     }
 
     public render() {
+      var requests: Array<number>  = this.props.pendingSubRequests ? this.props.pendingSubRequests : [];
       //TODO: Update this
-      var request: Array<number> = this.props.pendingSubRequests
       var userProfile = this.props.userProfile;
-      var isRequestPending = request.length ? request.includes(userProfile.id) : false;
+      var isRequestPending = requests.includes(userProfile.id);
+      console.log(requests)
+      console.log(userProfile.id)
+      console.log(isRequestPending)
       var a: Array<any> = []
       if (userProfile.posts) {
         a = userProfile.posts
@@ -64,7 +67,7 @@ class UserProfile extends React.Component<any, any> {
 function mapStateToProps(state :any) {
   return {
     userProfile: state.profile.profile,
-    pendingSubRequests: state.subscription.subscription_requests,
+    pendingSubRequests: state.subscription.subscription_request_ids,
     hasBeenLiked: state.post.hasBeenLiked
   }
 }
