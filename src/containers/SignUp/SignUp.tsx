@@ -2,7 +2,6 @@ import React from 'react';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
-import api from '../../api/api.js';
 import { signUp , login } from '../../actions/session.js';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';

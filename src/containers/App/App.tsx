@@ -1,11 +1,8 @@
 import React from 'react';
 import './App.css';
-import { withRouter } from 'react-router'
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import store from '../../store/store.js';
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Home from '../Home/Home';
 import NavBar from '../../components/NavBar/NavBar';
-import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import UserProfile from '../UserProfile/UserProfile';
 import Inbox from '../Inbox/Inbox';

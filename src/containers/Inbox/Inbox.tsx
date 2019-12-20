@@ -3,8 +3,6 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { getPendingSubscriptionRequests, getFollowRequests, updateFollowerRequest } from '../../actions/subscription.js'
-import SubscriptionRequest from '../../components/SubscriptionRequest/SubscriptionRequest';
-import PostMiniComponent from '../../components/PostMini/PostMini';
 import FollowRequest from '../../components/FollowRequest/FollowRequest';
 
 class Inbox extends React.Component<any, any> {
@@ -34,16 +32,19 @@ class Inbox extends React.Component<any, any> {
               Object.values(followRequests).map(req =>
                 <FollowRequest key={req.id}
                                request={req}
-                               handleFollowRequest={this.updateFollowerRequest}/>
+                               handleUpdateRequest={this.updateFollowerRequest}/>
             )}
             </div>
         );
     }
 }
 
+type Props = {
+  followerRequests: Array<number>;
+};
+
 function mapStateToProps(state :any) {
   return {
-    request_list: state.subscription.subscription_request_ids,
     followerRequests: state.subscription.follower_request_users
   }
 }

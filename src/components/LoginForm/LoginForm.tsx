@@ -66,10 +66,6 @@ export default function LoginForm(props: any) {
                 });
   }
 
-  const enableLoginButton = () => {
-    return (emailWarning || passwordWarning || Object.values(loginObject).includes(""))
-  }
-
   return (
     <form onSubmit={handleSubmit} className='signup-form'>
       <div className='signup-input'>

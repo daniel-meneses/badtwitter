@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { getUserById } from '../../actions/session.js'
 import { postSubscriptionRequest } from '../../actions/subscription.js'
-import { getAllUserLikes, postLike, deleteLike} from '../../actions/like.js'
+import {  postLike, deleteLike} from '../../actions/like.js'
 import { bindActionCreators } from 'redux'
 import PostMiniComponent from '../../components/PostMini/PostMini';
 
@@ -36,7 +36,7 @@ class UserProfile extends React.Component<any, any> {
 
     public render() {
       //TODO: Update this
-      var request: Array<any> = this.props.pendingSubRequests
+      var request: Array<number> = this.props.pendingSubRequests
       var userProfile = this.props.userProfile;
       var isRequestPending = request.length ? request.includes(userProfile.id) : false;
       var a: Array<any> = []

@@ -4,16 +4,17 @@ type Props = {
   request: {id: boolean,
             user: { first_name: string,
                     last_name: string}},
-  handleFollowRequest: any;
+  handleUpdateRequest: (e: any) => void;
 };
 
-const FollowRequest = ({request, handleFollowRequest} : Props) => {
+const FollowRequest = ({request, handleUpdateRequest} : Props) => {
+  const user = request.user;
   return (
       <div className='follow_request' data-key={request.id}>
-        <span> {request.user.first_name} </span>
-        <span> {request.user.last_name} </span>
-        <button value={'accept'} onClick={handleFollowRequest}> Accept </button>
-        <button value={'decline'} onClick={handleFollowRequest}> Decline </button>
+        <span> {user.first_name} </span>
+        <span> {user.last_name} </span>
+        <button value={'accept'} onClick={handleUpdateRequest}> Accept </button>
+        <button value={'decline'} onClick={handleUpdateRequest}> Decline </button>
       </div>
   );
 }

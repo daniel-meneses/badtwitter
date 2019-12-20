@@ -9,13 +9,8 @@ import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import PostMini from '../../components/PostMini/PostMini';
 import Inbox from '../Inbox/Inbox';
-import SubscriptionRequest from '../../components/SubscriptionRequest/SubscriptionRequest';
 
 class Home extends React.Component<any, any> {
-
-  constructor(props: any){
-    super(props);
-  }
 
   componentDidMount() {
     this.props.getGlobalFeed();

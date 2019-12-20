@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./PostMini.scss";
 
 export const PostMiniComponent = (props: any) => {

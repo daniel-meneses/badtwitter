@@ -1,4 +1,4 @@
-import * as session from '../constants/session.js';
+import * as feed from '../constants/feed.js';
 
 const initialState = {
   global_feed: [],
@@ -7,12 +7,12 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case "SET_GLOBAL_FEED":
+    case feed.SET_GLOBAL_FEED:
       return {
         ...state,
         global_feed: action.response.data,
       };
-    case "SET_USER_FEED":
+    case feed.SET_USER_FEED:
       return {
         ...state,
         user_feed: action.response.data,
