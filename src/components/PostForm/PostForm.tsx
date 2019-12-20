@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./PostForm.scss";
 
-export default function PostForm(props: any) {
+type Props = {
+  handleFormSubmit: (e: any) => void
+}
+
+const PostForm = ({handleFormSubmit}: Props) => {
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    props.submitMessage(message);
-  }
-
-  const handleInputChange = (e: any) => {
-    setMessage(e.target.value);
+    handleFormSubmit(message);
   }
 
   return (
@@ -19,7 +19,7 @@ export default function PostForm(props: any) {
           <input
             value={message}
             type="text"
-            onChange={e => handleInputChange(e)}
+            onChange={e => setMessage(e.target.value)}
           />
           <div className="p-form-ft">
             <input type="submit" value="Submit" />
@@ -28,3 +28,5 @@ export default function PostForm(props: any) {
     </div>
   );
 }
+
+export default PostForm;

@@ -1,40 +1,52 @@
 import React from "react";
 import "./PostMini.scss";
 
-export const PostMiniComponent = (props: any) => {
+type Props = {
+  post: { id: any,
+          user_id: number,
+          first_name: string,
+          last_name: string,
+          likes: string,
+          post: string,
+          created: number
+        },
+  handlePostLikeClick: (e: any) => void,
+  handlePostUserClick: (e: any) => void,
+  hasBeenLiked: boolean
+}
+
+const PostMiniComponent = ({post, handlePostLikeClick, handlePostUserClick, hasBeenLiked}: Props) => {
 
   const handleLike = (e: any) => {
-    if (props.hasBeenLiked) {
-      props.handleUnlike({post_id: e.target.id})
-    } else {
-      props.handleLike({post_id: e.target.id})
-    }
+    handlePostLikeClick({post_id: e.target.id})
   }
 
   const handleUserClick = (e: any) => {
     var userId = e.target.getAttribute("data-key")
-    props.handlePostUserClick(userId)
+    handlePostUserClick(userId)
   }
 
   const handlePostClick = (e: any) => {
-
+    //TO:DO
   }
 
-  var post = props.post;
-  var liked = props.hasBeenLiked;
+  var post = post;
+  var liked = hasBeenLiked;
   return (
-      <div className='pm-comp' data-key={post.id} onClick={handlePostClick}>
+      <div className='pm-comp'
+           data-key={post.id}
+           onClick={handleUserClick}>
         <h3 data-key={post.user_id}
             onClick={handleUserClick}>
-              {post.first_name + " " + post.last_name}
-              </h3>
+            {post.first_name + " " + post.last_name}
+            </h3>
         <p>{post.post} </p>
-        <div className='pm-comp-ft'>
+      <div className='pm-comp-ft'>
         <span id={post.id}
               className={liked ? "pm-comp-liked" : "pm-comp-l"}
-              onClick={handleLike}>
-                {liked? "Liked!" : "Like?"} + Likes: {post.likes}
-                </span>
+              onClick={handleUserClick}>
+              {liked? "Liked!" : "Like?"} + Likes: {post.likes}
+              </span>
         <span>{post.created} </span>
         </div>
       </div>

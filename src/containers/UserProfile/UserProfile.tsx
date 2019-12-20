@@ -6,7 +6,7 @@ import { getUserById } from '../../actions/session.js'
 import { postSubscriptionRequest } from '../../actions/subscription.js'
 import {  postLike, deleteLike} from '../../actions/like.js'
 import { bindActionCreators } from 'redux'
-import PostMiniComponent from '../../components/PostMini/PostMini';
+import PostMini from '../../components/PostMini/PostMini';
 
 class UserProfile extends React.Component<any, any> {
 
@@ -53,12 +53,12 @@ class UserProfile extends React.Component<any, any> {
                 <span>{userProfile.first_name}</span>
                 <span>{userProfile.last_name}</span>
                 <button disabled={isRequestPending} className={'request-button'} onClick={this.submitFollowRequest}>{isRequestPending ? "Pending" : "Request Follow"}</button>
-                { a.map(a => <PostMiniComponent
-                              key={a.id} post={a}
-                              handleLike={this.props.postLike}
-                              handleUnlike={this.props.deleteLike}
-                              hasBeenLiked={this.props.hasBeenLiked.includes(a.id)}
-                              handlePostUserClick={this.handlePostUserClick} />) }
+                { a.map(a => <PostMini key={a.id}
+                                       post={a}
+                                       handlePostLikeClick={this.props.postLike}
+                                       handlePostUserClick={this.handlePostUserClick}
+                                       hasBeenLiked={this.props.hasBeenLiked.includes(a.id)}
+                                        />) }
             </div>
         );
     }

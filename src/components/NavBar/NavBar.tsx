@@ -1,12 +1,20 @@
 import React from "react";
 
-export default function NavBar(props: any) {
+type Props = {
+  title: string,
+  handleLogoClick: (e: any) => void,
+  handleSettingsClick: (e: any) => void
+};
+
+const NavBar = ({title, handleLogoClick, handleSettingsClick}: Props) => {
 
   return (
       <div className='nav-bar'>
-        <span onClick={props.logoClick}>LOGO</span>
-        <span>{props.title}</span>
-        <span onClick={props.settingsClick}>Settings Icon</span>
+        <span onClick={handleLogoClick}>LOGO</span>
+        <span>{title}</span>
+        <span onClick={handleSettingsClick}>Settings Icon</span>
       </div>
   );
 }
+
+export default NavBar;

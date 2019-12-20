@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Home from '../Home/Home';
+import Home2 from '../Home/Home2';
 import NavBar from '../../components/NavBar/NavBar';
 import SignUp from '../SignUp/SignUp';
 import UserProfile from '../UserProfile/UserProfile';
@@ -33,7 +34,7 @@ class App extends React.Component<any, any> {
       return (
           <Router>
             <div className="App">
-              <NavBar title="home" logoClick={this.handleNavLogoClick} settingsClick={this.handleSettingsClick}/>
+              <NavBar title={"home"} handleLogoClick={this.handleNavLogoClick} handleSettingsClick={this.handleSettingsClick}/>
               <Route path='/signup' exact component={SignUp}/>
               <Route path='/user/:id' exact component={UserProfile}/>
               <Route path='/inbox' component={Inbox}/>

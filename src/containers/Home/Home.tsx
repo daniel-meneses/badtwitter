@@ -47,14 +47,13 @@ class Home extends React.Component<any, any> {
               <Inbox />
               </div>
                 <div className='f-comp'>
-                  <PostForm className='f-pf-comp' submitMessage={this.sendPost}/>
+                  <PostForm handleFormSubmit={this.sendPost} />
                     <div>
                       { this.props.feed.length ?
                         this.props.feed.map((p :any) =>
                         <PostMini key={p.id}
                                   post={p}
-                                  handleLike={this.props.postLike}
-                                  handleUnlike={this.props.deleteLike}
+                                  handlePostLikeClick={this.props.postLike}
                                   handlePostUserClick={this.handlePostUserClick}
                                   hasBeenLiked={this.props.hasBeenLiked.includes(p.id)}
                                   />)
