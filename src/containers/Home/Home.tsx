@@ -6,8 +6,10 @@ import { getPendingSubscriptionRequests, postSubscriptionRequest, getFollowers }
 import { getAllUserLikes, postLike, deleteLike} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
+import { isObjectEmpty } from '../../commons/helpers'
 import PostForm from '../../components/PostForm/PostForm';
 import PostMini from '../../components/PostMini/PostMini';
+import PostList from '../../components/PostList/PostList';
 import Inbox from '../Inbox/Inbox';
 import FollowersList from '../../components/FollowersList/FollowersList';
 import FollowersListItem from '../../components/FollowersListItem/FollowersListItem';
@@ -45,8 +47,20 @@ class Home extends React.Component<any, any> {
     console.log(e.target.getAttribute("data-key"))
   }
 
+  handlePostLikeClick = (e: any) => {
+    const isLiked = e.target.getAttribute("data-key");
+    const data = {post_id: e.target.id}
+    if (isLiked == "true") {
+      this.props.deleteLike(data)
+    } else {
+      this.props.postLike(data)
+    }
+  }
+
 
   public render() {
+    const shouldDisplayFollowers: boolean = !isObjectEmpty(this.props.follower_users);
+    const shouldDisplayFeed: boolean = !isObjectEmpty(this.props.feed);
 
       return (
           <div className={'g-fd'}>
@@ -58,26 +72,41 @@ class Home extends React.Component<any, any> {
                 <div className='f-comp'>
                   <PostForm handleFormSubmit={this.sendPost} />
                     <div>
-                      { this.props.feed.length ?
-                        this.props.feed.map((p :any) =>
-                        <PostMini key={p.id}
-                                  post={p}
-                                  handlePostLikeClick={this.props.postLike}
+                      {
+                        shouldDisplayFeed ?
+                        <PostList feed={this.props.feed}
+                                  handlePostLikeClick={this.handlePostLikeClick}
                                   handlePostUserClick={this.handlePostUserClick}
-                                  hasBeenLiked={this.props.hasBeenLiked.includes(p.id)}
-                                  />)
+                                  hasBeenLiked={this.props.hasBeenLiked}
+                                  displayPostMini={(post: any,
+                                                    handlePostLikeClick: any,
+                                                    handlePostUserClick: any,
+                                                    hasBeenLiked: any): JSX.Element => {
+                                    return <PostMini post={post}
+                                            handlePostLikeClick={handlePostLikeClick}
+                                            handlePostUserClick={handlePostUserClick}
+                                            hasBeenLiked={hasBeenLiked}
+                                            /> }}
+                         />
                         :
-                        <span>Feed Empty</span>
+                        <></>
                       }
                     </div>
                   </div>
                   <div className='e-comp'>
                   Explore Container
-                  <FollowersList
-                      followers={this.props.follower_users}
-                      handleFollowerClick={this.logit}
-                      displayFollowerItem={(follower: any, handleFollowerClick: any): JSX.Element => { return <FollowersListItem follower={follower} handleFollowerClick={handleFollowerClick}/> }}
+                  {shouldDisplayFollowers ?
+                    <FollowersList followers={this.props.follower_users}
+                                   handleFollowerClick={this.logit}
+                                   displayFollowerItem={(follower: any,
+                                                         handleFollowerClick: any): JSX.Element => {
+                                     return <FollowersListItem follower={follower}
+                                                               handleFollowerClick={handleFollowerClick}
+                                     /> }}
                       />
+                      :
+                      <></>
+                    }
                   </div>
           </div>
       );

@@ -43,8 +43,9 @@ const PostMiniComponent = ({post, handlePostLikeClick, handlePostUserClick, hasB
         <p>{post.post} </p>
       <div className='pm-comp-ft'>
         <span id={post.id}
+              data-key={liked}
               className={liked ? "pm-comp-liked" : "pm-comp-l"}
-              onClick={handleUserClick}>
+              onClick={handlePostLikeClick}>
               {liked? "Liked!" : "Like?"} + Likes: {post.likes}
               </span>
         <span>{post.created} </span>

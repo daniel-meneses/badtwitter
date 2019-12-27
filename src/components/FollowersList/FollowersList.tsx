@@ -2,23 +2,14 @@ import React from 'react';
 
 type Props = {
   followers: {},
-  displayFollowerItem: (follower: any, handleFollowerClick: any) => JSX.Element,
-  handleFollowerClick: any
+  handleFollowerClick: any,
+  displayFollowerItem: (follower: any, handleFollowerClick: any) => JSX.Element
 };
 
 const FollowersList = ({followers, handleFollowerClick, displayFollowerItem} : Props) => {
-  const followersList: Array<any> = Object.values(followers)
   return (
     <div>
-    { followersList.length ?
-      followersList.map((f :any) =>
-      <div>
-        {displayFollowerItem(f, handleFollowerClick)}
-        </div>
-      )
-      :
-      <span>Feed Empty</span>
-    }
+      { Object.values(followers).map((f :any) => displayFollowerItem(f, handleFollowerClick)) }
     </div>
   );
 }
