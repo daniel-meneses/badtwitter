@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import { getPendingSubscriptionRequests, getFollowRequests, updateFollowerRequest } from '../../actions/subscription.js'
+import { getPendingSubscriptionRequests, getFollowRequests, updateFollowerRequest, getFollowers } from '../../actions/subscription.js'
 import FollowRequest from '../../components/FollowRequest/FollowRequest';
 
 class Inbox extends React.Component<any, any> {
@@ -13,7 +13,7 @@ class Inbox extends React.Component<any, any> {
     }
 
     componentDidMount() {
-      this.props.getFollowRequests();
+      this.props.getFollowRequests()
     }
 
     updateFollowerRequest = (e: any) => {
@@ -50,7 +50,7 @@ function mapStateToProps(state :any) {
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({updateFollowerRequest, getPendingSubscriptionRequests, getFollowRequests}, dispatch)
+  return bindActionCreators({updateFollowerRequest, getPendingSubscriptionRequests, getFollowRequests, getFollowers}, dispatch)
   }
 
 export default withRouter(connect(mapStateToProps

@@ -2,13 +2,15 @@ import React from 'react';
 import './Home.scss';
 import { withRouter } from 'react-router'
 import { logout, getGlobalFeed } from '../../actions/session.js'
-import { getPendingSubscriptionRequests, postSubscriptionRequest } from '../../actions/subscription.js'
+import { getPendingSubscriptionRequests, postSubscriptionRequest, getFollowers } from '../../actions/subscription.js'
 import { getAllUserLikes, postLike, deleteLike} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import PostMini from '../../components/PostMini/PostMini';
 import Inbox from '../Inbox/Inbox';
+import FollowersList from '../../components/FollowersList/FollowersList';
+import FollowersListItem from '../../components/FollowersListItem/FollowersListItem';
 
 class Home extends React.Component<any, any> {
 
@@ -16,6 +18,7 @@ class Home extends React.Component<any, any> {
     this.props.getGlobalFeed();
     this.props.getPendingSubscriptionRequests();
     this.props.getAllUserLikes();
+    this.props.getFollowers();
   }
 
   logOut = () => {
@@ -39,6 +42,7 @@ class Home extends React.Component<any, any> {
   }
 
   public render() {
+
       return (
           <div className={'g-fd'}>
               <div className='s-comp'>
@@ -64,6 +68,11 @@ class Home extends React.Component<any, any> {
                   </div>
                   <div className='e-comp'>
                   Explore Container
+                  <FollowersList
+                      followers={this.props.follower_users}
+                      handleFollowerClick={"hey2"}
+                      displayFollowerItem={(follower: any): JSX.Element => { return <FollowersListItem follower={follower}/> }}
+                      />
                   </div>
           </div>
       );
@@ -74,9 +83,10 @@ function mapStateToProps(state :any) {
   return {
     feed: state.feed.global_feed,
     pendingSubscriptionRequests: state.subscription.subscription_request_ids,
-    hasBeenLiked: state.post.hasBeenLiked
+    hasBeenLiked: state.post.hasBeenLiked,
+    follower_users: state.subscription.follower_users
   }
 }
 
 export default withRouter(connect(mapStateToProps
-  , { logout, postMessage, getGlobalFeed, postLike, postSubscriptionRequest, getPendingSubscriptionRequests, getAllUserLikes, deleteLike })(Home) as any);
+  , { logout, postMessage, getGlobalFeed, postLike, postSubscriptionRequest, getPendingSubscriptionRequests, getAllUserLikes, deleteLike, getFollowers, FollowersListItem })(Home) as any);

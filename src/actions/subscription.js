@@ -21,6 +21,17 @@ export function getPendingSubscriptionRequests(data) {
     });
 }
 
+export function getFollowers() {
+  return dispatch => api.fetch('/followers', {accepted: true})
+    .then((response) => {
+      dispatch({ type: sub.GET_ACCEPTED_FOLLOW_REQUESTS_SUCCESS, response });
+      console.log(response)
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
 export function getFollowRequests(data) {
   console.log(data)
   return dispatch => api.fetch('/followers', data)
