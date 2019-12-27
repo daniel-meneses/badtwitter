@@ -41,6 +41,11 @@ class Home extends React.Component<any, any> {
     this.props.history.push("/user/" + userId)
   }
 
+  logit = (e: any) => {
+    console.log(e.target.getAttribute("data-key"))
+  }
+
+
   public render() {
 
       return (
@@ -70,8 +75,8 @@ class Home extends React.Component<any, any> {
                   Explore Container
                   <FollowersList
                       followers={this.props.follower_users}
-                      handleFollowerClick={"hey2"}
-                      displayFollowerItem={(follower: any): JSX.Element => { return <FollowersListItem follower={follower}/> }}
+                      handleFollowerClick={this.logit}
+                      displayFollowerItem={(follower: any, handleFollowerClick: any): JSX.Element => { return <FollowersListItem follower={follower} handleFollowerClick={handleFollowerClick}/> }}
                       />
                   </div>
           </div>

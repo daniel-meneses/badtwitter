@@ -5,13 +5,14 @@ type Props = {
                       first_name: string,
                       last_name: string
                     }
-                }
+                },
+  handleFollowerClick: () => void
 };
 
-const FollowersListItem = ({follower} : Props) => {
+const FollowersListItem = ({follower, handleFollowerClick} : Props) => {
 
   return (
-      <div>
+      <div data-key={follower.user.id} onClick={handleFollowerClick}>
         <span>{follower.user.id}</span>
         <span>{follower.user.first_name}</span>
         <span>{follower.user.last_name}</span>

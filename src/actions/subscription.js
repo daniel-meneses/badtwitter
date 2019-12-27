@@ -25,7 +25,6 @@ export function getFollowers() {
   return dispatch => api.fetch('/followers', {accepted: true})
     .then((response) => {
       dispatch({ type: sub.GET_ACCEPTED_FOLLOW_REQUESTS_SUCCESS, response });
-      console.log(response)
     })
     .catch((e) => {
       console.log(e)
@@ -37,7 +36,6 @@ export function getFollowRequests(data) {
   return dispatch => api.fetch('/followers', data)
     .then((response) => {
       dispatch({ type: sub.GET_PENDING_FOLLOW_REQUESTS_SUCCESS, response });
-      console.log(response)
     })
     .catch((e) => {
       console.log(e)

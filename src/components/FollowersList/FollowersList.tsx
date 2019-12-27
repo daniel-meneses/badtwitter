@@ -2,8 +2,8 @@ import React from 'react';
 
 type Props = {
   followers: {},
-  handleFollowerClick: string,
-  displayFollowerItem: (follower: any) => JSX.Element
+  displayFollowerItem: (follower: any, handleFollowerClick: any) => JSX.Element,
+  handleFollowerClick: any
 };
 
 const FollowersList = ({followers, handleFollowerClick, displayFollowerItem} : Props) => {
@@ -13,7 +13,7 @@ const FollowersList = ({followers, handleFollowerClick, displayFollowerItem} : P
     { followersList.length ?
       followersList.map((f :any) =>
       <div>
-        {displayFollowerItem(f)}
+        {displayFollowerItem(f, handleFollowerClick)}
         </div>
       )
       :
