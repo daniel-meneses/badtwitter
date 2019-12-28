@@ -1,15 +1,19 @@
 import React from 'react';
+import FollowersListItem from '../FollowersListItem/FollowersListItem';
 
 type Props = {
   followers: {},
-  handleFollowerClick: any,
-  displayFollowerItem: (follower: any, handleFollowerClick: any) => JSX.Element
+  handleFollowerClick: any
 };
 
-const FollowersList = ({followers, handleFollowerClick, displayFollowerItem} : Props) => {
+const FollowersList = ({followers, handleFollowerClick} : Props) => {
   return (
     <div>
-      { Object.values(followers).map((f :any) => displayFollowerItem(f, handleFollowerClick)) }
+      { Object.values(followers).map((follower :any) =>
+        <FollowersListItem follower={follower}
+                           handleFollowerClick={handleFollowerClick}
+        />)
+       }
     </div>
   );
 }

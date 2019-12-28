@@ -16,40 +16,23 @@ type Props = {
 }
 
 const PostMiniComponent = ({post, handlePostLikeClick, handlePostUserClick, hasBeenLiked}: Props) => {
-
-  const handleLike = (e: any) => {
-    handlePostLikeClick({post_id: e.target.id})
-  }
-
-  const handleUserClick = (e: any) => {
-    var userId = e.target.getAttribute("data-key")
-    handlePostUserClick(userId)
-  }
-
-  const handlePostClick = (e: any) => {
-    //TO:DO
-  }
-
-  var post = post;
-  var liked = hasBeenLiked;
   return (
-      <div className='pm-comp'
-           data-key={post.id}
-           onClick={handleUserClick}>
+      <div className='post_mini'
+           data-key={post.id}>
         <h3 data-key={post.user_id}
-            onClick={handleUserClick}>
-            {post.first_name + " " + post.last_name}
+            onClick={handlePostUserClick}>
+              {post.first_name + " " + post.last_name}
             </h3>
-        <p>{post.post} </p>
-      <div className='pm-comp-ft'>
-        <span id={post.id}
-              data-key={liked}
-              className={liked ? "pm-comp-liked" : "pm-comp-l"}
-              onClick={handlePostLikeClick}>
-              {liked? "Liked!" : "Like?"} + Likes: {post.likes}
-              </span>
-        <span>{post.created} </span>
-        </div>
+        <p> {post.post} </p>
+        <div className='post_mini_footer'>
+          <span className={"like_button"}
+                id={post.id}
+                data-key={hasBeenLiked}
+                onClick={handlePostLikeClick}>
+                {hasBeenLiked? "Liked!" : "Like?"} + Likes: {post.likes}
+                </span>
+                <span>{post.created} </span>
+          </div>
       </div>
   );
 }

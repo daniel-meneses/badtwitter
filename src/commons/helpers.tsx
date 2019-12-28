@@ -1,6 +1,6 @@
 
 export function isObjectEmpty(data: any): boolean {
-  if (data !== null) {
+  if (data != null ) {
     if (Array.isArray(data)) {
       return !data.length
     } else {

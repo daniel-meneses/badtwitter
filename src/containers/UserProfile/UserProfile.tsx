@@ -6,14 +6,10 @@ import { getUserById } from '../../actions/session.js'
 import { postSubscriptionRequest } from '../../actions/subscription.js'
 import {  postLike, deleteLike} from '../../actions/like.js'
 import { bindActionCreators } from 'redux'
-import PostMini from '../../components/PostMini/PostMini';
+import { isObjectEmpty } from '../../commons/helpers'
+import PostList from '../../components/PostList/PostList';
 
 class UserProfile extends React.Component<any, any> {
-
-    constructor(props: any){
-      super(props);
-      this.state = {};
-    }
 
     componentDidMount() {
       this.props.getUserById(this.props.match.params.id);
@@ -27,38 +23,57 @@ class UserProfile extends React.Component<any, any> {
       }
     }
 
-    handlePostUserClick = (e: any) => {
-    }
-
     submitFollowRequest = () => {
       this.props.postSubscriptionRequest(this.props.userProfile.id)
     }
 
-    public render() {
-      var requests: Array<number>  = this.props.pendingSubRequests ? this.props.pendingSubRequests : [];
-      //TODO: Update this
-      var userProfile = this.props.userProfile;
-      var isRequestPending = requests.includes(userProfile.id);
-      console.log(requests)
-      console.log(userProfile.id)
-      console.log(isRequestPending)
-      var a: Array<any> = []
-      if (userProfile.posts) {
-        a = userProfile.posts
+    handlePostUserClick = (e: any) => {
+      this.goToUserProfile(e.target.getAttribute("data-key"))
+    }
+
+    handlePostLikeClick = (e: any) => {
+      const isLiked = e.target.getAttribute("data-key");
+      const data = {post_id: e.target.id}
+      if (isLiked == "true") {
+        this.props.deleteLike(data)
+      } else {
+        this.props.postLike(data)
       }
+    }
+
+    goToUserProfile = (id: number) => {
+      this.props.history.push("/user/" + id)
+    }
+
+    public render() {
+      let userProfile = this.props.userProfile
+      let shouldDisplayFeed: boolean = !isObjectEmpty(userProfile.posts)
+      let isRequestPending = this.props.pendingSubRequests.includes(userProfile.id)
+
         return (
             <div>
-                Hello there!
+                This is top of user profile page
+                <div>
                 <span>{userProfile.email}</span>
                 <span>{userProfile.first_name}</span>
                 <span>{userProfile.last_name}</span>
-                <button disabled={isRequestPending} className={'request-button'} onClick={this.submitFollowRequest}>{isRequestPending ? "Pending" : "Request Follow"}</button>
-                { a.map(a => <PostMini key={a.id}
-                                       post={a}
-                                       handlePostLikeClick={this.props.postLike}
-                                       handlePostUserClick={this.handlePostUserClick}
-                                       hasBeenLiked={this.props.hasBeenLiked.includes(a.id)}
-                                        />) }
+                </div>
+                <button className={'subscribe_request_button'}
+                        disabled={isRequestPending}
+                        onClick={this.submitFollowRequest}
+                        >
+                        {isRequestPending ? "Pending" : "Request Follow"}
+                        </button>
+                        {
+                          shouldDisplayFeed ?
+                          <PostList feed={userProfile.posts}
+                                    handlePostLikeClick={this.handlePostLikeClick}
+                                    handlePostUserClick={this.handlePostUserClick}
+                                    hasBeenLiked={this.props.hasBeenLiked}
+                           />
+                          :
+                          <></>
+                        }
             </div>
         );
     }

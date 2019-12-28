@@ -23,28 +23,20 @@ class Home extends React.Component<any, any> {
     this.props.getFollowers();
   }
 
-  logOut = () => {
-    this.props.logout();
-  }
-
   sendPost = (e: any) => {
     this.props.postMessage({message:e});
   }
 
-  getGlobalFeed =  () => {
-    this.props.getGlobalFeed()
+  handlePostUserClick = (e: any) => {
+    this.goToUserProfile(e.target.getAttribute("data-key"))
   }
 
-  addFriend = () => {
-    this.props.postFollowRequest({user_id: 4})
+  handleFollowerClick = (e: any) => {
+    this.goToUserProfile(e.currentTarget.getAttribute("data-key"))
   }
 
-  handlePostUserClick = (userId: number) => {
-    this.props.history.push("/user/" + userId)
-  }
-
-  logit = (e: any) => {
-    console.log(e.target.getAttribute("data-key"))
+  goToUserProfile = (id: number) => {
+    this.props.history.push("/user/" + id)
   }
 
   handlePostLikeClick = (e: any) => {
@@ -59,14 +51,16 @@ class Home extends React.Component<any, any> {
 
 
   public render() {
-    const shouldDisplayFollowers: boolean = !isObjectEmpty(this.props.follower_users);
-    const shouldDisplayFeed: boolean = !isObjectEmpty(this.props.feed);
+    let props = this.props
+    let {feed, follower_users} = this.props
+    let shouldDisplayFollowers: boolean = !isObjectEmpty(follower_users)
+    let shouldDisplayFeed: boolean = !isObjectEmpty(feed)
 
       return (
           <div className={'g-fd'}>
               <div className='s-comp'>
               Sidebar Container
-              <button onClick={this.logOut}>LogOut</button>
+              <button onClick={() => props.logout()}>LogOut</button>
               <Inbox />
               </div>
                 <div className='f-comp'>
@@ -74,19 +68,10 @@ class Home extends React.Component<any, any> {
                     <div>
                       {
                         shouldDisplayFeed ?
-                        <PostList feed={this.props.feed}
+                        <PostList feed={props.feed}
                                   handlePostLikeClick={this.handlePostLikeClick}
                                   handlePostUserClick={this.handlePostUserClick}
-                                  hasBeenLiked={this.props.hasBeenLiked}
-                                  displayPostMini={(post: any,
-                                                    handlePostLikeClick: any,
-                                                    handlePostUserClick: any,
-                                                    hasBeenLiked: any): JSX.Element => {
-                                    return <PostMini post={post}
-                                            handlePostLikeClick={handlePostLikeClick}
-                                            handlePostUserClick={handlePostUserClick}
-                                            hasBeenLiked={hasBeenLiked}
-                                            /> }}
+                                  hasBeenLiked={props.hasBeenLiked}
                          />
                         :
                         <></>
@@ -97,12 +82,7 @@ class Home extends React.Component<any, any> {
                   Explore Container
                   {shouldDisplayFollowers ?
                     <FollowersList followers={this.props.follower_users}
-                                   handleFollowerClick={this.logit}
-                                   displayFollowerItem={(follower: any,
-                                                         handleFollowerClick: any): JSX.Element => {
-                                     return <FollowersListItem follower={follower}
-                                                               handleFollowerClick={handleFollowerClick}
-                                     /> }}
+                                   handleFollowerClick={this.handleFollowerClick}
                       />
                       :
                       <></>
