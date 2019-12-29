@@ -23,4 +23,8 @@ const PostList = ({feed, handlePostLikeClick, handlePostUserClick, hasBeenLiked}
       )
 }
 
+PostList.defaultProps = {
+  hasBeenLiked: false
+}
+
 export default PostList;

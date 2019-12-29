@@ -27,13 +27,12 @@ class Inbox extends React.Component<any, any> {
         <div>
         <span>SUBSCRIPTION REQUESTS</span>
           {
-            shouldDisplayerFollowers ?
+            shouldDisplayerFollowers &&
             Object.values(followerRequests).map( (req :any) =>
             <FollowRequest key={req.id}
                            request={req}
                            handleUserClick={(e :any) => goToUserProfile(history, e.currentTarget.getAttribute("data-key"))}
                            handleUpdateRequest={this.updateFollowerRequest}/>)
-            : <></>
           }
         </div>
       );

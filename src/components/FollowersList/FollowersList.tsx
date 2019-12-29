@@ -9,8 +9,9 @@ type Props = {
 const FollowersList = ({followers, handleFollowerClick} : Props) => {
   return (
     <div>
-      { Object.values(followers).map((follower :any) =>
-        <FollowersListItem follower={follower}
+      { Object.values(followers).map((follower: any) =>
+        <FollowersListItem key={follower.user.id}
+                           follower={follower}
                            handleFollowerClick={handleFollowerClick}
         />)
        }

@@ -7,7 +7,10 @@ const initialState = {
   follower_ids: [],
   follower_users: {},
   follower_request_ids: [],
-  follower_request_users: {}
+  follower_request_users: {},
+  new_followers: { data: {},
+                   isFetching: false,
+                   error: null}
 };
 
 export default function (state = initialState, action) {
@@ -54,6 +57,27 @@ export default function (state = initialState, action) {
         follower_ids: action.response.list,
         follower_users: action.response.data_map,
       };
+    case "GET_NEW_FOLLOWERS":
+      return {
+        ...state,
+        new_followers: { data: {},
+                         isFetching: true,
+                         error: null },
+      };
+    case "GET_NEW_FOLLOWERS_SUCCESS":
+      return {
+        ...state,
+        new_followers: { data: action.data,
+                         isFetching: false,
+                         error: null },
+      };
+    case "GET_NEW_FOLLOWERS_FAILED":
+      return {
+        ...state,
+        new_followers: { data: {},
+                         isFetching: false,
+                         error: "Failed to get new followers" },
+        };
     default:
       return state;
   }
