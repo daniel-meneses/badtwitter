@@ -3,29 +3,27 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { goToUserProfile } from '../../commons/actions'
-import { getGlobalFeed } from '../../actions/feed'
+import { getProfileFeed } from '../../actions/feed'
 import { postLike, deleteLike} from '../../actions/like.js'
 import PostMini from "../PostMini/PostMini";
 import isEmpty from 'lodash/isEmpty'
 
 
-interface GlobalFeed {
+interface ProfileFeed {
   feed?: {
-    global: {
+    profile: {
               list: [],
               dataMap: {},
               isFetching: boolean,
               errors: null
               }
-          },
-   post?: {
-     hasBeenLiked: []}
+          }
 }
 
-class GlobalFeed extends React.Component<any, any> {
+class ProfileFeed extends React.Component<any, any> {
 
   componentDidMount() {
-    this.props.getGlobalFeed()
+    this.props.getProfileFeed(this.props.match.params.id)
   }
 
   handlePostLikeClick = (e: any) => {
@@ -39,12 +37,12 @@ class GlobalFeed extends React.Component<any, any> {
     }
 
    render() {
-     let { global={}, hasBeenLiked=[], history } = this.props;
-     if (global.isFetching === true) { return <div> is fetching </div>}
-     if (isEmpty(global.dataMap)) {return <div>is empty</div>}
+     let { profile={}, hasBeenLiked=[], history } = this.props;
+     if (profile.isFetching === true) { return <div> is fetching </div>}
+     if (isEmpty(profile.dataMap)) {return <div>is empty</div>}
      return (
        <div className="post_list">
-         { Object.values(global.dataMap).map((post: any) =>
+         { Object.values(profile.dataMap).map((post: any) =>
                <PostMini key={post.id}
                          post={post}
                          handlePostLikeClick={this.handlePostLikeClick}
@@ -58,15 +56,15 @@ class GlobalFeed extends React.Component<any, any> {
 }
 
 function mapStateToProps(state :any) {
-  let { global } = state.feed
+  let { profile } = state.feed
   return {
-    global: global,
+    profile: profile,
     hasBeenLiked: state.post.hasBeenLiked
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getGlobalFeed, postLike, deleteLike }, dispatch)
+  return bindActionCreators({getProfileFeed, postLike, deleteLike }, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GlobalFeed) as any);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileFeed) as any);

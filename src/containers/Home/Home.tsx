@@ -6,10 +6,7 @@ import { getPendingSubscriptionRequests, postSubscriptionRequest } from '../../a
 import { getAllUserLikes, postLike, deleteLike} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
-import { isObjectEmpty } from '../../commons/helpers'
-import { goToUserProfile } from '../../commons/actions'
 import PostForm from '../../components/PostForm/PostForm';
-import PostList from '../../components/PostList/PostList';
 import GlobalFeed from '../../components/GlobalFeed/GlobalFeed';
 import Inbox from '../Inbox/Inbox';
 import FollowersList from '../../components/FollowersList/FollowersList';
@@ -22,7 +19,7 @@ class Home extends React.Component<any, any> {
   }
 
   public render() {
-    let {logout, history, postMessage} = this.props
+    let {logout, postMessage} = this.props
 
     return (
       <div className={'g-fd'}>

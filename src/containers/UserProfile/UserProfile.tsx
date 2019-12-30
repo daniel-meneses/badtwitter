@@ -7,6 +7,7 @@ import { postSubscriptionRequest } from '../../actions/subscription.js'
 import {  postLike, deleteLike} from '../../actions/like.js'
 import { bindActionCreators } from 'redux'
 import { isObjectEmpty } from '../../commons/helpers'
+import ProfileFeed from '../../components/ProfileFeed/ProfileFeed';
 import PostList from '../../components/PostList/PostList';
 
 class UserProfile extends React.Component<any, any> {
@@ -34,7 +35,7 @@ class UserProfile extends React.Component<any, any> {
     handlePostLikeClick = (e: any) => {
       const isLiked = e.target.getAttribute("data-key");
       const data = {post_id: e.target.id}
-      if (isLiked == "true") {
+      if (isLiked === "true") {
         this.props.deleteLike(data)
       } else {
         this.props.postLike(data)
@@ -52,6 +53,7 @@ class UserProfile extends React.Component<any, any> {
 
         return (
             <div>
+            <ProfileFeed />
                 This is top of user profile page
                 <div>
                 <span>{userProfile.email}</span>

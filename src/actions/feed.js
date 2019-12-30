@@ -1,6 +1,6 @@
 import api from '../api/api.js';
 
-export function getGlobalFeed2() {
+export function getGlobalFeed() {
   return dispatch => {
     dispatch({ type: "GET_GLOBAL_FEED" })
     api.fetch('/global_feed')
@@ -13,16 +13,16 @@ export function getGlobalFeed2() {
   }
 }
 
-
-export function getGlobalFeed() {
+export function getProfileFeed(data) {
   return dispatch => {
-    dispatch({ type: "GET_GLOBAL_FEED" })
-    api.fetch('/global_feed')
+    dispatch({ type: "GET_PROFILE_FEED" })
+    api.fetch('/user/' + data)
     .then((response) => {
-      dispatch({ type: "GET_GLOBAL_FEED_SUCCESS", response });
+      dispatch({ type: "GET_PROFILE_FEED_SUCCESS", response });
     })
     .catch((e) => {
-      dispatch({ type: "GET_GLOBAL_FEED_FAIL", e });
+      dispatch({ type: "GET_PROFILE_FEED_FAIL", e });
+      console.log(e)
     });
   }
 }

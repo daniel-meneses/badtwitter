@@ -7,7 +7,12 @@ const initialState = {
             dataMap: {},
             isFetching: false,
             errors: null
-            }
+          },
+  profile: { list: [],
+            dataMap: {},
+            isFetching: false,
+            errors: null
+          },
 };
 
 export default function (state = initialState, action) {
@@ -43,8 +48,31 @@ export default function (state = initialState, action) {
         ...state,
         global: { isFetching: false,
                   errors: "Failed to get global feed"
-                  },
+                },
       };
+    case "GET_PROFILE_FEED":
+      return {
+        ...state,
+        profile: { isFetching: true,
+                   errors: null
+                 },
+      }
+    case "GET_PROFILE_FEED_SUCCESS":
+      return {
+        ...state,
+        profile: { list: action.response.list,
+                   dataMap: action.response.data_map,
+                   isFetching: false,
+                   errors: null
+                  },
+      }
+    case "GET_PROFILE_FEED_FAIL":
+      return {
+        ...state,
+        profile: { isFetching: false,
+                   errors: "Failed to get profile feed"
+                  },
+      }
     default:
       return state;
   }
