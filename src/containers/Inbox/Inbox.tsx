@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { goToUserProfile } from '../../commons/actions'
 import { isObjectEmpty } from '../../commons/helpers'
-import { getPendingSubscriptionRequests, getFollowRequests, updateFollowerRequest, getFollowers } from '../../actions/subscription.js'
+import { getPendingSubscriptionRequests, getFollowRequests, updateFollowerRequest } from '../../actions/subscription.js'
 import FollowRequest from '../../components/FollowRequest/FollowRequest';
 
 class Inbox extends React.Component<any, any> {
@@ -50,7 +50,7 @@ function mapStateToProps(state :any) {
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({updateFollowerRequest, getPendingSubscriptionRequests, getFollowRequests, getFollowers}, dispatch)
+  return bindActionCreators({updateFollowerRequest, getPendingSubscriptionRequests, getFollowRequests}, dispatch)
   }
 
 export default withRouter(connect(mapStateToProps

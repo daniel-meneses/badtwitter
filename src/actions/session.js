@@ -62,13 +62,3 @@ export function getUserById(data) {
       console.log(e)
     });
 }
-
-export function getGlobalFeed() {
-  return dispatch => api.fetch('/global_feed')
-    .then((response) => {
-      dispatch({ type: "SET_GLOBAL_FEED", response });
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
