@@ -13,7 +13,9 @@ type Props = {
 const FollowersListItem = ({follower, handleFollowerClick} : Props) => {
 
   return (
-      <div className={"follower_list_tem"} data-key={follower.user.id} onClick={handleFollowerClick}>
+      <div className={"follower_list_tem"}
+           data-key={follower.user.id}
+           onClick={handleFollowerClick}>
         <span >{follower.user.id}</span>
         <span >{follower.user.first_name}</span>
         <span >{follower.user.last_name}</span>

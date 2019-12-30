@@ -12,6 +12,8 @@ import PostForm from '../../components/PostForm/PostForm';
 import PostList from '../../components/PostList/PostList';
 import Inbox from '../Inbox/Inbox';
 import FollowersList from '../../components/FollowersList/FollowersList';
+//import NewBook from '../../components/FollowersList/FollowersList2';
+
 
 class Home extends React.Component<any, any> {
 
@@ -19,7 +21,7 @@ class Home extends React.Component<any, any> {
     this.props.getGlobalFeed();
     this.props.getPendingSubscriptionRequests();
     this.props.getAllUserLikes();
-    this.props.getFollowers();
+  //  this.props.getFollowers();
   }
 
   sendPost = (e: any) => {
@@ -68,12 +70,13 @@ class Home extends React.Component<any, any> {
             Explore Container
             {
               shouldDisplayFollowers ?
-                <FollowersList followers={follower_users}
-                               handleFollowerClick={(e :any)=> goToUserProfile(history, e.currentTarget.getAttribute("data-key"))}
-                               />
+                <FollowersList />
                 :
                 <></>
              }
+            </div>
+            <div>
+
             </div>
         </div>
       );
@@ -85,7 +88,8 @@ function mapStateToProps(state :any) {
     feed: state.feed.global_feed,
     pendingSubscriptionRequests: state.subscription.subscription_request_ids,
     hasBeenLiked: state.post.hasBeenLiked,
-    follower_users: state.subscription.follower_users
+    follower_users: state.subscription.follower_users,
+    followers: state.subscription.new_followers
   }
 }
 

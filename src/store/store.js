@@ -26,7 +26,8 @@ store.subscribe(throttle(() => {
                     follower_request_ids: state.subscription.follower_request_ids,
                     subscriptions: state.subscription.subscriptions,
                     follower_users: state.subscription.follower_users,
-                    follower_request_users: state.subscription.follower_request_users
+                    follower_request_users: state.subscription.follower_request_users,
+                    followers: state.followers
                     },
     session: { currentUser: state.session.currentUser }
   });

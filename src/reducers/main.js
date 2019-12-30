@@ -4,13 +4,15 @@ import subscription from './subscription.js';
 import profile from './profile.js';
 import feed from './feed.js';
 import post from './post.js';
+import followers from './followers.js';
 
 const mainReducer = combineReducers({
   session,
   subscription,
   profile,
   feed,
-  post
+  post,
+  followers
 });
 
 export default function (state, action) {
