@@ -38,6 +38,7 @@ class ProfileFeed extends React.Component<any, any> {
 
    render() {
      let { profile={}, hasBeenLiked=[], history } = this.props;
+     console.log(profile)
      if (profile.isFetching === true) { return <div> is fetching </div>}
      if (isEmpty(profile.dataMap)) {return <div>is empty</div>}
      return (

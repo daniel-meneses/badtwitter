@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { getUserById } from '../../actions/session.js'
 import { postSubscriptionRequest } from '../../actions/subscription.js'
+import { getProfileFeed } from '../../actions/feed.js'
 import {  postLike, deleteLike} from '../../actions/like.js'
 import { bindActionCreators } from 'redux'
 import { isObjectEmpty } from '../../commons/helpers'
@@ -14,6 +15,7 @@ class UserProfile extends React.Component<any, any> {
 
     componentDidMount() {
       this.props.getUserById(this.props.match.params.id);
+      this.props.getProfileFeed(this.props.match.params.id)
     }
 
     handleLike = (e: any, hasBeenLiked: Boolean) => {
@@ -90,7 +92,7 @@ function mapStateToProps(state :any) {
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getUserById, postLike, postSubscriptionRequest, deleteLike}, dispatch)
+  return bindActionCreators({getUserById, postLike, postSubscriptionRequest, deleteLike, getProfileFeed}, dispatch)
   }
 
 export default withRouter(connect(mapStateToProps

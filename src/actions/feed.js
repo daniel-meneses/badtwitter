@@ -16,9 +16,10 @@ export function getGlobalFeed() {
 export function getProfileFeed(data) {
   return dispatch => {
     dispatch({ type: "GET_PROFILE_FEED" })
-    api.fetch('/user/' + data)
+    api.fetch('/feed/' + data)
     .then((response) => {
       dispatch({ type: "GET_PROFILE_FEED_SUCCESS", response });
+      console.log(response);
     })
     .catch((e) => {
       dispatch({ type: "GET_PROFILE_FEED_FAIL", e });
