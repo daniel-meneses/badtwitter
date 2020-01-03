@@ -12,7 +12,7 @@ function setAccessToken(response) {
 }
 
 export function login(data, history) {
-  return dispatch => api.post('/sessions', data)
+  return dispatch => api.post('/accounts/session', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
       history.push('/');
@@ -21,7 +21,7 @@ export function login(data, history) {
 }
 
 export function signUp(data, history) {
-  return dispatch => api.post('/users', data)
+  return dispatch => api.post('/accounts/user', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
       history.push('/');
@@ -30,7 +30,7 @@ export function signUp(data, history) {
 }
 
 export function logout(history) {
-  return dispatch => api.delete('/sessions')
+  return dispatch => api.delete('/accounts/session/logout')
     .then(() => {
       localStorage.removeItem('token_access');
       localStorage.removeItem('token_refresh');
@@ -41,7 +41,7 @@ export function logout(history) {
 }
 
 export function authenticate() {
-  return dispatch => api.post('/sessions/refresh')
+  return dispatch => api.post('/accounts/refresh')
     .then((response) => {
       setAccessToken(response);
     })

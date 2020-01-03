@@ -14,7 +14,6 @@ import PostList from '../../components/PostList/PostList';
 class UserProfile extends React.Component<any, any> {
 
     componentDidMount() {
-      this.props.getUserById(this.props.match.params.id);
       this.props.getProfileFeed(this.props.match.params.id)
     }
 
@@ -55,7 +54,6 @@ class UserProfile extends React.Component<any, any> {
 
         return (
             <div>
-            <ProfileFeed />
                 This is top of user profile page
                 <div>
                 <span>{userProfile.email}</span>
@@ -68,16 +66,7 @@ class UserProfile extends React.Component<any, any> {
                         >
                         {isRequestPending ? "Pending" : "Request Follow"}
                         </button>
-                        {
-                          shouldDisplayFeed ?
-                          <PostList feed={userProfile.posts}
-                                    handlePostLikeClick={this.handlePostLikeClick}
-                                    handlePostUserClick={this.handlePostUserClick}
-                                    hasBeenLiked={this.props.hasBeenLiked}
-                           />
-                          :
-                          <></>
-                        }
+              <ProfileFeed />
             </div>
         );
     }

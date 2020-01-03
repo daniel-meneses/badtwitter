@@ -2,7 +2,8 @@ const API = 'http://localhost:4000/api/v1';
 function headers(url) {
   var token = ""
   var tokenType = ""
-  if (url === '/sessions/refresh') {
+  // This needs to be set somewhere else
+  if (url === '/accounts/refresh') {
     tokenType = "token_refresh"
   } else {
     tokenType = "token_access"
