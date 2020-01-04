@@ -26,7 +26,7 @@ class UserProfile extends React.Component<any, any> {
     }
 
     submitFollowRequest = () => {
-      this.props.postSubscriptionRequest(this.props.userProfile.id)
+      this.props.postSubscriptionRequest(this.props.match.params.id)
     }
 
     handlePostUserClick = (e: any) => {

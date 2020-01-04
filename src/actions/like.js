@@ -1,7 +1,7 @@
 import api from '../api/api.js';
 
 export function postLike(data) {
-  return dispatch => api.post('/like', data)
+  return dispatch => api.post('/user_device/like', data)
     .then((response) => {
       dispatch({ type: "LIKE_POST_SUCCESS", response });
     })
@@ -11,7 +11,7 @@ export function postLike(data) {
 }
 
 export function getAllUserLikes(data) {
-  return dispatch => api.fetch('/like')
+  return dispatch => api.fetch('/user_device/like')
     .then((response) => {
       dispatch({ type: "UPDATE_HAS_BEEN_LIKED", response });
     })
@@ -21,7 +21,7 @@ export function getAllUserLikes(data) {
 }
 
 export function deleteLike(data) {
-  return dispatch => api.delete('/like', data)
+  return dispatch => api.delete('/user_device/like/delete', data)
   .then((response) => {
     dispatch({ type: "DELETE_POST_SUCCESS", response });
   })

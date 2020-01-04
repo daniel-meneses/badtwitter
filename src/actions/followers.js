@@ -4,7 +4,7 @@ import * as sub from '../constants/subscription.js';
 export function getFollowers() {
   return dispatch => {
     dispatch({ type: sub.GET_NEW_FOLLOWERS })
-    api.fetch('/followers', {accepted: true})
+    api.fetch('/user_device/follower', {accepted: true})
       .then((response) => {
         dispatch({ type: sub.GET_NEW_FOLLOWERS_SUCCESS, response })
       })
