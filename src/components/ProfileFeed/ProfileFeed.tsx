@@ -48,7 +48,9 @@ class ProfileFeed extends React.Component<any, any> {
                          post={post}
                          handlePostLikeClick={this.handlePostLikeClick}
                          handlePostUserClick={(e :any) => goToUserProfile(history, e.target.getAttribute("data-key"))}
-                         hasBeenLiked={hasBeenLiked.includes(post.id)} />
+                         hasBeenLiked={hasBeenLiked.includes(post.id)}
+                         isExpanded={false}
+                          />
                        )
                      }
          </div>

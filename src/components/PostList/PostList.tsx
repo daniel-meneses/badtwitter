@@ -5,10 +5,11 @@ type Props = {
   feed: any,
   handlePostLikeClick: any,
   handlePostUserClick: any,
-  hasBeenLiked: any
+  hasBeenLiked: any,
+  isExpanded: boolean
 }
 
-const PostList = ({feed, handlePostLikeClick, handlePostUserClick, hasBeenLiked}: Props) => {
+const PostList = ({feed, handlePostLikeClick, handlePostUserClick, hasBeenLiked, isExpanded}: Props) => {
 
   return (
     <div className="post_list">
@@ -16,7 +17,9 @@ const PostList = ({feed, handlePostLikeClick, handlePostUserClick, hasBeenLiked}
             <PostMini post={post}
                       handlePostLikeClick={handlePostLikeClick}
                       handlePostUserClick={handlePostUserClick}
-                      hasBeenLiked={hasBeenLiked.includes(post.id)} />
+                      hasBeenLiked={hasBeenLiked.includes(post.id)}
+                      isExpanded={false}
+                       />
                     )
                   }
       </div>

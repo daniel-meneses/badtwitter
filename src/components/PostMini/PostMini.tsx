@@ -1,5 +1,6 @@
 import React from "react";
 import "./PostMini.scss";
+import LikeButton from '../LikeButton/LikeButton';
 
 type Props = {
   post: { id: any,
@@ -12,25 +13,26 @@ type Props = {
         },
   handlePostLikeClick: (e: any) => void,
   handlePostUserClick: (e: any) => void,
-  hasBeenLiked: boolean
+  hasBeenLiked: boolean,
+  isExpanded: boolean
 }
 
-const PostMiniComponent = ({post, handlePostLikeClick, handlePostUserClick, hasBeenLiked}: Props) => {
+const PostMiniComponent = ({post, handlePostLikeClick, handlePostUserClick, hasBeenLiked, isExpanded}: Props) => {
   return (
-      <div className='post_mini'
-           data-key={post.id}>
+      <div className='post_mini_component' data-key={post.id}>
         <h3 data-key={post.user_id}
             onClick={handlePostUserClick}>
               {post.first_name + " " + post.last_name}
             </h3>
+            <i className="arrow down"
+               onClick={handlePostUserClick}
+               ></i>
         <p> {post.post} </p>
         <div className='post_mini_footer'>
-          <span className={"like_button"}
-                id={post.id}
-                data-key={hasBeenLiked}
-                onClick={handlePostLikeClick}>
-                {hasBeenLiked? "Liked!" : "Like?"} + Likes: {post.likes}
-                </span>
+          <LikeButton post={post}
+                      hasBeenLiked={hasBeenLiked}
+                      handlePostLikeClick={handlePostLikeClick}
+                      />
                 <span>{post.created} </span>
           </div>
       </div>

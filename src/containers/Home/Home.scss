@@ -1,11 +1,11 @@
-.g-fd {
+.home_container {
   position: relative;
   width: inherit;
   display: block;
   border: 1px green solid;
 }
 
-.f-comp {
+.home_center_feed {
   width: 600px;
   left: 20vw;
   position: absolute;
@@ -13,7 +13,7 @@
   border: 1px green solid;
 }
 
-.e-comp {
+.home_right_sidebar {
   position: absolute;
   display: inline;
   width: 400px;
@@ -21,7 +21,7 @@
   border: 4px purple purple;
 }
 
-.s-comp {
+.home_left_sidebar {
   left:0;
   position: absolute;
   display: inline;

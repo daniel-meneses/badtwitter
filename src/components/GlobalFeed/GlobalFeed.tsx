@@ -29,8 +29,9 @@ class GlobalFeed extends React.Component<any, any> {
   }
 
   handlePostLikeClick = (e: any) => {
-    const isLiked = e.target.getAttribute("data-key");
-    const data = {post_id: e.target.id}
+    const isLiked = e.target.getAttribute("data-liked");
+    const postId = e.target.getAttribute("data-key");
+    const data = {post_id: postId}
       if (isLiked === "true") {
         this.props.deleteLike(data)
       } else {
@@ -49,7 +50,9 @@ class GlobalFeed extends React.Component<any, any> {
                          post={post}
                          handlePostLikeClick={this.handlePostLikeClick}
                          handlePostUserClick={(e :any) => goToUserProfile(history, e.target.getAttribute("data-key"))}
-                         hasBeenLiked={hasBeenLiked.includes(post.id)} />
+                         hasBeenLiked={hasBeenLiked.includes(post.id)}
+                         isExpanded={false}
+                         />
                        )
                      }
          </div>

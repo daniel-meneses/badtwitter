@@ -10,7 +10,7 @@ import FollowRequest from '../../components/FollowRequest/FollowRequest';
 class Inbox extends React.Component<any, any> {
 
     componentDidMount() {
-      this.props.getFollowRequests()
+      this.props.getFollowRequests({accepted: "false"})
     }
 
     updateFollowerRequest = (e: any) => {
@@ -53,5 +53,6 @@ function mapDispatchToProps(dispatch: any) {
   return bindActionCreators({updateFollowerRequest, getPendingSubscriptionRequests, getFollowRequests}, dispatch)
   }
 
-export default withRouter(connect(mapStateToProps
+export default withRouter(connect(
+    mapStateToProps
   , mapDispatchToProps)(Inbox) as any);

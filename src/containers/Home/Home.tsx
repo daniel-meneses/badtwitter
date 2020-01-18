@@ -22,17 +22,17 @@ class Home extends React.Component<any, any> {
     let {logout, postMessage} = this.props
 
     return (
-      <div className={'g-fd'}>
-        <div className='s-comp'>
+      <div className={'home_container'}>
+        <div className='home_left_sidebar'>
           Sidebar Container
           <button onClick={() => logout()}>LogOut</button>
           <Inbox />
         </div>
-        <div className='f-comp'>
+        <div className='home_center_feed'>
           <PostForm handleFormSubmit={(e :any) => postMessage({message: e})} />
             <GlobalFeed/>
             </div>
-          <div className='e-comp'>
+          <div className='home_right_sidebar'>
             Explore Container
             <FollowersList />
             </div>
