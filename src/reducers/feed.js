@@ -27,14 +27,14 @@ export default function (state = initialState, action) {
         ...state,
         user_feed: action.response.data,
       };
-    case "GET_GLOBAL_FEED":
+    case feed.GET_GLOBAL_FEED:
       return {
         ...state,
         global: { isFetching: true,
                   errors: null
                 },
       };
-    case "GET_GLOBAL_FEED_SUCCESS":
+    case feed.GET_GLOBAL_FEED_SUCCESS:
       return {
         ...state,
         global: { list: action.response.list,
@@ -43,21 +43,21 @@ export default function (state = initialState, action) {
                   errors: null
                   },
       };
-    case "GET_GLOBAL_FEED_FAIL":
+    case feed.GET_GLOBAL_FEED_FAIL:
       return {
         ...state,
         global: { isFetching: false,
                   errors: "Failed to get global feed"
                 },
       };
-    case "GET_PROFILE_FEED":
+    case feed.GET_PROFILE_FEED:
       return {
         ...state,
         profile: { isFetching: true,
                    errors: null
                  },
       }
-    case "GET_PROFILE_FEED_SUCCESS":
+    case feed.GET_PROFILE_FEED_SUCCESS:
       return {
         ...state,
         profile: { list: action.response.list,
@@ -66,7 +66,7 @@ export default function (state = initialState, action) {
                    errors: null
                   },
       }
-    case "GET_PROFILE_FEED_FAIL":
+    case feed.GET_PROFILE_FEED_FAIL:
       return {
         ...state,
         profile: { isFetching: false,
