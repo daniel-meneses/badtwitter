@@ -20,7 +20,7 @@ store.subscribe(throttle(() => {
   var state = store.getState();
   console.log(state)
   saveStateToLocal({
-    subscription: { subscription_request_ids: state.subscription.subscription_requests,
+    subscription: { pendingSubRequestUserIds: state.subscription.pendingSubRequestUserIds,
                     follower_request_ids: state.subscription.follower_request_ids,
                     subscriptions: state.subscription.subscriptions,
                     follower_users: state.subscription.follower_users,

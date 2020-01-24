@@ -11,7 +11,7 @@ type Props = {
 
 function mapStateToProps(state :any) {
   return {
-    pendingRequests: state.subscription.subscription_request_ids
+    pendingRequests: state.subscription.pendingSubRequestUserIds
    };
 }
 

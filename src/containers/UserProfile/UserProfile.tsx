@@ -41,13 +41,13 @@ class UserProfile extends React.Component<any, any> {
 function mapStateToProps(state :any) {
   return {
     users: state.globalObject.users,
-    pendingSubRequests: state.subscription.subscription_request_ids
+    pendingSubRequests: state.subscription.pendingSubRequestUserIds
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return bindActionCreators({postSubscriptionRequest}, dispatch)
-  }
+}
 
 export default withRouter(connect(mapStateToProps
   , mapDispatchToProps)(UserProfile) as any);
