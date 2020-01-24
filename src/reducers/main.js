@@ -1,17 +1,18 @@
 import { combineReducers } from 'redux';
 import session from './session.js';
 import subscription from './subscription.js';
-import profile from './profile.js';
 import feed from './feed.js';
 import post from './post.js';
 import followers from './followers.js';
+import globalObject from './globalObject.js';
+
 
 const mainReducer = combineReducers({
   session,
   subscription,
-  profile,
   feed,
   post,
+  globalObject,
   followers
 });
 

@@ -14,6 +14,7 @@ class SignUp extends React.Component<any, any> {
     }
 
     signupRequest = (e: any) =>  {
+      console.log(e)
       this.props.signUp(e, this.props.history);
     }
 

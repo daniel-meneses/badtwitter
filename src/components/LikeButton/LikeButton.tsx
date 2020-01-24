@@ -1,26 +1,50 @@
 import React from "react";
 import "./LikeButton.scss";
+import { connect } from 'react-redux';
+import { postLike, deleteLike} from '../../actions/like.js';
+import { bindActionCreators } from 'redux';
 
 type Props = {
-  post: {id: any,
-         likes: any
-        },
-  hasBeenLiked: boolean,
-  handlePostLikeClick: (e: any) => void
+  postId: number,
+  hasBeenLiked: Array<number>,
+  postLike: (e: any) => void,
+  deleteLike: (e: any) => void
 }
 
-const LikeButton = ({post, hasBeenLiked, handlePostLikeClick}: Props) => {
+const LikeButton = ({postId, hasBeenLiked, postLike, deleteLike }: Props) => {
+
+  let isLiked = hasBeenLiked.includes(postId);
+
+  let handlePostLikeClick = (e: any) => {
+    const data = {post_id: postId}
+      if (isLiked) {
+        deleteLike(data)
+      } else {
+        postLike(data)
+      }
+    }
+
   return (
     <div>
       <span className={"like_button"}
-            data-key={post.id}
-            data-liked={hasBeenLiked}
+            data-key={postId}
+            data-liked={isLiked}
             onClick={handlePostLikeClick}
             >
-            {hasBeenLiked? "Liked!" : "Like?"} + Likes: {post.likes}
+            {isLiked? "Liked!" : "Like?"}
           </span>
       </div>
   );
 }
 
-export default LikeButton;
+function mapStateToProps(state :any) {
+  return {
+    hasBeenLiked: state.post.hasBeenLiked
+   };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return bindActionCreators({postLike, deleteLike}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LikeButton);

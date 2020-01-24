@@ -2,63 +2,28 @@ import React from 'react';
 import './UserProfile.scss';
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
-import { getUserById } from '../../actions/session.js'
 import { postSubscriptionRequest } from '../../actions/subscription.js'
-import { getProfileFeed } from '../../actions/feed.js'
-import {  postLike, deleteLike} from '../../actions/like.js'
 import { bindActionCreators } from 'redux'
-import { isObjectEmpty } from '../../commons/helpers'
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed';
-import PostList from '../../components/PostList/PostList';
+import SubscribeButton from '../../components/SubscribeButton/SubscribeButton';
 
 class UserProfile extends React.Component<any, any> {
-
-    componentDidMount() {
-      this.props.getProfileFeed(this.props.match.params.id)
-    }
-
-    handleLike = (e: any, hasBeenLiked: Boolean) => {
-      if (hasBeenLiked) {
-        this.props.deleteLike({post_id: e.target.id});
-      } else {
-        this.props.postLike({post_id: e.target.id});
-      }
-    }
 
     submitFollowRequest = () => {
       this.props.postSubscriptionRequest(this.props.match.params.id)
     }
 
-    handlePostUserClick = (e: any) => {
-      this.goToUserProfile(e.target.getAttribute("data-key"))
-    }
-
-    handlePostLikeClick = (e: any) => {
-      const isLiked = e.target.getAttribute("data-key");
-      const data = {post_id: e.target.id}
-      if (isLiked === "true") {
-        this.props.deleteLike(data)
-      } else {
-        this.props.postLike(data)
-      }
-    }
-
-    goToUserProfile = (id: number) => {
-      this.props.history.push("/user/" + id)
-    }
-
     public render() {
-      let userProfile = this.props.userProfile
-      let shouldDisplayFeed: boolean = !isObjectEmpty(userProfile.posts)
-      let isRequestPending = this.props.pendingSubRequests.includes(userProfile.id)
+      let { users, pendingSubRequests, match} = this.props;
+      let user = users[match.params.id]
+      let isRequestPending = pendingSubRequests.includes(user.id)
 
         return (
             <div>
                 This is top of user profile page
                 <div>
-                <span>{userProfile.email}</span>
-                <span>{userProfile.first_name}</span>
-                <span>{userProfile.last_name}</span>
+                <div>{user.first_name}</div>
+                <div>{user.last_name}</div>
                 </div>
                 <button className={'subscribe_request_button'}
                         disabled={isRequestPending}
@@ -67,6 +32,7 @@ class UserProfile extends React.Component<any, any> {
                         {isRequestPending ? "Pending" : "Request Follow"}
                         </button>
               <ProfileFeed />
+              <SubscribeButton userId={user.id} />
             </div>
         );
     }
@@ -74,14 +40,13 @@ class UserProfile extends React.Component<any, any> {
 
 function mapStateToProps(state :any) {
   return {
-    userProfile: state.profile.profile,
-    pendingSubRequests: state.subscription.subscription_request_ids,
-    hasBeenLiked: state.post.hasBeenLiked
+    users: state.globalObject.users,
+    pendingSubRequests: state.subscription.subscription_request_ids
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getUserById, postLike, postSubscriptionRequest, deleteLike, getProfileFeed}, dispatch)
+  return bindActionCreators({postSubscriptionRequest}, dispatch)
   }
 
 export default withRouter(connect(mapStateToProps

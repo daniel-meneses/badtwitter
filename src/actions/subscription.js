@@ -34,7 +34,6 @@ export function deleteSubscription(data) {
 
 
 export function getFollowRequests(data) {
-  console.log(data)
   return dispatch => api.fetch('/user_device/follower', data)
     .then((response) => {
       dispatch({ type: sub.GET_PENDING_FOLLOW_REQUESTS_SUCCESS, response });

@@ -1,7 +1,6 @@
 import * as act from '../constants/subscription.js';
 
 const initialState = {
-  subscriptions: [],
   subscription_request_ids: [],
   follower_ids: [],
   follower_users: {},

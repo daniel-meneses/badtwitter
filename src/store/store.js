@@ -19,17 +19,18 @@ const store = createStore(
 store.subscribe(throttle(() => {
   var state = store.getState();
   console.log(state)
-  //console.log(state)
   saveStateToLocal({
-    subscription: { subscription_request_ids: state.subscription.subscription_request_ids,
-                    subscription_requests: state.subscription.subscription_requests,
+    subscription: { subscription_request_ids: state.subscription.subscription_requests,
                     follower_request_ids: state.subscription.follower_request_ids,
                     subscriptions: state.subscription.subscriptions,
                     follower_users: state.subscription.follower_users,
                     follower_request_users: state.subscription.follower_request_users,
-                    followers: state.followers
+                    followers: state.followers,
                     },
-    session: { currentUser: state.session.currentUser }
+    session: { currentUser: state.session.currentUser },
+    globalObject: { users: state.globalObject.users,
+                    posts: state.globalObject.posts
+                  }
   });
 }, 1000));
 

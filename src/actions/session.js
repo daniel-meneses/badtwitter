@@ -52,13 +52,3 @@ export function authenticate() {
     });
 }
 export const unauthenticate = () => ({ type: act.AUTHENTICATION_FAILURE });
-
-export function getUserById(data) {
-  return dispatch => api.fetch('/user/' + data)
-    .then((response) => {
-      dispatch({ type: "ADD_USER_PROFILE", response });
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}

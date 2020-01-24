@@ -1,0 +1,1 @@
+export let GET_FEED_SUCCESS = 'GET_FEED_SUCCESS';
