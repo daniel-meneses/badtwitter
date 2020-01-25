@@ -17,6 +17,16 @@ export function getFollowers() {
   }
 }
 
+export function getFollowRequests(data) {
+  return dispatch => api.fetch('/user_device/follower', data)
+    .then((response) => {
+      dispatch({ type: "hey", response });
+    })
+    .catch((e) => {
+      console.log(e)
+    });
+}
+
 export function updateFollowerRequest(data) {
   return dispatch => api.post('/user_device/follower', data)
     .then((response) => {

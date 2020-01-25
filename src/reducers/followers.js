@@ -18,8 +18,8 @@ export default function (state = initialState, action) {
     case follow.GET_FOLLOWERS_SUCCESS:
       return {
         ...state,
-        list: action.response.list,
-        acceptedFollows: action.response.data_map,
+        pendingRequests: action.users,
+        pendingRequestsUserIds: [],
         isFetching: false,
         error: null,
       };
