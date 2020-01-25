@@ -28,8 +28,8 @@ const FollowRequest2 = ({request, history, users, acceptFollowerRequest, rejectF
   return (
       <div className='follow_request'>
         <span data-key={user.id} onClick={() => history.push("/user/" + user.id)}> {user.first_name} {user.last_name}</span>
-        <button value={'accept'} onClick={() => acceptFollowerRequest({accepted : true, id: request.id})}> Accept </button>
-        <button value={'decline'} onClick={() => rejectFollowerRequest({accepted : false, id: request.id})}> Decline </button>
+        <button onClick={() => acceptFollowerRequest({accepted : true, id: request.id})}> Accept </button>
+        <button onClick={() => rejectFollowerRequest({accepted : false, id: request.id})}> Decline </button>
       </div>
   );
 }
