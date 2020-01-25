@@ -4,35 +4,30 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { goToUserProfile } from '../../commons/actions'
 import isEmpty from 'lodash/isEmpty'
-import { getPendingSubscriptionRequests, getFollowRequests, updateFollowerRequest } from '../../actions/subscription.js'
+import { getPendingSubscriptionRequests, getFollowRequests } from '../../actions/subscription.js'
+import { getPendingFollowRequests, acceptFollowerRequest, rejectFollowerRequest } from '../../actions/followers.js'
+
 import FollowRequest from '../../components/FollowRequest/FollowRequest';
+import FollowRequest2 from '../../components/FollowRequest/FollowRequest2';
 
 class Inbox extends React.Component<any, any> {
 
     componentDidMount() {
-      this.props.getFollowRequests({accepted: "false"})
-    }
-
-    updateFollowerRequest = (e: any) => {
-      var bool = e.target.value === 'accept' ? true : false
-      var id = e.target.parentNode.getAttribute("data-key")
-      var data = {accepted : bool, id: id}
-      this.props.updateFollowerRequest(data);
+      this.props.getPendingFollowRequests()
     }
 
     public render() {
-      let {followerRequests, history} = this.props
-      let shouldDisplayerFollowers = !isEmpty(followerRequests);
+      let {pendingFollowerRequest={}, history} = this.props
+      if (isEmpty(pendingFollowerRequest)) { return <div>No Follow Requests</div> }
       return (
         <div>
-        <span>SUBSCRIPTION REQUESTS</span>
+        <span>Follow Requests</span>
           {
-            shouldDisplayerFollowers &&
-            Object.values(followerRequests).map( (req :any) =>
-            <FollowRequest key={req.id}
-                           request={req}
-                           handleUserClick={(e :any) => goToUserProfile(history, e.currentTarget.getAttribute("data-key"))}
-                           handleUpdateRequest={this.updateFollowerRequest}/>)
+            Object.values(pendingFollowerRequest).map( (request :any) =>
+            <FollowRequest2 key={request.id}
+                            request={request}
+                            history={history}
+                            />)
           }
         </div>
       );
@@ -40,17 +35,19 @@ class Inbox extends React.Component<any, any> {
 }
 
 type Props = {
-  followerRequests: {};
+  pendingFollowerRequest: {},
+  pendingFollowReqUserIds: Array<number>
 };
 
 function mapStateToProps(state :any) {
   return {
-    followerRequests: state.subscription.follower_request_users
+    pendingFollowerRequest: state.followers.pending.followRequests,
+    pendingFollowReqUserIds: state.followers.pending.listUserIds
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({updateFollowerRequest, getPendingSubscriptionRequests, getFollowRequests}, dispatch)
+  return bindActionCreators({acceptFollowerRequest, getPendingSubscriptionRequests, getPendingFollowRequests, rejectFollowerRequest}, dispatch)
   }
 
 export default withRouter(connect(
