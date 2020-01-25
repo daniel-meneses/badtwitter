@@ -6,14 +6,14 @@ import { bindActionCreators } from 'redux';
 
 type Props = {
   postId: number,
-  hasBeenLiked: Array<number>,
+  likedPostIds: Array<number>,
   postLike: (e: any) => void,
   deleteLike: (e: any) => void
 }
 
-const LikeButton = ({postId, hasBeenLiked, postLike, deleteLike }: Props) => {
+const LikeButton = ({postId, likedPostIds, postLike, deleteLike }: Props) => {
 
-  let isLiked = hasBeenLiked.includes(postId);
+  let isLiked = likedPostIds.includes(postId);
 
   let handlePostLikeClick = (e: any) => {
     const data = {post_id: postId}
@@ -39,7 +39,7 @@ const LikeButton = ({postId, hasBeenLiked, postLike, deleteLike }: Props) => {
 
 function mapStateToProps(state :any) {
   return {
-    hasBeenLiked: state.post.hasBeenLiked
+    likedPostIds: state.likes.likedPostIds
    };
 }
 

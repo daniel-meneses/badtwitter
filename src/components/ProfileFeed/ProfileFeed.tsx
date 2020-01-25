@@ -39,7 +39,7 @@ class ProfileFeed extends React.Component<any, any> {
   }
 
   render() {
-    let { profile={}, posts, users, history } = this.props;
+    let { profile={}, history } = this.props;
     if (profile.isFetching === true) { return <div> is fetching </div>}
     if (isEmpty(profile.timeline)) {return <div>is empty</div>}
     return (

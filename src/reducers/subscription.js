@@ -2,9 +2,10 @@ import * as act from '../constants/subscription.js';
 
 const initialState = {
   pendingSubRequestUserIds: [],
+  pendingFollowReqUserIds: [],
+  follower_users: [],
   follower_ids: [],
   follower_users: {},
-  follower_request_ids: [],
   follower_request_users: {}
 };
 
@@ -13,7 +14,7 @@ export default function (state = initialState, action) {
     case act.SUBSCRIPTION_REQUEST_SUCCESS:
       return {
         ...state,
-        pendingSubRequestUserIds: [...state.pendingSubRequestUserIds, Object.keys(action.response.data).map(Number)[0]],
+        pendingSubRequestUserIds: [...state.pendingSubRequestUserIds, Object.keys(action.response).map(Number)[0]],
       };
     case act.GET_PENDING_SUBSCRIPTION_REQUESTS_SUCCESS:
       return {
@@ -38,18 +39,18 @@ export default function (state = initialState, action) {
     case act.GET_PENDING_FOLLOW_REQUESTS_SUCCESS:
       return {
         ...state,
-        follower_request_ids: action.response.list,
+        pendingFollowReqUserIds: action.response.list,
         follower_request_users: action.response.data_map,
       };
     case act.UPDATE_FOLLOWER_REQUESTS_SUCCESS:
       return {
         ...state,
-        follower_request_ids: state.follower_request_ids.filter(req => Object.keys(req).map(Number)[0] !== action.response.user_id),
+        pendingFollowReqUserIds: state.pendingFollowReqUserIds.filter(req => Object.keys(req).map(Number)[0] !== action.response.user_id),
       };
     case act.GET_ACCEPTED_FOLLOW_REQUESTS_SUCCESS:
       return {
         ...state,
-        follower_ids: action.response.list,
+        follower_users: action.response.list,
         follower_users: action.response.data_map,
       };
     default:

@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch: any) {
 }
 
 const SubscribeButton = ({userId, pendingRequests, postSubscriptionRequest}: Props) => {
-  console.log(pendingRequests)
+
   let isRequested = pendingRequests.includes(userId);
 
   return (

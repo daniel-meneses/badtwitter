@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { goToUserProfile } from '../../commons/actions'
-import { isObjectEmpty } from '../../commons/helpers'
+import isEmpty from 'lodash/isEmpty'
 import { getPendingSubscriptionRequests, getFollowRequests, updateFollowerRequest } from '../../actions/subscription.js'
 import FollowRequest from '../../components/FollowRequest/FollowRequest';
 
@@ -22,7 +22,7 @@ class Inbox extends React.Component<any, any> {
 
     public render() {
       let {followerRequests, history} = this.props
-      let shouldDisplayerFollowers = !isObjectEmpty(followerRequests);
+      let shouldDisplayerFollowers = !isEmpty(followerRequests);
       return (
         <div>
         <span>SUBSCRIPTION REQUESTS</span>

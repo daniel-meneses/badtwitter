@@ -2,9 +2,7 @@ import React from "react";
 import "./PostMini.scss";
 import LikeButton from '../LikeButton/LikeButton';
 import { goToUserProfile } from '../../commons/actions';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 type Props = {
   postId: number,

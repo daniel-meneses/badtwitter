@@ -13,6 +13,12 @@ export default function (state = initialState, action) {
         posts: Object.assign({}, state.posts, action.response.posts),
         users: Object.assign({}, state.users, action.response.users),
       };
+    case globals.GET_USERS_SUCCESS:
+    console.log(action.response)
+      return {
+        ...state,
+        users: Object.assign({}, state.users, action.response.users),
+      };
     default:
       return state;
   }

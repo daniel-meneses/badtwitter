@@ -1,15 +1,28 @@
 import api from '../api/api.js';
-import * as sub from '../constants/subscription.js';
+import * as follow from '../constants/followers.js';
+import * as globals from '../constants/globalObject.js';
 
 export function getFollowers() {
   return dispatch => {
-    dispatch({ type: sub.GET_NEW_FOLLOWERS })
+    dispatch({ type: follow.GET_FOLLOWERS })
     api.fetch('/user_device/follower', {accepted: true})
       .then((response) => {
-        dispatch({ type: sub.GET_NEW_FOLLOWERS_SUCCESS, response })
+        console.log(response)
+        dispatch({ type: globals.GET_USERS_SUCCESS, response });
+        dispatch({ type: follow.GET_FOLLOWERS_SUCCESS, response })
       })
       .catch((e) => {
-        dispatch({ type: sub.GET_NEW_FOLLOWERS_FAIL })
+        dispatch({ type: follow.GET_FOLLOWERS_FAILURE })
       });
   }
+}
+
+export function updateFollowerRequest(data) {
+  return dispatch => api.post('/user_device/follower', data)
+    .then((response) => {
+      dispatch({ type: follow.UPDATE_FOLLOWER_REQUEST_SUCCESS, response})
+    })
+    .catch((e) => {
+      console.log(e)
+    });
 }

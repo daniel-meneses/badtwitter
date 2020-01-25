@@ -1,28 +1,29 @@
-import * as act from '../constants/subscription.js';
+import * as follow from '../constants/followers.js';
 
 const initialState = {
-    list:[],
-    dataMap: {},
+    pendingRequests: {}, // object of follow objects
+    pendingRequestsUserIds: [],
+    acceptedRequests: {},
     isFetching: false,
     error: null
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case act.GET_NEW_FOLLOWERS:
+    case follow.GET_FOLLOWERS:
       return {
         ...state,
         isFetching: true,
       };
-    case act.GET_NEW_FOLLOWERS_SUCCESS:
+    case follow.GET_FOLLOWERS_SUCCESS:
       return {
         ...state,
         list: action.response.list,
-        dataMap: action.response.data_map,
+        acceptedFollows: action.response.data_map,
         isFetching: false,
         error: null,
       };
-    case act.GET_NEW_FOLLOWERS_FAIL:
+    case follow.GET_FOLLOWERS_FAILURE:
       return {
         ...state,
         isFetching: false,

@@ -21,12 +21,13 @@ store.subscribe(throttle(() => {
   console.log(state)
   saveStateToLocal({
     subscription: { pendingSubRequestUserIds: state.subscription.pendingSubRequestUserIds,
-                    follower_request_ids: state.subscription.follower_request_ids,
+                    pendingFollowReqUserIds: state.subscription.pendingFollowReqUserIds,
                     subscriptions: state.subscription.subscriptions,
                     follower_users: state.subscription.follower_users,
                     follower_request_users: state.subscription.follower_request_users,
                     followers: state.followers,
                     },
+    likes: { likedPostIds: state.likes.likedPostIds },
     session: { currentUser: state.session.currentUser },
     globalObject: { users: state.globalObject.users,
                     posts: state.globalObject.posts

@@ -39,7 +39,7 @@ class GlobalFeed extends React.Component<any, any> {
   }
 
   render() {
-    let { global={}, posts, users, history } = this.props;
+    let { global={}, history } = this.props;
     if (global.isFetching === true) { return <div> is fetching </div>}
     if (isEmpty(global.timeline)) {return <div>is empty</div>}
     return (
