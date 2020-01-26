@@ -1,9 +1,8 @@
 import React from 'react';
 import './Home.scss';
-import { withRouter } from 'react-router'
 import { logout } from '../../actions/session.js'
-import { getPendingSubscriptionRequests, postSubscriptionRequest } from '../../actions/subscription.js'
-import { getAllUserLikes, postLike, deleteLike} from '../../actions/like.js'
+import { getPendingSubscriptionRequests } from '../../actions/subscription.js'
+import { getAllUserLikes} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
@@ -50,5 +49,5 @@ function mapStateToProps(state :any) {
   }
 }
 
-export default withRouter(connect(mapStateToProps
-  , { logout, postMessage, postLike, postSubscriptionRequest, getPendingSubscriptionRequests, getAllUserLikes, deleteLike })(Home) as any);
+export default connect(mapStateToProps
+  , { logout, postMessage, getPendingSubscriptionRequests, getAllUserLikes })(Home);

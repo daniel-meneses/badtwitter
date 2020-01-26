@@ -1,26 +1,37 @@
 import React from 'react';
 import './FollowersListItem.scss';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
+import { goToUserProfile } from '../../commons/actions';
 
 type Props = {
-  follower: { user: {id: string,
-                      first_name: string,
-                      last_name: string
-                    }
-                },
-  handleFollowerClick: () => void
+  follower: {
+    id: string,
+    user_id: number
+  },
+  users: any
 };
 
-const FollowersListItem = ({follower, handleFollowerClick} : Props) => {
+function mapStateToProps(state :any) {
+  return {
+    users: state.globalObject.users
+  }
+}
+
+const FollowersListItem = ({follower, users} : Props) => {
+
+  let user = users[follower.user_id]
+  let history = useHistory()
 
   return (
       <div className={"follower_list_tem"}
-           data-key={follower.user.id}
-           onClick={handleFollowerClick}>
-        <span >{follower.user.id}</span>
-        <span >{follower.user.first_name}</span>
-        <span >{follower.user.last_name}</span>
+           onClick={() => history.push('/user/' + user.id)}
+           data-key={follower.id}>
+        <span>{user.id}</span>
+        <span>{user.first_name}</span>
+        <span>{user.last_name}</span>
       </div>
   );
 }
 
-export default FollowersListItem;
+export default connect(mapStateToProps, {})(FollowersListItem);

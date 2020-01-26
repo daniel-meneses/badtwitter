@@ -31,25 +31,3 @@ export function deleteSubscription(data) {
       console.log(e)
     });
 }
-
-
-export function getFollowRequests(data) {
-  return dispatch => api.fetch('/user_device/follower', data)
-    .then((response) => {
-      dispatch({ type: sub.GET_PENDING_FOLLOW_REQUESTS_SUCCESS, response });
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}
-
-export function updateFollowerRequest(data) {
-  return dispatch => api.post('/user_device/follower', data)
-    .then((response) => {
-      console.log(response)
-      dispatch({ type: sub.UPDATE_FOLLOWER_REQUESTS_SUCCESS, response})
-    })
-    .catch((e) => {
-      console.log(e)
-    });
-}

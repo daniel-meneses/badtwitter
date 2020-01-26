@@ -1,14 +1,27 @@
 import React from 'react';
 import { getFollowers } from '../../actions/followers.js'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import isEmpty from 'lodash/isEmpty'
-import { goToUserProfile } from '../../commons/actions'
-import FollowersListItem from '../../components/FollowersListItem/FollowersListItem';
+import FollowersListItem from '../../components/FollowersListItem/FollowersListItem'
 
 interface FollowersList {
-  followers? : object
+  followers : {
+    followRequests: {},
+    listUserIds: [],
+    isFetching: false,
+    error: null
+  }
+}
+
+function mapStateToProps(state :any) {
+  return {
+    followers: state.followers.accepted
+  }
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return bindActionCreators({getFollowers}, dispatch)
 }
 
 class FollowersList extends React.Component<any, any> {
@@ -17,26 +30,21 @@ class FollowersList extends React.Component<any, any> {
     this.props.getFollowers();
   }
 
-   render() {
-     let { followers={}, history } = this.props;
+  render() {
+     let { followers={} } = this.props;
      if (followers.isFetching === true) { return <div> is fetching </div>}
-     if (isEmpty(followers)) { return <div> no followers </div> }
+     if (isEmpty(followers.followRequests)) { return <div> no followers </div> }
      return (
        <div>
-
+         {
+          Object.values(followers.followRequests).map( (follower: any) =>
+          <FollowersListItem key={follower.id}
+                             follower={follower}
+                             />
+        )}
        </div>
     );
   }
 }
 
-function mapStateToProps(state :any) {
-  return {
-    followers: state.followers
-  }
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getFollowers}, dispatch)
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FollowersList) as any);
+export default connect(mapStateToProps, mapDispatchToProps)(FollowersList);
