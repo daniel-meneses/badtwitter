@@ -1,8 +1,8 @@
-import React from "react";
-import "./LikeButton.scss";
-import { connect } from 'react-redux';
-import { postLike, deleteLike} from '../../actions/like.js';
-import { bindActionCreators } from 'redux';
+import React from 'react'
+import './LikeButton.scss'
+import { connect } from 'react-redux'
+import { postLike, deleteLike} from '../../actions/like.js'
+import { bindActionCreators } from 'redux'
 
 type Props = {
   postId: number,
@@ -10,6 +10,12 @@ type Props = {
   postLike: (e: any) => void,
   deleteLike: (e: any) => void
 }
+
+function mapStateToProps(state :any) {
+  return { likedPostIds: state.likes.likedPostIds }
+}
+
+const mapDispatchToProps = { postLike, deleteLike }
 
 const LikeButton = ({postId, likedPostIds, postLike, deleteLike }: Props) => {
 
@@ -28,23 +34,12 @@ const LikeButton = ({postId, likedPostIds, postLike, deleteLike }: Props) => {
     <div>
       <span className={"like_button"}
             data-key={postId}
-            data-liked={isLiked}
             onClick={handlePostLikeClick}
             >
             {isLiked? "Liked!" : "Like?"}
           </span>
       </div>
   );
-}
-
-function mapStateToProps(state :any) {
-  return {
-    likedPostIds: state.likes.likedPostIds
-   };
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({postLike, deleteLike}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LikeButton);

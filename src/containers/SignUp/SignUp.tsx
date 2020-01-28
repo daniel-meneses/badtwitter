@@ -7,20 +7,12 @@ import { connect } from 'react-redux';
 
 class SignUp extends React.Component<any, any> {
 
-    constructor(props: any){
-      super(props);
-      this.state = {};
-    }
-
     signupRequest = (e: any) =>  {
-      console.log(e)
-      let history = useHistory();
-      this.props.signUp(e, history);
+      this.props.signUp(e, this.props.history);
     }
 
     loginRequest = (e: any) =>  {
-      let history = useHistory();
-      this.props.login(e, history);
+      this.props.login(e, this.props.history);
     }
 
     public render() {
@@ -28,7 +20,7 @@ class SignUp extends React.Component<any, any> {
             <div>
                 <SignUpForm
                   handleLogIn={this.signupRequest}
-                  loginFailMessage={this.state.emailLoginFail}
+                  loginFailMessage={"hey"}
                   />
                   <LoginForm
                     handleLogIn={this.loginRequest}

@@ -3,26 +3,20 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getGlobalFeed } from '../../actions/feed'
 import isEmpty from 'lodash/isEmpty'
-import PostMini from "../PostMini/PostMini";
+import PostMini from '../PostMini/PostMini'
 
 interface GlobalFeed {
-  globalObject: {
-      users: any,
-      posts: any
-  },
-  feed?: {
+  feed: {
     global: {
-        timeline: any,
+        timeline: Array<number>,
         isFetching: boolean,
-        errors: null
+        errors: string
         }
     }
 }
 
 function mapStateToProps(state :any) {
   return {
-    users: state.globalObject.users,
-    posts: state.globalObject.posts,
     global: state.feed.global
   }
 }
@@ -38,7 +32,7 @@ class GlobalFeed extends React.Component<any, any> {
   }
 
   render() {
-    let { global={}, history } = this.props;
+    let { global } = this.props;
     if (global.isFetching === true) { return <div> is fetching </div>}
     if (isEmpty(global.timeline)) {return <div>is empty</div>}
     return (

@@ -3,33 +3,25 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getProfileFeed } from '../../actions/feed'
 import isEmpty from 'lodash/isEmpty'
-import PostMini from "../PostMini/PostMini";
+import PostMini from "../PostMini/PostMini"
 
 interface ProfileFeed {
-  globalObject: {
-      users: any,
-      posts: any
-  },
   feed: {
     profile: {
-        timeline: [],
+        timeline: Array<number>,
         isFetching: boolean,
-        errors: null
+        errors: string
         }
     }
 }
 
 function mapStateToProps(state :any) {
   return {
-    users: state.globalObject.users,
-    posts: state.globalObject.posts,
     profile: state.feed.profile
   }
 }
 
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getProfileFeed}, dispatch)
-}
+const mapDispatchToProps = { getProfileFeed }
 
 class ProfileFeed extends React.Component<any, any> {
 
@@ -39,7 +31,7 @@ class ProfileFeed extends React.Component<any, any> {
   }
 
   render() {
-    let { profile={}, history } = this.props;
+    let { profile } = this.props;
     if (profile.isFetching === true) { return <div> is fetching </div>}
     if (isEmpty(profile.timeline)) {return <div>is empty</div>}
     return (

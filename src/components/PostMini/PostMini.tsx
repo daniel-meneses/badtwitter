@@ -6,7 +6,12 @@ import { useHistory } from 'react-router-dom'
 
 type Props = {
   postId: number,
-  posts: any,
+  posts: { [index: string] :
+              { id: number,
+                user_id: number,
+                post: any,
+                created: string }
+              },
   users: any,
 }
 
