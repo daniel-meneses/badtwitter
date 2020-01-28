@@ -1,22 +1,11 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { postSubscriptionRequest } from '../../actions/subscription.js'
-import { bindActionCreators } from 'redux';
 
 type Props = {
   userId: number,
   pendingRequests: Array<number>,
   postSubscriptionRequest: (e: any) => void
-}
-
-function mapStateToProps(state :any) {
-  return {
-    pendingRequests: state.subscription.pendingSubRequestUserIds
-   };
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({postSubscriptionRequest}, dispatch)
 }
 
 const SubscribeButton = ({userId, pendingRequests, postSubscriptionRequest}: Props) => {
@@ -35,4 +24,9 @@ const SubscribeButton = ({userId, pendingRequests, postSubscriptionRequest}: Pro
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubscribeButton);
+export default connect(
+    (state :any) =>
+        ({pendingRequests: state.subscription.pendingSubRequestUserIds})
+        ,
+        { postSubscriptionRequest })
+    (SubscribeButton);
