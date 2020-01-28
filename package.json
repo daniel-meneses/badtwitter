@@ -3,25 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/lodash": "^4.14.149",
-    "@types/react": "^16.9.17",
-    "@types/react-redux": "^7.1.5",
-    "@types/react-router": "^5.1.3",
-    "@types/react-router-dom": "^4.3.5",
+    "connected-react-router": "^6.6.1",
     "lodash": "^4.17.15",
     "lodash.throttle": "^4.1.1",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
-    "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "sass": "^1.23.7",
-    "typescript": "^3.7.2"
+    "sass": "^1.23.7"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,7 +39,15 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-redux": "^7.1.5",
+    "@types/react-router-dom": "^5.1.3",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "react-native-typescript-transformer": "^1.2.13",
-    "ts-loader": "^6.2.1"
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5"
   }
 }

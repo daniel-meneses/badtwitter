@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getProfileFeed } from '../../actions/feed'
@@ -11,7 +10,7 @@ interface ProfileFeed {
       users: any,
       posts: any
   },
-  feed?: {
+  feed: {
     profile: {
         timeline: [],
         isFetching: boolean,
@@ -24,7 +23,7 @@ function mapStateToProps(state :any) {
   return {
     users: state.globalObject.users,
     posts: state.globalObject.posts,
-    profile: state.feed.profile,
+    profile: state.feed.profile
   }
 }
 
@@ -35,7 +34,8 @@ function mapDispatchToProps(dispatch: any) {
 class ProfileFeed extends React.Component<any, any> {
 
   componentDidMount() {
-    this.props.getProfileFeed(this.props.match.params.id)
+    let { getProfileFeed, userId} = this.props
+    getProfileFeed(userId)
   }
 
   render() {
@@ -48,7 +48,6 @@ class ProfileFeed extends React.Component<any, any> {
             { profile.timeline.map( (postId: number) =>
               <PostMini key={postId}
                         postId={postId}
-                        history={history}
                         />
                       )}
                       </div>
@@ -57,4 +56,4 @@ class ProfileFeed extends React.Component<any, any> {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileFeed) as any);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileFeed);

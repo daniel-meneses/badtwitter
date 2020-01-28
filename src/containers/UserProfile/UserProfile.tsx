@@ -1,6 +1,5 @@
 import React from 'react';
 import './UserProfile.scss';
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { postSubscriptionRequest } from '../../actions/subscription.js'
 import { bindActionCreators } from 'redux'
@@ -14,8 +13,8 @@ class UserProfile extends React.Component<any, any> {
     }
 
     public render() {
-      let { users, pendingSubRequests, match} = this.props;
-      let user = users[match.params.id]
+      let { users, pendingSubRequests} = this.props;
+      let user = users[this.props.match.params.id]
       let isRequestPending = pendingSubRequests.includes(user.id)
 
         return (
@@ -31,7 +30,7 @@ class UserProfile extends React.Component<any, any> {
                         >
                         {isRequestPending ? "Pending" : "Request Follow"}
                         </button>
-              <ProfileFeed />
+              <ProfileFeed userId={user.id}/>
               <SubscribeButton userId={user.id} />
             </div>
         );
@@ -49,5 +48,5 @@ function mapDispatchToProps(dispatch: any) {
   return bindActionCreators({postSubscriptionRequest}, dispatch)
 }
 
-export default withRouter(connect(mapStateToProps
-  , mapDispatchToProps)(UserProfile) as any);
+export default connect(mapStateToProps
+  , mapDispatchToProps)(UserProfile);

@@ -1,9 +1,8 @@
 import React from 'react';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import LoginForm from '../../components/LoginForm/LoginForm';
-
+import { useHistory } from 'react-router-dom';
 import { signUp , login } from '../../actions/session.js';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 class SignUp extends React.Component<any, any> {
@@ -15,11 +14,13 @@ class SignUp extends React.Component<any, any> {
 
     signupRequest = (e: any) =>  {
       console.log(e)
-      this.props.signUp(e, this.props.history);
+      let history = useHistory();
+      this.props.signUp(e, history);
     }
 
     loginRequest = (e: any) =>  {
-      this.props.login(e, this.props.history);
+      let history = useHistory();
+      this.props.login(e, history);
     }
 
     public render() {
@@ -37,4 +38,4 @@ class SignUp extends React.Component<any, any> {
     }
 }
 
-export default withRouter(connect(null, { signUp , login })(SignUp) as any);
+export default connect(null, { signUp , login })(SignUp);

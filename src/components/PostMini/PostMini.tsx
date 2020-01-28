@@ -1,14 +1,13 @@
-import React from "react";
-import "./PostMini.scss";
-import LikeButton from '../LikeButton/LikeButton';
-import { goToUserProfile } from '../../commons/actions';
-import { connect } from 'react-redux';
+import React from "react"
+import "./PostMini.scss"
+import LikeButton from '../LikeButton/LikeButton'
+import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 type Props = {
   postId: number,
-  history: any,
   posts: any,
-  users: any
+  users: any,
 }
 
 function mapStateToProps(state :any) {
@@ -18,19 +17,20 @@ function mapStateToProps(state :any) {
    };
 }
 
-const PostMiniComponent = ({postId, history, posts, users}: Props) => {
+const PostMiniComponent = ({postId, posts, users}: Props) => {
 
   let post = posts[postId];
   let user = users[post.user_id];
+  let history = useHistory()
 
   return (
       <div className='post_mini_component' data-key={post.id}>
         <h3 data-key={post.user_id}
-            onClick={() => goToUserProfile(history, user.id)}>
+            onClick={() => history.push("/user/" + user.id)}>
               {user.first_name + " " + user.last_name}
             </h3>
             <i className="arrow down"
-               onClick={() => goToUserProfile(history, user.id)}
+               onClick={() => history.push("/user/" + user.id)}
                ></i>
         <p> {post.post} </p>
         <div className='post_mini_footer'>

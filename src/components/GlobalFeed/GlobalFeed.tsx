@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getGlobalFeed } from '../../actions/feed'
@@ -47,7 +46,6 @@ class GlobalFeed extends React.Component<any, any> {
       { global.timeline.map( (postId: number) =>
          <PostMini key={postId}
                    postId={postId}
-                   history={history}
                    />
                  )}
          </div>
@@ -55,4 +53,4 @@ class GlobalFeed extends React.Component<any, any> {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GlobalFeed) as any);
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalFeed);

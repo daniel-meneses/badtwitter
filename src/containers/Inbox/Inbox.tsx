@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import isEmpty from 'lodash/isEmpty'
@@ -47,6 +46,6 @@ class Inbox extends React.Component<any, any> {
     }
 }
 
-export default withRouter(connect(
+export default connect(
     mapStateToProps
-  , mapDispatchToProps)(Inbox) as any);
+  , mapDispatchToProps)(Inbox);
