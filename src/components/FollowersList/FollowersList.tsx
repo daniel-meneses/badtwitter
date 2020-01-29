@@ -1,7 +1,6 @@
 import React from 'react';
 import { getFollowers } from '../../actions/followers.js'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import isEmpty from 'lodash/isEmpty'
 import FollowersListItem from '../../components/FollowersListItem/FollowersListItem'
 
@@ -18,10 +17,6 @@ function mapStateToProps(state :any) {
   return {
     followers: state.followers.accepted
   }
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getFollowers}, dispatch)
 }
 
 class FollowersList extends React.Component<any, any> {
@@ -47,4 +42,4 @@ class FollowersList extends React.Component<any, any> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FollowersList);
+export default connect(mapStateToProps, {getFollowers})(FollowersList);

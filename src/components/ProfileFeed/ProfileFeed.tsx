@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { getProfileFeed } from '../../actions/feed'
 import isEmpty from 'lodash/isEmpty'
 import PostMini from "../PostMini/PostMini"
@@ -20,8 +19,6 @@ function mapStateToProps(state :any) {
     profile: state.feed.profile
   }
 }
-
-const mapDispatchToProps = { getProfileFeed }
 
 class ProfileFeed extends React.Component<any, any> {
 
@@ -48,4 +45,4 @@ class ProfileFeed extends React.Component<any, any> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileFeed);
+export default connect(mapStateToProps, { getProfileFeed })(ProfileFeed);

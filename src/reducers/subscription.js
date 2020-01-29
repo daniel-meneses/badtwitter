@@ -3,9 +3,7 @@ import * as act from '../constants/subscription.js';
 const initialState = {
   pendingSubRequestUserIds: [],
   pendingFollowReqUserIds: [],
-  follower_users: [],
   follower_ids: [],
-  follower_users: {},
   follower_request_users: {}
 };
 
@@ -50,8 +48,6 @@ export default function (state = initialState, action) {
     case act.GET_ACCEPTED_FOLLOW_REQUESTS_SUCCESS:
       return {
         ...state,
-        follower_users: action.response.list,
-        follower_users: action.response.data_map,
       };
     default:
       return state;

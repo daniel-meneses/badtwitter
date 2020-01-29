@@ -1,4 +1,6 @@
 import * as feed from '../constants/feed.js';
+import * as sharedAction from '../constants/sharedAction.js';
+
 
 const initialState = {
   global: { timeline: [],
@@ -56,6 +58,16 @@ export default function (state = initialState, action) {
         profile: { isFetching: false,
                    errors: "Failed to get profile feed"
                   },
+      }
+    case sharedAction.APPEND_NEW_POST_TO_GLOBAL_FEED:
+      return {
+        ...state,
+      profile: {
+          timeline : [Object.keys(action.response).map(Number)[0], ...state.profile.timeline ]
+        },
+        global: {
+          timeline : [Object.keys(action.response).map(Number)[0], ...state.global.timeline ]
+        },
       }
     default:
       return state;

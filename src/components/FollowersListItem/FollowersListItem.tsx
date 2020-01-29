@@ -2,7 +2,6 @@ import React from 'react';
 import './FollowersListItem.scss';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { goToUserProfile } from '../../commons/actions';
 
 type Props = {
   follower: {

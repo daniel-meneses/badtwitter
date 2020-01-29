@@ -1,23 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { acceptFollowerRequest, rejectFollowerRequest } from '../../actions/followers.js'
+import { useHistory } from 'react-router-dom'
 
 type Props = {
-  request: {id: string,
-            user: { id: string,
-                    first_name: string,
-                    last_name: string}},
-  handleUpdateRequest: (e: any) => void,
-  handleUserClick: (e: any) => void
+  request: {id: number, user_id: number},
+  acceptFollowerRequest: (e: any) => void,
+  rejectFollowerRequest: (e: any) => void
+  users: { [index: string] :
+              { id: number,
+                first_name: number,
+                last_name: any,
+              }
+            },
 };
 
-const FollowRequest = ({request, handleUpdateRequest, handleUserClick} : Props) => {
-  const user = request.user;
+function mapStateToProps(state :any) {
+  return {
+    users: state.globalObject.users
+  }
+}
+
+const FollowRequest = ({request, users, acceptFollowerRequest, rejectFollowerRequest} : Props) => {
+
+  let user = users[request.user_id];
+  let history = useHistory();
+
   return (
-      <div className='follow_request' data-key={request.id}>
-        <span data-key={user.id} onClick={handleUserClick}> {user.first_name} {user.last_name}</span>
-        <button value={'accept'} onClick={handleUpdateRequest}> Accept </button>
-        <button value={'decline'} onClick={handleUpdateRequest}> Decline </button>
+      <div className='follow_request'>
+        <span data-key={user.id} onClick={() => history.push("/user/" + user.id)}> {user.first_name} {user.last_name}</span>
+        <button onClick={() => acceptFollowerRequest({accepted : true, id: request.id})}> Accept </button>
+        <button onClick={() => rejectFollowerRequest({accepted : false, id: request.id})}> Decline </button>
       </div>
   );
 }
 
-export default FollowRequest;
+export default connect(mapStateToProps, {acceptFollowerRequest, rejectFollowerRequest})(FollowRequest);

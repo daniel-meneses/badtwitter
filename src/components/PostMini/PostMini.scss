@@ -1,11 +1,9 @@
 .post_mini_component {
-  border: solid red 1px;
-  width: 600px;
+  border: grey solid 1px;
+  width: 100%;
   padding: 10px;
   text-align: left;
-  flex-basis: content;
   overflow: auto;
-  z-index: -1;
   cursor: pointer;
   &:hover {
     background-color: rgb(240, 245, 245);
@@ -14,54 +12,34 @@
   h3 {
     display:inline-block;
     margin: 0;
+    padding-bottom: 4px;
     cursor: pointer;
     &:hover {
       text-decoration: underline;
     }
-    border: solid purple 1px;
   }
   p {
-    margin: 0;
-    padding: 4px;
+    margin: 2px 0px 2px 0px;
+    padding: 10px 6px 10px 6px;
     overflow: auto;
-    border: solid red 1px;
+    border: grey solid 1px;
   }
   .post_mini_footer {
-     border: solid red 1px;
+    display: flex;
+    flex-direction: row;
+    padding: 6px 6px 6px 2px;
+    width: 100%;
+    div {
+      flex: 1;
+    }
     span {
-      display: block;
-      float: left;
+      flex: 1;
+      text-align: right;
       min-width: 20%;
     }
     .like_button {
+      display: inline;
       z-index: 100;
     }
   }
-}
-
-i {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-}
-
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
-
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-
-.up {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-}
-
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
 }

@@ -2,7 +2,7 @@ import api from '../api/api.js';
 import * as sub from '../constants/subscription.js';
 
 export function getPendingSubscriptionRequests(data) {
-  return dispatch => api.fetch('/user_device/subscription/?accepted=false', data)
+  return dispatch => api.fetch('/user_device/subscription?accepted=false', data)
     .then((response) => {
       dispatch({ type: sub.GET_PENDING_SUBSCRIPTION_REQUESTS_SUCCESS, response });
     })

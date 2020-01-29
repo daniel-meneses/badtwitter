@@ -2,9 +2,25 @@ import React from 'react';
 import './UserProfile.scss';
 import { connect } from 'react-redux';
 import { postSubscriptionRequest } from '../../actions/subscription.js'
-import { bindActionCreators } from 'redux'
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed';
 import SubscribeButton from '../../components/SubscribeButton/SubscribeButton';
+
+type Props = {
+  pendingSubRequests: Array<number>,
+  users: { [index: string] :
+              { id: number,
+                first_name: number,
+                last_name: any,
+              }
+            }
+};
+
+function mapStateToProps(state :any) {
+  return {
+    users: state.globalObject.users,
+    pendingSubRequests: state.subscription.pendingSubRequestUserIds
+  }
+}
 
 class UserProfile extends React.Component<any, any> {
 
@@ -37,16 +53,4 @@ class UserProfile extends React.Component<any, any> {
     }
 }
 
-function mapStateToProps(state :any) {
-  return {
-    users: state.globalObject.users,
-    pendingSubRequests: state.subscription.pendingSubRequestUserIds
-  }
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({postSubscriptionRequest}, dispatch)
-}
-
-export default connect(mapStateToProps
-  , mapDispatchToProps)(UserProfile);
+export default connect(mapStateToProps, {postSubscriptionRequest})(UserProfile);

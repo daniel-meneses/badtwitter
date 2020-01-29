@@ -1,6 +1,6 @@
 import React from 'react'
+import './GlobalFeed.scss'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { getGlobalFeed } from '../../actions/feed'
 import isEmpty from 'lodash/isEmpty'
 import PostMini from '../PostMini/PostMini'
@@ -19,10 +19,6 @@ function mapStateToProps(state :any) {
   return {
     global: state.feed.global
   }
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return bindActionCreators({getGlobalFeed}, dispatch)
 }
 
 class GlobalFeed extends React.Component<any, any> {
@@ -47,4 +43,4 @@ class GlobalFeed extends React.Component<any, any> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GlobalFeed);
+export default connect(mapStateToProps, {getGlobalFeed})(GlobalFeed);

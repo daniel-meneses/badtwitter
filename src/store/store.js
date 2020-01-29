@@ -23,7 +23,6 @@ store.subscribe(throttle(() => {
     subscription: { pendingSubRequestUserIds: state.subscription.pendingSubRequestUserIds,
                     pendingFollowReqUserIds: state.subscription.pendingFollowReqUserIds,
                     subscriptions: state.subscription.subscriptions,
-                    follower_users: state.subscription.follower_users,
                     follower_request_users: state.subscription.follower_request_users,
                     followers: state.followers,
                     },

@@ -1,7 +1,6 @@
 import React from 'react';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import { useHistory } from 'react-router-dom';
 import { signUp , login } from '../../actions/session.js';
 import { connect } from 'react-redux';
 

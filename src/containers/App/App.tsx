@@ -9,6 +9,12 @@ import Inbox from '../Inbox/Inbox';
 import { connect } from 'react-redux';
 import { authenticate , unauthenticate} from '../../actions/session';
 
+const mapStateToProps = function(state: any) {
+  return {
+    isAuthenticated: state.session.isAuthenticated
+  }
+}
+
 class App extends React.Component<any, any> {
 
   componentDidMount() {
@@ -43,12 +49,6 @@ class App extends React.Component<any, any> {
             </div>
           </Router>
       );
-  }
-}
-
-const mapStateToProps = function(state: any) {
-  return {
-    isAuthenticated: state.session.isAuthenticated
   }
 }
 
