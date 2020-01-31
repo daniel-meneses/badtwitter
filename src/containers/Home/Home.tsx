@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import GlobalFeed from '../../components/GlobalFeed/GlobalFeed';
 import Inbox from '../Inbox/Inbox';
+import SideBar from '../../components/SideBar/SideBar';
 import FollowersList from '../../components/FollowersList/FollowersList';
 
 class Home extends React.Component<any, any> {
@@ -21,17 +22,12 @@ class Home extends React.Component<any, any> {
     let {logout, postMessage} = this.props
 
     return (
-      <div className={'home_container'}>
-        <div className='home_left_sidebar'>
-          Sidebar Container
-          <button onClick={() => logout()}>LogOut</button>
-          <Inbox />
-        </div>
-        <div className='home_center_feed'>
+      <div className={'main_container'}>
+        <div className={'center_container'}>
           <PostForm handleFormSubmit={(e :any) => postMessage({message: e})} />
             <GlobalFeed/>
             </div>
-          <div className='home_right_sidebar'>
+          <div className={'right_container'}>
             Explore Container
             <FollowersList />
             </div>

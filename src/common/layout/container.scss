@@ -1,0 +1,89 @@
+@import '../theme/mixins.scss';
+
+header {
+  display: flex;
+  flex-direction: row;
+  max-height: 96vh;
+  @include respond-to('small') {
+  }
+  @include respond-to('medium') {
+    width: 680px;
+    margin: 0 auto;
+  }
+  @include respond-to('large') {
+    width: 1060px;
+    margin: 0 auto;
+  }
+  @include respond-to('xlarge') {
+    width: 1260px;
+  }
+}
+
+.main_container {
+  display: flex;
+  flex-direction: row;
+  max-height: 96vh;
+  @include respond-to('small') {
+  }
+  @include respond-to('medium') {
+    width: 680px;
+    margin: 0 auto;
+  }
+  @include respond-to('large') {
+    width: 1060px;
+    margin: 0 auto;
+  }
+  @include respond-to('xlarge') {
+    width: 1260px;
+  }
+}
+
+.left_container {
+  display: none;
+  @include respond-to('small') {
+    display: flex;
+    flex: 0 0 75px;
+    border: 2px red solid;
+  }
+  @include respond-to('medium') {
+    flex: 0 0 182px;
+  }
+  @include respond-to('large') {
+  }
+  @include respond-to('xlarge') {
+    flex: 0 0 275px;
+  }
+}
+
+.center_container {
+  flex: 0 0 714px;
+  overflow-y: scroll;
+  @include respond-to('small') {
+  }
+  @include respond-to('medium') {
+    flex: 0 0 600px;
+  }
+  @include respond-to('large') {
+    flex: 0 0 600px;
+  }
+  @include respond-to('xlarge') {
+    flex: 0 0 600px;
+  }
+}
+
+.right_container {
+  display: none;
+  @include respond-to('small') {
+    display: none;
+  }
+  @include respond-to('medium') {
+    display: none;
+  }
+  @include respond-to('large') {
+    border: 2px blue solid;
+    display: flex;
+  }
+  @include respond-to('xlarge') {
+    border: 2px blue solid;
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Home from '../Home/Home';
 import NavBar from '../../components/NavBar/NavBar';
@@ -39,13 +39,19 @@ class App extends React.Component<any, any> {
       return (
           <Router>
             <div className="App">
-              <NavBar title={"home"} handleLogoClick={this.handleNavLogoClick} handleSettingsClick={this.handleSettingsClick}/>
+              <header>
+                <NavBar title={"home"} />
+              </header>
+              <main>
+                <div className={"hey"}>
               <Route path='/signup' exact component={SignUp}/>
               <Route path='/user/:id' exact component={UserProfile}/>
               <Route path='/inbox' component={Inbox}/>
               <Route exact path="/" render={() => (
                 token ? ( <Home/> ) : ( <Redirect to="/signup"/> )
               )}/>
+                </div>
+              </main>
             </div>
           </Router>
       );

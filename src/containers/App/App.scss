@@ -1,0 +1,34 @@
+@import '../../common/theme/mixins.scss';
+
+.App {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+header {
+  display: none;
+  @include respond-to('small') {
+    display: flex;
+    flex: 1 0 auto;
+  }
+}
+
+main {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100vh;
+  overflow-y: scroll;
+}
