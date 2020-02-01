@@ -24,7 +24,9 @@ class Home extends React.Component<any, any> {
     return (
       <div className={'main_container'}>
         <div className={'center_container'}>
+          <div className={'new_post_form'}>
           <PostForm handleFormSubmit={(e :any) => postMessage({message: e})} />
+            </div>
             <GlobalFeed/>
             </div>
           <div className={'right_container'}>

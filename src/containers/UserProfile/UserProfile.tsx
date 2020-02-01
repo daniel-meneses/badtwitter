@@ -35,14 +35,17 @@ class UserProfile extends React.Component<any, any> {
 
         return (
             <div>
-                This is top of user profile page
-                <div>
-                <div>{user.first_name}</div>
-                <div>{user.last_name}</div>
-                <SubscribeButton userId={user.id} />
-                </div>
                 <div className={'main_container'}>
-                  <div className={'center_container'}>
+                <div className={'center_container'}>
+                <div className={'profile'}>
+                  <div>
+                  <h2>First name: {user.first_name}</h2>
+                  <h2>Last name: {user.last_name}</h2>
+                      <SubscribeButton userId={user.id} />
+                  </div>
+                </div>
+
+
                     <ProfileFeed userId={user.id}/>
                   </div>
               </div>
