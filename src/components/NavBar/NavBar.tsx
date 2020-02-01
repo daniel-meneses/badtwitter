@@ -1,4 +1,5 @@
 import React from 'react'
+import './NavBar.scss'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 

@@ -39,15 +39,13 @@ class UserProfile extends React.Component<any, any> {
                 <div>
                 <div>{user.first_name}</div>
                 <div>{user.last_name}</div>
+                <SubscribeButton userId={user.id} />
                 </div>
-                <button className={'subscribe_request_button'}
-                        disabled={isRequestPending}
-                        onClick={this.submitFollowRequest}
-                        >
-                        {isRequestPending ? "Pending" : "Request Follow"}
-                        </button>
-              <ProfileFeed userId={user.id}/>
-              <SubscribeButton userId={user.id} />
+                <div className={'main_container'}>
+                  <div className={'center_container'}>
+                    <ProfileFeed userId={user.id}/>
+                  </div>
+              </div>
             </div>
         );
     }

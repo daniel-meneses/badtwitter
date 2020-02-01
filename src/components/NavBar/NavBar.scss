@@ -1,0 +1,27 @@
+@import '../../common/theme/mixins.scss';
+
+.navbar {
+  display: flex;
+  width: 275px;
+  flex-direction: column;
+  margin-left: auto;
+  align-items: flex-start;
+  border: solid purple 2px;
+  @include respond-to('small') {
+    width: 87px;
+  }
+  @include respond-to('large') {
+    width: 275px;
+  }
+}
+
+.navbar_item {
+  display: flex;
+  flex: 0;
+  align-self: stretch;
+  border: solid purple 2px;
+  line-height: 1.3125;
+  font-size: 19px;
+  margin: 0 20px 0 15px;
+  cursor: pointer;
+}
