@@ -7,7 +7,6 @@ import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import GlobalFeed from '../../components/GlobalFeed/GlobalFeed';
-import Inbox from '../Inbox/Inbox';
 import SideBar from '../../components/SideBar/SideBar';
 import FollowersList from '../../components/FollowersList/FollowersList';
 
@@ -24,14 +23,15 @@ class Home extends React.Component<any, any> {
     return (
       <div className={'main_container'}>
         <div className={'center_container'}>
+          <h2> Home </h2>
           <div className={'new_post_form'}>
           <PostForm handleFormSubmit={(e :any) => postMessage({message: e})} />
             </div>
             <GlobalFeed/>
             </div>
           <div className={'right_container'}>
-            Explore Container
-            <FollowersList />
+            <h2> Trending </h2>
+            <div> This is explore content </div>
             </div>
             <div>
           </div>

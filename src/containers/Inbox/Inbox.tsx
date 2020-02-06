@@ -1,8 +1,8 @@
 import React from 'react';
+import './Inbox.scss'
 import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty'
-import { getPendingFollowRequests } from '../../actions/followers.js'
-import FollowRequest from '../../components/FollowRequest/FollowRequest';
+import FollowRequestList from '../../components/FollowRequestList/FollowRequestList';
+
 
 type Props = {
   pendingFollowerRequest: {}
@@ -16,22 +16,16 @@ function mapStateToProps(state :any) {
 
 class Inbox extends React.Component<any, any> {
 
-    componentDidMount() {
-      this.props.getPendingFollowRequests()
-    }
-
     public render() {
-      let {pendingFollowerRequest} = this.props
-      if (isEmpty(pendingFollowerRequest)) { return <div>No Follow Requests</div> }
       return (
-        <div>
-        <span>Follow Requests</span>
-          {
-            Object.values(pendingFollowerRequest).map((request :any) =>
-            <FollowRequest key={request.id}
-                            request={request}
-                            />)
-          }
+        <div className={'main_container'}>
+          <div className={'center_container'}>
+          <h2> Inbox </h2>
+            <FollowRequestList/>
+          </div>
+          <div className={'right_container'}>
+          hey
+          </div>
         </div>
       );
     }
@@ -39,4 +33,4 @@ class Inbox extends React.Component<any, any> {
 
 export default connect(
     mapStateToProps
-  , {getPendingFollowRequests})(Inbox);
+  , {})(Inbox);

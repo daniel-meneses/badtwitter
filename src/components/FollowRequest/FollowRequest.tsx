@@ -1,4 +1,5 @@
 import React from 'react';
+import './FollowRequest.scss'
 import { connect } from 'react-redux'
 import { acceptFollowerRequest, rejectFollowerRequest } from '../../actions/followers.js'
 import { useHistory } from 'react-router-dom'
@@ -29,8 +30,10 @@ const FollowRequest = ({request, users, acceptFollowerRequest, rejectFollowerReq
   return (
       <div className='follow_request'>
         <span data-key={user.id} onClick={() => history.push("/user/" + user.id)}> {user.first_name} {user.last_name}</span>
-        <button onClick={() => acceptFollowerRequest({accepted : true, id: request.id})}> Accept </button>
-        <button onClick={() => rejectFollowerRequest({accepted : false, id: request.id})}> Decline </button>
+        <div className='follow_request_buttons'>
+          <button className='request_accept' onClick={() => acceptFollowerRequest({accepted : true, id: request.id})}> Accept </button>
+          <button className='request_reject' onClick={() => rejectFollowerRequest({accepted : false, id: request.id})}> Decline </button>
+        </div>
       </div>
   );
 }

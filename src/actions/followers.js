@@ -21,6 +21,7 @@ export function getPendingFollowRequests() {
     dispatch({ type: follow.GET_PENDING_FOLLOW_REQUESTS })
     api.fetch('/user_device/follower', {accepted: "false"})
     .then((response) => {
+      dispatch({ type: globals.GET_USERS_SUCCESS, response });
       dispatch({ type: follow.GET_PENDING_FOLLOW_REQUESTS_SUCCESS, response });
     })
     .catch((e) => {

@@ -1,0 +1,30 @@
+.follow_request {
+  border: purple 2px solid;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(240, 245, 245);
+    transition: background-color 0.2s linear;
+  }
+  span {
+    border: gold 2px solid;
+    flex: 2;
+    font-size: 18px;
+    margin: auto;
+  }
+  button {
+    font-size: 16px;
+    height: 36px;
+    width: 100px;
+    margin: 4px;
+    cursor: pointer;
+  }
+}
+
+.follow_request_buttons {
+  border: gold 2px solid;
+  display: flex;
+  flex: 1;
+}
