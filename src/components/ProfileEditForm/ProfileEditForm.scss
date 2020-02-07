@@ -1,0 +1,13 @@
+.profile_edit_form {
+  border: solid purple 2px;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 50vh;
+  min-height: 400px;
+  input[type='text']{
+    width: 80%;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
