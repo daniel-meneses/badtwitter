@@ -3,7 +3,7 @@ import './Inbox.scss'
 import { connect } from 'react-redux'
 import FollowRequestList from '../../components/FollowRequestList/FollowRequestList'
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
-
+import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 
 
 type Props = {
@@ -24,6 +24,7 @@ class Inbox extends React.Component<any, any> {
           <div className={'center_container'}>
           <h2> Inbox </h2>
             <FollowRequestList/>
+            <ProfileEditImage />
             <ProfileEditForm />
           </div>
           <div className={'right_container'}>

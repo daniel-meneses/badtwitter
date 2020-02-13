@@ -6,6 +6,7 @@ import post from './post.js';
 import followers from './followers.js';
 import globalObject from './globalObject.js';
 import likes from './likes.js';
+import profileEdit from './profileEdit.js';
 
 const mainReducer = combineReducers({
   session,
@@ -14,7 +15,8 @@ const mainReducer = combineReducers({
   post,
   likes,
   globalObject,
-  followers
+  followers,
+  profileEdit
 });
 
 export default function (state, action) {

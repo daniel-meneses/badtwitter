@@ -57,6 +57,15 @@ export default {
     .then(parseResponse)
   },
 
+  postImage(url, data) {
+    return fetch(`${url}`, {
+      method: 'PUT',
+      headers: {},
+      body: data,
+    })
+    .then(parseResponse)
+  },
+
   patch(url, data) {
     const body = JSON.stringify(data);
 
