@@ -3,30 +3,27 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { signUp , login } from '../../actions/session.js';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 
-class SignUp extends React.Component<any, any> {
+type Props = {
+  signUp: (e: any, h: any) => void,
+  login: (e: any, h: any) => void
+}
 
-    signupRequest = (e: any) =>  {
-      this.props.signUp(e, this.props.history);
-    }
+const SignUp = ({signUp, login} : Props) => {
+  let history = useHistory()
 
-    loginRequest = (e: any) =>  {
-      this.props.login(e, this.props.history);
-    }
-
-    public render() {
-        return (
-            <div>
-                <SignUpForm
-                  handleLogIn={this.signupRequest}
-                  loginFailMessage={"hey"}
-                  />
-                  <LoginForm
-                    handleLogIn={this.loginRequest}
-                  />
-            </div>
-        );
-    }
+  return (
+    <div>
+        <SignUpForm
+          handleLogIn={(e: any) => signUp(e, history)}
+          loginFailMessage={"hey"}
+          />
+          <LoginForm
+            handleLogIn={(e: any) => signUp(e, history)}
+          />
+    </div>
+  );
 }
 
 export default connect(null, { signUp , login })(SignUp);

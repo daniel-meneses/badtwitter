@@ -5,17 +5,6 @@ import FollowRequestList from '../../components/FollowRequestList/FollowRequestL
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 
-
-type Props = {
-  pendingFollowerRequest: {}
-};
-
-function mapStateToProps(state :any) {
-  return {
-    pendingFollowerRequest: state.followers.pending.followRequests
-  }
-}
-
 class Inbox extends React.Component<any, any> {
 
     public render() {
@@ -28,7 +17,6 @@ class Inbox extends React.Component<any, any> {
             <ProfileEditForm />
           </div>
           <div className={'right_container'}>
-          hey
           </div>
         </div>
       );
@@ -36,5 +24,5 @@ class Inbox extends React.Component<any, any> {
 }
 
 export default connect(
-    mapStateToProps
+    null
   , {})(Inbox);

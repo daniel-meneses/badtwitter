@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import session from './session.js';
-import subscription from './subscription.js';
+import subscriptions from './subscriptions.js';
 import feed from './feed.js';
 import post from './post.js';
 import followers from './followers.js';
@@ -10,7 +10,7 @@ import profileEdit from './profileEdit.js';
 
 const mainReducer = combineReducers({
   session,
-  subscription,
+  subscriptions,
   feed,
   post,
   likes,

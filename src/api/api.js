@@ -30,6 +30,10 @@ function parseResponse(response) {
   });
 }
 
+function parseResponseStatus(response) {
+  return response.ok
+}
+
 function queryString(params) {
   const query = Object.keys(params)
                       .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
@@ -63,7 +67,7 @@ export default {
       headers: {},
       body: data,
     })
-    .then(parseResponse)
+    .then(parseResponseStatus)
   },
 
   patch(url, data) {

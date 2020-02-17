@@ -1,5 +1,5 @@
 import api from '../api/api.js';
-import * as sharedAction from '../constants/sharedAction.js';
+import * as sharedAction from '../constants/acts.js';
 
 export function postMessage(data) {
   return dispatch => api.post('/user_device/post', data)

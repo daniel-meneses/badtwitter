@@ -1,4 +1,4 @@
-import * as like from '../constants/likes.js';
+import * as like from '../constants/acts.js';
 
 const initialState = {
   likedPostIds: [],

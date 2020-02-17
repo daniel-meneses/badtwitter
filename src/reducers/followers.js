@@ -1,15 +1,15 @@
-import * as follow from '../constants/followers.js';
+import * as follow from '../constants/acts.js';
 
 const initialState = {
     pending: {
       followRequests: {},
-      listUserIds: [],
+      userIds: [],
       isFetching: false,
       error: null
     },
     accepted: {
       followRequests: {},
-      listUserIds: [],
+      userIds: [],
       isFetching: false,
       error: null
     },
@@ -21,7 +21,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         accepted: {
-          isFetching: true
+          isFetching: true,
+          error: null
         }
       };
     case follow.GET_ACCEPTED_FOLLOWERS_SUCCESS:
@@ -29,7 +30,7 @@ export default function (state = initialState, action) {
         ...state,
         accepted: {
           followRequests: action.response.followers,
-          listUserIds: Object.keys(action.response.users).map(Number),
+          userIds: Object.keys(action.response.users).map(Number),
           isFetching: false,
           error: null
         }
@@ -46,7 +47,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         pending: {
-          isFetching: true
+          isFetching: true,
+          error: null
         }
       };
     case follow.GET_PENDING_FOLLOW_REQUESTS_SUCCESS:
@@ -54,7 +56,7 @@ export default function (state = initialState, action) {
         ...state,
         pending: {
           followRequests: action.response.followers,
-          listUserIds: Object.keys(action.response.users).map(Number),
+          userIds: Object.keys(action.response.users).map(Number),
           isFetching: false,
           error: null
         }

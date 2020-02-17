@@ -2,21 +2,23 @@ import React, {useCallback, useState} from 'react'
 import ReactCrop from 'react-image-crop'
 import { connect } from 'react-redux'
 import 'react-image-crop/lib/ReactCrop.scss'
-import { setNewProfileImage } from '../../actions/profile.js'
+import { postImageToPresignedURL } from '../../actions/profile.js'
 
 type Props = {
   src: string,
-  setNewProfileImage: (e: any, a: any) => void,
-  presignedURl: string
+  postImageToPresignedURL: (e: string, a: any) => void,
+  presignedURL: string,
+  avatar: string
 }
 
 function mapStateToProps(state :any) {
   return {
-    presignedURl: state.profileEdit.presigned_Url.url
+    presignedURL: state.profileEdit.presigned_Url.url,
+    avatar: state.profileEdit.avatar
    }
 }
 
-const ProfileEditImageCrop = ({ src,  setNewProfileImage, presignedURl} : Props) => {
+const ProfileEditImageCrop = ({ src,  postImageToPresignedURL, presignedURL, avatar} : Props) => {
   const [crop, setCrop] = useState({ aspect: 16 / 16, minWidth: 40, maxWidth: 40})
   const [image, setImage] = useState(null)
   const [croppedImage, setCroppedImage] = useState()
@@ -56,7 +58,7 @@ const ProfileEditImageCrop = ({ src,  setNewProfileImage, presignedURl} : Props)
   function submitNewProfileImage() {
     const formData = new FormData()
     formData.append('avatar', src)
-    setNewProfileImage(presignedURl, croppedImage)
+    postImageToPresignedURL(presignedURL, croppedImage)
   }
 
   return <div>
@@ -69,4 +71,4 @@ const ProfileEditImageCrop = ({ src,  setNewProfileImage, presignedURl} : Props)
          </div>
 }
 
-export default connect(mapStateToProps, {setNewProfileImage})(ProfileEditImageCrop);
+export default connect(mapStateToProps, {postImageToPresignedURL})(ProfileEditImageCrop);

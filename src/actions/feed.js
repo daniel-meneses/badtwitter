@@ -1,18 +1,12 @@
 import api from '../api/api.js';
-import * as feed from '../constants/feed.js';
-import * as globals from '../constants/globalObject.js';
-
-const URL_FEED_GLOBAL = "/feed/global";
-const URL_FEED_EXPLORE = "/feed/explore";
-const URL_FEED_SUBSCRIPTIONS = "/feed/subscriptions";
-const URL_FEED_USER = "/feed/user/";
+import * as feed from '../constants/acts.js';
 
 export function getGlobalFeed() {
   return dispatch => {
     dispatch({ type: feed.GET_GLOBAL_FEED })
-    api.fetch(URL_FEED_GLOBAL)
+    api.fetch('/feed/global')
     .then((response) => {
-      dispatch({ type: globals.GET_FEED_SUCCESS, response });
+      dispatch({ type: feed.GET_FEED_SUCCESS, response });
       dispatch({ type: feed.GET_GLOBAL_FEED_SUCCESS, response });
     })
     .catch((e) => {
@@ -24,7 +18,7 @@ export function getGlobalFeed() {
 export function getSubscriptionFeed() {
   return dispatch => {
     dispatch({ type: feed.GET_GLOBAL_FEED })
-    api.fetch(URL_FEED_GLOBAL)
+    api.fetch('/feed/global')
     .then((response) => {
       dispatch({ type: feed.GET_GLOBAL_FEED_SUCCESS, response });
     })
@@ -37,10 +31,10 @@ export function getSubscriptionFeed() {
 export function getProfileFeed(data) {
   return dispatch => {
     dispatch({ type: feed.GET_PROFILE_FEED })
-    api.fetch(URL_FEED_USER + data)
+    api.fetch('/feed/user/' + data)
     .then((response) => {
       dispatch({ type: feed.GET_PROFILE_FEED_SUCCESS, response });
-      dispatch({ type: globals.GET_FEED_SUCCESS, response });
+      dispatch({ type: feed.GET_FEED_SUCCESS, response });
     })
     .catch((e) => {
       dispatch({ type: feed.GET_PROFILE_FEED_FAIL, e });

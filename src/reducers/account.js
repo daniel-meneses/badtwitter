@@ -1,5 +1,9 @@
 const initialState = {
-  avatar: null,
+  avatar: {
+    url: "",
+    isFetching: false,
+    error: null
+  },
   presigned_Url: {
     url: "",
     isFetching: false,
@@ -37,23 +41,25 @@ export default function (state = initialState, action) {
       case "UPLOAD_NEW_AVATAR":
         return {
           ...state,
-         presigned_Url: {
+         avatar: {
            url: "",
-           key: "",
-           isFetching: true
+           isFetching: true,
+           error: null
           }
         };
       case "UPLOAD_NEW_AVATAR_SUCCESS":
         return {
           ...state,
-          avatar: action.imageURL
+          avatar: {
+            isFetching: false,
+            error: null
+          }
         };
       case "UPLOAD_NEW_AVATAR_FAILURE":
         return {
           ...state,
-          presigned_Url: {
+          avatar: {
             url: "",
-            key: "",
             isFetching: false,
             error: action.response.error
            }

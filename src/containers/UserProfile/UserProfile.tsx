@@ -6,9 +6,9 @@ import ProfileFeed from '../../components/ProfileFeed/ProfileFeed';
 import SubscribeButton from '../../components/SubscribeButton/SubscribeButton';
 
 type Props = {
-  pendingSubRequests: Array<number>,
+  pendingSubUserIds: Array<number>,
   users: { [index: string] :
-              { id: number,
+              { user_id: number,
                 first_name: number,
                 last_name: any,
               }
@@ -18,7 +18,7 @@ type Props = {
 function mapStateToProps(state :any) {
   return {
     users: state.globalObject.users,
-    pendingSubRequests: state.subscription.pendingSubRequestUserIds
+    pendingSubUserIds: state.subscriptions.pending.userIds
   }
 }
 
@@ -29,9 +29,9 @@ class UserProfile extends React.Component<any, any> {
     }
 
     public render() {
-      let { users, pendingSubRequests} = this.props;
+      let { users, pendingSubUserIds} = this.props;
       let user = users[this.props.match.params.id]
-      let isRequestPending = pendingSubRequests.includes(user.id)
+      let isRequestPending = pendingSubUserIds.includes(user.user_id)
 
         return (
             <div>
@@ -40,9 +40,9 @@ class UserProfile extends React.Component<any, any> {
                 <h2> Profile Container </h2>
                 <div className={'profile'}>
                   <h3> {user.first_name + " " + user.last_name}</h3>
-                      <SubscribeButton userId={user.id} />
+                      <SubscribeButton userId={user.user_id} />
                 </div>
-                    <ProfileFeed userId={user.id}/>
+                    <ProfileFeed userId={user.user_id}/>
                   </div>
               </div>
             </div>

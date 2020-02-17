@@ -34,7 +34,7 @@ const PostMiniComponent = ({postId, posts, users}: Props) => {
       <div  className='post_mini_component'
             data-key={post.id}>
         <h3 data-key={post.user_id}
-            onClick={() => history.push("/user/" + user.id)}>
+            onClick={() => history.push("/user/" + user.user_id)}>
               {user.first_name + " " + user.last_name}
             </h3>
         <p> {post.post} </p>

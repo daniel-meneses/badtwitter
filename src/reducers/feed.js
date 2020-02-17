@@ -1,6 +1,4 @@
-import * as feed from '../constants/feed.js';
-import * as sharedAction from '../constants/sharedAction.js';
-
+import * as feed from '../constants/acts.js';
 
 const initialState = {
   global: { timeline: [],
@@ -59,7 +57,7 @@ export default function (state = initialState, action) {
                    errors: "Failed to get profile feed"
                   },
       }
-    case sharedAction.APPEND_NEW_POST_TO_GLOBAL_FEED:
+    case feed.APPEND_NEW_POST_TO_GLOBAL_FEED:
       return {
         ...state,
       profile: {

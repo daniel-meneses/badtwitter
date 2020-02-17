@@ -6,10 +6,12 @@ import FollowersListItem from '../../components/FollowersListItem/FollowersListI
 
 interface FollowersList {
   followers : {
-    followRequests: {},
-    listUserIds: [],
-    isFetching: false,
-    error: null
+    accepted  : {
+      followRequests: {},
+      userIds: [],
+      isFetching: false,
+      error: null
+    }
   }
 }
 

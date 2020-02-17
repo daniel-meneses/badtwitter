@@ -1,4 +1,4 @@
-import * as session from '../constants/session.js';
+import * as session from '../constants/acts.js';
 
 const initialState = {
   isAuthenticated: false,

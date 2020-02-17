@@ -20,12 +20,24 @@ store.subscribe(throttle(() => {
   var state = store.getState();
   console.log(state)
   saveStateToLocal({
-    subscription: { pendingSubRequestUserIds: state.subscription.pendingSubRequestUserIds,
-                    pendingFollowReqUserIds: state.subscription.pendingFollowReqUserIds,
-                    subscriptions: state.subscription.subscriptions,
-                    follower_request_users: state.subscription.follower_request_users,
-                    followers: state.followers,
-                    },
+    subscriptions: { pending: {
+                      subscriptionRequests: state.subscriptions.pending.subscriptionRequests,
+                      userIds: state.subscriptions.pending.userIds
+                      },
+                    accepted: {
+                      subscriptionRequests: state.subscriptions.accepted.subscriptionRequests,
+                      userIds: state.subscriptions.accepted.userIds
+                      },
+                  },
+    followers: { pending: {
+                  followRequests: state.followers.pending.followRequests,
+                  userIds: state.followers.pending.userIds
+                },
+                accepted: {
+                  followRequests: state.followers.accepted.followRequests,
+                  userIds: state.followers.accepted.userIds
+                },
+              },
     likes: { likedPostIds: state.likes.likedPostIds },
     session: { currentUser: state.session.currentUser },
     globalObject: { users: state.globalObject.users,

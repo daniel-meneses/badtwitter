@@ -1,5 +1,5 @@
 import api from '../api/api.js';
-import * as likes from '../constants/likes.js';
+import * as likes from '../constants/acts.js';
 
 export function postLike(data) {
   return dispatch => api.post('/user_device/like', data)

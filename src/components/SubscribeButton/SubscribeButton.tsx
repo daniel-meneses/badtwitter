@@ -26,7 +26,7 @@ const SubscribeButton = ({userId, pendingRequests, postSubscriptionRequest}: Pro
 
 export default connect(
     (state :any) =>
-        ({pendingRequests: state.subscription.pendingSubRequestUserIds})
+        ({pendingRequests: state.subscriptions.pending.userIds})
         ,
         { postSubscriptionRequest })
     (SubscribeButton);
