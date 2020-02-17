@@ -3,8 +3,10 @@
 .navbar {
   display: flex;
   width: 275px;
+  height: 300px;
   flex-direction: column;
   margin-left: auto;
+  margin-top: 6px;
   align-items: flex-start;
   @include respond-to('small') {
     width: 87px;
@@ -16,22 +18,43 @@
 
 .navbar_item {
   display: flex;
-  flex: 0;
+  flex: 1 1;
   align-self: stretch;
-  border: solid purple 1px;
   line-height: 1.3125;
-  font-size: 18px;
-  margin: 5px 12px 5px 0px;
-  padding: 7px 20px;
+  font-size: 22px;
+  font-weight: 600;
+  margin-left: 20px;
   cursor: pointer;
-  span {
-    padding: 6px 16px;
+  .navbar_content {
+    height: 90%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  .navbar_logo {
+    height: 90%;
+    display: flex;
+    align-items: center;
+    &:hover {
+        background-color: rgb(240, 245, 245);
+        transition: background-color 0.2s linear;
+        border-radius: 25px;
+    }
+    .logo {
+      height: 36px;
+      width: 48px;
+    }
+  }
+  svg {
+    width: 26px;
+    height: 22px;
+    margin-right: 14px;
   }
   &:hover {
-    span {
-      padding: 6px 16px;
+    .navbar_content {
       background-color: rgb(240, 245, 245);
       transition: background-color 0.2s linear;
+      border-radius: 25px;
     }
   }
 }

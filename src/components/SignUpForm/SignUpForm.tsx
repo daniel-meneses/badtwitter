@@ -8,8 +8,8 @@ export default function SignUpForm(props: any) {
   const [emailWarning, setEmailWarning] = useState("");
   const [passwordWarning, setPasswordWarning] = useState("");
   const [confirmationWarning, setConfirmationWarning] = useState("");
-  const [isFocused, setIsFocused] = useState({"first_name": false, "last_name": false, "email": false, "password": false, "password_confirmation": false});
-  const [signupObject, setSignupObject] = useState({"first_name": "", "last_name": "", "email": "", "password": "", "password_confirmation": ""});
+  const [isFocused, setIsFocused] = useState({"alias": false, "first_name": false, "last_name": false, "email": false, "password": false, "password_confirmation": false});
+  const [signupObject, setSignupObject] = useState({"alias": "", "first_name": "", "last_name": "", "email": "", "password": "", "password_confirmation": ""});
 
   const handleSubmit = (e: any) => {
       e.preventDefault();
@@ -137,6 +137,17 @@ export default function SignUpForm(props: any) {
 
   return (
     <form onSubmit={handleSubmit} className='signup-form'>
+    <div className='signup-input'>
+      <span id={isFocused.alias ? "isFocused" : ""}>Alias</span>
+        <input
+          id='alias'
+          value={signupObject.alias}
+          type="text"
+          onBlur={e => validateInput(e)}
+          onChange={e => handleInputChange(e)}
+          onFocus={e => setFocus(e.target.id, true)}
+        />
+    </div>
       <div className='signup-input'>
         <span id={isFocused.first_name ? "isFocused" : ""}>First name</span>
           <input

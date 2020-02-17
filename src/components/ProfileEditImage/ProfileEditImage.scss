@@ -1,4 +1,15 @@
+.uploader {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center
+}
+
 .uploaded_image {
   max-width: 400px;
   max-height: 400px;
+}
+
+.upload_placeholder{
+  width: 200px;
+  height: 200px;
 }

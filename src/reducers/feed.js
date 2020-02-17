@@ -60,7 +60,7 @@ export default function (state = initialState, action) {
     case feed.APPEND_NEW_POST_TO_GLOBAL_FEED:
       return {
         ...state,
-      profile: {
+        profile: {
           timeline : [Object.keys(action.response).map(Number)[0], ...state.profile.timeline ]
         },
         global: {

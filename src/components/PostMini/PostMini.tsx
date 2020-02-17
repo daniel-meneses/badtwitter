@@ -24,7 +24,6 @@ function mapStateToProps(state :any) {
 }
 
 const PostMiniComponent = ({postId, posts, users}: Props) => {
-
   let post = posts[postId];
   let user = users[post.user_id];
   let history = useHistory()
@@ -33,6 +32,7 @@ const PostMiniComponent = ({postId, posts, users}: Props) => {
   return (
       <div  className='post_mini_component'
             data-key={post.id}>
+        <img src={user.avatar} />
         <h3 data-key={post.user_id}
             onClick={() => history.push("/user/" + user.user_id)}>
               {user.first_name + " " + user.last_name}

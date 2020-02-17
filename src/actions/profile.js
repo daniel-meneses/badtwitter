@@ -22,7 +22,9 @@ export function postImageToPresignedURL(url, data) {
     .then((response) => {
       dispatch({ type: "UPLOAD_NEW_AVATAR_SUCCESS", data });
       let imgData = {image : url.split("?")[0]}
-      return api.post('/accounts/avatar', imgData)
+      api.post('/accounts/avatar', imgData)
+          .then((response) => {console.log(response)})
+          .catch((error) => {console.log(error)})
     })
     .then((response) => {
       console.log(response)

@@ -14,7 +14,7 @@ const SideBar = ({}: Props) => {
   let history = useHistory()
 
   return (
-    
+
       <div className='sidebar'>
         <div className='sidebar_item'
              onClick={() => history.push('/')}>Home </div>
