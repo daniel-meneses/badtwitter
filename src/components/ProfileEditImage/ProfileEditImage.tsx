@@ -40,7 +40,7 @@ const ProfileEditImage = ({getPresignedUrl} : Props) => {
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         <img className={'upload_placeholder'} src={'https://images-03.s3-ap-southeast-2.amazonaws.com/upload.png'}  />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <div>Upload image</div>
         </div>
       </div>
       :

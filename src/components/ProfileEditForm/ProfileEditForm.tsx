@@ -84,7 +84,8 @@ const ProfileEditForm = ({currentUser}: Props) => {
 
   return (
     <form onSubmit={handleSubmit} className='profile_edit_form'>
-      <div id={isFocused.first_name ? "isFocused2" : ""}>
+      <div className='edit_form_field_container'>
+      <div className='edit_field' id={isFocused.first_name ? "isFocused2" : ""}>
         First Name
         </div>
           <input
@@ -95,7 +96,7 @@ const ProfileEditForm = ({currentUser}: Props) => {
             onChange={e => handleInputOnChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
           />
-      <div id={isFocused.last_name ? "isFocused2" : ""}>
+      <div className='edit_field' id={isFocused.last_name ? "isFocused2" : ""}>
         Last Name
       </div>
           <input
@@ -106,7 +107,7 @@ const ProfileEditForm = ({currentUser}: Props) => {
             onChange={e => handleInputOnChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
           />
-      <div id={isFocused.bio ? "isFocused2" : ""}>
+      <div className='edit_field' id={isFocused.bio ? "isFocused2" : ""}>
         Bio
       </div>
           <input
@@ -117,8 +118,9 @@ const ProfileEditForm = ({currentUser}: Props) => {
             onChange={e => handleInputOnChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
           />
-      <div>
-        <input type="submit" onClick={handleSubmit} value="Submit" />
+      <div className='form_submit'>
+        <button type="submit" onClick={handleSubmit}>Submit</button>
+        </div>
         </div>
     </form>
   );

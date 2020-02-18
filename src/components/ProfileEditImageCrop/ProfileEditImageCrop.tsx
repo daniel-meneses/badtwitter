@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from 'react'
 import ReactCrop from 'react-image-crop'
+import './ProfileEditImageCrop.scss'
 import { connect } from 'react-redux'
 import 'react-image-crop/lib/ReactCrop.scss'
 import { postImageToPresignedURL } from '../../actions/profile.js'
@@ -67,7 +68,7 @@ const ProfileEditImageCrop = ({ src,  postImageToPresignedURL, presignedURL, ava
                         onChange={(newCrop: any) => setCrop(newCrop)}
                         onImageLoaded={(image: any) => setImage(image)}
                         onComplete={onCropComplete} />
-            <button onClick={submitNewProfileImage}> Submit </button>
+            <button className='edit_pic_save' onClick={submitNewProfileImage}> Save </button>
          </div>
 }
 

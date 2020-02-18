@@ -1,13 +1,26 @@
 .profile_edit_form {
-  border: solid purple 2px;
   display: flex;
   flex-direction: column;
-  width: 600px;
-  height: 50vh;
-  min-height: 400px;
+  font-size: 22px;
+  width: inherit;
+  .edit_form_field_container {
+    width: 60%;
+    margin: auto;
+  }
   input[type='text']{
-    width: 80%;
-    font-size: 18px;
+    font-size: 20px;
+    padding: 2px;
+    width: 100%;
     line-height: 1.5;
+  }
+  button {
+    display: block;
+    font-size: 18px;
+    width: 180px;
+    margin: 12px auto;
+    cursor: pointer;
+  }
+  .edit_field{
+    padding: 16px 0 4px 0px;
   }
 }

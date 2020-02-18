@@ -6,6 +6,8 @@ import NavBar from '../../components/NavBar/NavBar';
 import SignUp from '../SignUp/SignUp';
 import UserProfile from '../UserProfile/UserProfile';
 import Inbox from '../Inbox/Inbox';
+import Account from '../Account/Account';
+import Explore from '../Explore/Explore';
 import { connect } from 'react-redux';
 import { authenticate , unauthenticate} from '../../actions/session';
 
@@ -47,6 +49,8 @@ class App extends React.Component<any, any> {
               <Route path='/signup' exact component={SignUp}/>
               <Route path='/user/:id' exact component={UserProfile}/>
               <Route path='/inbox' component={Inbox}/>
+              <Route path='/explore' component={Explore}/>
+              <Route path='/account' component={Account}/>
               <Route exact path="/" render={() => (
                 token ? ( <Home/> ) : ( <Redirect to="/signup"/> )
               )}/>

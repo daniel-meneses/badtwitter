@@ -1,15 +1,27 @@
 .uploader {
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
-  text-align: center
+  text-align: center;
+  font-size: 22px;
+  &:hover {
+    cursor: pointer;
+    background: #e1ede8;
+    border-radius: 25px;
+  }
 }
 
 .uploaded_image {
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 60%;
+  margin: 0 auto;
+  overflow-y: scroll;
 }
+
 
 .upload_placeholder{
   width: 200px;
   height: 200px;
+  &:hover {
+    cursor: pointer;
+    background: #e1ede8;
+  }
 }
