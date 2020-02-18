@@ -11,6 +11,24 @@
   flex: 1;
   max-width: 600px;
   overflow-y: scroll;
+  .center_container_header {
+    position: fixed;
+    margin-top: 0;
+    padding-top: 14px;
+    border-bottom: solid #c9d6cd 1px;
+    width: 598px;
+    height: 58px;
+    background: white;
+    border-right: solid #c9d6cd 1px;
+    border-left: solid #c9d6cd 1px;
+    padding-left: 14px;
+  }
+  .center_container_body {
+    margin-top: 58px;
+    border-right: solid #c9d6cd 1px;
+    border-left: solid #c9d6cd 1px;
+    height: 100vh;
+  }
 }
 .right_container {
   display: flex;

@@ -40,3 +40,13 @@ main {
 ::-webkit-scrollbar-thumb {
   background: #c5e0d5;
 }
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+[contenteditable="true"]:focus {
+    outline: none;
+}

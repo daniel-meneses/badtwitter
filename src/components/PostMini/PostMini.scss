@@ -1,5 +1,5 @@
 .post_mini_component {
-  border: grey solid 1px;
+  border: #c9d6cd solid 1px;
   width: 100%;
   padding: 10px;
   text-align: left;
@@ -10,10 +10,11 @@
     transition: background-color 0.2s linear;
   }
   img {
-    height: 40px;
-    width: 40px;
+    height: 44px;
+    width: 44px;
     margin-right: 6px;
     margin-top: 4px;
+    border-radius: 10px;
   }
   h3 {
     display:inline-block;
@@ -25,10 +26,12 @@
     }
   }
   p {
+    font-weight: 450;
+    letter-spacing: 1px;
     margin: 2px 0px 2px 0px;
     padding: 10px 6px 10px 6px;
     overflow: auto;
-    border: grey solid 1px;
+    border: darken(#c9d6cd, 30%) solid 1px;
   }
   .post_mini_footer {
     display: flex;

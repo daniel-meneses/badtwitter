@@ -14,7 +14,8 @@ class Account extends React.Component<any, any> {
       return (
         <div className={'main_container'}>
           <div className={'center_container'}>
-          <h2> Account </h2>
+            <h2 className={'center_container_header'}> Account </h2>
+          <div className={'center_container_body'}>
           <div className='edit_container'>
           <div className='edit_item'>
           <ProfileEditImage />
@@ -23,6 +24,7 @@ class Account extends React.Component<any, any> {
             <ProfileEditForm />
             </div>
             </div>
+          </div>
           </div>
           <div className={'right_container'}>
           </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import './SubscribeButton.scss'
 import { connect } from 'react-redux';
 import { postSubscriptionRequest } from '../../actions/subscription.js'
 

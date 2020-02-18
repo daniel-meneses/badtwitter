@@ -36,14 +36,23 @@ class UserProfile extends React.Component<any, any> {
         return (
             <div>
                 <div className={'main_container'}>
-                <div className={'center_container'}>
-                <h2> Profile Container </h2>
-                <div className={'profile'}>
-                  <h3> {user.first_name + " " + user.last_name}</h3>
-                      <SubscribeButton userId={user.user_id} />
+                  <div className={'center_container'}>
+                    <h2 className={'center_container_header'}> {user.alias} </h2>
+                    <div className={'center_container_body'}>
+                    <div className={'profile'}>
+                      <img className='profile_avatar' src={user.avatar}/>
+                      <span className='profile_alias'> {user.alias} </span>
+                      <div className='profile_subscribe'>
+                        <SubscribeButton userId={user.user_id} />
+                      </div>
+
+                        <div className='profile_full_name'> {user.first_name + " " + user.last_name} </div>
+                        <div className='profile_bio'>This is my biography text. It will spread across the page and be limited to 240 characters.</div>
+
+                    </div>
+                  <ProfileFeed userId={user.user_id}/>
                 </div>
-                    <ProfileFeed userId={user.user_id}/>
-                  </div>
+                </div>
               </div>
             </div>
         );

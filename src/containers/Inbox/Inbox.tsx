@@ -9,7 +9,7 @@ class Inbox extends React.Component<any, any> {
       return (
         <div className={'main_container'}>
           <div className={'center_container'}>
-          <h2> Inbox </h2>
+          <h2 className={'header'}> Inbox </h2>
             <FollowRequestList/>
           </div>
           <div className={'right_container'}>

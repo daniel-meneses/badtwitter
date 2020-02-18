@@ -2,28 +2,35 @@
   cursor: default;
 }
 
-.main_container {
-  display: flex;
-  flex-direction: row;
-  min-width: 990px;
-  height: 100vh;
-}
-
-.center_container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  max-width: 600px;
-  overflow-y: scroll;
-}
-.right_container {
-  display: flex;
-  flex: 1;
-  min-width: 350px;
-  max-width: 350px;
-  margin-left: 28px;
-}
 
 .profile {
   min-height: 160px;
+  padding: 28px 14px;
+  .profile_avatar{
+    width: 80px;
+    border-radius: 24px;
+  }
+  .profile_alias {
+    font-size: 24px;
+  }
+  .profile_full_name {
+    margin-left: 86px;
+    font-size: 18px;
+    font-weight: 300;
+  }
+  .profile_bio {
+    margin-left: 86px;
+    font-size: 18px;
+    letter-spacing: 0.6px;
+  }
+  .profile_subscribe {
+    display: inline-block;
+    width: 40%;
+    float: right;
+    margin-top: 56px;
+    button {
+      float: right;
+      margin-right: 12px;
+    }
+  }
 }

@@ -1,66 +1,98 @@
 import React from 'react'
 import './NavBar.scss'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-
-type Props = {
-  title: string
-}
+import { useHistory, useLocation,  } from 'react-router-dom'
 
 function mapStateToProps(state :any) {
   return {};
 }
 
-const NavBar = ({title}: Props) => {
+const NavBar = () => {
 
   let history = useHistory()
+  let location = useLocation();
+  console.log(location.pathname)
+  let path = location.pathname
+  let isHome = path === '/home'
+  let isExplore = path === '/explore'
+  let isInbox = path === '/inbox'
+  let isProfile = path === '/user/13'
+  let isAccount = path === '/account'
 
   return (
       <div className='navbar'>
       <div className='navbar_item'>
       <span className='navbar_logo' onClick={() => history.push('/')}>
-          <svg className='logo' viewBox='-4 0 24 24'>
-            <g>
+          <svg className='logo' viewBox='-4 0 24 24' fill='green'>
+              <g>
               <path d='M12.003 23.274c-.083 0-.167-.014-.248-.042-.3-.105-.502-.39-.502-.708v-4.14c-2.08-.172-4.013-1.066-5.506-2.56-3.45-3.45-3.45-9.062 0-12.51s9.062-3.45 12.512 0c3.096 3.097 3.45 8.07.82 11.565l-6.49 8.112c-.146.182-.363.282-.587.282zm0-21.05c-1.882 0-3.763.717-5.195 2.15-2.864 2.863-2.864 7.524 0 10.39 1.388 1.387 3.233 2.15 5.195 2.15.414 0 .75.337.75.75v2.72l5.142-6.425c2.17-2.885 1.876-7.014-.696-9.587-1.434-1.43-3.316-2.148-5.197-2.148z'/>
               <path d='M15.55 8.7h-7.1c-.413 0-.75-.337-.75-.75s.337-.75.75-.75h7.1c.413 0 .75.335.75.75s-.337.75-.75.75zm-3.05 3.238H8.45c-.413 0-.75-.336-.75-.75s.337-.75.75-.75h4.05c.414 0 .75.336.75.75s-.336.75-.75.75z'/>
-            </g>
+              </g>
           </svg>
       </span>
       </div>
         <div className='navbar_item'
              onClick={() => history.push('/')}>
              <span className='navbar_content'>
-             <svg>
-               <g>
-                 <path d={'M22.58 7.35L12.475 1.897c-.297-.16-.654-.16-.95 0L1.425 7.35c-.486.264-.667.87-.405 1.356.18.335.525.525.88.525.16 0 .324-.038.475-.12l.734-.396 1.59 11.25c.216 1.214 1.31 2.062 2.66 2.062h9.282c1.35 0 2.444-.848 2.662-2.088l1.588-11.225.737.398c.485.263 1.092.082 1.354-.404.263-.486.08-1.093-.404-1.355zM12 15.435c-1.795 0-3.25-1.455-3.25-3.25s1.455-3.25 3.25-3.25 3.25 1.455 3.25 3.25-1.455 3.25-3.25 3.25z'}>
-                 </path>
+             <svg className='svg_home'viewBox='0 0 24 24' fill={isHome ? 'green' : 'black'}>
+             { isHome ?
+              <g>
+                <path d={'M22.58 7.35L12.475 1.897c-.297-.16-.654-.16-.95 0L1.425 7.35c-.486.264-.667.87-.405 1.356.18.335.525.525.88.525.16 0 .324-.038.475-.12l.734-.396 1.59 11.25c.216 1.214 1.31 2.062 2.66 2.062h9.282c1.35 0 2.444-.848 2.662-2.088l1.588-11.225.737.398c.485.263 1.092.082 1.354-.404.263-.486.08-1.093-.404-1.355zM12 15.435c-1.795 0-3.25-1.455-3.25-3.25s1.455-3.25 3.25-3.25 3.25 1.455 3.25 3.25-1.455 3.25-3.25 3.25z'}>
+                </path>
                </g>
+               :
+               <g>
+                <path d='M22.46 7.57L12.357 2.115c-.223-.12-.49-.12-.713 0L1.543 7.57c-.364.197-.5.652-.303 1.017.135.25.394.393.66.393.12 0 .243-.03.356-.09l.815-.44L4.7 19.963c.214 1.215 1.308 2.062 2.658 2.062h9.282c1.352 0 2.445-.848 2.663-2.087l1.626-11.49.818.442c.364.193.82.06 1.017-.304.196-.363.06-.818-.304-1.016zm-4.638 12.133c-.107.606-.703.822-1.18.822H7.36c-.48 0-1.075-.216-1.178-.798L4.48 7.69 12 3.628l7.522 4.06-1.7 12.015z'/>
+                <path d='M8.22 12.184c0 2.084 1.695 3.78 3.78 3.78s3.78-1.696 3.78-3.78-1.695-3.78-3.78-3.78-3.78 1.696-3.78 3.78zm6.06 0c0 1.258-1.022 2.28-2.28 2.28s-2.28-1.022-2.28-2.28 1.022-2.28 2.28-2.28 2.28 1.022 2.28 2.28z'/>
+               </g>
+             }
              </svg>
-            <span>Home</span></span></div>
+            <span className={isHome ? 'focus_green' : ''}>Home</span></span></div>
         <div className='navbar_item'
              onClick={() => history.push('/explore')}>
              <span className='navbar_content'>
-             <svg>
+             <svg viewBox='0 0 25 25' stroke={isExplore ? "green" : "black"} stroke-width={isExplore ? "1.4px" : "0.3px"}>
                <g>
                  <path d={'M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z'}>
                  </path>
                </g>
              </svg>
-             <span>Explore</span></span></div>
+             <span className={isExplore ? 'focus_green' : ''}>Explore</span></span></div>
         <div className='navbar_item'
              onClick={() => history.push('/inbox')}>
              <span className='navbar_content'>
-             <svg>
+             <svg viewBox='0 0 24 24' fill={isInbox ? "green" : "black"} stroke-width={isInbox ? "1px" : "0.2px"}>
+             { isInbox ?
+               <g>
+                 <path d={'M11.55 12.082c.273.182.627.182.9 0L22 5.716V5.5c0-1.24-1.01-2.25-2.25-2.25H4.25C3.01 3.25 2 4.26 2 5.5v.197l9.55 6.385z'}>
+                 </path>
+                 <path d={'M13.26 13.295c-.383.255-.82.382-1.26.382s-.877-.127-1.26-.383L2 7.452v11.67c0 1.24 1.01 2.25 2.25 2.25h15.5c1.24 0 2.25-1.01 2.25-2.25V7.47l-8.74 5.823z'}>
+                 </path>
+               </g>
+               :
                <g>
                  <path d={'M19.25 3.018H4.75C3.233 3.018 2 4.252 2 5.77v12.495c0 1.518 1.233 2.753 2.75 2.753h14.5c1.517 0 2.75-1.235 2.75-2.753V5.77c0-1.518-1.233-2.752-2.75-2.752zm-14.5 1.5h14.5c.69 0 1.25.56 1.25 1.25v.714l-8.05 5.367c-.273.18-.626.182-.9-.002L3.5 6.482v-.714c0-.69.56-1.25 1.25-1.25zm14.5 14.998H4.75c-.69 0-1.25-.56-1.25-1.25V8.24l7.24 4.83c.383.256.822.384 1.26.384.44 0 .877-.128 1.26-.383l7.24-4.83v10.022c0 .69-.56 1.25-1.25 1.25z'}>
                  </path>
                </g>
+             }
              </svg>
-             <span>Inbox</span></span></div>
+             <span className={isInbox ? 'focus_green' : ''}>Inbox</span></span></div>
+        <div className='navbar_item'
+             onClick={() => history.push('/user/13')}>
+             <span className='navbar_content'>
+             <svg viewBox='0 0 24 24' stroke={isProfile ? 'green' : 'black'} stroke-width={isProfile ? "0.8px" : "0.2px"}>
+               <g>
+                 <path d={'M20.75 22H3.25C2.01 22 1 20.99 1 19.75V4.25C1 3.01 2.01 2 3.25 2h17.5C21.99 2 23 3.01 23 4.25v15.5c0 1.24-1.01 2.25-2.25 2.25zM3.25 3.5c-.414 0-.75.337-.75.75v15.5c0 .413.336.75.75.75h17.5c.414 0 .75-.337.75-.75V4.25c0-.413-.336-.75-.75-.75H3.25z'}>
+                 </path>
+                 <path d='M16.758 6.982h-5.806c-.414 0-.75.336-.75.75s.336.75.75.75h3.995L6.92 16.508c-.292.293-.292.768 0 1.06.147.147.34.22.53.22s.385-.072.53-.22l8.027-8.025v3.995c0 .414.336.75.75.75s.75-.336.75-.75V7.732c0-.414-.335-.75-.75-.75z'>
+                 </path>
+               </g>
+             </svg>
+             <span className={isProfile ? 'focus_green' : ''}>Profile</span></span></div>
         <div className='navbar_item'
              onClick={() => history.push('/account')}>
              <span className='navbar_content'>
-             <svg>
+             <svg viewBox='0 0 24 24' stroke={isAccount ? 'green' : 'black'} stroke-width={isAccount ? "0.8px" : "0.2px"}>
                <g>
                  <path d={'M12 8.21c-2.09 0-3.79 1.7-3.79 3.79s1.7 3.79 3.79 3.79 3.79-1.7 3.79-3.79-1.7-3.79-3.79-3.79zm0 6.08c-1.262 0-2.29-1.026-2.29-2.29S10.74 9.71 12 9.71s2.29 1.026 2.29 2.29-1.028 2.29-2.29 2.29z'}>
                  </path>
@@ -68,7 +100,7 @@ const NavBar = ({title}: Props) => {
                  </path>
                </g>
              </svg>
-             <span>Account</span></span></div>
+             <span className={isAccount ? 'focus_green' : ''}>Account</span></span></div>
       </div>
   );
 }

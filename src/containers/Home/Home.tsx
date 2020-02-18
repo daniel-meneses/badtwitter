@@ -23,11 +23,13 @@ class Home extends React.Component<any, any> {
     return (
       <div className={'main_container'}>
         <div className={'center_container'}>
-          <h2> Home </h2>
+          <h2 className={'center_container_header'}> Home </h2>
+          <div className={'center_container_body'}>
           <div className={'new_post_form'}>
           <PostForm handleFormSubmit={(e :any) => postMessage({message: e})} />
             </div>
             <GlobalFeed/>
+            </div>
             </div>
           <div className={'right_container'}>
             <h2> Trending </h2>
