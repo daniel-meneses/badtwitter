@@ -3,33 +3,40 @@ import './NavBar.scss'
 import { connect } from 'react-redux'
 import { useHistory, useLocation,  } from 'react-router-dom'
 
-function mapStateToProps(state :any) {
-  return {};
+type Props = {
+  user: any
 }
 
-const NavBar = () => {
+function mapStateToProps(state :any) {
+  return {
+    user: state.session.currentUser
+  };
+}
+
+const NavBar = ({user} : Props) => {
 
   let history = useHistory()
   let location = useLocation();
-  console.log(location.pathname)
   let path = location.pathname
   let isHome = path === '/home'
   let isExplore = path === '/explore'
   let isInbox = path === '/inbox'
-  let isProfile = path === '/user/13'
+  let isProfile = path === '/user/' + user.user_id
   let isAccount = path === '/account'
 
   return (
-      <div className='navbar'>
+      <nav className='nav_bar'>
       <div className='navbar_item'>
+      <div className='navbar_content'>
       <span className='navbar_logo' onClick={() => history.push('/')}>
-          <svg className='logo' viewBox='-4 0 24 24' fill='green'>
+          <svg className='logo' viewBox='0 0 22 22' fill='green'>
               <g>
               <path d='M12.003 23.274c-.083 0-.167-.014-.248-.042-.3-.105-.502-.39-.502-.708v-4.14c-2.08-.172-4.013-1.066-5.506-2.56-3.45-3.45-3.45-9.062 0-12.51s9.062-3.45 12.512 0c3.096 3.097 3.45 8.07.82 11.565l-6.49 8.112c-.146.182-.363.282-.587.282zm0-21.05c-1.882 0-3.763.717-5.195 2.15-2.864 2.863-2.864 7.524 0 10.39 1.388 1.387 3.233 2.15 5.195 2.15.414 0 .75.337.75.75v2.72l5.142-6.425c2.17-2.885 1.876-7.014-.696-9.587-1.434-1.43-3.316-2.148-5.197-2.148z'/>
               <path d='M15.55 8.7h-7.1c-.413 0-.75-.337-.75-.75s.337-.75.75-.75h7.1c.413 0 .75.335.75.75s-.337.75-.75.75zm-3.05 3.238H8.45c-.413 0-.75-.336-.75-.75s.337-.75.75-.75h4.05c.414 0 .75.336.75.75s-.336.75-.75.75z'/>
               </g>
           </svg>
       </span>
+      </div>
       </div>
         <div className='navbar_item'
              onClick={() => history.push('/')}>
@@ -47,21 +54,21 @@ const NavBar = () => {
                </g>
              }
              </svg>
-            <span className={isHome ? 'focus_green' : ''}>Home</span></span></div>
+            <span className={isHome ? 'focus_green' : ''}><span className={'nav_bar_text'}>Home</span></span></span></div>
         <div className='navbar_item'
              onClick={() => history.push('/explore')}>
              <span className='navbar_content'>
-             <svg viewBox='0 0 25 25' stroke={isExplore ? "green" : "black"} stroke-width={isExplore ? "1.4px" : "0.3px"}>
+             <svg viewBox='0 0 25 25' stroke={isExplore ? "green" : "black"} strokeWidth={isExplore ? "1.4px" : "0.3px"}>
                <g>
                  <path d={'M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z'}>
                  </path>
                </g>
              </svg>
-             <span className={isExplore ? 'focus_green' : ''}>Explore</span></span></div>
+             <span className={isExplore ? 'focus_green' : ''}><span className={'nav_bar_text'}>Explore</span></span></span></div>
         <div className='navbar_item'
              onClick={() => history.push('/inbox')}>
              <span className='navbar_content'>
-             <svg viewBox='0 0 24 24' fill={isInbox ? "green" : "black"} stroke-width={isInbox ? "1px" : "0.2px"}>
+             <svg viewBox='0 0 24 24' fill={isInbox ? "green" : "black"} strokeWidth={isInbox ? "1px" : "0.2px"}>
              { isInbox ?
                <g>
                  <path d={'M11.55 12.082c.273.182.627.182.9 0L22 5.716V5.5c0-1.24-1.01-2.25-2.25-2.25H4.25C3.01 3.25 2 4.26 2 5.5v.197l9.55 6.385z'}>
@@ -76,11 +83,11 @@ const NavBar = () => {
                </g>
              }
              </svg>
-             <span className={isInbox ? 'focus_green' : ''}>Inbox</span></span></div>
+             <span className={isInbox ? 'focus_green' : ''}><span className={'nav_bar_text'}>Inbox</span></span></span></div>
         <div className='navbar_item'
-             onClick={() => history.push('/user/13')}>
+             onClick={() => history.push('/user/' + user.user_id)}>
              <span className='navbar_content'>
-             <svg viewBox='0 0 24 24' stroke={isProfile ? 'green' : 'black'} stroke-width={isProfile ? "0.8px" : "0.2px"}>
+             <svg viewBox='0 0 24 24' stroke={isProfile ? 'green' : 'black'} strokeWidth={isProfile ? "0.8px" : "0.2px"}>
                <g>
                  <path d={'M20.75 22H3.25C2.01 22 1 20.99 1 19.75V4.25C1 3.01 2.01 2 3.25 2h17.5C21.99 2 23 3.01 23 4.25v15.5c0 1.24-1.01 2.25-2.25 2.25zM3.25 3.5c-.414 0-.75.337-.75.75v15.5c0 .413.336.75.75.75h17.5c.414 0 .75-.337.75-.75V4.25c0-.413-.336-.75-.75-.75H3.25z'}>
                  </path>
@@ -88,11 +95,11 @@ const NavBar = () => {
                  </path>
                </g>
              </svg>
-             <span className={isProfile ? 'focus_green' : ''}>Profile</span></span></div>
+             <span className={isProfile ? 'focus_green' : ''}><span className={'nav_bar_text'}>Profile</span></span></span></div>
         <div className='navbar_item'
              onClick={() => history.push('/account')}>
              <span className='navbar_content'>
-             <svg viewBox='0 0 24 24' stroke={isAccount ? 'green' : 'black'} stroke-width={isAccount ? "0.8px" : "0.2px"}>
+             <svg viewBox='0 0 24 24' stroke={isAccount ? 'green' : 'black'} strokeWidth={isAccount ? "0.8px" : "0.2px"}>
                <g>
                  <path d={'M12 8.21c-2.09 0-3.79 1.7-3.79 3.79s1.7 3.79 3.79 3.79 3.79-1.7 3.79-3.79-1.7-3.79-3.79-3.79zm0 6.08c-1.262 0-2.29-1.026-2.29-2.29S10.74 9.71 12 9.71s2.29 1.026 2.29 2.29-1.028 2.29-2.29 2.29z'}>
                  </path>
@@ -100,8 +107,11 @@ const NavBar = () => {
                  </path>
                </g>
              </svg>
-             <span className={isAccount ? 'focus_green' : ''}>Account</span></span></div>
-      </div>
+             <span className={isAccount ? 'focus_green' : ''}>
+                <span className={'nav_bar_text'}>Account</span>
+                </span>
+              </span></div>
+      </nav>
   );
 }
 

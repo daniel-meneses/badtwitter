@@ -1,36 +1,76 @@
 .p-form {
-  width: 100%;
-  padding: 20px 20px 40px 20px;
-  border: #c9d6cd solid 1px;
-  input {
-    &[type=text] {
-      line-height: 12px;
-      width: 99%;
-      height: 80px;
-      overflow:scroll;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 20px 20px;
+  border-bottom: #c9d6cd solid 1px;
+  align-items:flex-end;
+  background: white;
+  .post_form_main {
+    display: flex;
+    width: 100%;
+    img {
+      display: flex;
+      width: 50px;
+      height: 50px;
+      margin-right: 5px;
+      border-radius: 10px;
+      display: inline-block;
     }
-    &[type=submit] {
-      float: right;
-      margin-right: 6px;
+    #input {
+        -moz-appearance: textfield;
+        -webkit-appearance: textfield;
+        background-color: white;
+        background-color: -moz-field;
+        border: none;
+        width: 500px;
+        max-width: 500px;
+        margin-top: 5px;
+        padding: 4px 3px;
+        overflow: visible;
+        font-size: 20px;
+        outline: none;
+        &:empty:not(:focus):before{
+          font-size: 22px;
+          color: gray;
+          content:attr(data-text)
+        }
+        &:empty:focus:before{
+          font-size: 22px;
+          color: lighten(gray, 30%);
+          content:attr(data-text);
+        }
+        &:hover{
+          cursor: text;
+        }
+    }
+  }
+  .post_form_footer {
+    display: flex;
+    padding-top: 12px;
+  }
+  .submit_post {
       width: 100px;
+      font-size: 16px;
+      font-weight: 600;
+      height: 30px;
+      background: #c9d6cd;
+      border: #c9d6cd solid 1px;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+  .highlighted {
+    background: lighten(green, 40%);
+    color: lighten(#c9d6cd, 80%);
+    font-weight: 700;
+    background: green;
+    &:hover{
+      background-color: darken(green, 4%);
+      transition: background-color 0.2s linear;
     }
   }
 }
 
 
-#input {
-    -moz-appearance: textfield;
-    -webkit-appearance: textfield;
-    background-color: white;
-    background-color: -moz-field;
-    border: 1px solid darkgray;
-    box-shadow: 1px 1px 1px 0 lightgray inset;
-    margin-top: 5px;
-    padding: 4px 3px;
-    width: 100%;
-    overflow: visible;
-}
-
-[contentEditable=true]:empty:not(:focus):before{
-        content:attr(data-text)
+[contenteditable=true]:focus {
+        outline: none;
     }

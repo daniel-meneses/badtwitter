@@ -1,0 +1,19 @@
+html {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+body {
+  overflow: auto;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}

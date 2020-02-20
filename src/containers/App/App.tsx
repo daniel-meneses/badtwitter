@@ -42,17 +42,19 @@ class App extends React.Component<any, any> {
           <Router>
             <div className="App">
               <header>
-                <NavBar/>
+                <div className='nav_container'>
+                  {token ? <NavBar/> : <></>}
+                </div>
               </header>
               <main>
-                <div className={"hey"}>
-              <Route path='/home' exact component={Home}/>
-              <Route path='/signup' exact component={SignUp}/>
-              <Route path='/user/:id' exact component={UserProfile}/>
-              <Route path='/inbox' component={Inbox}/>
-              <Route path='/explore' component={Explore}/>
-              <Route path='/account' component={Account}/>
-              <Route exact path="/" render={() => (
+                <div>
+                <Route path='/home' exact component={Home}/>
+                <Route path='/signup' exact component={SignUp}/>
+                <Route path='/user/:id' exact component={UserProfile}/>
+                <Route path='/inbox' component={Inbox}/>
+                <Route path='/explore' component={Explore}/>
+                <Route path='/account' component={Account}/>
+                <Route exact path="/" render={() => (
                 token ? ( <Redirect to="/home"/> ) : ( <Redirect to="/signup"/> )
               )}/>
                 </div>

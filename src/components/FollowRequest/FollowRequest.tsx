@@ -9,7 +9,8 @@ type Props = {
   acceptFollowerRequest: (e: any) => void,
   rejectFollowerRequest: (e: any) => void
   users: { [index: string] :
-              { id: number,
+              { user_id: number,
+                avatar: string,
                 first_name: number,
                 last_name: any,
               }
@@ -26,10 +27,12 @@ const FollowRequest = ({request, users, acceptFollowerRequest, rejectFollowerReq
 
   let user = users[request.user_id];
   let history = useHistory();
+  console.log(user)
 
   return (
       <div className='follow_request'>
-        <span data-key={user.id} onClick={() => history.push("/user/" + user.id)}> {user.first_name} {user.last_name}</span>
+        <img src={user.avatar} />
+        <span data-key={user.user_id} onClick={() => history.push("/user/" + user.user_id)}> {user.first_name} {user.last_name}</span>
         <div className='follow_request_buttons'>
           <button className='request_accept' onClick={() => acceptFollowerRequest({accepted : true, id: request.id})}> Accept </button>
           <button className='request_reject' onClick={() => rejectFollowerRequest({accepted : false, id: request.id})}> Decline </button>

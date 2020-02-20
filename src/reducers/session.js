@@ -32,6 +32,14 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         currentUser: {}
       };
+    case 'SAVE_NEW_AVATAR_SUCCESS':
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          avatar: Object.values(action.response)[0].avatar
+        }
+      }
     default:
       return state;
   }

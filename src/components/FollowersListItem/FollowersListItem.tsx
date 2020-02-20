@@ -26,6 +26,7 @@ const FollowersListItem = ({follower, users} : Props) => {
       <div className={"follower_list_tem"}
            onClick={() => history.push('/user/' + user.id)}
            data-key={follower.id}>
+        <img src={user.avatar} />
         <span>{user.id}</span>
         <span>{user.first_name}</span>
         <span>{user.last_name}</span>

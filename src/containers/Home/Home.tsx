@@ -6,6 +6,7 @@ import { getAllUserLikes} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
+import Trending from '../../components/Trending/Trending';
 import GlobalFeed from '../../components/GlobalFeed/GlobalFeed';
 import SideBar from '../../components/SideBar/SideBar';
 import FollowersList from '../../components/FollowersList/FollowersList';
@@ -26,15 +27,16 @@ class Home extends React.Component<any, any> {
           <h2 className={'center_container_header'}> Home </h2>
           <div className={'center_container_body'}>
           <div className={'new_post_form'}>
-          <PostForm handleFormSubmit={(e :any) => postMessage({message: e})} />
+              <PostForm handleFormSubmit={(e :any) => postMessage({message: e})} />
             </div>
             <GlobalFeed/>
             </div>
             </div>
-          <div className={'right_container'}>
-            <h2> Trending </h2>
-            <div> This is explore content </div>
-            </div>
+              <div className={'right_container'}>
+                <div className={'trending_container'}>
+                  <Trending postId={1}/>
+                </div>
+              </div>
             <div>
           </div>
         </div>
