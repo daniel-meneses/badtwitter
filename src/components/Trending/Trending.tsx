@@ -27,6 +27,8 @@ const Trending = ({postId, posts, users}: Props) => {
         <h3>Trending</h3>
 
         <div className='trending_item'> This a fake long trending title </div>
+        <div className='trending_item'> This a fake long trending title </div>
+        <div className='trending_item'> This a fake long trending title </div>
         </div>
       </div>
   );

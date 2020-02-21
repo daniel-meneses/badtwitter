@@ -38,6 +38,7 @@
 }
 
 .focus_green {
+  transition: color 0.2s linear;
   color: green;
 }
 
@@ -57,12 +58,15 @@
       border-radius: 25px;
     }
     svg {
+      transition: fill 0.2s linear;
       fill: green;
     }
     svg .svg_home {
-      fill: green;
+      transition: stroke 0.2s linear;
       stroke: green;
+      fill: green;
     }
+    transition: color 0.2s linear;
     color: green;
   }
 }

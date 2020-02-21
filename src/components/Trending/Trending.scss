@@ -1,8 +1,13 @@
 .trending {
   border: solid #c9d6cd 1px;
   margin-top: 57px;
-  padding: 4px;
+  margin-left: 14px;
+  min-height: 400px;
+  background-color: lighten(#c9d6cd, 15%);
+  border-radius: 5px;
+  padding: 0px 12px;
+  width: 350px; // set breakpoints for container items
   .trending_item{
-    width: 350px;
+    width: 100%; //move width to container
   }
 }

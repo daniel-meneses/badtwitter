@@ -22,6 +22,7 @@ const PostForm = ({handleFormSubmit, user}: Props) => {
     handleFormSubmit(postText);
     let el = document.getElementById("input")!;
     el.innerHTML=""
+    setPostText("")
   }
 
   const handleInputChange = (e: any) => {

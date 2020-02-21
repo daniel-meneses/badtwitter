@@ -55,12 +55,10 @@ main {
     min-width: 600px;
   }
   @include respond-to('large') {
-    width: 100%;
-    min-width: 990px;
+    width: 920px;
   }
   @include respond-to('xlarge') {
-    width: 100%;
-    min-width: 990px;
+    width: 990px;
   }
 }
 
@@ -72,7 +70,7 @@ main {
     width: 600px;
     min-width: 600px;
   }
-  width: 600px;
+  max-width: 600px;
   border-right: solid #c9d6cd 1px;
   border-left: solid #c9d6cd 1px;
   .center_container_header {
@@ -80,7 +78,7 @@ main {
     margin-top: 0;
     padding-top: 14px;
     border-bottom: solid #c9d6cd 1px;
-    width: 598px;
+    width: 598px; // need to breakpoint
     height: 58px;
     background: white;
     padding-left: 14px;
@@ -95,18 +93,20 @@ main {
   display: none;
   @include respond-to('small') {
     display: none;
+    width: 230px;
   }
   @include respond-to('medium') {
     display: none;
+    width: 275px;
   }
   @include respond-to('large') {
-    border: 2px blue solid;
     display: flex;
-    width: 290px;
-  }
-  @include respond-to('xlarge') {
     width: 350px;
     margin-right: 10px;
-    border: 2px blue solid;
+  }
+  @include respond-to('xlarge') {
+    display: flex;
+    width: 350px;
+    margin-right: 10px;
   }
 }
