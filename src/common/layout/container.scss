@@ -18,24 +18,28 @@ main {
   display: flex;
   flex-grow: 1;
   flex-shrink: 1;
-  @include respond-to('small') {
-    display: flex;
-    flex-grow: 2;
-  }
 }
 
 .nav_container {
   display: none;
-  width: 68px;
+  width: 66px;
   @include respond-to('small') {
     display: flex;
-    width: 75px;
+    width: 68px;
   }
   @include respond-to('medium') {
     display: flex;
     width: 88px;
   }
+  @include respond-to('large') {
+    display: flex;
+    width: 88px;
+  }
   @include respond-to('xlarge') {
+    display: flex;
+    width: 88px;
+  }
+  @include respond-to('xxlarge') {
     display: flex;
     width: 275px;
   }
@@ -48,6 +52,7 @@ main {
   justify-content: space-between;
   width: 100%;
   @include respond-to('small') {
+    min-width: 432px;
     width: 100%;
   }
   @include respond-to('medium') {
@@ -57,7 +62,7 @@ main {
   @include respond-to('large') {
     width: 920px;
   }
-  @include respond-to('xlarge') {
+  @include respond-to('xxlarge') {
     width: 990px;
   }
 }

@@ -29,15 +29,16 @@ export function signUp(data, history) {
     .catch(err => console.log(err));
 }
 
-export function logout(history) {
+export function logout() {
   return dispatch => api.delete('/accounts/session/logout')
     .then(() => {
-      localStorage.removeItem('token_access');
-      localStorage.removeItem('token_refresh');
+      localStorage.clear();
       dispatch({ type: act.LOGOUT });
-    //  window.location = "/signup";
+      window.location = "/signup";
     })
-    .catch(err => console.log(err));
+    .catch((err) => {
+      window.location = "/signup";
+    })
 }
 
 export function authenticate() {

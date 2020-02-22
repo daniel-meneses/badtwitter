@@ -3,6 +3,7 @@ import './App.scss';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Home from '../Home/Home';
 import NavBar from '../../components/NavBar/NavBar';
+import FloatingPostContainer from '../../components/FloatingPostContainer/FloatingPostContainer';
 import SignUp from '../SignUp/SignUp';
 import UserProfile from '../UserProfile/UserProfile';
 import Inbox from '../Inbox/Inbox';
@@ -41,6 +42,7 @@ class App extends React.Component<any, any> {
       return (
           <Router>
             <div className="App">
+              <FloatingPostContainer />
               <header>
                 <div className='nav_container'>
                   {token ? <NavBar/> : <></>}

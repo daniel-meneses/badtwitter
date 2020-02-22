@@ -1,5 +1,22 @@
 @import '../../common/theme/mixins.scss';
 
+$primary_green: lighten(green, 5%);
+
+.nav_bar_post_icon_container {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  #nav_post {
+    position: absolute;
+    background: $primary_green;
+    border-radius: 25px;
+    svg {
+          overflow: visible;
+          width: 32px;
+          height: 32px;
+          }
+    }
+}
 .nav_bar {
   position: fixed;
   display: flex;
@@ -7,34 +24,81 @@
   align-items: flex-start;
   height: 100%;
   width: 100%;
-  padding: 0px 20px;
+  padding: 0px 14px;
   letter-spacing: 1.5px;
-  svg { height: 28px; }
+  align-content: center;
+  svg { height: 28px;
+    margin: 0 auto;
+  }
   .navbar_content { display: flex;
                     align-items: center;
+                    width: 100%;
+                    margin: 0 auto;
                     padding: 10px;}
   @include respond-to('small') {
     width: 68px;
+    padding: 0px 4px;
+    .post_item{ margin-left: 0px;
+                width: 58px;
+                background: $primary_green;
+                border-radius: 30px;}
     .nav_bar_text { display: none;}
+    .nav_post_button { display: none;}
+    .nav_bar_post_icon_container {
+      #nav_post { left: 3%;}
+    }
   }
   @include respond-to('medium') {
-    width: 75px;
+    width: 88px;
+    padding: 0px 16px;
+    .post_item{ margin-left: -4px;
+                width: 58px;}
     .nav_bar_text { display: none;}
     .navbar_item { width: auto; }
     .navbar_item { width: auto; }
+    .nav_bar_post_icon_container {
+      #nav_post { left: -8%;}
+    }
   }
   @include respond-to('large') {
     width: 88px;
+    .post_item{ margin-left: -4px;
+                width: 58px;}
     .nav_bar_text { display: none;}
     .navbar_item { width: auto; }
+    .nav_post_button { display: none;}
   }
   @include respond-to('xlarge') {
+    width: 88px;
+    .post_item{ margin-left: -4px;
+                width: 58px;}
+    .nav_bar_text { display: none;}
+    .nav_post_button { display: none;}
+    .new_post_icon { display: block;}
+  }
+  @include respond-to('xxlarge') {
     width: 275px;
+    .nav_post_button { display: block;}
     .nav_bar_text { display: inline;
                     margin-left:  20px;
                     margin-right: 15px;}
-    .navbar_content { svg { } }
+    .new_post_icon { display: none;}
+    #nav_post { display: none;}
   }
+}
+
+.nav_post_button {
+  background-color: $primary_green;
+  font-weight: 600;
+  color: white;
+  font-size: 18px;
+  margin-top: 12px;
+  &:hover {
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+    background-color: green;
+
+ }
 }
 
 .focus_green {
@@ -53,9 +117,11 @@
   cursor: pointer;
   &:hover {
     .navbar_content {
+      margin: 0 auto;
       background-color: rgb(240, 245, 245);
       transition: background-color 0.2s linear;
       border-radius: 25px;
+      width: 100%;
     }
     svg {
       transition: fill 0.2s linear;
@@ -66,7 +132,22 @@
       stroke: green;
       fill: green;
     }
+    #nav_post { background: green;
+
+          svg { stroke: white;
+                      fill: white;
+                    } }
     transition: color 0.2s linear;
     color: green;
   }
+}
+
+.nav_post_button {
+  width: 195px;
+  border-radius: 25px;
+  height: 50px;
+}
+
+.hide_content {
+  display: none;
 }

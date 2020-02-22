@@ -1,3 +1,5 @@
+@import '../../common/theme/mixins.scss';
+
 .profile_edit_form {
   display: flex;
   flex-direction: column;
@@ -5,7 +7,14 @@
   width: inherit;
   .edit_form_field_container {
     width: 60%;
+    height: 100%;
     margin: auto;
+    @include respond-to('small') {
+      width: 80%;
+    }
+    @include respond-to('medium') {
+      width: 60%;
+    }
   }
   input[type='text']{
     font-size: 20px;

@@ -1,5 +1,6 @@
 const initialState = {
-  newPostSuccess: null
+  newPostSuccess: null,
+  floatingPostFormIsHidden: true
 };
 
 export default function (state = initialState, action) {
@@ -13,6 +14,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
        newPostSuccess: false,
+      };
+    case "DISPLAY_FLOATING_POST_FORM":
+      return {
+        ...state,
+       floatingPostFormIsHidden: false,
+    };
+    case "HIDE_FLOATING_POST_FORM":
+      return {
+        ...state,
+       floatingPostFormIsHidden: true,
       };
     default:
       return state;

@@ -1,1 +1,12 @@
+@import '../../common/theme/mixins.scss';
 
+.edit_container {
+  height: calc(100vh - 58px);
+  padding-top: 20px;
+  @include respond-to('small') {
+    width: 100%;
+  }
+  @include respond-to('medium') {
+    width: 600px;
+  }
+}

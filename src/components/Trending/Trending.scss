@@ -1,3 +1,5 @@
+@import '../../common/layout/container.scss';
+
 .trending {
   border: solid #c9d6cd 1px;
   margin-top: 57px;
@@ -9,5 +11,23 @@
   width: 350px; // set breakpoints for container items
   .trending_item{
     width: 100%; //move width to container
+  }
+}
+
+.trending {
+  @include respond-to('small') {
+    width: 230px;
+  }
+  @include respond-to('medium') {
+    width: 275px;
+  }
+  @include respond-to('large') {
+    width: 275px;
+  }
+  @include respond-to('xlarge') {
+    width: 350px;
+  }
+  @include respond-to('xxlarge') {
+    width: 350px;
   }
 }

@@ -1,3 +1,5 @@
+@import '../../common/theme/mixins.scss';
+
 .p-form {
   display: flex;
   flex-direction: column;
@@ -22,7 +24,6 @@
         background-color: white;
         background-color: -moz-field;
         border: none;
-        width: 500px; // need to breakpoint
         max-width: 500px;
         margin-top: 5px;
         padding: 4px 3px;
@@ -53,7 +54,9 @@
       font-size: 16px;
       font-weight: 600;
       height: 30px;
-      background: #c9d6cd;
+      background: lighten(green, 5%);
+      color: white;
+      opacity: 0.4;
       border: #c9d6cd solid 1px;
       border-radius: 25px;
     }
@@ -62,6 +65,7 @@
     color: lighten(#c9d6cd, 80%);
     font-weight: 700;
     background: green;
+    opacity: 1;
     &:hover{
       cursor: pointer;
       background-color: darken(green, 4%);
@@ -73,4 +77,21 @@
 
 [contenteditable=true]:focus {
         outline: none;
-    }
+}
+#input {
+  @include respond-to('small') {
+    width: 100%;
+  }
+  @include respond-to('medium') {
+    width: 100%;
+  }
+  @include respond-to('large') {
+    width: 100%;
+  }
+  @include respond-to('xlarge') {
+    width: 100%;
+  }
+  @include respond-to('xxlarge') {
+    width: 100%;
+  }
+}

@@ -17,8 +17,7 @@ function mapStateToProps(state :any) {
 }
 
 const Trending = ({postId, posts, users}: Props) => {
-  let post = posts[postId];
-  let user = users[post.user_id];
+
   let history = useHistory()
 
   return (

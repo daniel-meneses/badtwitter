@@ -1,6 +1,5 @@
 import React from 'react';
 import './Home.scss';
-import { logout } from '../../actions/session.js'
 import { getPendingSubscriptionRequests } from '../../actions/subscription.js'
 import { getAllUserLikes} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
@@ -45,4 +44,4 @@ class Home extends React.Component<any, any> {
 }
 
 export default connect(null
-  , { logout, postMessage, getPendingSubscriptionRequests, getAllUserLikes })(Home);
+  , { postMessage, getPendingSubscriptionRequests, getAllUserLikes })(Home);

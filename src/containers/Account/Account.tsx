@@ -1,16 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import './Account.scss'
-import { authenticate , unauthenticate} from '../../actions/session'
+import { connect } from 'react-redux'
+import {logout} from '../../actions/session'
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 
 class Account extends React.Component<any, any> {
 
-  componentDidMount() {
-  }
-
   render() {
+    let { logout } = this.props
       return (
         <div className={'main_container'}>
           <div className={'center_container'}>
@@ -23,6 +21,9 @@ class Account extends React.Component<any, any> {
           <div className='edit_item'>
             <ProfileEditForm />
             </div>
+            <button onClick={() => logout()}>
+              Log out
+              </button>
             </div>
           </div>
           </div>
@@ -33,4 +34,4 @@ class Account extends React.Component<any, any> {
   }
 }
 
-export default connect(null, {} )(Account);
+export default connect(null, {logout})(Account);

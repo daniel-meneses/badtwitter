@@ -2,6 +2,7 @@ import React from 'react';
 import './UserProfile.scss';
 import { connect } from 'react-redux';
 import { postSubscriptionRequest } from '../../actions/subscription.js'
+import { getProfileFeed } from '../../actions/feed.js'
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed';
 import SubscribeButton from '../../components/SubscribeButton/SubscribeButton';
 
@@ -12,26 +13,42 @@ type Props = {
                 first_name: number,
                 last_name: any,
               }
-            }
+            },
+  profile: {
+    timeline: {},
+    isFetching: boolean,
+    errors: null
+  }
 };
 
 function mapStateToProps(state :any) {
   return {
     users: state.globalObject.users,
-    pendingSubUserIds: state.subscriptions.pending.userIds
+    pendingSubUserIds: state.subscriptions.pending.userIds,
+    profile: {
+      timeline: state.feed.profile.timeline,
+      isFetching: state.feed.profile.isFetching,
+      errors: state.feed.profile.errors
+    }
   }
 }
 
 class UserProfile extends React.Component<any, any> {
+
+    componentDidMount() {
+      this.props.getProfileFeed(this.props.match.params.id);
+    }
 
     submitFollowRequest = () => {
       this.props.postSubscriptionRequest(this.props.match.params.id)
     }
 
     public render() {
-      let { users, pendingSubUserIds} = this.props;
+      let { users, pendingSubUserIds, profile} = this.props;
       let user = users[this.props.match.params.id]
-      let isRequestPending = pendingSubUserIds.includes(user.user_id)
+      if (user === undefined && profile.isFetching) { return <div>Fetching</div>}
+      if (user === undefined && !profile.isFetching) { return <>WTF</>}
+      if (user === undefined && profile.errors) { return <>{profile.errors}</>}
 
         return (
             <div>
@@ -45,10 +62,8 @@ class UserProfile extends React.Component<any, any> {
                       <div className='profile_subscribe'>
                         <SubscribeButton userId={user.user_id} />
                       </div>
-
                         <div className='profile_full_name'> {user.first_name + " " + user.last_name} </div>
                         <div className='profile_bio'>This is my biography text. It will spread across the page and be limited to 240 characters.</div>
-
                     </div>
                   <ProfileFeed userId={user.user_id}/>
                 </div>
@@ -59,4 +74,4 @@ class UserProfile extends React.Component<any, any> {
     }
 }
 
-export default connect(mapStateToProps, {postSubscriptionRequest})(UserProfile);
+export default connect(mapStateToProps, {postSubscriptionRequest, getProfileFeed})(UserProfile);
