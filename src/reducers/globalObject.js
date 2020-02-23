@@ -19,7 +19,6 @@ export default function (state = initialState, action) {
         users: Object.assign({}, state.users, action.response.users)
       }
     case globals.APPEND_NEW_POSTS:
-    console.log(action.response)
       return {
         ...state,
         posts: Object.assign({}, state.posts, action.response)

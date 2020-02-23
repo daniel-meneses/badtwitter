@@ -68,6 +68,7 @@ main {
 }
 
 .center_container {
+  position: relative;
   @include respond-to('small') {
     width: 100%;
   }
@@ -79,7 +80,9 @@ main {
   border-right: solid #c9d6cd 1px;
   border-left: solid #c9d6cd 1px;
   .center_container_header {
+    background-color: white;
     position: fixed;
+    z-index: 10;
     margin-top: 0;
     padding-top: 14px;
     border-bottom: solid #c9d6cd 1px;

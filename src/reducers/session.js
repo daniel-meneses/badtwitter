@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
         ...state,
         willAuthenticate: false,
         isAuthenticated: true,
-        currentUser: action.response.user,
+        currentUser: Object.values(action.response.users)[0],
       };
     case session.AUTHENTICATION_FAILURE:
       return {

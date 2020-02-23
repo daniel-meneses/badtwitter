@@ -5,6 +5,7 @@ function setCurrentUser(dispatch, response) {
   if (response.token_refresh) {localStorage.setItem('token_refresh', JSON.stringify(response.token_refresh))}
   if (response.token_access) {setAccessToken(response)}
   dispatch({ type: act.AUTHENTICATION_SUCCESS, response });
+  dispatch({ type: act.APPEND_NEW_USERS, response });
 }
 
 function setAccessToken(response) {
