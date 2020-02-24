@@ -1,35 +1,20 @@
 import React from 'react';
 import './UserProfile.scss';
 import { connect } from 'react-redux';
-import { postSubscriptionRequest } from '../../actions/subscription.js'
 import { getProfileFeed } from '../../actions/feed.js'
-import ProfileFeed from '../../components/ProfileFeed/ProfileFeed';
-import SubscribeButton from '../../components/SubscribeButton/SubscribeButton';
+import ProfileFeed from '../../components/ProfileFeed/ProfileFeed'
+import ProfileHead from '../../components/ProfileHead/ProfileHead'
+import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage'
 
 type Props = {
-  pendingSubUserIds: Array<number>,
-  users: { [index: string] :
-              { user_id: number,
-                first_name: number,
-                last_name: any,
-              }
-            },
-  profile: {
-    timeline: {},
-    isFetching: boolean,
-    errors: null
-  }
+  users: { [index: string] : {} },
+  profiles: {timeline: Array<number>}
 };
 
 function mapStateToProps(state :any) {
   return {
     users: state.globalObject.users,
-    pendingSubUserIds: state.subscriptions.pending.userIds,
-    profile: {
-      timeline: state.feed.profile.timeline,
-      isFetching: state.feed.profile.isFetching,
-      errors: state.feed.profile.errors
-    }
+    profiles: state.feed.profiles
   }
 }
 
@@ -44,29 +29,46 @@ class UserProfile extends React.Component<any, any> {
     }
 
     public render() {
-      let { users, pendingSubUserIds, profile} = this.props;
-      let user = users[this.props.match.params.id]
-      if (user === undefined && profile.isFetching) { return <div>Fetching</div>}
-      if (user === undefined && !profile.isFetching) { return <>WTF</>}
-      if (user === undefined && profile.errors) { return <>{profile.errors}</>}
+      let { users, profiles, match} = this.props;
+      let user = users[match.params.id]
+      let profile = profiles[match.params.id]
+
+      var profileTitle = "";
+      var profileHead = null;
+      var profileFeed = null;
+
+      // display user from memory
+      if (user !== undefined) {
+        profileHead = <ProfileHead user={user}/>
+        profileTitle = user.alias
+      }
+
+      // profile error handling
+      if (profile === undefined) {
+        return <div></div>
+      } else if (profile.isFetching) {
+        profileFeed = <div className='some_loading_icon'>Some fetching component</div>
+      } else if (profile.errors === 'Not Found') {
+        profileFeed = <EmptyListMessage message={"User does not exist!"} />
+      } else if (profile.errors) {
+        profileFeed = <EmptyListMessage message={"Something went wrong!"} />
+      } else if (profile.timeline.length === 0) {
+        profileFeed = <EmptyListMessage message={"User has no posts!"} />
+      } else {
+        profileFeed = <ProfileFeed profileTimeline={profile.timeline}/>
+      }
 
         return (
             <div>
                 <div className={'main_container'}>
                   <div className={'center_container'}>
-                    <h2 className={'center_container_header'}> {user.alias} </h2>
+                    <h2 className={'center_container_header'}>
+                      {profileTitle}
+                    </h2>
                     <div className={'center_container_body'}>
-                    <div className={'profile'}>
-                      <img className='profile_avatar' src={user.avatar}/>
-                      <span className='profile_alias'> {user.alias} </span>
-                      <div className='profile_subscribe'>
-                        <SubscribeButton userId={user.user_id} />
-                      </div>
-                        <div className='profile_full_name'> {user.first_name + " " + user.last_name} </div>
-                        <div className='profile_bio'>This is my biography text. It will spread across the page and be limited to 240 characters.</div>
+                      {profileHead}
+                      {profileFeed}
                     </div>
-                  <ProfileFeed userId={user.user_id}/>
-                </div>
                 </div>
               </div>
             </div>
@@ -74,4 +76,4 @@ class UserProfile extends React.Component<any, any> {
     }
 }
 
-export default connect(mapStateToProps, {postSubscriptionRequest, getProfileFeed})(UserProfile);
+export default connect(mapStateToProps, {getProfileFeed})(UserProfile);

@@ -28,17 +28,16 @@ export function getSubscriptionFeed() {
   }
 }
 
-export function getProfileFeed(data) {
+export function getProfileFeed(userId) {
   return dispatch => {
-    dispatch({ type: feed.GET_PROFILE_FEED })
-    api.fetch('/feed/user/' + data)
+    dispatch({ type: feed.GET_PROFILE_FEED, userId })
+    api.fetch('/feed/user/' + userId)
     .then((response) => {
       dispatch({ type: feed.GET_PROFILE_FEED_SUCCESS, response });
       dispatch({ type: feed.GET_FEED_SUCCESS, response });
     })
-    .catch((e) => {
-      dispatch({ type: feed.GET_PROFILE_FEED_FAIL, e });
-      console.log(e)
+    .catch((response) => {
+      dispatch({ type: feed.GET_PROFILE_FEED_FAIL, userId, response });
     });
   }
 }

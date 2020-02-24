@@ -4,11 +4,12 @@ const initialState = {
   global: { timeline: [],
             isFetching: false,
             errors: null
-          },
+  },
   profile: { timeline: [],
             isFetching: false,
             errors: null
-          },
+  },
+  profiles: {}
 };
 
 export default function (state = initialState, action) {
@@ -36,26 +37,28 @@ export default function (state = initialState, action) {
                 },
       };
     case feed.GET_PROFILE_FEED:
+    var profile = { isFetching: true,
+                    errors: null }
       return {
         ...state,
-        profile: { isFetching: true,
-                   errors: null
-                 },
+        profiles: { ...state.profiles, [action.userId] : profile },
       }
     case feed.GET_PROFILE_FEED_SUCCESS:
+    var profile = { timeline: action.response.timeline,
+                    isFetching: false,
+                    errors: null
+                  }
       return {
         ...state,
-        profile: { timeline: action.response.timeline,
-                   isFetching: false,
-                   errors: null
-                  },
+        profiles: { ...state.profiles, [Object.keys(action.response.users)] : profile },
       }
     case feed.GET_PROFILE_FEED_FAIL:
+    var profile = { isFetching: false,
+                    errors: action.response.error
+                  }
       return {
         ...state,
-        profile: { isFetching: false,
-                   errors: "Failed to get profile feed"
-                  },
+        profiles: { ...state.profiles, [action.userId] : profile },
       }
     case feed.APPEND_NEW_POST_TO_GLOBAL_FEED:
       return {

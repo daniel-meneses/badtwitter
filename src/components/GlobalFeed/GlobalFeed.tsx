@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getGlobalFeed } from '../../actions/feed'
 import isEmpty from 'lodash/isEmpty'
 import PostMini from '../PostMini/PostMini'
+import EmptyListMessage from '../EmptyListMessage/EmptyListMessage'
 
 interface GlobalFeed {
   feed: {
@@ -29,8 +30,9 @@ class GlobalFeed extends React.Component<any, any> {
 
   render() {
     let { global } = this.props;
+    console.log(global)
+    if (global === undefined ) {return <div>HELP</div>}
     if (global.isFetching === true) { return <div> is fetching </div>}
-    if (isEmpty(global.timeline)) {return <div>is empty</div>}
     return (
       <div className="post_list">
       { global.timeline.map( (postId: number) =>

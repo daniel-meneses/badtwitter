@@ -22,12 +22,13 @@ function headers(url) {
 }
 
 function parseResponse(response) {
-  return response.json().then((json) => {
-    if (!response.ok) {
-      return Promise.reject(json);
-    }
-    return json;
-  });
+  return response.json()
+    .then((json) => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+      return json;
+    })
 }
 
 function parseResponseStatus(response) {

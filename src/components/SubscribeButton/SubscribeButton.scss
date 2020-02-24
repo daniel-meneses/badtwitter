@@ -1,3 +1,4 @@
+@import '../../common/theme/mixins.scss';
 .subscribe_request_button {
   display: block;
   height: 28px;
@@ -5,4 +6,16 @@
   font-size: 16px;
   border-radius: 25px;
   padding: 0 10px;
+  @include respond-to('mobile') {
+    width: 80px;
+  }
+  @include respond-to('small') {
+    width: 120px;
+  }
+  @include respond-to('medium') {
+    width: 160px;
+  }
+  @include respond-to('large') {
+    width: 200px;
+  }
 }

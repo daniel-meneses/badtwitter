@@ -11,7 +11,7 @@ const EmptyListMessage = ({message}: Props) => {
 
   return (
     <div className="empty_list_message">
-      
+      <span>{message}</span>
     </div>
   );
 }

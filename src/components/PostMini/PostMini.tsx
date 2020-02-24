@@ -36,12 +36,12 @@ const PostMiniComponent = ({postId, posts, users}: Props) => {
         <h3 data-key={post.user_id}
             onClick={() => history.push("/user/" + user.user_id)}>
               {user.first_name + " " + user.last_name}
-            </h3>
+        </h3>
         <p> {post.post} </p>
         <div className='post_mini_footer'>
           <LikeButton postId={post.id} />
-                <span>{timeStamp} </span>
-          </div>
+          <span>{timeStamp} </span>
+        </div>
       </div>
   );
 }
