@@ -1,0 +1,20 @@
+.inbox_nav_container {
+  display: flex;
+  .inbox_nav_item {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    border: solid purple 1px;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    height: 40px;
+    &:hover {
+      cursor: pointer;
+    }
+    div {
+      line-height: 40px;
+      border: solid gold 1px;
+    }
+  }
+}

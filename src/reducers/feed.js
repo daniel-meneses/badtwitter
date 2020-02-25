@@ -17,7 +17,8 @@ export default function (state = initialState, action) {
     case feed.GET_GLOBAL_FEED:
       return {
         ...state,
-        global: { isFetching: true,
+        global: { ...state.global,
+                  isFetching: true,
                   errors: null
                 },
       };
@@ -32,7 +33,8 @@ export default function (state = initialState, action) {
     case feed.GET_GLOBAL_FEED_FAIL:
       return {
         ...state,
-        global: { isFetching: false,
+        global: { ...state.global,
+                  isFetching: false,
                   errors: "Failed to get global feed"
                 },
       };
@@ -63,11 +65,9 @@ export default function (state = initialState, action) {
     case feed.APPEND_NEW_POST_TO_GLOBAL_FEED:
       return {
         ...state,
-        profile: {
-          timeline : [Object.keys(action.response).map(Number)[0], ...state.profile.timeline ]
-        },
         global: {
-          timeline : [Object.keys(action.response).map(Number)[0], ...state.global.timeline ]
+          ...state.global,
+          timeline : [Object.keys(action.response).map(Number)[0], ...state.global.timeline]
         },
       }
     default:

@@ -1,7 +1,8 @@
 import api from '../api/api.js';
 import * as likes from '../constants/acts.js';
 
-export function postLike(data) {
+export function postLike(postId) {
+  let data = {post_id: postId};
   return dispatch => api.post('/user_device/like', data)
     .then((response) => {
       dispatch({ type: likes.LIKE_POST_SUCCESS, response });
@@ -21,7 +22,8 @@ export function getAllUserLikes(data) {
     });
 }
 
-export function deleteLike(data) {
+export function deleteLike(postId) {
+  let data = {post_id: postId};
   return dispatch => api.delete('/user_device/like/delete', data)
   .then((response) => {
     dispatch({ type: likes.UNLIKE_POST_SUCCESS, response });

@@ -1,10 +1,11 @@
 import React, {useState} from "react"
 import "./PostForm.scss"
 import { connect } from 'react-redux'
+import { postMessage } from '../../actions/post.js'
 
 type Props = {
-  handleFormSubmit: (e: any) => void,
-  user: any
+  user: { avatar: string},
+  postMessage: (message: string) => void
 }
 
 function mapStateToProps(state :any) {
@@ -13,13 +14,14 @@ function mapStateToProps(state :any) {
   }
 }
 
-const PostForm = ({handleFormSubmit, user}: Props) => {
+const PostForm = ({user, postMessage}: Props) => {
 
   const [isFocused, setIsFocused] = useState(false);
   const [postText, setPostText] = useState("");
 
   const handleSubmit = (e: any) => {
-    handleFormSubmit(postText);
+    postMessage(postText)
+    // post could fail and field would be cleared.
     let el = document.getElementById("input")!;
     el.innerHTML=""
     setPostText("")
@@ -40,16 +42,17 @@ const PostForm = ({handleFormSubmit, user}: Props) => {
                         onInput={handleInputChange}
                         data-text={"What's happenning?"}
                         data-value=""
-                        contentEditable></div>
-      </div>
-      <div className="post_form_footer">
-        <input type="submit"
-                className={postText.length > 0 ? 'submit_post highlighted' : 'submit_post'}
-                onClick={handleSubmit}
-                value="Submit" />
-      </div>
+                        contentEditable>
+                        </div>
+                      </div>
+        <div className="post_form_footer">
+          <input type="submit"
+                 className={postText.length > 0 ? 'submit_post highlighted' : 'submit_post'}
+                 onClick={handleSubmit}
+                 value="Submit" />
+                 </div>
     </div>
   );
 }
 
-export default connect(mapStateToProps, {})(PostForm);
+export default connect(mapStateToProps, {postMessage})(PostForm);

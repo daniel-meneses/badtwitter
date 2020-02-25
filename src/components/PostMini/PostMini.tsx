@@ -24,9 +24,12 @@ function mapStateToProps(state :any) {
 }
 
 const PostMiniComponent = ({postId, posts, users}: Props) => {
-  let post = posts[postId];
-  let user = users[post.user_id];
   let history = useHistory()
+  let post = posts[postId];
+  if (post === undefined) {
+    return <></>
+  }
+  let user = users[post.user_id];
   var timeStamp = moment(post.created).format("MMM Do LT");;
 
   return (

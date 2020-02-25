@@ -2,6 +2,7 @@ import React from 'react'
 import './Account.scss'
 import { connect } from 'react-redux'
 import {logout} from '../../actions/session'
+import AccountNav from '../../components/AccountNav/AccountNav'
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 
@@ -14,6 +15,7 @@ class Account extends React.Component<any, any> {
           <div className={'center_container'}>
             <h2 className={'center_container_header'}> Account </h2>
           <div className={'center_container_body'}>
+            <AccountNav />
           <div className='edit_container'>
           <div className='edit_item'>
           <ProfileEditImage />

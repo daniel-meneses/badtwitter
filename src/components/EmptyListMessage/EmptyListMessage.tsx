@@ -1,7 +1,5 @@
 import React, {useState} from "react"
 import './EmptyListMessage.scss'
-import { connect } from 'react-redux'
-import { postMessage } from '../../actions/post.js'
 
 type Props = {
   message: string
@@ -16,4 +14,4 @@ const EmptyListMessage = ({message}: Props) => {
   );
 }
 
-export default connect(null)(EmptyListMessage);
+export default EmptyListMessage
