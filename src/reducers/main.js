@@ -7,6 +7,7 @@ import followers from './followers.js';
 import globalObject from './globalObject.js';
 import likes from './likes.js';
 import profileEdit from './profileEdit.js';
+import inbox from './inbox.js';
 
 const mainReducer = combineReducers({
   session,
@@ -16,6 +17,7 @@ const mainReducer = combineReducers({
   likes,
   globalObject,
   followers,
+  inbox,
   profileEdit
 });
 

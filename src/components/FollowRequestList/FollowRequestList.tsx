@@ -1,42 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { getPendingFollowRequests } from '../../actions/followers.js'
 import FollowRequest from '../FollowRequest/FollowRequest'
-import isEmpty from 'lodash/isEmpty'
-
 
 type Props = {
-  followRequests: {},
-  getPendingFollowRequests: (e: any) => void
+  followRequests: any
 };
 
-function mapStateToProps(state :any) {
-  return {
-    followRequests: state.followers.pending.followRequests
+const FollowRequestList = ({followRequests} :Props) => {
+  return (
+    <div className='follow_request_list'>
+      {
+        Object.values(followRequests).map((request :any) =>
+        <FollowRequest key={request.id}
+                        request={request}
+                        />)
+      }
+    </div>)
   }
-}
 
-class FollowRequestList extends React.Component<any, any> {
-
-  componentDidMount() {
-    this.props.getPendingFollowRequests()
-  }
-
-  render() {
-    let {followRequests} = this.props
-    if (isEmpty(followRequests)) {
-      return (<div>No Follow Requests</div>)}
-
-    return (
-      <div className='follow_request_list'>
-        {
-          Object.values(followRequests).map((request :any) =>
-          <FollowRequest key={request.id}
-                          request={request}
-                          />)
-        }
-      </div>)
-    }
-}
-
-export default connect(mapStateToProps, {getPendingFollowRequests})(FollowRequestList);
+export default connect(null, {})(FollowRequestList);
