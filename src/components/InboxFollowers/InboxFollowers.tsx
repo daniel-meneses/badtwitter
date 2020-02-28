@@ -4,7 +4,6 @@ import EmptyListMessage from '../EmptyListMessage/EmptyListMessage'
 import isEmpty from 'lodash/isEmpty'
 import { connect } from 'react-redux'
 
-
 type Props = {
   followers: any
 }
@@ -15,7 +14,7 @@ function mapStateToProps(state: any)  {
   }
 }
 
-const InboxFollowers = ({followers} :Props) => {
+const InboxFollowers = ({followers={}} :Props) => {
 
   let followersListSection = null
   if (followers.isFetching) {
@@ -25,12 +24,11 @@ const InboxFollowers = ({followers} :Props) => {
   } else if (isEmpty(followers.followRequests)) {
     followersListSection = <EmptyListMessage message={"You loner"}/>
   } else {
-    followersListSection = <FollowersList />
+    followersListSection = <FollowersList followers={followers} />
   }
 
-
   return (
-    <div>AccountFollowers</div>
+    <div>{followersListSection}</div>
   )
 }
 

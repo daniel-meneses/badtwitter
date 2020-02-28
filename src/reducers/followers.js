@@ -70,13 +70,15 @@ export default function (state = initialState, action) {
         }
       }
     case follow.ACCEPT_FOLLOW_REQUEST_SUCCESS:
+        const { [Object.keys(action.response.follow)[0]] : user_id, ...pendingFollowRequests} = state.pending.followRequests
+        console.log(pendingFollowRequests)
       return {
         ...state,
         pending: {
-          followRequests: state.followers.pending.followRequests.filter(req => Object.keys(req).map(Number)[0] !== action.response.followers.user_id),
+          followRequests: pendingFollowRequests,
         },
         accepted: {
-          followRequests: Object.assign({}, state.accepted.followRequests, action.response.follwers),
+          followRequests: Object.assign({}, state.accepted.followRequests, action.response.follow),
         }
       }
     case follow.REJECT_FOLLOW_REQUEST_SUCCESS:

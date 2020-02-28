@@ -24,7 +24,7 @@ const InboxSubscriptions = ({followers} :Props) => {
   } else if (isEmpty(followers.followRequests)) {
     followersListSection = <EmptyListMessage message={"You loner"}/>
   } else {
-    followersListSection = <FollowersList />
+    followersListSection = <FollowersList followers={followers}/>
   }
 
 

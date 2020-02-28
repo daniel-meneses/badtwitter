@@ -36,6 +36,7 @@ export function acceptFollowerRequest(data) {
     api.post('/user_device/follower', data)
     .then((response) => {
       dispatch({ type: follow.ACCEPT_FOLLOW_REQUEST_SUCCESS, response})
+      dispatch({ type: follow.APPEND_NEW_USERS, response})
     })
     .catch((e) => {
       dispatch({ type: follow.ACCEPT_FOLLOW_REQUEST_FAILURE, e})

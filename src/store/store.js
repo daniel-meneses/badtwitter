@@ -31,15 +31,7 @@ store.subscribe(throttle(() => {
                       userIds: state.subscriptions.accepted.userIds
                       },
                   },
-    followers: { pending: {
-                  followRequests: state.followers.pending.followRequests,
-                  userIds: state.followers.pending.userIds
-                },
-                accepted: {
-                  followRequests: state.followers.accepted.followRequests,
-                  userIds: state.followers.accepted.userIds
-                },
-              },
+    followers: state.followers,
     likes: { likedPostIds: state.likes.likedPostIds },
     session: { currentUser: state.session.currentUser },
     globalObject: { users: state.globalObject.users,
