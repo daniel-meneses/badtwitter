@@ -3,8 +3,10 @@
   font-size: 18px;
   width: 180px;
   margin: 12px auto;
+  overflow: scroll;
   cursor: pointer;
 }
 .ReactCrop__image {
-  max-height: 350px;
+  max-width: 500px;
+  max-height: 600px;
 }

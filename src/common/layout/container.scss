@@ -87,12 +87,18 @@ main {
     margin-top: 0;
     padding-top: 14px;
     border-bottom: solid #c9d6cd 1px;
-    width: 598px; // need to breakpoint
+    @include respond-to('small') {
+      width: 430px;
+    }
+    @include respond-to('medium') {
+      width: 598px; // need to breakpoint
+    }
     height: 58px;
     background: white;
     padding-left: 14px;
   }
   .center_container_body {
+    width: 100%;
     margin-top: 58px;
     overflow-y: scroll;
   }

@@ -1,0 +1,12 @@
+.list_divider{
+  height: 36px;
+  font-size: 18px;
+  background-color: lighten(#e6ece8, 5%);
+  line-height: 36px;
+  padding-left: 12px;
+  border-top: #e6ece8;
+  border-bottom: #e6ece8;
+  &:hover{
+    cursor: default;
+  }
+}

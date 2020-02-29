@@ -2,6 +2,7 @@ import React from 'react';
 import './UserProfile.scss';
 import { connect } from 'react-redux';
 import { getProfileFeed } from '../../actions/feed.js'
+import Trending from '../../components/Trending/Trending';
 import ProfileFeed from '../../components/ProfileFeed/ProfileFeed'
 import ProfileHead from '../../components/ProfileHead/ProfileHead'
 import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage'
@@ -43,6 +44,10 @@ class UserProfile extends React.Component<any, any> {
         profileTitle = user.alias
       }
 
+      if (profile === undefined) {
+        return <></>
+      }
+
       // profile error handling
       if (profile === undefined) {
         return <div></div>
@@ -59,7 +64,6 @@ class UserProfile extends React.Component<any, any> {
       }
 
         return (
-            <div>
                 <div className={'main_container'}>
                   <div className={'center_container'}>
                     <h2 className={'center_container_header'}>
@@ -70,8 +74,14 @@ class UserProfile extends React.Component<any, any> {
                       {profileFeed}
                     </div>
                 </div>
+                <div className={'right_container'}>
+                  <div className={'trending_container'}>
+                    <Trending postId={1}/>
+                  </div>
+                </div>
+                <div className='empty'>
               </div>
-            </div>
+              </div>
         );
     }
 }

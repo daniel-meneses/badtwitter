@@ -6,16 +6,34 @@
   font-size: 16px;
   border-radius: 25px;
   padding: 0 10px;
+  &:hover {
+    cursor: pointer;
+    background-color: #c9d6cd;
+    transition: background-color 0.2s linear;
+  }
   @include respond-to('mobile') {
     width: 80px;
   }
   @include respond-to('small') {
-    width: 120px;
+    width: 60px;
+    .request_icon{
+      margin-left: 8px;
+      display: block;
+    }
+    .request_text {
+      display: none;
+    }
   }
   @include respond-to('medium') {
     width: 160px;
+    .request_icon{
+      display: none;
+    }
+    .request_text {
+      display: block;
+    }
   }
   @include respond-to('large') {
-    width: 200px;
+    width: 160px;
   }
 }

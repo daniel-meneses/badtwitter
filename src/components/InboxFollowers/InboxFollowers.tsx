@@ -22,7 +22,7 @@ const InboxFollowers = ({followers={}} :Props) => {
   } else if (followers.error) {
     followersListSection = <EmptyListMessage message={"An error has occurred please try again."}/>
   } else if (isEmpty(followers.followRequests)) {
-    followersListSection = <EmptyListMessage message={"You loner"}/>
+    followersListSection = <EmptyListMessage message={"No followers"}/>
   } else {
     followersListSection = <FollowersList followers={followers} />
   }

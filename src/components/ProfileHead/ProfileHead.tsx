@@ -1,4 +1,5 @@
 import React from 'react'
+import './ProfileHead.scss'
 import SubscribeButton from '../SubscribeButton/SubscribeButton'
 
 type Props = {
@@ -19,8 +20,10 @@ const ProfileHead = ({user} : Props) => {
       <div className='profile_subscribe'>
         <SubscribeButton userId={user.user_id} />
       </div>
+      <div className='profile_bio_container'>
         <div className='profile_full_name'> {user.first_name + " " + user.last_name} </div>
         <div className='profile_bio'>This is my biography text. It will spread across the page and be limited to 240 characters.</div>
+      </div>
     </div>
   );
 }

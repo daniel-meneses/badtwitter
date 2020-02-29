@@ -16,7 +16,7 @@ export function getAcceptedSubscriptionRequests(data) {
   return dispatch => api.fetch('/user_device/subscription?accepted=true', data)
     .then((response) => {
       dispatch({ type: sub.APPEND_NEW_USERS, response });
-      dispatch({ type: sub.GET_PENDING_SUBSCRIPTION_REQUESTS_SUCCESS, response });
+      dispatch({ type: sub.GET_ACCEPTED_SUBSCRIPTION_REQUESTS_SUCCESS, response });
     })
     .catch((e) => {
       console.log(e)

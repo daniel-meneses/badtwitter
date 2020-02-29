@@ -1,0 +1,43 @@
+@import '../../common/theme/mixins.scss';
+
+.profile {
+  min-height: 160px;
+  padding: 28px 14px;
+  border-bottom: #c9d6cd solid 1px;
+  .profile_avatar{
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+  }
+  .profile_alias {
+    font-size: 24px;
+  }
+  .profile_full_name {
+    font-size: 18px;
+    font-weight: 300;
+  }
+  .profile_bio_container {
+    margin-left: 86px;
+    @include respond-to('small') {
+      width: 300px;
+    }
+    @include respond-to('medium') {
+      width: inherit;
+    }
+  }
+  .profile_bio {
+    font-size: 18px;
+    width: inherit;
+    letter-spacing: 0.6px;
+  }
+  .profile_subscribe {
+    display: inline-block;
+    width: 40%;
+    float: right;
+    margin-top: 56px;
+    button {
+      float: right;
+      margin-right: 12px;
+    }
+  }
+}

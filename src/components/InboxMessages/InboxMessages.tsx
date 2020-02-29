@@ -30,9 +30,9 @@ const InboxMessage = ({followRequests} : Props) => {
 
   return (
     <div>
-      <div> Follow Requests </div>
+      <div className={"list_divider"}> Follow Requests </div>
       <div>{followRequestList}</div>
-      <div> Inbox </div>
+      <div className={"list_divider"}> Inbox </div>
       <EmptyListMessage message={"No messages"}/>
     </div>
   )

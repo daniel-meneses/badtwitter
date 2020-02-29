@@ -15,7 +15,6 @@ class Account extends React.Component<any, any> {
           <div className={'center_container'}>
             <h2 className={'center_container_header'}> Account </h2>
           <div className={'center_container_body'}>
-            <AccountNav />
           <div className='edit_container'>
           <div className='edit_item'>
           <ProfileEditImage />
@@ -23,13 +22,11 @@ class Account extends React.Component<any, any> {
           <div className='edit_item'>
             <ProfileEditForm />
             </div>
-            <button onClick={() => logout()}>
+            <button className={'logout_button'}onClick={() => logout()}>
               Log out
               </button>
             </div>
           </div>
-          </div>
-          <div className={'right_container'}>
           </div>
         </div>
       );

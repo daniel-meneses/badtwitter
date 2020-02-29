@@ -18,7 +18,7 @@ const InboxNav = ({setFocusedTab, focusedTab} : Props) => {
 
   return (
     <div className={'inbox_nav_container'}>
-      <div className={focusedTab === 'Messages' ? 'inbox_nav_item focused' : 'inbox_nav_item'} id={"Messages"} onClick={setFocusedTab}><div>Inbox</div></div>
+      <div className={focusedTab === 'Messages' ? 'inbox_nav_item focused' : 'inbox_nav_item'} id={"Messages"} onClick={setFocusedTab}><div>Messages</div></div>
       <div className={focusedTab === 'Followers' ? 'inbox_nav_item focused' : 'inbox_nav_item'} id={"Followers"} onClick={setFocusedTab}><div>Followers</div></div>
       <div className={focusedTab === 'Subscriptions' ? 'inbox_nav_item focused' : 'inbox_nav_item'} id={"Subscriptions"} onClick={setFocusedTab}><div>Subscriptions</div></div>
     </div>

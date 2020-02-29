@@ -1,23 +1,31 @@
+
 .inbox_nav_container {
   display: flex;
+  font-size: 17px;
   .inbox_nav_item {
     display: flex;
     flex: 1;
     justify-content: space-around;
-    border: solid purple 1px;
+    border-bottom: solid #c9d6cd 1px;
     text-align: center;
     justify-content: center;
     align-content: center;
     height: 40px;
+    &:nth-child(2) {
+      border-left: solid #c9d6cd 1px;
+      border-right: solid #c9d6cd 1px;
+    }
     &:hover {
       cursor: pointer;
+      background-color: rgb(240, 245, 245);
+      transition: background-color 0.2s linear;
     }
     div {
       line-height: 40px;
-      border: solid gold 1px;
     }
   }
   .focused {
-    border: solid 5px gold;
+    font-weight: 500;
+    background-color: rgb(240, 245, 245);
   }
 }

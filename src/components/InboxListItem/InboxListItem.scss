@@ -1,5 +1,5 @@
 .follow_request {
-  border: purple 2px solid;
+  border-bottom: solid #c9d6cd 1px;
   padding: 12px;
   display: flex;
   flex-direction: row;
@@ -13,14 +13,14 @@
     height: 40px;
   }
   span {
-    border: gold 2px solid;
     flex: 2;
+    padding-left: 12px;
     font-size: 18px;
     margin: auto;
   }
   button {
     font-size: 16px;
-    height: 36px;
+    height: 30px;
     width: 100px;
     margin: 4px;
     cursor: pointer;
@@ -28,7 +28,6 @@
 }
 
 .follow_request_buttons {
-  border: gold 2px solid;
   display: flex;
   flex: 1;
 }

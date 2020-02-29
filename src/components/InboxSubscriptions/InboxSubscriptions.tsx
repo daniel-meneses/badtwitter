@@ -1,35 +1,35 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import FollowersList from '../FollowersList/FollowersList'
+import SubscriptionsList from '../SubscriptionsList/SubscriptionsList'
 import EmptyListMessage from '../EmptyListMessage/EmptyListMessage'
 import isEmpty from 'lodash/isEmpty'
 
 type Props = {
-  followers: any
+  subscriptions: any
 }
 
 function mapStateToProps(state: any) {
   return {
-    followers: state.followers.accepted
+    subscriptions: state.subscriptions.accepted
   }
 }
 
-const InboxSubscriptions = ({followers} :Props) => {
+const InboxSubscriptions = ({subscriptions} :Props) => {
 
   let followersListSection = null
-  if (followers.isFetching) {
+  if (subscriptions.isFetching) {
     followersListSection = <div>Fetching</div>
-  } else if (followers.error) {
+  } else if (subscriptions.error) {
     followersListSection = <EmptyListMessage message={"An error has occurred please try again."}/>
-  } else if (isEmpty(followers.followRequests)) {
-    followersListSection = <EmptyListMessage message={"You loner"}/>
+  } else if (isEmpty(subscriptions.subscriptionRequests)) {
+    followersListSection = <EmptyListMessage message={"No subscriptions"}/>
   } else {
-    followersListSection = <FollowersList followers={followers}/>
+    followersListSection = <SubscriptionsList subscriptions={subscriptions}/>
   }
 
 
   return (
-    <div>AccountSubscriptions</div>
+    <div>{followersListSection}</div>
   )
 }
 
