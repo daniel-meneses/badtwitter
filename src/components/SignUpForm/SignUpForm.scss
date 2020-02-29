@@ -1,42 +1,52 @@
 .signup-form {
-  height: 500px;
-  width: 900px;
-  background: blue;
+  display: flex;
+  flex-wrap: wrap;
+  width: 602px;
+  border: solid purple 1px;
+  margin: 0 auto;
   .signup-input {
-    position: relative;
-    border: yellow solid 2px;
-    height: 80px;
-    width: 400px;
-    float:left;
-    padding: 12px;
+    width: 300px;
+    height: 90px;
+    padding: 0px 6px;
     input {
-      position: relative;
-      display: block;
-      margin-top: 20px;
       height: 40px;
-      width: 96%;
+      width: 100%;
       font-size: 14px;
-    }
-    h6 {
-      margin-top: 4px;
-      font-size: 16px;
-    }
-    span {
-      position: absolute;
-      top: 50px;
-      left: 20px;
-      z-index: 999;
-      transition: all 100ms linear;
-      pointer-events: none;
     }
   }
 }
 
+.input-warning {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.input-submit-field {
+  border: solid purple 1px;
+  height: 120px;
+  margin: 0 auto;
+  input[type=submit] {
+    border: solid purple 1px;
+    font-size: 18px;
+    border-radius: 25px;
+    height: 30px;
+    width: 160px
+  }
+  .login_fail_message{
+    margin-top: 6px;
+    font-size: 19px;
+  }
+}
+
+#notFocused {
+  line-height: 22px;
+  transition: all 300ms linear;
+  pointer-events: none;
+}
+
 #isFocused {
-    position: absolute;
-    left: 40px;
-    top: 10px;
-    font-size: 11px;
-    transform:scale(2);
-    transition: all 100ms linear;
+  line-height: 22px;
+  font-size: 20px;
+  transition: all 300ms linear;
 }

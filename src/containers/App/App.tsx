@@ -43,6 +43,7 @@ class App extends React.Component<any, any> {
           <Router>
             <div className="App">
               <FloatingPostContainer />
+              <Route path='/signup' exact component={SignUp}/>
               <header>
                 <div className='nav_container'>
                   {token ? <NavBar/> : <></>}
@@ -51,7 +52,6 @@ class App extends React.Component<any, any> {
               <main>
                 <div>
                 <Route path='/home' exact component={Home}/>
-                <Route path='/signup' exact component={SignUp}/>
                 <Route path='/user/:id' exact component={UserProfile}/>
                 <Route path='/inbox' component={Inbox}/>
                 <Route path='/explore' component={Explore}/>

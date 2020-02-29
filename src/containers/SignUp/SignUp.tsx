@@ -1,4 +1,5 @@
 import React from 'react';
+import './SignUp.scss'
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { signUp , login } from '../../actions/session.js';
@@ -13,15 +14,16 @@ type Props = {
 const SignUp = ({signUp, login} : Props) => {
   let history = useHistory()
 
+  let loginC = <LoginForm handleLogIn={(e: any) => signUp(e, history)} />
+
   return (
-    <div>
+    <div className='sign_up_container'>
+      <div className='sign_up_container2'>
         <SignUpForm
           handleLogIn={(e: any) => signUp(e, history)}
-          loginFailMessage={"hey"}
+          loginFailMessage={"login failed api response"}
           />
-          <LoginForm
-            handleLogIn={(e: any) => signUp(e, history)}
-          />
+      </div>
     </div>
   );
 }

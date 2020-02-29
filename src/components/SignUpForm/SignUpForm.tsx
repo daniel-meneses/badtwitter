@@ -138,7 +138,7 @@ export default function SignUpForm(props: any) {
   return (
     <form onSubmit={handleSubmit} className='signup-form'>
     <div className='signup-input'>
-      <span id={isFocused.alias ? "isFocused" : ""}>Alias</span>
+      <span id={isFocused.alias ? "isFocused" : "notFocused"}>Alias</span>
         <input
           id='alias'
           value={signupObject.alias}
@@ -148,32 +148,8 @@ export default function SignUpForm(props: any) {
           onFocus={e => setFocus(e.target.id, true)}
         />
     </div>
-      <div className='signup-input'>
-        <span id={isFocused.first_name ? "isFocused" : ""}>First name</span>
-          <input
-            id='first_name'
-            value={signupObject.first_name}
-            type="text"
-            onBlur={e => validateInput(e)}
-            onChange={e => handleInputChange(e)}
-            onFocus={e => setFocus(e.target.id, true)}
-          />
-          <h6 hidden={!firstNameWarning}>{firstNameWarning}</h6>
-      </div>
     <div className='signup-input'>
-      <span id={isFocused.last_name ? "isFocused" : ""}>Last name</span>
-        <input
-          id='last_name'
-          value={signupObject.last_name}
-          type="text"
-          onBlur={e => validateInput(e)}
-          onChange={e => handleInputChange(e)}
-          onFocus={e => setFocus(e.target.id, true)}
-        />
-        <h6 hidden={!lastNameWarning}>{lastNameWarning}</h6>
-    </div>
-    <div className='signup-input'>
-      <span id={isFocused.email ? "isFocused" : ""}>Email</span>
+      <span id={isFocused.email ? "isFocused" : "notFocused"}>Email</span>
         <input
           id='email'
           value={signupObject.email}
@@ -182,10 +158,34 @@ export default function SignUpForm(props: any) {
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
         />
-        <h6 hidden={!emailWarning}>{emailWarning}</h6>
+        <span className={'input-warning'} hidden={!emailWarning}>{emailWarning}</span>
+    </div>
+      <div className='signup-input'>
+        <span id={isFocused.first_name ? "isFocused" : "notFocused"}>First name</span>
+          <input
+            id='first_name'
+            value={signupObject.first_name}
+            type="text"
+            onBlur={e => validateInput(e)}
+            onChange={e => handleInputChange(e)}
+            onFocus={e => setFocus(e.target.id, true)}
+          />
+          <span className={'input-warning'} hidden={!firstNameWarning}>{firstNameWarning}</span>
+      </div>
+    <div className='signup-input'>
+      <span id={isFocused.last_name ? "isFocused" : "notFocused"}>Last name</span>
+        <input
+          id='last_name'
+          value={signupObject.last_name}
+          type="text"
+          onBlur={e => validateInput(e)}
+          onChange={e => handleInputChange(e)}
+          onFocus={e => setFocus(e.target.id, true)}
+        />
+        <span className={'input-warning'} hidden={!lastNameWarning}>{lastNameWarning}</span>
     </div>
     <div className='signup-input'>
-      <span id={isFocused.password ? "isFocused" : ""}>Password</span>
+      <span id={isFocused.password ? "isFocused" : "notFocused"}>Password</span>
         <input
           id='password'
           value={signupObject.password}
@@ -194,10 +194,10 @@ export default function SignUpForm(props: any) {
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
         />
-        <h6 hidden={!passwordWarning}>{passwordWarning}</h6>
+        <span className={'input-warning'} hidden={!passwordWarning}>{passwordWarning}</span>
     </div>
     <div className='signup-input'>
-      <span id={isFocused.password_confirmation ? "isFocused" : ""}>Password Confirmation</span>
+      <span id={isFocused.password_confirmation ? "isFocused" : "notFocused"}>Password Confirmation</span>
         <input
           id='password_confirmation'
           value={signupObject.password_confirmation}
@@ -206,10 +206,12 @@ export default function SignUpForm(props: any) {
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
         />
-      <h6 hidden={!confirmationWarning}>{confirmationWarning}</h6>
-      <input disabled={Object.values(signupObject).includes("")} type="submit" value="Submit" />
+      <span className={'input-warning'} hidden={!confirmationWarning}>{confirmationWarning}</span>
     </div>
-    <span>{props.loginFailMessage}</span>
+    <div className='input-submit-field'>
+      <input className='signup-submit-button' disabled={Object.values(signupObject).includes("")} type="submit" value="Submit" />
+      <div className='login_fail_message'>{props.loginFailMessage}</div>
+    </div>
     </form>
   );
 }
