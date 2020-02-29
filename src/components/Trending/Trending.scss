@@ -7,10 +7,45 @@
   min-height: 400px;
   background-color: lighten(#c9d6cd, 15%);
   border-radius: 5px;
-  padding: 0px 12px;
   width: 350px; // set breakpoints for container items
+  .trending_title {
+    line-height: 46px;
+    font-weight: 700;
+    font-size: 18px;
+    padding-left: 12px;
+    border-bottom: solid #c9d6cd 1px;
+  }
   .trending_item{
     width: 100%; //move width to container
+    height: 80px;
+    border-bottom: solid #c9d6cd 1px;
+    border-top: black;
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    .item_category {
+      font-size: 14px;
+      font-weight: 600;
+      color: gray;
+      letter-spacing: 0.4px;
+    }
+    .item_title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+    .item_mentions {
+      font-weight: 600;
+      font-size: 15px;
+      color: gray;
+    }
+    &:hover{
+      cursor: pointer;
+      background-color: #c9d6cd;
+      transition: background-color 0.2s linear;
+    }
+
   }
 }
 

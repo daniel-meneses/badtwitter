@@ -23,8 +23,13 @@ const Trending = ({postId, posts, users}: Props) => {
   return (
       <div  className='trending'>
         <div className='trending_padding'>
-        <h3>Trending</h3>
-
+        <div className='trending_title'>Trending</div>
+        <div className='trending_item'>
+          <div className='item_category'>Poltiics</div>
+          <div className='item_title'>This a fake long trending title</div>
+          <div className='item_mentions'>16,000 mentions</div>
+        </div>
+        <div className='trending_item'> This a fake long trending title </div>
         <div className='trending_item'> This a fake long trending title </div>
         <div className='trending_item'> This a fake long trending title </div>
         <div className='trending_item'> This a fake long trending title </div>
