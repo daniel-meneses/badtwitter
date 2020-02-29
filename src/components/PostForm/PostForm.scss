@@ -78,20 +78,3 @@
 [contenteditable=true]:focus {
         outline: none;
 }
-#input {
-  @include respond-to('small') {
-    width: 100%;
-  }
-  @include respond-to('medium') {
-    width: 100%;
-  }
-  @include respond-to('large') {
-    width: 100%;
-  }
-  @include respond-to('xlarge') {
-    width: 100%;
-  }
-  @include respond-to('xxlarge') {
-    width: 100%;
-  }
-}

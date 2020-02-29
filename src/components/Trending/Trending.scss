@@ -1,51 +1,64 @@
 @import '../../common/layout/container.scss';
 
 .trending {
-  border: solid #c9d6cd 1px;
   margin-top: 57px;
   margin-left: 14px;
   min-height: 400px;
-  background-color: lighten(#c9d6cd, 15%);
   border-radius: 5px;
   width: 350px; // set breakpoints for container items
   .trending_title {
     line-height: 46px;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
     padding-left: 12px;
-    border-bottom: solid #c9d6cd 1px;
+    background-color: lighten(#c9d6cd, 14%);
+    border-bottom: solid lighten(#c9d6cd, 5%) 1px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
   }
   .trending_item{
     width: 100%; //move width to container
-    height: 80px;
-    border-bottom: solid #c9d6cd 1px;
+    border-bottom: solid lighten(#c9d6cd, 5%) 1px;
     border-top: black;
-    padding-left: 12px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    justify-content:space-around;
+    background-color: lighten(#c9d6cd, 14%);
     .item_category {
-      font-size: 14px;
-      font-weight: 600;
-      color: gray;
-      letter-spacing: 0.4px;
+      font-size: 13px;
+      font-weight: 500;
+      color: darken(gray, 5%);
+      letter-spacing: 0.6px;
     }
     .item_title {
       font-size: 15px;
       font-weight: 700;
       letter-spacing: 0.4px;
+      line-height: 24px;
     }
     .item_mentions {
-      font-weight: 600;
-      font-size: 15px;
-      color: gray;
+      font-weight: 500;
+      font-size: 14px;
+      color: darken(gray, 5%);
     }
     &:hover{
       cursor: pointer;
-      background-color: #c9d6cd;
+      background-color: lighten(#c9d6cd, 11%);
       transition: background-color 0.2s linear;
     }
-
+  }
+  .trending_show_more {
+    background-color: lighten(#c9d6cd, 14%);
+    line-height: 46px;
+    padding-left: 12px;
+    color: green;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    &:hover{
+      cursor: pointer;
+      background-color: lighten(#c9d6cd, 11%);
+      transition: background-color 0.2s linear;
+    }
   }
 }
 

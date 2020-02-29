@@ -19,7 +19,7 @@
   .profile_bio_container {
     margin-left: 86px;
     @include respond-to('small') {
-      width: 300px;
+      width: inherit;
     }
     @include respond-to('medium') {
       width: inherit;

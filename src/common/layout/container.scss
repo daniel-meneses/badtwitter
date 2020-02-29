@@ -88,7 +88,7 @@ main {
     padding-top: 14px;
     border-bottom: solid #c9d6cd 1px;
     @include respond-to('small') {
-      width: 430px;
+      width: 100%;
     }
     @include respond-to('medium') {
       width: 598px; // need to breakpoint
@@ -98,7 +98,12 @@ main {
     padding-left: 14px;
   }
   .center_container_body {
-    width: 100%;
+    @include respond-to('small') {
+      width: 100%;
+    }
+    @include respond-to('medium') {
+      width: 598px;
+    }
     margin-top: 58px;
     overflow-y: scroll;
   }
