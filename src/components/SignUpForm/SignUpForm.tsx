@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './SignUpForm.scss';
 
+
+
 export default function SignUpForm(props: any) {
 
   const [firstNameWarning, setFirstNameWarning] = useState("");
@@ -107,9 +109,9 @@ export default function SignUpForm(props: any) {
 
   const validatePassword = (value: string) => {
     if (value.length < 8 ){
-      setPasswordWarning("Password must be at least 8 characters")
+      setPasswordWarning("Minimum 8 characters")
     } else if (value.length > 30 ){
-      setPasswordWarning("Password must be less than 30 characters")
+      setPasswordWarning("Maximum 30 characters")
     } else {
       setPasswordWarning("")
     }
@@ -135,14 +137,24 @@ export default function SignUpForm(props: any) {
     }
   }
 
+  let error = null;
+  let emailErrorResponse = (((props.loginFailMessage || {}).errors || {}).credential || {}).email
+  if (emailErrorResponse == "has already been taken") {
+    error = "Email has already been taken"
+  }
+
+  let submitEnabled = !Object.values(signupObject).includes("")
+
   return (
     <form onSubmit={handleSubmit} className='signup-form'>
+    <div className='signup-title'>Sign up via Email</div>
     <div className='signup-input'>
       <span id={isFocused.alias ? "isFocused" : "notFocused"}>Alias</span>
         <input
           id='alias'
           value={signupObject.alias}
           type="text"
+          className={signupObject.alias.length > 0 ? "field_completed" : ""}
           onBlur={e => validateInput(e)}
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
@@ -154,6 +166,7 @@ export default function SignUpForm(props: any) {
           id='email'
           value={signupObject.email}
           type="text"
+          className={signupObject.email.length > 0 ? "field_completed" : ""}
           onBlur={e => validateInput(e)}
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
@@ -166,6 +179,7 @@ export default function SignUpForm(props: any) {
             id='first_name'
             value={signupObject.first_name}
             type="text"
+            className={signupObject.first_name.length > 0 ? "field_completed" : ""}
             onBlur={e => validateInput(e)}
             onChange={e => handleInputChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
@@ -178,6 +192,7 @@ export default function SignUpForm(props: any) {
           id='last_name'
           value={signupObject.last_name}
           type="text"
+          className={signupObject.last_name.length > 0 ? "field_completed" : ""}
           onBlur={e => validateInput(e)}
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
@@ -190,6 +205,7 @@ export default function SignUpForm(props: any) {
           id='password'
           value={signupObject.password}
           type="text"
+          className={signupObject.password.length > 5 ? "field_completed" : ""}
           onBlur={e => validateInput(e)}
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
@@ -201,6 +217,7 @@ export default function SignUpForm(props: any) {
         <input
           id='password_confirmation'
           value={signupObject.password_confirmation}
+          className={signupObject.password_confirmation.length > 5 ? "field_completed" : ""}
           type="text"
           onBlur={e => validateInput(e)}
           onChange={e => handleInputChange(e)}
@@ -209,8 +226,8 @@ export default function SignUpForm(props: any) {
       <span className={'input-warning'} hidden={!confirmationWarning}>{confirmationWarning}</span>
     </div>
     <div className='input-submit-field'>
-      <input className='signup-submit-button' disabled={Object.values(signupObject).includes("")} type="submit" value="Submit" />
-      <div className='login_fail_message'>{props.loginFailMessage}</div>
+      <input className={submitEnabled? 'signup-submit-button enabled' : 'signup-submit-button disabled'} disabled={!submitEnabled} type="submit" value="Submit" />
+      <div className='login_fail_message'>{error}</div>
     </div>
     </form>
   );

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import './LoginForm.scss';
+import {connect} from 'react-redux'
+import {login} from '../../actions/session.js'
 
-export default function LoginForm(props: any) {
+type Props ={
+  handleLogIn: any,
+  errorResponse: any
+}
+
+const LoginForm = ({handleLogIn, errorResponse} : Props) => {
   const [emailWarning, setEmailWarning] = useState("");
   const [passwordWarning, setPasswordWarning] = useState("");
   const [isFocused, setIsFocused] = useState({"email": false, "password": false});
@@ -9,7 +16,7 @@ export default function LoginForm(props: any) {
 
   const handleSubmit = (e: any) => {
       e.preventDefault();
-      props.handleLogIn(loginObject);
+      login(loginObject);
   }
 
   const handleInputChange = (e: any) => {
@@ -66,32 +73,41 @@ export default function LoginForm(props: any) {
                 });
   }
 
+  let submitEnabled = !Object.values(loginObject).includes("")
+
   return (
     <form onSubmit={handleSubmit} className='signup-form'>
+    <div className='signup-title'>Log in via Email</div>
       <div className='signup-input'>
-      <span id={isFocused.email ? "isFocused" : ""}>Email</span>
-        <input
-          id='email'
-          value={loginObject.email}
-          type="text"
-          onBlur={e => validateInput(e)}
-          onChange={e => handleInputChange(e)}
-          onFocus={e => setFocus(e.target.id, true)}
-        />
-        </div>
-        <div className='signup-input'>
-      <span id={isFocused.password ? "isFocused" : ""}>Password</span>
-        <input
-          id='password'
-          value={loginObject.password}
-          type="text"
-          onBlur={e => validateInput(e)}
-          onChange={e => handleInputChange(e)}
-          onFocus={e => setFocus(e.target.id, true)}
-        />
-      <input disabled={Object.values(loginObject).includes("")} type="submit" value="Submit" />
-      <span hidden={!emailWarning}></span>
+        <span id={isFocused.email ? "isFocused" : ""}>Email</span>
+          <input
+            id='email'
+            value={loginObject.email}
+            type="text"
+            className={loginObject.email.length > 3 ? "field_completed" : ""}
+            onBlur={e => validateInput(e)}
+            onChange={e => handleInputChange(e)}
+            onFocus={e => setFocus(e.target.id, true)}
+          />
+          </div>
+      <div className='signup-input'>
+        <span id={isFocused.password ? "isFocused" : ""}>Password</span>
+          <input
+            id='password'
+            value={loginObject.password}
+            type="text"
+            className={loginObject.password.length > 5 ? "field_completed" : ""}
+            onBlur={e => validateInput(e)}
+            onChange={e => handleInputChange(e)}
+            onFocus={e => setFocus(e.target.id, true)}
+          />
+      </div>
+      <div className='input-submit-field'>
+        <input className={submitEnabled? 'signup-submit-button enabled' : 'signup-submit-button disabled'} disabled={!submitEnabled} type="submit" value="Submit" />
+        <span hidden={!emailWarning}></span>
       </div>
     </form>
   );
 }
+
+export default connect(null,{login})(LoginForm);

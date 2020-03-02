@@ -8,24 +8,27 @@ import { useHistory } from 'react-router-dom'
 
 type Props = {
   signUp: (e: any, h: any) => void,
-  login: (e: any, h: any) => void
+  login: (e: any, h: any) => void,
+  signupError: string
 }
 
-const SignUp = ({signUp, login} : Props) => {
-  let history = useHistory()
+function mapStateToProps(state: any) {
+  return {
+    signupError: state.session.error
+  }
+}
 
-  let loginC = <LoginForm handleLogIn={(e: any) => signUp(e, history)} />
+const SignUp = ({signUp, signupError} : Props) => {
+  let history = useHistory()
 
   return (
     <div className='sign_up_container'>
-      <div className='sign_up_container2'>
         <SignUpForm
           handleLogIn={(e: any) => signUp(e, history)}
-          loginFailMessage={"login failed api response"}
+          loginFailMessage={signupError}
           />
-      </div>
     </div>
   );
 }
 
-export default connect(null, { signUp , login })(SignUp);
+export default connect(mapStateToProps, { signUp , login })(SignUp);

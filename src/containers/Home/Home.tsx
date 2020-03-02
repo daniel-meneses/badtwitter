@@ -46,13 +46,11 @@ class Home extends React.Component<any, any> {
             Home
           </h2>
           <div className={'center_container_body'}>
-          <div className={'center_width'}>
 
             <div className={'new_post_form'}>
               <PostForm/>
             </div>
             {globalFeed}
-          </div>
           </div>
         </div>
 
@@ -61,8 +59,6 @@ class Home extends React.Component<any, any> {
             <Trending postId={1}/>
           </div>
         </div>
-      <div className='empty'>
-    </div>
   </div>
       );
   }

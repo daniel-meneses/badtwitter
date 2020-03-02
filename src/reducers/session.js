@@ -3,7 +3,8 @@ import * as session from '../constants/acts.js';
 const initialState = {
   isAuthenticated: false,
   willAuthenticate: true,
-  currentUser: {}
+  currentUser: {},
+  error: null
 };
 
 export default function (state = initialState, action) {
@@ -21,16 +22,19 @@ export default function (state = initialState, action) {
         currentUser: Object.values(action.response.users)[0],
       };
     case session.AUTHENTICATION_FAILURE:
+    console.log(action.error)
       return {
         ...state,
         willAuthenticate: false,
+        error: action.error
       };
     case session.LOGOUT:
       return {
         ...state,
         willAuthenticate: false,
         isAuthenticated: false,
-        currentUser: {}
+        currentUser: {},
+        error: null
       };
     case 'SAVE_NEW_AVATAR_SUCCESS':
       return {

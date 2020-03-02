@@ -9,6 +9,7 @@ import UserProfile from '../UserProfile/UserProfile';
 import Inbox from '../Inbox/Inbox';
 import Account from '../Account/Account';
 import Explore from '../Explore/Explore';
+import Login from '../Login/Login';
 import { connect } from 'react-redux';
 import { authenticate , unauthenticate} from '../../actions/session';
 
@@ -44,13 +45,13 @@ class App extends React.Component<any, any> {
             <div className="App">
               <FloatingPostContainer />
               <Route path='/signup' exact component={SignUp}/>
+              <Route path='/login' exact component={Login}/>
               <header>
                 <div className='nav_container'>
                   {token ? <NavBar/> : <></>}
                 </div>
               </header>
               <main>
-                <div>
                 <Route path='/home' exact component={Home}/>
                 <Route path='/user/:id' exact component={UserProfile}/>
                 <Route path='/inbox' component={Inbox}/>
@@ -59,7 +60,6 @@ class App extends React.Component<any, any> {
                 <Route exact path="/" render={() => (
                 token ? ( <Redirect to="/home"/> ) : ( <Redirect to="/signup"/> )
               )}/>
-                </div>
               </main>
             </div>
           </Router>

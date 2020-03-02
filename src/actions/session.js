@@ -18,16 +18,23 @@ export function login(data, history) {
       setCurrentUser(dispatch, response);
       history.push('/');
     })
-    .catch(err => console.log(err.error));
+    .catch((error) => {
+      console.log(error)
+      dispatch({ type: act.AUTHENTICATION_FAILURE, error})
+    })
 }
 
 export function signUp(data, history) {
   return dispatch => api.post('/accounts/user', data)
     .then((response) => {
+      console.log(response)
       setCurrentUser(dispatch, response);
       history.push('/');
       })
-    .catch(err => console.log(err));
+    .catch((error) => {
+      console.log(error)
+      dispatch({ type: act.AUTHENTICATION_FAILURE, error})
+    })
 }
 
 export function logout() {
