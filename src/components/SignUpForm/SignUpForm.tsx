@@ -5,6 +5,7 @@ import './SignUpForm.scss';
 
 export default function SignUpForm(props: any) {
 
+  const [aliasWarning, setAliasWarning] = useState("");
   const [firstNameWarning, setFirstNameWarning] = useState("");
   const [lastNameWarning, setLastNameWarning] = useState("");
   const [emailWarning, setEmailWarning] = useState("");
@@ -15,15 +16,15 @@ export default function SignUpForm(props: any) {
 
   const handleSubmit = (e: any) => {
       e.preventDefault();
-      if (firstNameWarning || lastNameWarning || emailWarning || passwordWarning || confirmationWarning) {
-        console.log("NOPE")
-      }
       let signup = {'user' : signupObject};
       props.handleLogIn(signup);
   }
 
   const clearWarnings = (input: any) => {
     switch (input) {
+      case 'alias':
+        setAliasWarning("")
+        break;
       case 'first_name':
         setFirstNameWarning("")
         break;
@@ -59,6 +60,9 @@ export default function SignUpForm(props: any) {
       return
     }
     switch (input) {
+      case 'alias':
+        validateAlias(value)
+        break;
       case 'first_name':
         validateFirstName(value)
         break;
@@ -78,9 +82,19 @@ export default function SignUpForm(props: any) {
     }
   }
 
+  const validateAlias = (value: string) => {
+    if (!/^[A-Za-z ]+$/.test(value)) {
+      setAliasWarning("Must contain letters only")
+    } else if (value.charAt(0) === " ") {
+      setAliasWarning("Alias cannot start with space")
+    } else {
+      setAliasWarning("")
+    }
+  }
+
   const validateFirstName = (value: string) => {
     if (!/^[A-Za-z ]+$/.test(value)) {
-      setFirstNameWarning("First name must contain letters only")
+      setFirstNameWarning("Must contain letters only")
     } else if (value.charAt(0) === " ") {
       setFirstNameWarning("First name cannot start with space")
     } else {
@@ -159,6 +173,7 @@ export default function SignUpForm(props: any) {
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
         />
+        <span className={'input-warning'} hidden={!aliasWarning}>{aliasWarning}</span>
     </div>
     <div className='signup-input'>
       <span id={isFocused.email ? "isFocused" : "notFocused"}>Email</span>

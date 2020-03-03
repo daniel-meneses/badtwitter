@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import './LoginForm.scss';
-import {connect} from 'react-redux'
-import {login} from '../../actions/session.js'
 
 type Props ={
-  handleLogIn: any,
+  handleLogin: any,
   errorResponse: any
 }
 
-const LoginForm = ({handleLogIn, errorResponse} : Props) => {
+const LoginForm = ({handleLogin, errorResponse} : Props) => {
   const [emailWarning, setEmailWarning] = useState("");
   const [passwordWarning, setPasswordWarning] = useState("");
   const [isFocused, setIsFocused] = useState({"email": false, "password": false});
   const [loginObject, setLoginObject] = useState({"email": "", "password": ""});
 
   const handleSubmit = (e: any) => {
-      e.preventDefault();
-      login(loginObject);
+    e.preventDefault();
+    handleLogin(loginObject);
   }
 
   const handleInputChange = (e: any) => {
@@ -28,7 +26,6 @@ const LoginForm = ({handleLogIn, errorResponse} : Props) => {
   const validateInput = (e: any) => {
     let input = e.target.id;
     let value = e.target.value;
-    // Remove focus if blank
     if (value==="") {
       setFocus(input, false);
       return
@@ -54,7 +51,6 @@ const LoginForm = ({handleLogIn, errorResponse} : Props) => {
     } else {
       setEmailWarning("");
     }
-    console.log(emailWarning)
   }
 
   const validatePassword = (value: string) => {
@@ -74,6 +70,11 @@ const LoginForm = ({handleLogIn, errorResponse} : Props) => {
   }
 
   let submitEnabled = !Object.values(loginObject).includes("")
+  var error = null
+  let errorMessage = (errorResponse || {}).error
+  if (errorMessage == 'unprocessable') {
+    error = "Incorrect email or password"
+  }
 
   return (
     <form onSubmit={handleSubmit} className='signup-form'>
@@ -104,10 +105,10 @@ const LoginForm = ({handleLogIn, errorResponse} : Props) => {
       </div>
       <div className='input-submit-field'>
         <input className={submitEnabled? 'signup-submit-button enabled' : 'signup-submit-button disabled'} disabled={!submitEnabled} type="submit" value="Submit" />
-        <span hidden={!emailWarning}></span>
+        <div className='login_fail_message'>{error}</div>
       </div>
     </form>
   );
 }
 
-export default connect(null,{login})(LoginForm);
+export default LoginForm

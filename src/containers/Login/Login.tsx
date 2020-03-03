@@ -15,13 +15,17 @@ function mapStateToProps(state: any) {
   }
 }
 
-const Login =({loginError} : Props) => {
+const Login =({loginError, login} : Props) => {
   let history = useHistory()
+
+  const handleLogin = (credentials: any, history: any) => {
+    login(credentials, history)
+  }
 
   return (
     <div className='sign_up_container'>
       <LoginForm
-        handleLogIn={(e: any) => login(e, history)}
+        handleLogin={handleLogin}
         errorResponse={loginError} />
     </div>
     );

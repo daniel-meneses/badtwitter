@@ -54,11 +54,11 @@ main {
 .main_container {
   display: flex;
   flex-grow: 1;
-  min-height: 100vh;
-  overflow: hidden;
   align-items: stretch;
   justify-content: space-between;
   width: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
   @include respond-to('small') {
     min-width: 100%;
     width: 100%;
@@ -84,15 +84,14 @@ main {
     min-width: 600px;
   }
   max-width: 600px;
-  border-right: solid #c9d6cd 1px;
-  border-left: solid #c9d6cd 1px;
-  align-items: stretch;
   .center_container_header {
     background-color: white;
     position: fixed;
     z-index: 4;
     margin-top: 0;
     padding-top: 14px;
+    border-right: solid #c9d6cd 1px;
+    border-left: solid #c9d6cd 1px;
     border-bottom: solid #c9d6cd 1px;
     @include respond-to('small') {
       width: 100%;
@@ -112,7 +111,9 @@ main {
       width: 598px;
     }
     margin-top: 58px;
-    overflow-y: scroll;
+    min-height: calc(100vh - 58px);
+    border-right: solid #c9d6cd 1px;
+    border-left: solid #c9d6cd 1px;
   }
 }
 
