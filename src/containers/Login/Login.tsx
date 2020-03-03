@@ -18,7 +18,7 @@ function mapStateToProps(state: any) {
 const Login =({loginError, login} : Props) => {
   let history = useHistory()
 
-  const handleLogin = (credentials: any, history: any) => {
+  const handleLogin = (credentials: any) => {
     login(credentials, history)
   }
 
