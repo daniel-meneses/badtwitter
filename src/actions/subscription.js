@@ -26,7 +26,8 @@ export function getAcceptedSubscriptionRequests(data) {
 export function postSubscriptionRequest(data) {
   return dispatch => api.post('/user_device/subscription', {user_id: data})
     .then((response) => {
-      dispatch({ type: sub.SUBSCRIPTION_REQUEST_SUCCESS, response });
+      dispatch({ type: sub.APPEND_NEW_USERS, response });
+      dispatch({ type: "APPEND_PENDING_SUB_REQUEST", response });
     })
     .catch((e) => {
       console.log(e)

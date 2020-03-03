@@ -64,7 +64,14 @@ export default function(state = initialState, action) {
               isFetching: false,
               error: action.response.error
             }
-          }
+    }
+    case "APPEND_PENDING_SUB_REQUEST":
+      return { ...state,
+              pending: {
+                subscriptionRequests: Object.assign({}, state.pending.subscriptionRequests, action.response.subscriptions),
+                userIds: [...state.pending.userIds, Object.values(action.response.users)[0].user_id]
+              }
+            }
     default:
       return state;
   }
