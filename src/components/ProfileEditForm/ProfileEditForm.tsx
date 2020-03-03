@@ -1,24 +1,34 @@
 import React, { useState } from "react"
 import { connect } from 'react-redux'
 import './ProfileEditForm.scss'
+import {editProfileBio} from '../../actions/profile.js'
 
 type Props = {
-  currentUser: any
+  currentUser: any,
+  editProfileBio: any
 }
 
 function mapStateToProps(state :any) {
   return { currentUser: state.session.currentUser }
 }
 
-const ProfileEditForm = ({currentUser}: Props) => {
+const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
   const [firstName, setFirstName] = useState(currentUser.first_name);
   const [lastName, setLastName] = useState(currentUser.last_name);
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState(currentUser.bio);
+  const [editObject, setEditObject] = useState({"first_name": currentUser.first_name, "last_name": currentUser.last_name, "bio" : currentUser.bio});
   const [isFocused, setIsFocused] = useState({"first_name": false, "last_name": false, "bio" : false});
 
   const handleSubmit = (e: any) => {
       e.preventDefault();
-      console.log(firstName + " " + lastName + " " + bio)
+      console.log(editObject)
+      editProfileBio(editObject)
+  }
+
+  const handleInputChange = (e: any) => {
+    setEditObject({...editObject,
+                [e.target.id]: e.target.value
+                });
   }
 
   const handleInputOnChange = (e: any) => {
@@ -71,7 +81,7 @@ const ProfileEditForm = ({currentUser}: Props) => {
   }
 
   const validateBio = (value:  string) => {
-    if (value.length > 120) {
+    if (value.length > 244) {
       console.log("Toooo long")
     }
   }
@@ -90,10 +100,10 @@ const ProfileEditForm = ({currentUser}: Props) => {
         </div>
           <input
             id='first_name'
-            value={firstName}
+            value={editObject.first_name}
             type="text"
             onBlur={e => validateInputOnBlur(e)}
-            onChange={e => handleInputOnChange(e)}
+            onChange={e => handleInputChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
           />
       <div className='edit_field' id={isFocused.last_name ? "isFocused2" : ""}>
@@ -101,10 +111,10 @@ const ProfileEditForm = ({currentUser}: Props) => {
       </div>
           <input
             id='last_name'
-            value={lastName}
+            value={editObject.last_name}
             type="text"
             onBlur={e => validateInputOnBlur(e)}
-            onChange={e => handleInputOnChange(e)}
+            onChange={e => handleInputChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
           />
       <div className='edit_field' id={isFocused.bio ? "isFocused2" : ""}>
@@ -112,10 +122,10 @@ const ProfileEditForm = ({currentUser}: Props) => {
       </div>
           <input
             id='bio'
-            value={bio ? bio : ""}
+            value={editObject.bio}
             type="text"
             onBlur={e => validateInputOnBlur(e)}
-            onChange={e => handleInputOnChange(e)}
+            onChange={e => handleInputChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
           />
       <div className='form_submit'>
@@ -126,4 +136,4 @@ const ProfileEditForm = ({currentUser}: Props) => {
   );
 }
 
-export default connect(mapStateToProps, {})(ProfileEditForm)
+export default connect(mapStateToProps, {editProfileBio})(ProfileEditForm)

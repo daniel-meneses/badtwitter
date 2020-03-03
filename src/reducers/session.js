@@ -43,7 +43,15 @@ export default function (state = initialState, action) {
           ...state.currentUser,
           avatar: Object.values(action.response)[0].avatar
         }
-      }
+    }
+    case 'UPDATE_BIO_SUCCESS':
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          bio: Object.values(action.response)[0].bio
+        }
+    }
     default:
       return state;
   }

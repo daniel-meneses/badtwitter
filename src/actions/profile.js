@@ -45,3 +45,15 @@ export function saveNewProfileImage(data) {
     });
   }
 }
+
+export function editProfileBio(data) {
+  return dispatch => {
+    api.post('/accounts/user/update', data)
+    .then((response) => {
+      dispatch({ type: "UPDATE_BIO_SUCCESS", response });
+    })
+    .catch((e) => {
+      dispatch({ type: "SAVE_NEW_AVATAR_FAILURE", e });
+    });
+  }
+}
