@@ -5,7 +5,7 @@
   width: 200px;
   font-size: 16px;
   border-radius: 25px;
-  border: solid green 1px;
+  border: solid green 1.4px;
   color: green;
   padding: 0 10px;
   &:hover {
@@ -27,7 +27,7 @@
     }
   }
   @include respond-to('medium') {
-    width: 160px;
+    width: 100px;
     .request_icon{
       display: none;
     }
@@ -36,19 +36,26 @@
     }
   }
   @include respond-to('large') {
-    width: 130px;
+    width: 100px;
   }
 }
 
-
 .is_requested {
-  background: #c9d6cd;
-  border: none;
-  font-weight: 600;
-  opacity: 0.7;
-  color: white;
+  opacity: 0.4;
+  color: darken(green, 5%);
+  border: solid darken(green, 5%) 1.4px;
   &:hover {
     cursor: default;
-    background: #c9d6cd;
+    background: none;
+  }
+}
+
+.following{
+  border: none;
+  font-weight: 500;
+  opacity: 0.4;
+  &:hover {
+    cursor: default;
+    background: none;
   }
 }

@@ -1,5 +1,7 @@
 @import '../../common/theme/mixins.scss';
 
+$primary_green: lighten(green, 5%);
+
 .edit_container {
   height: calc(100vh - 58px);
   padding-top: 20px;
@@ -12,9 +14,19 @@
 }
 
 .logout_button {
+  background-color: $primary_green;
+  font-weight: 600;
+  border-radius: 25px;
+  color: white;
   font-size: 18px;
-  width: 80px;
+  padding: 4px 22px;
   display: flex;
   flex: 1;
   margin: 24px auto;
+  &:hover {
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+    background-color: green;
+
+ }
 }

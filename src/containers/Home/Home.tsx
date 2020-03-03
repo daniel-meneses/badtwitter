@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.scss';
-import { getPendingSubscriptionRequests } from '../../actions/subscription.js'
+import { getPendingSubscriptionRequests, getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
 import { getAllUserLikes} from '../../actions/like.js'
 import { postMessage } from '../../actions/post.js'
 import { getGlobalFeed } from '../../actions/feed.js'
@@ -23,6 +23,7 @@ class Home extends React.Component<any, any> {
 
   componentDidMount() {
     this.props.getPendingSubscriptionRequests();
+    this.props.getAcceptedSubscriptionRequests();
     this.props.getAllUserLikes();
     this.props.getGlobalFeed();
   }
@@ -65,4 +66,4 @@ class Home extends React.Component<any, any> {
 }
 
 export default connect(mapStateToProps
-  , { postMessage, getPendingSubscriptionRequests, getAllUserLikes, getGlobalFeed })(Home);
+  , { postMessage, getPendingSubscriptionRequests, getAcceptedSubscriptionRequests, getAllUserLikes, getGlobalFeed })(Home);

@@ -31,3 +31,15 @@
   display: flex;
   flex: 1;
 }
+
+.green-button {
+  display: block;
+  border-radius: 25px;
+  border: solid green 1.4px;
+  color: green;
+  &:hover {
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0.3px 0.3px;
+  }
+}

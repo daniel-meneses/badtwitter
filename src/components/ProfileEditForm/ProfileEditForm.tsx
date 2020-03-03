@@ -119,7 +119,7 @@ const ProfileEditForm = ({currentUser}: Props) => {
             onFocus={e => setFocus(e.target.id, true)}
           />
       <div className='form_submit'>
-        <button type="submit" onClick={handleSubmit}>Submit</button>
+        <button type="submit" className='green-button' onClick={handleSubmit}>Submit</button>
         </div>
         </div>
     </form>

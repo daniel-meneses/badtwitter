@@ -35,8 +35,8 @@ const InboxListItem = ({user_id, users, acceptFollowerRequest, rejectFollowerReq
         <span data-key={user.user_id} onClick={() => history.push("/user/" + user.user_id)}> {user.first_name} {user.last_name}</span>
         { isFollowRequest ?
         <div className='follow_request_buttons'>
-          <button className='request_accept' onClick={() => acceptFollowerRequest({accepted : true, id: user.user_id})}> Accept </button>
-          <button className='request_reject' onClick={() => rejectFollowerRequest({accepted : false, id: user.user_id})}> Decline </button>
+          <button className='green-button' onClick={() => acceptFollowerRequest({accepted : true, id: user.user_id})}> Accept </button>
+          <button className='green-button' onClick={() => rejectFollowerRequest({accepted : false, id: user.user_id})}> Decline </button>
         </div>
         : <></>
       }
