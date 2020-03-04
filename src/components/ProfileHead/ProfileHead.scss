@@ -1,6 +1,7 @@
 @import '../../common/theme/mixins.scss';
 
 .profile {
+  position: relative;
   min-height: 160px;
   padding: 28px 14px;
   border-bottom: #c9d6cd solid 1px;
@@ -8,6 +9,9 @@
     width: 80px;
     height: 80px;
     border-radius: 24px;
+    &:hover{
+      cursor: pointer;
+    }
   }
   .profile_alias {
     font-size: 24px;
@@ -29,6 +33,9 @@
     font-size: 18px;
     width: inherit;
     letter-spacing: 0.6px;
+    max-width: 400px;
+    overflow-x:hidden;
+    word-wrap: break-word;
   }
   .profile_subscribe {
     display: inline-block;

@@ -1,29 +1,31 @@
-import React, {useState} from "react"
+import React, {useState, useRef, useEffect} from "react"
 import "./PostForm.scss"
 import { connect } from 'react-redux'
 import { postMessage } from '../../actions/post.js'
 
 type Props = {
   user: { avatar: string},
-  postMessage: (message: string) => void
+  postMessage: (message: string) => void,
+  didUpdate: any
 }
 
 function mapStateToProps(state :any) {
   return {
-    user: state.session.currentUser
+    user: state.session.currentUser,
+    didUpdate: state.post.floatingPostFormIsHidden
   }
 }
 
-const PostForm = ({user, postMessage}: Props) => {
+const PostForm = ({user, postMessage, didUpdate}: Props) => {
 
   const [isFocused, setIsFocused] = useState(false);
   const [postText, setPostText] = useState("");
+  const [postSuccess, setPostSuccess] = useState(false);
+  var innerText = { __html: postText}
 
   const handleSubmit = (e: any) => {
     postMessage(postText)
     // post could fail and field would be cleared.
-    let el = document.getElementById("input")!;
-    el.innerHTML=""
     setPostText("")
   }
 

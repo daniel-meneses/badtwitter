@@ -1,9 +1,10 @@
 .post_mini_component {
+  position: relative;
   border-bottom: #c9d6cd solid 1px;
   width: 100%;
   padding: 10px;
   text-align: left;
-  overflow: auto;
+  overflow:visible;
   cursor: pointer;
   &:hover {
     background-color: rgb(240, 245, 245);

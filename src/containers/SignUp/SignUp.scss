@@ -4,3 +4,20 @@
   height: inherit;
   overflow: scroll;
 }
+
+.alt_link {
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 12px;
+  width: 500px;
+  font-size: 20px;
+  cursor: default;
+  span {
+    font-weight: 600;
+    &:hover{
+      color: green;
+      cursor: pointer;
+    }
+  }
+}

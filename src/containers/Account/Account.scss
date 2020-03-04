@@ -3,8 +3,8 @@
 $primary_green: lighten(green, 5%);
 
 .edit_container {
-  height: calc(100vh - 58px);
   padding-top: 20px;
+  overflow: scroll;
   @include respond-to('small') {
     width: 100%;
   }

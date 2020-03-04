@@ -27,6 +27,10 @@ const SignUp = ({signUp, signupError} : Props) => {
           handleLogIn={(e: any) => signUp(e, history)}
           loginFailMessage={signupError}
           />
+        <div className='alt_link'>
+          Have an account?
+          <span onClick={() => history.push('/login')}>Log in</span>
+        </div>
     </div>
   );
 }

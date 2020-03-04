@@ -1,0 +1,31 @@
+@import '../../common/layout/container.scss';
+
+.floating-image-container{
+  overflow: hidden;
+  .floating-image{
+    position: absolute;
+    top: 38px;
+    left: 38px;
+    z-index: 10;
+    img{
+      border: solid green 2px;
+      border-radius: 25px;
+      height: 300px;
+      width: 300px;
+      z-index: 1000;
+    }
+  }
+}
+
+.float-bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.isHidden{
+  display: none;
+}

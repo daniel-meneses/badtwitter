@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from "react"
 import './PostMini.scss'
 import LikeButton from '../LikeButton/LikeButton'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
+import FloatingImage from '../FloatingImageContainer/FloatingImage';
 
 type Props = {
   postId: number,
@@ -24,6 +25,7 @@ function mapStateToProps(state :any) {
 }
 
 const PostMiniComponent = ({postId, posts, users}: Props) => {
+  const [displayFloatingImage, setDisplayFloatingImage] = useState(false)
   let history = useHistory()
   let post = posts[postId];
   if (post === undefined) {
@@ -35,11 +37,14 @@ const PostMiniComponent = ({postId, posts, users}: Props) => {
   return (
       <div  className='post_mini_component'
             data-key={post.id}>
-        <img src={user.avatar} />
+        <img src={user.avatar} onClick={() => setDisplayFloatingImage(true)}/>
         <h3 data-key={post.user_id}
             onClick={() => history.push("/user/" + user.user_id)}>
               {user.first_name + " " + user.last_name}
         </h3>
+        <FloatingImage isDisplayed={displayFloatingImage}
+                       image={user.avatar}
+                       dismiss={() => setDisplayFloatingImage(false)}/>
         <p> {post.post} </p>
         <div className='post_mini_footer'>
           <LikeButton postId={post.id} />

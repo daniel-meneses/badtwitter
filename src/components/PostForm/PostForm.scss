@@ -61,10 +61,9 @@
       border-radius: 25px;
     }
   .highlighted {
-    background: lighten(green, 40%);
+    background: lighten(green, 5%);
     color: lighten(#c9d6cd, 80%);
     font-weight: 700;
-    background: green;
     opacity: 1;
     &:hover{
       cursor: pointer;

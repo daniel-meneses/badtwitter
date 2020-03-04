@@ -20,7 +20,7 @@ function mapStateToProps(state :any) {
 }
 
 const ProfileEditImageCrop = ({ src,  postImageToPresignedURL, presignedURL, avatar} : Props) => {
-  const [crop, setCrop] = useState({ aspect: 16 / 16, minWidth: 40, maxWidth: 40})
+  const [crop, setCrop] = useState({ aspect: 1 / 1, minWidth: 600, maxWidth: 2600})
   const [image, setImage] = useState(null)
   const [croppedImage, setCroppedImage] = useState()
 

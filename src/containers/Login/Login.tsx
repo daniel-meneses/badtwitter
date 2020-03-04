@@ -27,6 +27,10 @@ const Login =({loginError, login} : Props) => {
       <LoginForm
         handleLogin={handleLogin}
         errorResponse={loginError} />
+        <div className='alt_link'>
+          Need an account?
+          <span onClick={() => history.push('/signup')}> Sign up</span>
+        </div>
     </div>
     );
 }

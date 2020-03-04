@@ -11,6 +11,7 @@ import GlobalFeed from '../../components/GlobalFeed/GlobalFeed';
 import SideBar from '../../components/SideBar/SideBar';
 import FollowersList from '../../components/FollowersList/FollowersList';
 import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage'
+import PostEditable from '../../components/PostForm/PostFormEditable.js'
 
 
 function mapStateToProps(state :any) {
@@ -43,7 +44,7 @@ class Home extends React.Component<any, any> {
     return (
       <div className={'main_container'}>
         <div className={'center_container'}>
-          <h2 className={'center_container_header'}>
+          <h2 className={'center_container_header selectable'} onClick={() => this.props.history.push('/')}>
             Home
           </h2>
           <div className={'center_container_body'}>

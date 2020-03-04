@@ -89,6 +89,9 @@
   font-size: 26px;
   margin-bottom: 20px;
   text-decoration: underline;
+  &:hover{
+    cursor: default;
+  }
 }
 
 .disabled {

@@ -15,18 +15,18 @@ class Account extends React.Component<any, any> {
           <div className={'center_container'}>
             <h2 className={'center_container_header'}> Account </h2>
           <div className={'center_container_body'}>
-          <div className='edit_container'>
-          <div className='edit_item'>
-          <ProfileEditImage />
+            <div className='edit_container'>
+            <div className='edit_item'>
+              <ProfileEditImage />
             </div>
-          <div className='edit_item'>
-            <ProfileEditForm />
+            <div className='edit_item'>
+              <ProfileEditForm />
             </div>
             <button className={'logout_button'}onClick={() => logout()}>
               Log out
-              </button>
+            </button>
             </div>
-          </div>
+            </div>
           </div>
         </div>
       );

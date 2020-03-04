@@ -30,6 +30,9 @@
     cursor: pointer;
   }
   .edit_field{
+    max-width: inherit;
     padding: 16px 0 4px 0px;
+    word-wrap: break-word;
+    word-break: break-all;
   }
 }
