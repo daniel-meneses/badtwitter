@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import './FloatingPostContainer.scss'
 import { connect } from 'react-redux'
 import PostForm from '../PostForm/PostForm';
@@ -23,11 +23,6 @@ const dismissForm = () => {
 }
 
 const FloatingPostContainer = ({floatingPostFormIsHidden, postMessage, dismissForm}: Props) => {
-
-  const handleFormSubmit = (e: any) => {
-    if (e.message === "") { return }
-    postMessage(e)
-  }
 
   return (
     <div className="floating_post_form_container"

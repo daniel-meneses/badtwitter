@@ -3,7 +3,6 @@ import './Inbox.scss'
 import { connect } from 'react-redux'
 import InboxNav from '../../components/InboxNav/InboxNav'
 import InboxMessages from '../../components/InboxMessages/InboxMessages'
-import FollowRequestList from '../../components/FollowRequestList/FollowRequestList'
 import InboxFollowers from '../../components/InboxFollowers/InboxFollowers'
 import InboxSubscriptions from '../../components/InboxSubscriptions/InboxSubscriptions'
 import { getFollowers, getPendingFollowRequests } from '../../actions/followers.js'
@@ -32,6 +31,7 @@ const Inbox = ({getFollowers,
     getFollowers()
     getPendingFollowRequests()
     getAcceptedSubscriptionRequests()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
    var view = null;

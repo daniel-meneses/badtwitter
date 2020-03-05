@@ -2,7 +2,6 @@ import React from 'react'
 import './Account.scss'
 import { connect } from 'react-redux'
 import {logout} from '../../actions/session'
-import AccountNav from '../../components/AccountNav/AccountNav'
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 

@@ -12,7 +12,7 @@ const FloatingImage = ({image, isDisplayed, dismiss} : Props) => {
   return (
       <div className={isDisplayed ? 'floating-image-container' : 'isHidden' }>
         <div className='floating-image'>
-          <img src={image} />
+          <img src={image} alt={'Profile Avatar'} />
         </div>
         <div className={isDisplayed ? 'float-bg' : 'hidden'}
               onClick={dismiss}/>

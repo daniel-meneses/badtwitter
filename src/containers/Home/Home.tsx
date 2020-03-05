@@ -41,13 +41,14 @@ const Home = ({getPendingSubscriptionRequests,
               global} : Props) => {
 
   useEffect(() => {
-    getPendingSubscriptionRequests();
-    getAcceptedSubscriptionRequests();
-    getAllUserLikes();
-    getGlobalFeed();
+    getPendingSubscriptionRequests()
+    getAcceptedSubscriptionRequests()
+    getAllUserLikes()
+    getGlobalFeed()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
-   const history = useHistory();
+   const history = useHistory()
 
    var feedDisplayable = null
    const feedCount = global.timeline.length

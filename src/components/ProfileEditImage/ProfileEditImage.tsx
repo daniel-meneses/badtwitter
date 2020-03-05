@@ -1,5 +1,4 @@
 import React, {useCallback, useState} from 'react'
-import ReactCrop from 'react-image-crop'
 import {useDropzone} from 'react-dropzone'
 import 'react-image-crop/lib/ReactCrop.scss'
 import './ProfileEditImage.scss'
@@ -29,7 +28,7 @@ const ProfileEditImage = ({getPresignedUrl} : Props) => {
       }
       reader.readAsDataURL(file)
     })
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const {getRootProps, getInputProps} = useDropzone({onDrop})
 
@@ -39,7 +38,9 @@ const ProfileEditImage = ({getPresignedUrl} : Props) => {
       <div className={'uploader'} >
       <div {...getRootProps()}>
         <input {...getInputProps()} />
-        <img className={'upload_placeholder'} src={'https://images-03.s3-ap-southeast-2.amazonaws.com/upload.png'}  />
+        <img className={'upload_placeholder'}
+             src={'https://images-03.s3-ap-southeast-2.amazonaws.com/upload.png'}
+             alt={'Upload placeholder'}/>
         <div>Upload image</div>
         </div>
       </div>

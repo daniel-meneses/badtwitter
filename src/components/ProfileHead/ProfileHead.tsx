@@ -22,7 +22,10 @@ const ProfileHead = ({user} : Props) => {
     <FloatingImage isDisplayed={displayFloatingImage}
                    image={user.avatar}
                    dismiss={() => setDisplayFloatingImage(false)}/>
-      <img className='profile_avatar' src={user.avatar} onClick={() => setDisplayFloatingImage(true)}/>
+      <img className='profile_avatar'
+            src={user.avatar}
+            onClick={() => setDisplayFloatingImage(true)}
+            alt={'Profile Avatar'}/>
       <span className='profile_alias'> {user.alias} </span>
       <div className='profile_subscribe'>
         <SubscribeButton userId={user.user_id} />

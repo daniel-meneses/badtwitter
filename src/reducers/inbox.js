@@ -1,5 +1,3 @@
-import * as globals from '../constants/acts.js';
-
 const initialState = {
     focusedTab: 'Messages'
 };

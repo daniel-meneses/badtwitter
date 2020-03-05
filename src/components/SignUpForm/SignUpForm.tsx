@@ -153,7 +153,7 @@ export default function SignUpForm(props: any) {
 
   let error = null;
   let emailErrorResponse = (((props.loginFailMessage || {}).errors || {}).credential || {}).email
-  if (emailErrorResponse == "has already been taken") {
+  if (emailErrorResponse === "has already been taken") {
     error = "Email has already been taken"
   }
 

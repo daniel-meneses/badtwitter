@@ -13,15 +13,11 @@ function mapStateToProps(state :any) {
 }
 
 const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
-  const [firstName, setFirstName] = useState(currentUser.first_name);
-  const [lastName, setLastName] = useState(currentUser.last_name);
-  const [bio, setBio] = useState(currentUser.bio);
   const [editObject, setEditObject] = useState({"first_name": currentUser.first_name, "last_name": currentUser.last_name, "bio" : currentUser.bio});
   const [isFocused, setIsFocused] = useState({"first_name": false, "last_name": false, "bio" : false});
 
   const handleSubmit = (e: any) => {
       e.preventDefault();
-      console.log(editObject)
       editProfileBio(editObject)
   }
 
@@ -29,22 +25,6 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
     setEditObject({...editObject,
                 [e.target.id]: e.target.value
                 });
-  }
-
-  const handleInputOnChange = (e: any) => {
-    let value = e.target.value;
-    switch (e.target.id) {
-      case 'first_name':
-        setFirstName(value)
-        break;
-      case 'last_name':
-        setLastName(value)
-        break;
-      case 'bio':
-        setBio(value)
-        break;
-      default: console.log("Something happened");
-    }
   }
 
   const validateInputOnBlur = (e: any) => {

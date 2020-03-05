@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react"
+import React, {useState} from "react"
 import "./PostForm.scss"
 import { connect } from 'react-redux'
 import { postMessage } from '../../actions/post.js'
@@ -18,10 +18,7 @@ function mapStateToProps(state :any) {
 
 const PostForm = ({user, postMessage, didUpdate}: Props) => {
 
-  const [isFocused, setIsFocused] = useState(false);
   const [postText, setPostText] = useState("");
-  const [postSuccess, setPostSuccess] = useState(false);
-  var innerText = { __html: postText}
 
   const handleSubmit = (e: any) => {
     postMessage(postText)
@@ -38,10 +35,9 @@ const PostForm = ({user, postMessage, didUpdate}: Props) => {
   return (
     <div className="p-form">
       <div className="post_form_main">
-        <img src={user.avatar}/>
-        <div id="input" onFocus={e => setIsFocused(true)}
-                        onBlur={e => setIsFocused(false)}
-                        onInput={handleInputChange}
+        <img src={user.avatar}
+             alt={'Profile avatar'}/>
+        <div id="input" onInput={handleInputChange}
                         data-text={"What's happenning?"}
                         data-value=""
                         contentEditable>

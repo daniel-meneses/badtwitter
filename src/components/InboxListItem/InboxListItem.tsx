@@ -31,7 +31,7 @@ const InboxListItem = ({user_id, users, acceptFollowerRequest, rejectFollowerReq
 
   return (
       <div className='follow_request'>
-        <img src={user.avatar} />
+        <img src={user.avatar} alt={'Profile avatar'}/>
         <span data-key={user.user_id} onClick={() => history.push("/user/" + user.user_id)}> {user.first_name} {user.last_name}</span>
         { isFollowRequest ?
         <div className='follow_request_buttons'>

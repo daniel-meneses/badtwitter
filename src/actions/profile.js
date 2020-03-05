@@ -1,6 +1,4 @@
 import api from '../api/api.js'
-import * as act from '../constants/acts.js'
-const IMAGE_URL = 'https://images-03.s3-ap-southeast-2.amazonaws.com/'
 
 export function getPresignedUrl() {
   return dispatch => {

@@ -1,6 +1,5 @@
 import React from 'react'
 import './GlobalFeed.scss'
-import { connect } from 'react-redux'
 import PostMini from '../PostMini/PostMini'
 
 type Props = {
