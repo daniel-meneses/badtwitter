@@ -44,9 +44,7 @@ const ProfileEditImage = ({getPresignedUrl} : Props) => {
         </div>
       </div>
       :
-      <div className={"uploaded_image"}>
         <ProfileEditImageCrop src={imageSrc}/>
-      </div>
     }
     </div>
   )

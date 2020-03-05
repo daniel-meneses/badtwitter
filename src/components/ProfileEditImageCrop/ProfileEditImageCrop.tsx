@@ -63,11 +63,13 @@ const ProfileEditImageCrop = ({ src,  postImageToPresignedURL, presignedURL, ava
   }
 
   return <div>
+            <div className='uploaded_image'>
             <ReactCrop src={src}
                         crop={crop}
                         onChange={(newCrop: any) => setCrop(newCrop)}
                         onImageLoaded={(image: any) => setImage(image)}
                         onComplete={onCropComplete} />
+            </div>
             <button className='edit_pic_save' onClick={submitNewProfileImage}> Save </button>
          </div>
 }

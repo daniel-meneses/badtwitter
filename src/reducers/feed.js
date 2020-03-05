@@ -44,7 +44,6 @@ export default function (state = initialState, action) {
                     errors: null }
       }
     case feed.GET_PROFILE_FEED_SUCCESS:
-    console.log(action.response)
       return {
         ...state,
         profile: {isFetching: false,
