@@ -2,7 +2,7 @@
 
 .profile_edit_image_container {
   position: relative;
-  z-index: 100;
+  z-index: 4;
   background-color: white;
   border-radius: 10px;
   @include respond-to('small') {
