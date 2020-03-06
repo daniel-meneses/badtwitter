@@ -1,7 +1,9 @@
 import React, {useState} from "react"
 import './ProfileHead.scss'
+import { connect } from 'react-redux'
 import SubscribeButton from '../SubscribeButton/SubscribeButton'
 import FloatingImage from '../FloatingImageContainer/FloatingImage';
+import { useHistory } from 'react-router-dom'
 
 
 type Props = {
@@ -11,11 +13,20 @@ type Props = {
           first_name: string,
           last_name: string,
           bio: string
-    }
+    },
+  currentUserId: number
 }
 
-const ProfileHead = ({user} : Props) => {
+function mapStateToProps(state: any) {
+  let currentUser = state.session.currentUser
+  return {
+    currentUserId: currentUser.user_id
+  }
+}
+
+const ProfileHead = ({user, currentUserId} : Props) => {
   const [displayFloatingImage, setDisplayFloatingImage] = useState(false)
+  const history = useHistory()
 
   return (
     <div className={'profile'}>
@@ -28,8 +39,13 @@ const ProfileHead = ({user} : Props) => {
             alt={'Profile Avatar'}/>
       <span className='profile_alias'> {user.alias} </span>
       <div className='profile_subscribe'>
+        { currentUserId == user.user_id ?
+          <button className='subscribe_request_button' onClick={() => history.push('/account')}> Edit Profile </button>
+            :
         <SubscribeButton userId={user.user_id} />
+        }
       </div>
+
       <div className='profile_bio_container'>
         <div className='profile_full_name'> {user.first_name + " " + user.last_name} </div>
         <div className='profile_bio'>{user.bio}</div>
@@ -38,4 +54,4 @@ const ProfileHead = ({user} : Props) => {
   );
 }
 
-export default ProfileHead;
+export default connect(mapStateToProps, {})(ProfileHead);
