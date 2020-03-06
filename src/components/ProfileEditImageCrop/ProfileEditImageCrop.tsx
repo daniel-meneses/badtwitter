@@ -3,13 +3,12 @@ import ReactCrop from 'react-image-crop'
 import './ProfileEditImageCrop.scss'
 import { connect } from 'react-redux'
 import 'react-image-crop/lib/ReactCrop.scss'
-import { postImageToPresignedURL } from '../../actions/profile.js'
 
 type Props = {
   src: string,
-  postImageToPresignedURL: (e: string, a: any) => void,
   presignedURL: string,
-  avatar: string
+  avatar: string,
+  handleSubmit: (presignedURL: any, croppedImage: any) => void
 }
 
 function mapStateToProps(state :any) {
@@ -19,10 +18,16 @@ function mapStateToProps(state :any) {
    }
 }
 
-const ProfileEditImageCrop = ({ src,  postImageToPresignedURL, presignedURL, avatar} : Props) => {
-  const [crop, setCrop] = useState({ aspect: 1 / 1, minWidth: 600, maxWidth: 2600})
-  const [image, setImage] = useState(null)
+const ProfileEditImageCrop = ({ src, presignedURL, avatar, handleSubmit} : Props) => {
+  const [crop, setCrop] = useState({aspect: 1/1, minWidth: 200, height: 300, width: 300})
+  const [image, setImage] = useState()
   const [croppedImage, setCroppedImage] = useState()
+
+  var style = {}
+  if (image !== undefined) {
+      style = {height: image.height,
+               width: image.width}
+  }
 
   function onCropComplete(crop: any) {
     if (image && crop.width && crop.height) {
@@ -57,21 +62,21 @@ const ProfileEditImageCrop = ({ src,  postImageToPresignedURL, presignedURL, ava
   }
 
   function submitNewProfileImage() {
-    const formData = new FormData()
-    formData.append('avatar', src)
-    postImageToPresignedURL(presignedURL, croppedImage)
+    handleSubmit(presignedURL, croppedImage)
   }
 
-  return <div>
-            <div className='uploaded_image'>
-            <ReactCrop src={src}
-                        crop={crop}
-                        onChange={(newCrop: any) => setCrop(newCrop)}
-                        onImageLoaded={(image: any) => setImage(image)}
-                        onComplete={onCropComplete} />
+  return <div id='uploaded_image'>
+            <div>
+                <ReactCrop src={src}
+                            style={style}
+                            crop={crop}
+                            keepSelection={true}
+                            onChange={(newCrop: any) => setCrop(newCrop)}
+                            onImageLoaded={(image: any) => setImage(image)}
+                            onComplete={onCropComplete} />
             </div>
             <button className='edit_pic_save' onClick={submitNewProfileImage}> Save </button>
          </div>
 }
 
-export default connect(mapStateToProps, {postImageToPresignedURL})(ProfileEditImageCrop);
+export default connect(mapStateToProps, {})(ProfileEditImageCrop);

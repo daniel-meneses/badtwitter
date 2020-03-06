@@ -72,6 +72,12 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
                 });
   }
 
+  const disableSubmit = (editObject.first_name === currentUser.first_name &&
+                              editObject.last_name === currentUser.last_name &&
+                              editObject.bio === currentUser.bio)
+  const buttonStyle = {diabled: disableSubmit}
+  console.log(disableSubmit)
+
   return (
     <form onSubmit={handleSubmit} className='profile_edit_form'>
       <div className='edit_form_field_container'>
@@ -109,7 +115,7 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
             onFocus={e => setFocus(e.target.id, true)}
           />
       <div className='form_submit'>
-        <button type="submit" className='green-button' onClick={handleSubmit}>Submit</button>
+        <button type="submit" className={disableSubmit ? 'hide' : 'green-button'} onClick={handleSubmit}>Submit</button>
         </div>
         </div>
     </form>

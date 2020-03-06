@@ -71,7 +71,6 @@ export default function (state = initialState, action) {
       }
     case follow.ACCEPT_FOLLOW_REQUEST_SUCCESS:
         const { [Object.keys(action.response.follow)[0]] : user_id, ...pendingFollowRequests} = state.pending.followRequests
-        console.log(pendingFollowRequests)
       return {
         ...state,
         pending: {

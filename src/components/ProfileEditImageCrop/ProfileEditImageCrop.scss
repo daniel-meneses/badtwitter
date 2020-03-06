@@ -1,17 +1,26 @@
+.ReactCrop {
+  width: auto;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+}
+
+#uploaded_image {
+  position: relative;
+  background: #FFFAF0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.ReactCrop__image {
+  max-height: 550px;
+  max-width: 550px;
+}
+
 .edit_pic_save {
   display: block;
   font-size: 18px;
   width: 180px;
-  margin: 12px auto;
-  overflow: scroll;
+  margin: 10px auto;
   cursor: pointer;
-}
-
-.ReactCrop {
-  overflow: scroll;
-  max-width: 2200px;
-}
-.ReactCrop__image {
-  max-width: 800px;
-  max-height: 800px;
 }
