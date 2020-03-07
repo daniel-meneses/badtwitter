@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import LikeButton from '../LikeButton/LikeButton'
 import FloatingImage from '../FloatingImageContainer/FloatingImage';
+import isEmpty from 'lodash/isEmpty'
 
 type Props = {
   postId: number,
@@ -24,8 +25,8 @@ type Props = {
 
 function mapStateToProps(state :any, ownProps: any) {
   const global = state.globalObject
-  const post = global.posts[ownProps.postId]
-  const user = global.users[post.user_id]
+  const post = global.posts[ownProps.postId] || {}
+  const user = global.users[post.user_id] || {}
   return {
     post: post,
     user: user
@@ -35,10 +36,12 @@ function mapStateToProps(state :any, ownProps: any) {
 const PostMiniComponent = ({postId, post, user}: Props) => {
   const [displayFloatingImage, setDisplayFloatingImage] = useState(false)
   let history = useHistory()
-  if (post === undefined || user===undefined) {
+
+  if (isEmpty(post) || isEmpty(user)) {
     return <></>
   }
-  var timeStamp = moment(post.created).format("MMM Do LT");;
+
+  let timeStamp = moment(post.created).format("MMM Do LT");;
 
   return (
       <div className='post_mini_component' data-key={post.id}>

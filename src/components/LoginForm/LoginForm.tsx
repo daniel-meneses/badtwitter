@@ -54,8 +54,8 @@ const LoginForm = ({handleLogin, errorResponse} : Props) => {
   }
 
   const validatePassword = (value: string) => {
-    if (value.length < 8 ){
-      setPasswordWarning("Password must be at least 8 characters")
+    if (value.length < 6 ){
+      setPasswordWarning("Minimum 6 characters")
     } else if (value.length > 30 ){
       setPasswordWarning("Password must be less than 30 characters")
     } else {

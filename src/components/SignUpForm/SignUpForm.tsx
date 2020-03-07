@@ -83,8 +83,8 @@ export default function SignUpForm(props: any) {
   }
 
   const validateAlias = (value: string) => {
-    if (!/^[A-Za-z ]+$/.test(value)) {
-      setAliasWarning("Must contain letters only")
+    if (!/^[A-Za-z0-9 ]+$/.test(value)) {
+      setAliasWarning("Must contain letters & numbers only")
     } else if (value.charAt(0) === " ") {
       setAliasWarning("Alias cannot start with space")
     } else {
@@ -122,8 +122,8 @@ export default function SignUpForm(props: any) {
   }
 
   const validatePassword = (value: string) => {
-    if (value.length < 8 ){
-      setPasswordWarning("Minimum 8 characters")
+    if (value.length < 6 ){
+      setPasswordWarning("Minimum 6 characters")
     } else if (value.length > 30 ){
       setPasswordWarning("Maximum 30 characters")
     } else {
@@ -151,10 +151,14 @@ export default function SignUpForm(props: any) {
     }
   }
 
-  let error = null;
-  let emailErrorResponse = (((props.loginFailMessage || {}).errors || {}).credential || {}).email
-  if (emailErrorResponse === "has already been taken") {
-    error = "Email has already been taken"
+  let errorMessage = null;
+  let error = (props.loginFailMessage || {}).errors
+  if (error !== undefined) {
+    if (error.alias) {
+      errorMessage = "Alias has already been taken"
+    }  else if (error.credential) {
+      errorMessage = "Email has already been taken"
+    }
   }
 
   let submitEnabled = !Object.values(signupObject).includes("")
@@ -242,7 +246,7 @@ export default function SignUpForm(props: any) {
     </div>
     <div className='input-submit-field'>
       <input className={submitEnabled? 'signup-submit-button enabled' : 'signup-submit-button disabled'} disabled={!submitEnabled} type="submit" value="Submit" />
-      <div className='login_fail_message'>{error}</div>
+      <div className='login_fail_message'>{errorMessage}</div>
     </div>
     </form>
   );

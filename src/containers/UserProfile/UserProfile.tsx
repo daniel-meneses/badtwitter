@@ -9,13 +9,17 @@ import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage
 
 type Props = {
   users: { [index: string] : {} },
-  profiles: {timeline: Array<number>}
+  profiles: {timeline: Array<number>},
+  isFetching: boolean,
+  errors: null | string
 };
 
 function mapStateToProps(state :any) {
   return {
     users: state.globalObject.users,
-    profiles: state.feed.profiles
+    profiles: state.feed.profiles,
+    isFetching: state.feed.profile.isFetching,
+    error: state.feed.profile.errors
   }
 }
 
@@ -30,33 +34,27 @@ class UserProfile extends React.Component<any, any> {
     }
 
     public render() {
-      let { users, profiles, match} = this.props;
-      let user = users[match.params.id]
-      let profile = profiles[match.params.id]
-
+      let { users, profiles, match, isFetching, error} = this.props;
+      let user = users[match.params.id] || {}
+      let profile = profiles[match.params.id] || {}
       var profileTitle = "";
       var profileHead = null;
       var profileFeed = null;
 
       // display user from memory
-      if (user !== undefined) {
+      if (user.alias) {
         profileHead = <ProfileHead user={user}/>
         profileTitle = user.alias
       }
 
-      if (profile === undefined) {
-        return <></>
-      }
 
-      // profile error handling
-      if (profile === undefined) {
-        return <div></div>
-      } else if (profile.isFetching) {
-        profileFeed = <div className='some_loading_icon'>Some fetching component</div>
-      } else if (profile.errors === 'Not Found') {
-        profileFeed = <EmptyListMessage message={"User does not exist!"} />
-      } else if (profile.errors) {
-        profileFeed = <EmptyListMessage message={"Something went wrong!"} />
+      if (isFetching && !profile.timeline) {
+        profileFeed = <EmptyListMessage message={"Fetching"} />
+      } else if (isFetching && profile.timeline) {
+        // need to show small loading spinner
+        profileFeed = <ProfileFeed profileTimeline={profile.timeline}/>
+      } else if (error || !profile.timeline) {
+        profileFeed = <EmptyListMessage message={"An error has occurred please refresh"} />
       } else if (profile.timeline.length === 0) {
         profileFeed = <EmptyListMessage message={"User has no posts!"} />
       } else {

@@ -70,7 +70,7 @@ export default function (state = initialState, action) {
         }
       }
     case follow.ACCEPT_FOLLOW_REQUEST_SUCCESS:
-        const { [Object.keys(action.response.follow)[0]] : user_id, ...pendingFollowRequests} = state.pending.followRequests
+      const { [Object.keys(action.response.follow)[0]] : user_id, ...pendingFollowRequests} = state.pending.followRequests
       return {
         ...state,
         pending: {
@@ -81,10 +81,11 @@ export default function (state = initialState, action) {
         }
       }
     case follow.REJECT_FOLLOW_REQUEST_SUCCESS:
+      const { [Object.keys(action.response.follow)[0]] : id, ...pendingFollowRequests2} = state.pending.followRequests
       return {
         ...state,
         pending: {
-          followRequests: state.followers.pending.followRequests.filter(req => Object.keys(req).map(Number)[0] !== action.response.followers.user_id),
+          followRequests: pendingFollowRequests2,
         }
       }
     default:
