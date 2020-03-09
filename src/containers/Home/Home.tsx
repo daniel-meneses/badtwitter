@@ -80,8 +80,8 @@ const Home = ({getPendingSubscriptionRequests,
    return (
      <div className={'main_container'}>
        <div className={'center_container'}>
-         <h2 className={'center_container_header selectable'} onClick={() => history.push('/')}>
-           Home
+         <h2 className={'center_container_header'}>
+           <span className={'selectable'} onClick={() => history.push('/')}>Home</span>
          </h2>
 
        <div className={'center_container_body'}>
