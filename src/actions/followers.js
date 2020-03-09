@@ -4,7 +4,7 @@ import * as follow from '../constants/acts.js';
 export function getFollowers() {
   return dispatch => {
     dispatch({ type: follow.GET_ACCEPTED_FOLLOWERS })
-    api.fetch('/user_device/follower', {accepted: true})
+    api.fetch('/follower', {accepted: true})
       .then((response) => {
         dispatch({ type: follow.APPEND_NEW_USERS, response });
         dispatch({ type: follow.GET_ACCEPTED_FOLLOWERS_SUCCESS, response })
@@ -18,7 +18,7 @@ export function getFollowers() {
 export function getPendingFollowRequests() {
   return dispatch => {
     dispatch({ type: follow.GET_PENDING_FOLLOW_REQUESTS })
-    api.fetch('/user_device/follower', {accepted: "false"})
+    api.fetch('/follower', {accepted: "false"})
     .then((response) => {
       dispatch({ type: follow.APPEND_NEW_USERS, response });
       dispatch({ type: follow.GET_PENDING_FOLLOW_REQUESTS_SUCCESS, response });
@@ -33,7 +33,7 @@ export function getPendingFollowRequests() {
 export function acceptFollowerRequest(data) {
   return dispatch => {
     dispatch({ type: follow.ACCEPT_FOLLOW_REQUEST })
-    api.post('/user_device/follower', data)
+    api.post('/follower', data)
     .then((response) => {
       dispatch({ type: follow.ACCEPT_FOLLOW_REQUEST_SUCCESS, response})
       dispatch({ type: follow.APPEND_NEW_USERS, response})
@@ -48,7 +48,7 @@ export function acceptFollowerRequest(data) {
 export function rejectFollowerRequest(data) {
   return dispatch => {
     dispatch({ type: follow.REJECT_FOLLOW_REQUEST })
-    api.post('/user_device/follower', data)
+    api.post('/follower', data)
     .then((response) => {
       dispatch({ type: follow.REJECT_FOLLOW_REQUEST_SUCCESS, response})
     })

@@ -18,8 +18,8 @@ function mapStateToProps(state :any) {
   return {
     users: state.globalObject.users,
     profiles: state.feed.profiles,
-    isFetching: state.feed.profile.isFetching,
-    error: state.feed.profile.errors
+    isFetching: (state.feed.profile || {}).isFetching,
+    error: (state.feed.profile || {}).errors
   }
 }
 

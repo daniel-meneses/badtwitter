@@ -19,6 +19,13 @@ const store = createStore(
 store.subscribe(throttle(() => {
   var state = store.getState();
   console.log(state)
+  /* Issues caused when saveStateToLoad run after logging out.
+     On logout, current user cleared and isAuthenticated = false.
+     Check isAuthenticated = false to stop saveState after logout.
+  */
+  if (!state.session.isAuthenticated) {
+    return
+  }
   saveStateToLocal({
     feed: { global : { timeline : state.feed.global.timeline },
             profiles : state.feed.profiles,
@@ -34,7 +41,8 @@ store.subscribe(throttle(() => {
                   },
     followers: state.followers,
     likes: { likedPostIds: state.likes.likedPostIds },
-    session: { currentUser: state.session.currentUser },
+    session: { currentUser: state.session.currentUser,
+               isAuthenticated: state.session.isAuthenticated},
     globalObject: { users: state.globalObject.users,
                     posts: state.globalObject.posts
                   }

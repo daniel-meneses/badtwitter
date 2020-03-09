@@ -147,7 +147,6 @@ export default function SignUpForm(props: any) {
 
   const enableRegisterButton = () => {
     if (Object.values(signupObject).includes("") || firstNameWarning || lastNameWarning || emailWarning || passwordWarning || confirmationWarning) {
-      console.log("disable")
     }
   }
 

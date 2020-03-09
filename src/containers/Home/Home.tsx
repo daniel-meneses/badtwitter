@@ -69,10 +69,12 @@ const Home = ({getPendingSubscriptionRequests,
      }
    }
 
-   if (!global.errors && !feedCount) {
-     feedDisplayable = <EmptyListMessage message={"No post to display."} />
-   } else {
-     feedDisplayable = <GlobalFeed globalTimeline={global.timeline}/>
+   if (!global.errors) {
+     if (!feedCount) {
+       feedDisplayable = <EmptyListMessage message={"No post to display."} />
+     } else {
+       feedDisplayable = <GlobalFeed globalTimeline={global.timeline}/>
+    }
    }
 
    return (

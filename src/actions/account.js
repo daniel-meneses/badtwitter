@@ -3,7 +3,7 @@ import api from '../api/api.js'
 export function getPresignedUrl() {
   return dispatch => {
     dispatch({ type: "FETCH_PRESIGNED_URL" })
-    api.post('/accounts/avatar')
+    api.fetch('/accounts/user/avatar/presigned')
     .then((response) => {
       dispatch({ type: "FETCH_PRESIGNED_URL_SUCCESS", response })
     })
@@ -20,7 +20,7 @@ export function postImageToPresignedURL(url, data) {
     .then((response) => {
       dispatch({ type: "UPLOAD_NEW_AVATAR_SUCCESS", data });
       let imgData = {image : url.split("?")[0]}
-      api.post('/accounts/avatar', imgData)
+      api.post('/accounts/user/avatar', imgData)
           .then((response) => {
                 dispatch({ type: "SAVE_NEW_AVATAR_SUCCESS", response });
                 })
@@ -34,7 +34,7 @@ export function postImageToPresignedURL(url, data) {
 
 export function saveNewProfileImage(data) {
   return dispatch => {
-    api.post('/accounts/avatar', data)
+    api.post('/accounts/user/avatar/update', data)
     .then((response) => {
       dispatch({ type: "SAVE_NEW_AVATAR_SUCCESS", response });
     })

@@ -3,7 +3,7 @@ import {useDropzone} from 'react-dropzone'
 import 'react-image-crop/lib/ReactCrop.scss'
 import './ProfileEditImage.scss'
 import { connect } from 'react-redux'
-import { getPresignedUrl, postImageToPresignedURL } from '../../actions/profile'
+import { getPresignedUrl, postImageToPresignedURL } from '../../actions/account'
 import ProfileEditImageCrop from '../ProfileEditImageCrop/ProfileEditImageCrop'
 
 type Props = {

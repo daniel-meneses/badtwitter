@@ -22,9 +22,9 @@ export default function (state = initialState, action) {
         currentUser: Object.values(action.response.users)[0],
       };
     case session.AUTHENTICATION_FAILURE:
-    console.log(action.error)
       return {
         ...state,
+        isAuthenticated: false,
         willAuthenticate: false,
         error: action.error
       };

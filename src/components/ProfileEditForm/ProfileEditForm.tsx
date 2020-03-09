@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { connect } from 'react-redux'
 import './ProfileEditForm.scss'
-import {editProfileBio} from '../../actions/profile.js'
+import {editProfileBio} from '../../actions/account.js'
 
 type Props = {
   currentUser: any,
@@ -76,7 +76,6 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
                               editObject.last_name === currentUser.last_name &&
                               editObject.bio === currentUser.bio)
   const buttonStyle = {diabled: disableSubmit}
-  console.log(disableSubmit)
 
   return (
     <form onSubmit={handleSubmit} className='profile_edit_form'>

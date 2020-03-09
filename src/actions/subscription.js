@@ -2,7 +2,7 @@ import api from '../api/api.js';
 import * as sub from '../constants/acts.js';
 
 export function getPendingSubscriptionRequests(data) {
-  return dispatch => api.fetch('/user_device/subscription?accepted=false', data)
+  return dispatch => api.fetch('/subscription?accepted=false', data)
     .then((response) => {
       dispatch({ type: sub.APPEND_NEW_USERS, response });
       dispatch({ type: sub.GET_PENDING_SUBSCRIPTION_REQUESTS_SUCCESS, response });
@@ -13,7 +13,7 @@ export function getPendingSubscriptionRequests(data) {
 }
 
 export function getAcceptedSubscriptionRequests(data) {
-  return dispatch => api.fetch('/user_device/subscription?accepted=true', data)
+  return dispatch => api.fetch('/subscription?accepted=true', data)
     .then((response) => {
       dispatch({ type: sub.APPEND_NEW_USERS, response });
       dispatch({ type: sub.GET_ACCEPTED_SUBSCRIPTION_REQUESTS_SUCCESS, response });
@@ -24,7 +24,7 @@ export function getAcceptedSubscriptionRequests(data) {
 }
 
 export function postSubscriptionRequest(data) {
-  return dispatch => api.post('/user_device/subscription', {user_id: data})
+  return dispatch => api.post('/subscription', {user_id: data})
     .then((response) => {
       dispatch({ type: sub.APPEND_NEW_USERS, response });
       dispatch({ type: "APPEND_PENDING_SUB_REQUEST", response });
@@ -35,7 +35,7 @@ export function postSubscriptionRequest(data) {
 }
 
 export function deleteSubscription(data) {
-  return dispatch => api.delete('/user_device/subscription/delete', data)
+  return dispatch => api.delete('/subscription/delete', data)
     .then((response) => {
       dispatch({ type: sub.UPDATE_FOLLOWER_REQUESTS_SUCCESS, response})
       console.log(response)

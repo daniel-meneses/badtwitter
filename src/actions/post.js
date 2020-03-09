@@ -4,7 +4,7 @@ import * as sharedAction from '../constants/acts.js';
 export function postMessage(message) {
   var data = {message: message}
   console.log(data)
-  return dispatch => api.post('/user_device/post', data)
+  return dispatch => api.post('/post', data)
     .then((response) => {
       console.log(response)
       dispatch({type: 'HIDE_FLOATING_POST_FORM' })

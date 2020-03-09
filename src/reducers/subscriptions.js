@@ -49,7 +49,6 @@ export default function(state = initialState, action) {
               }
             }
     case sub.GET_ACCEPTED_SUBSCRIPTION_REQUESTS_SUCCESS:
-    console.log(action.response)
       return { ...state,
                 accepted: {
                 subscriptionRequests: action.response.subscriptions,

@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
         presigned_Url: {
           url: "",
           isFetching: false,
-          error: action.response.error
+          error: (action.response || {}).error
          }
       };
       case "UPLOAD_NEW_AVATAR":
