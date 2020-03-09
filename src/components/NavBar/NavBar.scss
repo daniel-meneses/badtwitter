@@ -38,14 +38,15 @@ $primary_green: lighten(green, 5%);
   }
   @include respond-to('mobile') {
     position: fixed;
-    bottom: 0;
+    bottom: -1px;
     flex-direction: row;
-    max-height: 64px;
+    max-height: 48px;
     background-color: white;
     border-top: #c9d6cd solid 1px;
     z-index: 4;
     .nav_bar_text { display: none;}
     .nav_post_button { display: none;}
+    .navbar_item { padding: 0; }
   }
   @include respond-to('small') {
     position: relative;
@@ -61,6 +62,8 @@ $primary_green: lighten(green, 5%);
     .nav_bar_post_icon_container {
       #nav_post { left: 3%;}
     }
+    .navbar_item { padding: 6px 0px; }
+
   }
   @include respond-to('medium') {
     width: 88px;
@@ -165,7 +168,7 @@ $primary_green: lighten(green, 5%);
   .display_for_mobile{
     position: fixed;
     max-width: 52px;
-    bottom: 58px;
+    bottom: 50px;
     right: 8px;
   }
 }

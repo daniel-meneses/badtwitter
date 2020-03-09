@@ -1,7 +1,16 @@
+@import '../../common/theme/mixins.scss';
+
+
 
 .inbox_nav_container {
   display: flex;
   font-size: 17px;
+  @include respond-to('small') {
+    position: fixed;
+  }
+  @include respond-to('medium') {
+    position: relative;
+  }
   .inbox_nav_item {
     display: flex;
     flex: 1;

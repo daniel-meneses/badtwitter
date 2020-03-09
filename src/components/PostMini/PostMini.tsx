@@ -46,14 +46,16 @@ const PostMiniComponent = ({postId, post, user}: Props) => {
   return (
       <div className='post_mini_component' data-key={post.id}>
         <img src={user.avatar} onClick={() => setDisplayFloatingImage(true)} alt={'Profile avatar'}/>
-        <h3 data-key={post.user_id}
+        <span
+            className='post-mini-username'
+            data-key={post.user_id}
             onClick={() => history.push("/user/" + user.user_id)}>
             {user.first_name + " " + user.last_name}
-        </h3>
+        </span>
         <FloatingImage isDisplayed={displayFloatingImage}
                        image={user.avatar}
                        dismiss={() => setDisplayFloatingImage(false)}/>
-        <p> {post.post} </p>
+        <p className='post_mini_content'> {post.post} </p>
         <div className='post_mini_footer'>
           <LikeButton postId={post.id} />
           <span>{timeStamp} </span>

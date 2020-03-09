@@ -2,7 +2,7 @@
 .new_post_form {
   background: lighten(#c9d6cd, 10%);
   padding-bottom: 6px;
-  @include respond-to('small') {
+  @include respond-to('mobile') {
     display: none;
   }
   @include respond-to('medium') {
