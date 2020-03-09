@@ -1,4 +1,6 @@
-const API = 'http://localhost:4000/api/v1';
+//const API = 'http://localhost:4000/api/v1';
+const API = 'http://still-shelf-30581.herokuapp.com/api/v1'
+
 function headers(url) {
   var token = ""
   var tokenType = ""
