@@ -65,7 +65,11 @@ const Home = ({getPendingSubscriptionRequests,
      if (!feedCount) {
        feedDisplayable = <EmptyListMessage message={"Show big error message."} />
      } else {
-       feedDisplayable = <EmptyListMessage message={"Show available feed + small error message"} />
+       feedDisplayable = <div>
+          <EmptyListMessage message={"An error occurred please try again"} />
+          <div className={'divider'}> </div>
+          <GlobalFeed globalTimeline={global.timeline}/>
+            </div>
      }
    }
 
