@@ -231,7 +231,7 @@ export default function SignUpForm(props: any) {
         <span className={'input-warning'} hidden={!passwordWarning}>{passwordWarning}</span>
     </div>
     <div className='signup-input'>
-      <span id={isFocused.password_confirmation ? "isFocused" : "notFocused"}>Password Confirmation</span>
+      <span id={isFocused.password_confirmation ? "isFocused" : "notFocused"}>Confirmation</span>
         <input
           id='password_confirmation'
           value={signupObject.password_confirmation}
