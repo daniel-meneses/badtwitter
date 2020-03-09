@@ -18,7 +18,7 @@ const store = createStore(
 // https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
 store.subscribe(throttle(() => {
   var state = store.getState();
-  console.log(state)
+  //console.log(state)
   /* Issues caused when saveStateToLoad run after logging out.
      On logout, current user cleared and isAuthenticated = false.
      Check isAuthenticated = false to stop saveState after logout.

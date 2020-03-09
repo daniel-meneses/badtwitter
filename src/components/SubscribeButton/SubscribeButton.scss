@@ -18,6 +18,10 @@
   }
   @include respond-to('small') {
     width: 60px;
+    white-space: pre-wrap;
+    // this is so stupid
+    overflow: hidden;
+    padding-top: 5px;
     .request_icon{
       margin-left: 8px;
       display: block;
@@ -28,6 +32,7 @@
   }
   @include respond-to('medium') {
     width: 100px;
+    padding-top: 0px;
     .request_icon{
       display: none;
     }
@@ -39,6 +44,7 @@
     width: 100px;
   }
 }
+
 
 .is_requested {
   opacity: 0.4;
