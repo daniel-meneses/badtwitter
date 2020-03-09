@@ -27,7 +27,7 @@ const NavBar = ({user, dispatch} : Props) => {
 
   return (
       <nav className='nav_bar'>
-      <div className='navbar_item'>
+      <div className='navbar_item remove_for_mobile'>
       <span className='navbar_content' onClick={() => history.push('/')}>
           <svg className='logo' viewBox='0 0 22 22' fill='green'>
               <g>
@@ -54,7 +54,7 @@ const NavBar = ({user, dispatch} : Props) => {
              }
              </svg>
             <span className={isHome ? 'focus_green' : ''}><span className={'nav_bar_text'}>Home</span></span></span></div>
-        <div className='navbar_item'
+        <div className='navbar_item '
              onClick={() => history.push('/explore')}>
              <span className='navbar_content'>
              <svg viewBox='0 0 25 25' stroke={isExplore ? "green" : "black"} strokeWidth={isExplore ? "1.4px" : "0.3px"}>
@@ -83,7 +83,7 @@ const NavBar = ({user, dispatch} : Props) => {
              }
              </svg>
              <span className={isInbox ? 'focus_green' : ''}><span className={'nav_bar_text'}>Inbox</span></span></span></div>
-        <div className='navbar_item'
+        <div className='navbar_item remove_for_mobile'
              onClick={() => history.push('/user/' + user.user_id)}>
              <span className='navbar_content'>
              <svg viewBox='0 0 24 24' stroke={isProfile ? 'green' : 'black'} strokeWidth={isProfile ? "0.8px" : "0.2px"}>
@@ -111,7 +111,7 @@ const NavBar = ({user, dispatch} : Props) => {
                 </span>
               </span>
         </div>
-        <div className='navbar_item'
+        <div className='navbar_item display_for_mobile'
              onClick={() => dispatch({type: 'DISPLAY_FLOATING_POST_FORM' })}>
              <button className='nav_post_button'>New Post</button>
              <div className='nav_bar_post_icon_container'>

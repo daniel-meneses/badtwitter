@@ -4,9 +4,10 @@ import { connect } from 'react-redux'
 import { logout } from '../../actions/session'
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
+import { useHistory } from 'react-router-dom'
 
 type Props = {
-  logout: () => void,
+  logout: (history: any) => void,
   currentUser: any
 }
 
@@ -17,6 +18,8 @@ function mapStateToProps(state: any) {
 }
 
 const Account = ({logout, currentUser} : Props) => {
+  const history = useHistory();
+
   return (
     <div className={'main_container'}>
       <div className={'center_container'}>
@@ -31,7 +34,7 @@ const Account = ({logout, currentUser} : Props) => {
           <div className='edit_item'>
             <ProfileEditForm />
           </div>
-          <button className={'logout_button'}onClick={() => logout()}>
+          <button className={'logout_button'}onClick={() => logout(history)}>
             Log out
           </button>
         </div>

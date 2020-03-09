@@ -2,6 +2,12 @@
 @import '../../common/layout/container.scss';
 @import '../../common/layout/resets.scss';
 
-.some_loading_icon {
-  
+
+.App{
+  @include respond-to('mobile') {
+    max-width: 500px;
+  }
+  @include respond-to('small') {
+    max-width: inherit;
+  }
 }

@@ -34,10 +34,24 @@ $primary_green: lighten(green, 5%);
                     align-items: center;
                     width: 100%;
                     margin: 0 auto;
-                    padding: 10px;}
+                    padding: 10px;
+  }
+  @include respond-to('mobile') {
+    position: fixed;
+    bottom: 0;
+    flex-direction: row;
+    max-height: 64px;
+    background-color: white;
+    border-top: #c9d6cd solid 1px;
+    z-index: 4;
+    .nav_bar_text { display: none;}
+    .nav_post_button { display: none;}
+  }
   @include respond-to('small') {
+    position: relative;
     width: 68px;
     padding: 0px 4px;
+    flex-direction: column;
     .post_item{ margin-left: 0px;
                 width: 58px;
                 background: $primary_green;
@@ -54,7 +68,6 @@ $primary_green: lighten(green, 5%);
     .post_item{ margin-left: -4px;
                 width: 58px;}
     .nav_bar_text { display: none;}
-    .navbar_item { width: auto; }
     .navbar_item { width: auto; }
     .nav_bar_post_icon_container {
       #nav_post { left: -8%;}
@@ -140,7 +153,34 @@ $primary_green: lighten(green, 5%);
     transition: color 0.2s linear;
     color: green;
   }
+  @include respond-to('mobile') {
+    max-height: 100px;
+  }
 }
+
+@include respond-to('mobile') {
+  .remove_for_mobile {
+    display: none;
+  }
+  .display_for_mobile{
+    position: fixed;
+    max-width: 52px;
+    bottom: 58px;
+    right: 8px;
+  }
+}
+@include respond-to('small') {
+  .remove_for_mobile {
+    display: flex;
+  }
+  .display_for_mobile{
+    position: relative;
+    bottom: 0;
+    right: 0;
+    max-width: 295px;
+  }
+}
+
 
 .nav_post_button {
   width: 195px;

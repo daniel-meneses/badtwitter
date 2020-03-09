@@ -17,7 +17,7 @@
     font-size: 24px;
   }
   .profile_full_name {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 300;
   }
   .profile_bio_container {
@@ -30,10 +30,11 @@
     }
   }
   .profile_bio {
+    padding-top: 6px;
     font-size: 18px;
     width: inherit;
     letter-spacing: 0.6px;
-    max-width: 400px;
+    max-width: 430px;
     overflow-x:hidden;
     word-wrap: break-word;
   }
