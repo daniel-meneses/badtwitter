@@ -37,14 +37,16 @@ export function signUp(data, history) {
 }
 
 export function logout() {
+  localStorage.clear();
+  dispatch({ type: act.LOGOUT });
+  window.location = "/signup";
   return dispatch => api.delete('/accounts/session/logout')
     .then(() => {
-      localStorage.clear();
-      dispatch({ type: act.LOGOUT });
-      window.location = "/signup";
+      // this doesn't really matter, /logout
+      // functionaly does nothing.
     })
     .catch((err) => {
-      window.location = "/signup";
+      // doesn't matter.
     })
 }
 
