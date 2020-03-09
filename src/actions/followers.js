@@ -25,7 +25,6 @@ export function getPendingFollowRequests() {
     })
     .catch((e) => {
       dispatch({ type: follow.GET_PENDING_FOLLOW_REQUESTS_FAILURE, e });
-      console.log(e)
     });
   }
 }
@@ -40,7 +39,6 @@ export function acceptFollowerRequest(data) {
     })
     .catch((e) => {
       dispatch({ type: follow.ACCEPT_FOLLOW_REQUEST_FAILURE, e})
-      console.log(e)
     });
   }
 }
@@ -54,7 +52,6 @@ export function rejectFollowerRequest(data) {
     })
     .catch((e) => {
       dispatch({ type: follow.REJECT_FOLLOW_REQUEST_FAILURE, e})
-      console.log(e)
     });
   }
 }

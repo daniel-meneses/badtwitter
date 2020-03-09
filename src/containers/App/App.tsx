@@ -30,14 +30,6 @@ class App extends React.Component<any, any> {
     }
   }
 
-  handleNavLogoClick = () => {
-    console.log("You clicked on logo!")
-  }
-
-  handleSettingsClick = () => {
-    console.log("You clicked on settings!")
-  }
-
   render() {
     let token = localStorage.getItem('token_refresh')
       return (

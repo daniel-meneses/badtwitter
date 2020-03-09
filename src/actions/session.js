@@ -27,7 +27,6 @@ export function login(data, history) {
 export function signUp(data, history) {
   return dispatch => api.post('/accounts/user', data)
     .then((response) => {
-      console.log(response)
       setCurrentUser(dispatch, response);
       history.push('/');
       })

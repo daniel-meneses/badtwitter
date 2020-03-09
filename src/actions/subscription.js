@@ -38,7 +38,6 @@ export function deleteSubscription(data) {
   return dispatch => api.delete('/subscription/delete', data)
     .then((response) => {
       dispatch({ type: sub.UPDATE_FOLLOWER_REQUESTS_SUCCESS, response})
-      console.log(response)
     })
     .catch((e) => {
       console.log(e)
