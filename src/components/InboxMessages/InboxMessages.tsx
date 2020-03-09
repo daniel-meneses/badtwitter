@@ -19,7 +19,7 @@ const InboxMessage = ({followRequests} : Props) => {
 
   var followRequestList = null
   if (followRequests.isFetching) {
-    followRequestList = <div>Is Fetching</div>
+    followRequestList = <EmptyListMessage message={"Fetching.."}/>
   } else if (followRequests.error) {
     followRequestList = <EmptyListMessage message={"An error occurred please try again"}/>
   } else if (isEmpty(followRequests.followRequests)) {
