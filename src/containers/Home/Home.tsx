@@ -55,13 +55,17 @@ const Home = ({getPendingSubscriptionRequests,
    const history = useHistory()
 
    var feedDisplayable = null
-   const feedCount = global.timeline.length
+   const feedCount = (global.timeline || {}).length
 
    if (global.isFetching) {
-     if (!feedCount) {
-       feedDisplayable = <EmptyListMessage message={"Show big loading spinner."} />
+     if (feedCount > 0) {
+       feedDisplayable = <div>
+                          <EmptyListMessage message={"Fetching..."} />
+                          <div className={'divider'}> </div>
+                          <GlobalFeed globalTimeline={global.timeline}/>
+                        </div>
      } else {
-       feedDisplayable = <EmptyListMessage message={"Show available feed + small loading spinner"} />
+       feedDisplayable = <EmptyListMessage message={"Fetching..."} />
      }
    }
 
@@ -77,11 +81,11 @@ const Home = ({getPendingSubscriptionRequests,
      }
    }
 
-   if (!global.errors) {
-     if (!feedCount) {
-       feedDisplayable = <EmptyListMessage message={"No post to display."} />
-     } else {
+   if (!global.isFetching && !global.errors) {
+     if (feedCount > 0) {
        feedDisplayable = <GlobalFeed globalTimeline={global.timeline}/>
+     } else {
+       feedDisplayable = <EmptyListMessage message={"No post to display."} />
     }
    }
 
