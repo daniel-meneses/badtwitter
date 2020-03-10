@@ -3,10 +3,4 @@
 .post_list {
   display: flex;
   flex-direction: column;
-  @include respond-to('mobile') {
-    margin-bottom: 120px;
-  }
-  @include respond-to('small') {
-    margin-bottom: 0px;
-  }
 }
