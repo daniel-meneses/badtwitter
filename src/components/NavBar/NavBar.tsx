@@ -54,7 +54,7 @@ const NavBar = ({user, dispatch} : Props) => {
              }
              </svg>
             <span className={isHome ? 'focus_green' : ''}><span className={'nav_bar_text'}>Home</span></span></span></div>
-        <div className='navbar_item remove_for_mobile'
+        <div className='navbar_item'
              onClick={() => history.push('/explore')}>
              <span className='navbar_content'>
              <svg viewBox='0 0 25 25' stroke={isExplore ? "green" : "black"} strokeWidth={isExplore ? "1.4px" : "0.3px"}>
@@ -83,7 +83,7 @@ const NavBar = ({user, dispatch} : Props) => {
              }
              </svg>
              <span className={isInbox ? 'focus_green' : ''}><span className={'nav_bar_text'}>Inbox</span></span></span></div>
-        <div className='navbar_item'
+        <div className='navbar_item remove_for_mobile'
              onClick={() => history.push('/user/' + user.user_id)}>
              <span className='navbar_content'>
              <svg viewBox='0 0 24 24' stroke={isProfile ? 'green' : 'black'} strokeWidth={isProfile ? "0.8px" : "0.2px"}>
