@@ -107,18 +107,51 @@ main {
     border-right: solid #c9d6cd 1px;
     border-left: solid #c9d6cd 1px;
     border-bottom: solid #c9d6cd 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @include respond-to('mobile') {
       width: 100vw;
       height: 40px;
       padding-top: 6px;
       padding-left: 10px;
-
+      .header_back{
+        font-size: 20px;
+        font-weight: 300;
+        color: green;
+        margin-left: 4px;
+        margin-right: 10px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      .header_avatar_container {
+        display: inline-block;
+        height: 23px;
+        width: 23px;
+        margin-right: 16px;
+      }
+      .header_avatar {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        border-radius: 30px;
+        margin-right: 12px;
+        padding: 0px;
+        overflow: auto;
+      }
     }
     @include respond-to('small') {
       width: 100%;
       height: 58px;
       padding-top: 14px;
       padding-left: 14px;
+      .header_avatar_container {
+        display: none;
+      }
+      .header_avatar{
+        display: none;
+      }
     }
     @include respond-to('medium') {
       width: 598px; // need to breakpoint

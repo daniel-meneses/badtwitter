@@ -34,7 +34,7 @@ class UserProfile extends React.Component<any, any> {
     }
 
     public render() {
-      let { users, profiles, match, isFetching, error} = this.props;
+      let { users, profiles, match, isFetching, error, history} = this.props;
       let user = users[match.params.id] || {}
       let profile = profiles[match.params.id] || {}
       var profileTitle = "";
@@ -65,6 +65,9 @@ class UserProfile extends React.Component<any, any> {
                 <div className={'main_container'}>
                   <div className={'center_container'}>
                     <h2 className={'center_container_header'}>
+                    <span className={'header_back'}
+                          onClick={() => history.goBack()}
+                        > ⬅ </span>
                       {profileTitle}
                     </h2>
                     <div className={'center_container_body'}>

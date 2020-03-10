@@ -20,7 +20,9 @@ type Props = {
       timeline: Array<number>,
       isFetching: boolean,
       errors: string | null
-  }
+  },
+  currentUser: {avatar: string,
+                user_id: number}
 }
 
 function mapStateToProps(state: any) {
@@ -30,7 +32,8 @@ function mapStateToProps(state: any) {
       timeline: global.timeline,
       isFetching: global.isFetching,
       errors: global.errors
-    }
+    },
+    currentUser: state.session.currentUser
   }
 }
 
@@ -38,7 +41,8 @@ const Home = ({getPendingSubscriptionRequests,
               getAcceptedSubscriptionRequests,
               getAllUserLikes,
               getGlobalFeed,
-              global} : Props) => {
+              global,
+              currentUser} : Props) => {
 
   useEffect(() => {
     getPendingSubscriptionRequests()
@@ -85,6 +89,10 @@ const Home = ({getPendingSubscriptionRequests,
      <div className={'main_container'}>
        <div className={'center_container'}>
          <h2 className={'center_container_header'}>
+           <span className='header_avatar_container'>
+                 <img className='header_avatar'
+                      src={currentUser.avatar}
+                      onClick={() => history.push('/user/' + currentUser.user_id)}/></span>
            <span className={'selectable'} onClick={() => history.push('/')}>Home</span>
          </h2>
 
