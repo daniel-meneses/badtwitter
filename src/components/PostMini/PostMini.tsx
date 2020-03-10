@@ -12,7 +12,8 @@ type Props = {
   post: { id: number,
           user_id: number,
           post: any,
-          created: string
+          created: string,
+          likes: number
         },
   user: { alias: string,
           avatar: string,
@@ -57,7 +58,10 @@ const PostMiniComponent = ({postId, post, user}: Props) => {
                        dismiss={() => setDisplayFloatingImage(false)}/>
         <p className='post_mini_content'> {post.post} </p>
         <div className='post_mini_footer'>
-          <LikeButton postId={post.id} />
+          <div className='likes_container'>
+            <LikeButton postId={post.id} />
+            <span>{post.likes}</span>
+            </div>
           <span>{timeStamp} </span>
         </div>
       </div>
