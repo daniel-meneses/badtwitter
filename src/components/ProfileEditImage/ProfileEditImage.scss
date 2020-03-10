@@ -39,6 +39,9 @@
     background: gray;
     border-radius: 25px;
   }
+  div:focus {outline:none;}
+  -webkit-tap-highlight-color: transparent;
+
 }
 
 .plus_svg{

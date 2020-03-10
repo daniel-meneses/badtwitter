@@ -123,6 +123,7 @@ $primary_green: lighten(green, 5%);
 }
 
 .navbar_item {
+  -webkit-tap-highlight-color: transparent;
   display: flex;
   flex: 1 1;
   font-size: 19px;
@@ -133,11 +134,13 @@ $primary_green: lighten(green, 5%);
   cursor: pointer;
   &:hover {
     .navbar_content {
-      margin: 0 auto;
-      background-color: rgb(240, 245, 245);
-      transition: background-color 0.2s linear;
-      border-radius: 25px;
-      width: 100%;
+      @include respond-to('small') {
+        margin: 0 auto;
+        background-color: rgb(240, 245, 245);
+        transition: background-color 0.2s linear;
+        border-radius: 25px;
+        width: 100%;
+      }
     }
     svg {
       transition: fill 0.2s linear;
