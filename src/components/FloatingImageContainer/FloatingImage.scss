@@ -10,9 +10,15 @@
     img{
       border: solid green 2px;
       border-radius: 25px;
-      height: 300px;
-      width: 300px;
       z-index: 1000;
+      @include respond-to('mobile') {
+        height: 240px;
+        width: 240px;
+      }
+      @include respond-to('small') {
+        height: 300px;
+        width: 300px;
+      }
     }
   }
 }
