@@ -92,6 +92,7 @@ const LoginForm = ({handleLogin, errorResponse} : Props) => {
         <span id={isFocused.password ? "isFocused" : ""}>Password</span>
           <input
             id='password'
+            autoComplete="off"
             value={loginObject.password}
             type="text"
             className={loginObject.password.length > 5 ? "field_completed" : ""}

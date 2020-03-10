@@ -169,6 +169,7 @@ export default function SignUpForm(props: any) {
       <span id={isFocused.alias ? "isFocused" : "notFocused"}>Alias</span>
         <input
           id='alias'
+          autoComplete="off"
           value={signupObject.alias}
           type="text"
           className={signupObject.alias.length > 0 ? "field_completed" : ""}
@@ -221,6 +222,7 @@ export default function SignUpForm(props: any) {
       <span id={isFocused.password ? "isFocused" : "notFocused"}>Password</span>
         <input
           id='password'
+          autoComplete="off"
           value={signupObject.password}
           type="text"
           className={signupObject.password.length > 5 ? "field_completed" : ""}
@@ -234,6 +236,7 @@ export default function SignUpForm(props: any) {
       <span id={isFocused.password_confirmation ? "isFocused" : "notFocused"}>Confirmation</span>
         <input
           id='password_confirmation'
+          autoComplete="off"
           value={signupObject.password_confirmation}
           className={signupObject.password_confirmation.length > 5 ? "field_completed" : ""}
           type="text"

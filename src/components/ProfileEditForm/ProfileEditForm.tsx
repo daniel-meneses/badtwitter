@@ -87,6 +87,7 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
             id='first_name'
             value={editObject.first_name}
             type="text"
+            autoComplete="off"
             onBlur={e => validateInputOnBlur(e)}
             onChange={e => handleInputChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
@@ -98,6 +99,7 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
             id='last_name'
             value={editObject.last_name}
             type="text"
+            autoComplete="off"
             onBlur={e => validateInputOnBlur(e)}
             onChange={e => handleInputChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
@@ -109,6 +111,7 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
             id='bio'
             value={editObject.bio}
             type="text"
+            autoComplete="off"
             onBlur={e => validateInputOnBlur(e)}
             onChange={e => handleInputChange(e)}
             onFocus={e => setFocus(e.target.id, true)}
