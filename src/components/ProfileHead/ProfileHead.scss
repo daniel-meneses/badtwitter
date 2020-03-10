@@ -14,19 +14,34 @@
     }
   }
   .profile_alias {
-    font-size: 24px;
-  }
-  .profile_full_name {
-    font-size: 17px;
-    font-weight: 300;
-  }
-  .profile_bio_container {
-    margin-left: 86px;
+    padding-left: 1px;
+    font-size: 18px;
+    @include respond-to('mobile') {
+      display: block;
+      width: 100px;
+    }
     @include respond-to('small') {
+      display: inline;
       width: inherit;
     }
-    @include respond-to('medium') {
+  }
+  .profile_full_name {
+    font-weight: 300;
+    @include respond-to('mobile') {
+      font-size: 14px;
+    }
+    @include respond-to('small') {
+      font-size: 17px;
+    }
+  }
+  .profile_bio_container {
+    @include respond-to('mobile') {
       width: inherit;
+      margin-left: 0px;
+    }
+    @include respond-to('small') {
+      width: inherit;
+      margin-left: 86px;
     }
   }
   .profile_bio {
@@ -38,14 +53,22 @@
     overflow-x:hidden;
     word-wrap: break-word;
   }
-  .profile_subscribe {
+  .profile_head_button {
     display: inline-block;
-    width: 40%;
     float: right;
-    margin-top: 56px;
     button {
       float: right;
-      margin-right: 12px;
+    }
+    @include respond-to('mobile') {
+      position: absolute;
+      top: 80px;
+      right: 12px;
+    }
+    @include respond-to('small') {
+      position: relative;
+      margin-top: 56px;
+      top: 0px;
+      right: 0;
     }
   }
 }

@@ -38,7 +38,7 @@ const ProfileHead = ({user, currentUserId} : Props) => {
             onClick={() => setDisplayFloatingImage(true)}
             alt={'Profile Avatar'}/>
       <span className='profile_alias'> {user.alias} </span>
-      <div className='profile_subscribe'>
+      <div className='profile_head_button'>
         { currentUserId == user.user_id ?
           <button className='subscribe_request_button' onClick={() => history.push('/account')}> Edit Profile </button>
             :

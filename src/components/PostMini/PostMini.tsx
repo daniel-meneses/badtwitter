@@ -50,7 +50,7 @@ const PostMiniComponent = ({postId, post, user}: Props) => {
             className='post-mini-username'
             data-key={post.user_id}
             onClick={() => history.push("/user/" + user.user_id)}>
-            {user.first_name + " " + user.last_name}
+            {user.alias}
         </span>
         <FloatingImage isDisplayed={displayFloatingImage}
                        image={user.avatar}

@@ -40,7 +40,7 @@ const SubscribeButton = ({userId, pendingRequests, acceptedRequests, postSubscri
       <button className={buttonClass}
               disabled={isRequested}
               onClick={() => postSubscriptionRequest(userId)}
-              >{followRequestIcon}
+              >
               <span className='request_text'>{followRequestText}</span>
             </button>
       </div>
