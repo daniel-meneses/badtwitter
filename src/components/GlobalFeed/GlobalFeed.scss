@@ -1,4 +1,12 @@
+@import '../../common/theme/mixins.scss';
+
 .post_list {
   display: flex;
   flex-direction: column;
+  @include respond-to('mobile') {
+    padding-bottom: 80px;
+  }
+  @include respond-to('small') {
+    padding-bottom: 0px;
+  }
 }

@@ -5,6 +5,9 @@ $primary_green: lighten(green, 5%);
 .edit_container {
   padding-top: 20px;
   overflow: scroll;
+  @include respond-to('mobile') {
+    padding-bottom: 30px;
+  }
   @include respond-to('small') {
     width: 100%;
   }
