@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import Trending from '../../components/Trending/Trending';
 import GlobalFeed from '../../components/GlobalFeed/GlobalFeed';
+import GreenLoadingCircle from '../../components/ReactLoading/ReactLoading.js';
 import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage'
 import { useHistory } from 'react-router-dom'
 
@@ -54,22 +55,21 @@ const Home = ({getPendingSubscriptionRequests,
 
    const history = useHistory()
 
+   var loadingSpinner = null
    var feedDisplayable = null
    const feedCount = (global.timeline || {}).length
 
    if (global.isFetching) {
      if (feedCount > 0) {
-       feedDisplayable = <div>
-                          <EmptyListMessage message={"Fetching..."} />
-                          <div className={'divider'}> </div>
-                          <GlobalFeed globalTimeline={global.timeline}/>
-                        </div>
+       loadingSpinner = <GreenLoadingCircle size='small'/>
+       feedDisplayable = <GlobalFeed globalTimeline={global.timeline}/>
      } else {
-       feedDisplayable = <EmptyListMessage message={"Fetching..."} />
+       loadingSpinner = <GreenLoadingCircle size='large'/>
      }
    }
 
    if (global.errors) {
+     loadingSpinner = null
      if (!feedCount) {
        feedDisplayable = <EmptyListMessage message={"Show big error message."} />
      } else {
@@ -92,18 +92,23 @@ const Home = ({getPendingSubscriptionRequests,
    return (
      <div className={'main_container'}>
        <div className={'center_container'}>
+
          <h2 className={'center_container_header'}>
            <span className='header_avatar_container'>
                  <img className='header_avatar'
                       src={currentUser.avatar}
-                      onClick={() => history.push('/user/' + currentUser.user_id)}/></span>
-           <span className={'selectable'} onClick={() => history.push('/')}>Home</span>
+                      onClick={() => history.push('/user/' + currentUser.user_id)}/>
+                      </span>
+           <span className={'selectable'} onClick={() => history.push('/')}>
+           Home
+           </span>
          </h2>
 
        <div className={'center_container_body'}>
          <div className={'new_post_form'}>
           <PostForm/>
           </div>
+          {loadingSpinner}
          {feedDisplayable}
          </div>
        </div>
