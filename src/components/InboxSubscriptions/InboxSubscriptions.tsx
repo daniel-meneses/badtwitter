@@ -18,7 +18,7 @@ const InboxSubscriptions = ({subscriptions} :Props) => {
 
   let followersListSection = null
   if (subscriptions.isFetching) {
-    followersListSection = <EmptyListMessage message={"Fetching..."}/>
+    followersListSection = <EmptyListMessage message={"Fetching.."}/>
   } else if (subscriptions.error) {
     followersListSection = <EmptyListMessage message={"An error has occurred please try again."}/>
   } else if (isEmpty(subscriptions.subscriptionRequests)) {
