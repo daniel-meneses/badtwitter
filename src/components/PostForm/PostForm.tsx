@@ -7,7 +7,8 @@ type Props = {
   user: { avatar: string},
   postMessage: (message: string) => void,
   didUpdate: any,
-  shouldClearForm: boolean
+  shouldClearForm: boolean,
+  resetClearForm: () => void
 }
 
 function mapStateToProps(state :any) {
@@ -22,7 +23,7 @@ function resetClearForm() {
   return (dispatch: any) => dispatch({ type: "RESET_CLEAR_FORM"})
 }
 
-const PostForm = ({user, postMessage, didUpdate, shouldClearForm}: Props) => {
+const PostForm = ({user, postMessage, didUpdate, shouldClearForm, resetClearForm}: Props) => {
 
   const [postText, setPostText] = useState("");
   const inputEl = useRef<HTMLDivElement>(null);
@@ -35,7 +36,7 @@ const PostForm = ({user, postMessage, didUpdate, shouldClearForm}: Props) => {
   if (shouldClearForm === true) {
     if (inputEl.current !== null) {
       inputEl.current.innerText = ""
-
+      setInterval(resetClearForm, 300);
     }
   }
 
@@ -69,4 +70,4 @@ const PostForm = ({user, postMessage, didUpdate, shouldClearForm}: Props) => {
   );
 }
 
-export default connect(mapStateToProps, {postMessage})(PostForm);
+export default connect(mapStateToProps, {postMessage, resetClearForm})(PostForm);
