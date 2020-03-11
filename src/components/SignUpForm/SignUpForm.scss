@@ -8,13 +8,20 @@
   border: solid green 1px;
   border-radius: 25px;
   background: lighten(#c9d6cd, 17);
+  @include respond-to('mobile') {
+    margin-top: 40px;
+  }
   @include respond-to('small') {
+    margin-top: 100px;
     max-width: 400px;
   }
   @include respond-to('medium') {
     max-width: 600px;
   }
   .signup-input {
+    @include respond-to('mobile') {
+      flex: 1 0 80%;
+    }
     @include respond-to('small') {
       flex: 1 0 75%;
     }

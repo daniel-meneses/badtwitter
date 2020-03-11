@@ -8,9 +8,11 @@
   overflow: scroll;
   @include respond-to('mobile') {
     max-width: 500px;
+    padding-bottom: 120px
   }
   @include respond-to('small') {
     max-width: inherit;
+    padding-bottom: 0px;
   }
 }
 
@@ -21,7 +23,7 @@
   padding-top: 12px;
   width: 500px;
   @include respond-to('mobile') {
-    width: 200px;
+    width: 180px;
   }
   @include respond-to('small') {
     width: 500px;
