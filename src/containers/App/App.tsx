@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
 import NavBar from '../../components/NavBar/NavBar';
 import FloatingPostContainer from '../../components/FloatingPostContainer/FloatingPostContainer';
@@ -10,6 +10,7 @@ import Inbox from '../Inbox/Inbox';
 import Account from '../Account/Account';
 import Explore from '../Explore/Explore';
 import Login from '../Login/Login';
+import NotFound from '../NotFound/NotFound';
 import { connect } from 'react-redux';
 import { authenticate , unauthenticate} from '../../actions/session';
 
@@ -35,24 +36,46 @@ class App extends React.Component<any, any> {
       return (
           <Router>
             <div className="App">
-              <FloatingPostContainer />
-              <Route path='/signup' exact component={isAuthenticated ? Home : SignUp}/>
-              <Route path='/login' exact component={isAuthenticated ? Home : Login}/>
-              <header>
-                <div className='nav_container'>
-                  {isAuthenticated ? <NavBar/> : <></>}
-                </div>
-              </header>
-              <main>
-                <Route path='/home' exact component={Home}/>
-                <Route path='/user/:id' exact component={UserProfile}/>
-                <Route path='/inbox' component={Inbox}/>
-                <Route path='/explore' component={Explore}/>
-                <Route path='/account' component={Account}/>
-                <Route exact path="/" render={() => (
-                isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Redirect to="/signup"/> )
+              {
+                isAuthenticated ?
+                <>
+                <FloatingPostContainer />
+                  <header>
+                    <div className='nav_container'>
+                      <NavBar/>
+                    </div>
+                  </header>
+                  <main>
+                  <Switch>
+                    <Route path='/' exact component={Home}/>
+                    <Route path='/home' exact component={Home}/>
+                    <Route path='/user/:id' exact component={UserProfile}/>
+                    <Route path='/inbox' exact component={Inbox}/>
+                    <Route path='/explore' exact component={Explore}/>
+                    <Route path='/account' exact component={Account}/>
+                    <Route path="/signup" render={() => (
+                      isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
+                    )}/>
+                    <Route path="/login" render={() => (
+                      isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
+                    )}/>
+                    <Route component={NotFound}/>
+                  </Switch>
+                  </main>
+                  </>
+
+                  :
+              <>
+              <Route path="/signup" render={() => (
+                isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
               )}/>
-              </main>
+              <Route path="/login" render={() => (
+                isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
+              )}/>
+              <Redirect path="/" to='signup'/>
+              </>
+            }
+
             </div>
           </Router>
       );

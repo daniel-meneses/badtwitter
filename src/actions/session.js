@@ -16,7 +16,7 @@ export function login(data, history) {
   return dispatch => api.post('/accounts/session', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
-      history.push('/');
+      history.push('/home');
     })
     .catch((error) => {
       console.log(error)
@@ -28,7 +28,7 @@ export function signUp(data, history) {
   return dispatch => api.post('/accounts/user', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
-      history.push('/');
+      history.push('/home');
       })
     .catch((error) => {
       console.log(error)
