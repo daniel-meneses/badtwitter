@@ -6,6 +6,7 @@ export function postLike(postId) {
   return dispatch => api.post('/like', data)
     .then((response) => {
       dispatch({ type: likes.LIKE_POST_SUCCESS, response });
+      dispatch({ type: "INCREMENT_LIKE", response });
     })
     .catch((e) => {
       console.log(e)
@@ -27,6 +28,7 @@ export function deleteLike(postId) {
   return dispatch => api.delete('/like/delete', data)
   .then((response) => {
     dispatch({ type: likes.UNLIKE_POST_SUCCESS, response });
+    dispatch({ type: "DECREMENT_LIKE", response });
   })
   .catch((e) => {
     console.log(e)
