@@ -31,16 +31,16 @@ class App extends React.Component<any, any> {
   }
 
   render() {
-    let token = localStorage.getItem('token_refresh')
+    let {isAuthenticated} = this.props
       return (
           <Router>
             <div className="App">
               <FloatingPostContainer />
-              <Route path='/signup' exact component={SignUp}/>
-              <Route path='/login' exact component={Login}/>
+              <Route path='/signup' exact component={isAuthenticated ? Home : SignUp}/>
+              <Route path='/login' exact component={isAuthenticated ? Home : Login}/>
               <header>
                 <div className='nav_container'>
-                  {token ? <NavBar/> : <></>}
+                  {isAuthenticated ? <NavBar/> : <></>}
                 </div>
               </header>
               <main>
@@ -50,7 +50,7 @@ class App extends React.Component<any, any> {
                 <Route path='/explore' component={Explore}/>
                 <Route path='/account' component={Account}/>
                 <Route exact path="/" render={() => (
-                token ? ( <Redirect to="/home"/> ) : ( <Redirect to="/signup"/> )
+                isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Redirect to="/signup"/> )
               )}/>
               </main>
             </div>
