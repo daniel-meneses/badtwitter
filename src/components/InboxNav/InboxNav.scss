@@ -5,10 +5,10 @@
 .inbox_nav_container {
   display: flex;
   font-size: 17px;
-  @include respond-to('small') {
-    position: fixed;
+  @include respond-to('mobile') {
+  //  position: fixed;
   }
-  @include respond-to('medium') {
+  @include respond-to('small') {
     position: relative;
   }
   .inbox_nav_item {

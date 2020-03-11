@@ -18,7 +18,7 @@ const InboxFollowers = ({followers={}} :Props) => {
 
   let followersListSection = null
   if (followers.isFetching) {
-    followersListSection = <div>Fetching</div>
+    followersListSection = <EmptyListMessage message={"Fetching..."}/>
   } else if (followers.error) {
     followersListSection = <EmptyListMessage message={"An error has occurred please try again."}/>
   } else if (isEmpty(followers.followRequests)) {

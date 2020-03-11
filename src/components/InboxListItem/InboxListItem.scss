@@ -1,3 +1,5 @@
+@import '../../common/theme/mixins.scss';
+
 .follow_request {
   border-bottom: solid #c9d6cd 1px;
   padding: 12px;
@@ -19,9 +21,20 @@
     margin: auto;
   }
   button {
-    font-size: 16px;
+    @include respond-to('mobile') {
+      width: 54px;
+      font-size: 11px;
+      background: white;
+    }
+    @include respond-to('small') {
+      width: 80px;
+      font-size: 14px;
+    }
+    @include respond-to('medium') {
+      width: 100px;
+      font-size: 16px;
+    }
     height: 30px;
-    width: 100px;
     margin: 4px;
     cursor: pointer;
   }
