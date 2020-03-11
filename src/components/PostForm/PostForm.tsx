@@ -44,11 +44,12 @@ const PostForm = ({user, postMessage, didUpdate}: Props) => {
                         </div>
                       </div>
         <div className="post_form_footer">
-          <input type="submit"
-                 className={postText.length > 0 ? 'submit_post highlighted' : 'submit_post'}
-                 onClick={handleSubmit}
-                 value="Submit" />
-                 </div>
+          <button className={postText.length > 0 ? 'submit_post highlighted' : 'submit_post'}
+                  onClick={handleSubmit}
+                  >
+                  Submit
+                  </button>
+                  </div>
     </div>
   );
 }
