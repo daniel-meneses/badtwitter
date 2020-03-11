@@ -1,6 +1,7 @@
 const initialState = {
   newPostSuccess: null,
-  floatingPostFormIsHidden: true
+  floatingPostFormIsHidden: true,
+  shouldClearForm: false
 };
 
 export default function (state = initialState, action) {
@@ -24,6 +25,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
        floatingPostFormIsHidden: true,
+      };
+    case "CLEAR_FORM":
+      return {
+        ...state,
+       shouldClearForm: true,
+      };
+    case "RESET_CLEAR_FORM":
+      return {
+        ...state,
+       shouldClearForm: false,
       };
     default:
       return state;

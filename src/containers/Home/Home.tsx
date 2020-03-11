@@ -106,7 +106,7 @@ const Home = ({getPendingSubscriptionRequests,
 
        <div className={'center_container_body'}>
          <div className={'new_post_form'}>
-          <PostForm/>
+          <PostForm />
           </div>
           {loadingSpinner}
          {feedDisplayable}

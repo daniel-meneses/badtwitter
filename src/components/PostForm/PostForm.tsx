@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useRef} from "react"
 import "./PostForm.scss"
 import { connect } from 'react-redux'
 import { postMessage } from '../../actions/post.js'
@@ -6,24 +6,37 @@ import { postMessage } from '../../actions/post.js'
 type Props = {
   user: { avatar: string},
   postMessage: (message: string) => void,
-  didUpdate: any
+  didUpdate: any,
+  shouldClearForm: boolean
 }
 
 function mapStateToProps(state :any) {
   return {
     user: state.session.currentUser,
-    didUpdate: state.post.floatingPostFormIsHidden
+    didUpdate: state.post.floatingPostFormIsHidden,
+    shouldClearForm: state.post.shouldClearForm
   }
 }
 
-const PostForm = ({user, postMessage, didUpdate}: Props) => {
+function resetClearForm() {
+  return (dispatch: any) => dispatch({ type: "RESET_CLEAR_FORM"})
+}
+
+const PostForm = ({user, postMessage, didUpdate, shouldClearForm}: Props) => {
 
   const [postText, setPostText] = useState("");
+  const inputEl = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (e: any) => {
     postMessage(postText)
-    // post could fail and field would be cleared.
     setPostText("")
+  }
+
+  if (shouldClearForm === true) {
+    if (inputEl.current !== null) {
+      inputEl.current.innerText = ""
+
+    }
   }
 
   const handleInputChange = (e: any) => {
@@ -40,7 +53,9 @@ const PostForm = ({user, postMessage, didUpdate}: Props) => {
         <div id="input" onInput={handleInputChange}
                         data-text={"What's happenning?"}
                         data-value=""
-                        contentEditable>
+                        contentEditable
+                        ref={inputEl}
+                        >
                         </div>
                       </div>
         <div className="post_form_footer">
