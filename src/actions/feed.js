@@ -15,6 +15,20 @@ export function getGlobalFeed() {
   }
 }
 
+export function getGlobalFeedAtPage() {
+  return dispatch => {
+    dispatch({ type: "GET_GLOBAL_FEED_PAGE" })
+    api.fetch('/feed/global?page=' + 2)
+    .then((response) => {
+      dispatch({ type: "UPDATE_GLOBAL", response });
+      dispatch({ type: "GET_GLOBAL_FEED_PAGE_SUCCESS", response });
+    })
+    .catch((e) => {
+      //dispatch({ type: feed.GET_GLOBAL_FEED_FAIL, e });
+    });
+  }
+}
+
 export function getSubscriptionFeed() {
   return dispatch => {
     dispatch({ type: feed.GET_GLOBAL_FEED })

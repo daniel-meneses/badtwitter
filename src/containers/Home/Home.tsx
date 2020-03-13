@@ -3,7 +3,7 @@ import './Home.scss';
 import { getPendingSubscriptionRequests,
          getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
 import { getAllUserLikes} from '../../actions/like.js'
-import { getGlobalFeed } from '../../actions/feed.js'
+import { getGlobalFeed, getGlobalFeedAtPage } from '../../actions/feed.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import Trending from '../../components/Trending/Trending';
@@ -25,7 +25,8 @@ type Props = {
   currentUser: {avatar: string,
                 user_id: number},
   scrollPosition: number,
-  saveScrollPosition: (position: number) => void
+  saveScrollPosition: (position: number) => void,
+  getGlobalFeedAtPage: () => void
 }
 
 function mapStateToProps(state: any) {
@@ -52,7 +53,8 @@ const Home = ({getPendingSubscriptionRequests,
               global,
               currentUser,
               scrollPosition,
-              saveScrollPosition} : Props) => {
+              saveScrollPosition,
+              getGlobalFeedAtPage} : Props) => {
 
   const [scrollPercent, setScrollPercent] = useState(0)
   const scrollEl = useRef<HTMLDivElement>(null)
@@ -64,14 +66,28 @@ const Home = ({getPendingSubscriptionRequests,
     getAllUserLikes()
     getGlobalFeed()
     scrollEl.current?.scrollTo(0, scrollPosition)
-    document.getElementById("main-scroll")?.addEventListener('scroll', handleScroll)
+    document.getElementById("main-scroll")?.addEventListener('scroll', debHandleScroll)
     return () => {
       saveScrollPosition(scrollEl.current?.scrollTop || 0)
-      document.getElementById("main-scroll")?.removeEventListener('scroll', handleScroll)
+      document.getElementById("main-scroll")?.removeEventListener('scroll', debHandleScroll)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
+   function debounced(delay :any, fn :any) {
+      let timerId :any;
+      return function (...args :any) {
+        if (timerId) {
+          clearTimeout(timerId);
+        }
+        timerId = setTimeout(() => {
+          fn(...args);
+          timerId = null;
+        }, delay);
+      }
+    }
+
+  const debHandleScroll = debounced(200, handleScroll);
    /*
     Track vertical scrolling.
    */
@@ -85,10 +101,8 @@ const Home = ({getPendingSubscriptionRequests,
    /*
     If scrolled to bottom, try to fetch next content
    */
-   if (scrollPercent > 70) {
-     console.log("heyooo")
-     //fetch content
-     //show small loading spinner at bottom
+   if (scrollPercent > 20) {
+     //getGlobalFeedAtPage()
    }
 
    var loadingSpinner = null
@@ -164,4 +178,5 @@ export default connect(mapStateToProps,
                          getAcceptedSubscriptionRequests,
                          getAllUserLikes,
                          getGlobalFeed,
-                         saveScrollPosition})(Home)
+                         saveScrollPosition,
+                         getGlobalFeedAtPage})(Home)
