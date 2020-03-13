@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import './Home.scss';
 import { getPendingSubscriptionRequests,
          getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
@@ -50,14 +50,34 @@ const Home = ({getPendingSubscriptionRequests,
     getAcceptedSubscriptionRequests()
     getAllUserLikes()
     getGlobalFeed()
+    document.getElementById("main-scroll")?.addEventListener('scroll', handleScroll)
+    return () => {
+      document.getElementById("main-scroll")?.removeEventListener('scroll', handleScroll)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
+   const [scrollPosition, setScrollPostition] = useState(0);
+   const scrollEl = useRef<HTMLDivElement>(null);
    const history = useHistory()
 
    var loadingSpinner = null
    var feedDisplayable = null
    const feedCount = (global.timeline || {}).length
+
+   function handleScroll() {
+     let top = scrollEl.current?.scrollTop
+     let total = scrollEl.current?.scrollHeight
+     let percent = Math.round((top || 0) / (total || 1) * 100)
+     setScrollPostition(percent)
+   }
+
+   // if user scrolled down view, fetch next content
+   if (scrollPosition > 70) {
+     console.log("heyooo")
+     //fetch content
+     //show small loading spinner at bottom
+   }
 
    if (global.isFetching) {
      if (feedCount > 0) {
@@ -90,7 +110,7 @@ const Home = ({getPendingSubscriptionRequests,
    }
 
    return (
-     <div className={'main_container'}>
+     <div className={'main_container'} id='main-scroll' ref={scrollEl}>
        <div className={'center_container'}>
 
          <h2 className={'center_container_header'}>
@@ -104,7 +124,7 @@ const Home = ({getPendingSubscriptionRequests,
            </span>
          </h2>
 
-       <div className={'center_container_body'}>
+       <div className={'center_container_body'} id='special'>
          <div className={'new_post_form'}>
           <PostForm />
           </div>
