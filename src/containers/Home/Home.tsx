@@ -23,7 +23,9 @@ type Props = {
       errors: string | null
   },
   currentUser: {avatar: string,
-                user_id: number}
+                user_id: number},
+  scrollPosition: number,
+  saveScrollPosition: (position: number) => void
 }
 
 function mapStateToProps(state: any) {
@@ -34,8 +36,13 @@ function mapStateToProps(state: any) {
       isFetching: global.isFetching,
       errors: global.errors
     },
+    scrollPosition: state.home.scrollPosition,
     currentUser: state.session.currentUser
   }
+}
+
+function saveScrollPosition(position :number) {
+  return (dispatch :any) => dispatch({type: 'SET_HOME_SCROLL_POSITION', position: position})
 }
 
 const Home = ({getPendingSubscriptionRequests,
@@ -43,41 +50,50 @@ const Home = ({getPendingSubscriptionRequests,
               getAllUserLikes,
               getGlobalFeed,
               global,
-              currentUser} : Props) => {
+              currentUser,
+              scrollPosition,
+              saveScrollPosition} : Props) => {
+
+  const [scrollPercent, setScrollPercent] = useState(0)
+  const scrollEl = useRef<HTMLDivElement>(null)
+  const history = useHistory()
 
   useEffect(() => {
     getPendingSubscriptionRequests()
     getAcceptedSubscriptionRequests()
     getAllUserLikes()
     getGlobalFeed()
+    scrollEl.current?.scrollTo(0, scrollPosition)
     document.getElementById("main-scroll")?.addEventListener('scroll', handleScroll)
     return () => {
+      saveScrollPosition(scrollEl.current?.scrollTop || 0)
       document.getElementById("main-scroll")?.removeEventListener('scroll', handleScroll)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
-   const [scrollPosition, setScrollPostition] = useState(0);
-   const scrollEl = useRef<HTMLDivElement>(null);
-   const history = useHistory()
-
-   var loadingSpinner = null
-   var feedDisplayable = null
-   const feedCount = (global.timeline || {}).length
-
+   /*
+    Track vertical scrolling.
+   */
    function handleScroll() {
-     let top = scrollEl.current?.scrollTop
+     let top = scrollEl.current?.scrollTop || 0
      let total = scrollEl.current?.scrollHeight
      let percent = Math.round((top || 0) / (total || 1) * 100)
-     setScrollPostition(percent)
+     setScrollPercent(percent)
    }
 
-   // if user scrolled down view, fetch next content
-   if (scrollPosition > 70) {
+   /*
+    If scrolled to bottom, try to fetch next content
+   */
+   if (scrollPercent > 70) {
      console.log("heyooo")
      //fetch content
      //show small loading spinner at bottom
    }
+
+   var loadingSpinner = null
+   var feedDisplayable = null
+   const feedCount = (global.timeline || {}).length
 
    if (global.isFetching) {
      if (feedCount > 0) {
@@ -147,4 +163,5 @@ export default connect(mapStateToProps,
                         {getPendingSubscriptionRequests,
                          getAcceptedSubscriptionRequests,
                          getAllUserLikes,
-                         getGlobalFeed})(Home)
+                         getGlobalFeed,
+                         saveScrollPosition})(Home)
