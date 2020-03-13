@@ -38,7 +38,7 @@ const NavBar = ({user, dispatch} : Props) => {
       </span>
       </div>
         <div className='navbar_item'
-             onClick={() => history.push('/')}>
+             onClick={() => history.push('/home')}>
              <span className='navbar_content'>
              <svg className='svg_home'viewBox='0 0 24 24' fill={isHome ? 'green' : 'black'}>
              { isHome ?
