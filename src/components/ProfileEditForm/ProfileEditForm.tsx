@@ -75,7 +75,6 @@ const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
   const disableSubmit = (editObject.first_name === currentUser.first_name &&
                               editObject.last_name === currentUser.last_name &&
                               editObject.bio === currentUser.bio)
-  const buttonStyle = {diabled: disableSubmit}
 
   return (
     <form onSubmit={handleSubmit} className='profile_edit_form'>

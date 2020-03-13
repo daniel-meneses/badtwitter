@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import './Account.scss'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/session'

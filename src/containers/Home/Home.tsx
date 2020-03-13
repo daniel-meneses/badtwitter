@@ -61,14 +61,15 @@ const Home = ({getPendingSubscriptionRequests,
   const history = useHistory()
 
   useEffect(() => {
+    let scrollingDiv = scrollEl.current
     getPendingSubscriptionRequests()
     getAcceptedSubscriptionRequests()
     getAllUserLikes()
     getGlobalFeed()
-    scrollEl.current?.scrollTo(0, scrollPosition)
+    scrollingDiv?.scrollTo(0, scrollPosition)
     document.getElementById("main-scroll")?.addEventListener('scroll', debHandleScroll)
     return () => {
-      saveScrollPosition(scrollEl.current?.scrollTop || 0)
+      saveScrollPosition(scrollingDiv?.scrollTop || 0)
       document.getElementById("main-scroll")?.removeEventListener('scroll', debHandleScroll)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,6 +147,7 @@ const Home = ({getPendingSubscriptionRequests,
          <h2 className={'center_container_header'}>
            <span className='header_avatar_container'>
                  <img className='header_avatar'
+                      alt='User Avatar'
                       src={currentUser.avatar}
                       onClick={() => history.push('/user/' + currentUser.user_id)}/>
                       </span>
