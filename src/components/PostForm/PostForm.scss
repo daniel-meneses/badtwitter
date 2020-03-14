@@ -19,11 +19,8 @@
       display: inline-block;
     }
     #input {
-        -moz-appearance: textfield;
-        -webkit-appearance: textfield;
         background-color: white;
         background-color: -moz-field;
-        border: none;
         max-width: 500px;
         margin-top: 5px;
         padding: 4px 3px;
