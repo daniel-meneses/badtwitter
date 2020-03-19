@@ -3,7 +3,10 @@ import * as feed from '../constants/acts.js';
 const initialState = {
   global: { timeline: [],
             isFetching: false,
-            errors: null
+            errors: null,
+            isFetchingNextPage: false,
+            afterCursor: null,
+            wasFetchedSuccessfully: false
   },
   profile: {isFetching: false,
             errors: null
@@ -26,7 +29,10 @@ export default function (state = initialState, action) {
         ...state,
         global: { timeline: action.response.timeline,
                   isFetching: false,
-                  errors: null
+                  errors: null,
+                  afterCursor: action.response.after_cursor,
+                  isFetchingNextPage: false,
+                  wasFetchedSuccessfully: true
                   },
       };
     case feed.GET_GLOBAL_FEED_FAIL:
@@ -36,7 +42,23 @@ export default function (state = initialState, action) {
                   isFetching: false,
                   errors: "Failed to get global feed"
                 },
-      };
+              };
+    case "GET_GLOBAL_FEED_AT_CURSOR":
+      return {
+        ...state,
+        global: { ...state.global,
+                  isFetchingNextPage: true
+                },
+              };
+    case "GET_GLOBAL_FEED_AT_CURSOR_SUCCESS":
+      return {
+        ...state,
+        global: { ...state.global,
+                  timeline: [...state.global.timeline, ...action.response.timeline],
+                  afterCursor: action.response.after_cursor,
+                  isFetchingNextPage: false
+                },
+              };
     case feed.GET_PROFILE_FEED:
       return {
         ...state,

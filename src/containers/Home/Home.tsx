@@ -3,7 +3,7 @@ import './Home.scss';
 import { getPendingSubscriptionRequests,
          getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
 import { getAllUserLikes} from '../../actions/like.js'
-import { getGlobalFeed, getGlobalFeedAtPage } from '../../actions/feed.js'
+import { getGlobalFeed, getGlobalAtCursor } from '../../actions/feed.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import Trending from '../../components/Trending/Trending';
@@ -20,13 +20,16 @@ type Props = {
   global: {
       timeline: Array<number>,
       isFetching: boolean,
-      errors: string | null
+      afterCursor: string | null,
+      isFetchingNextPage: boolean,
+      errors: string | null,
+      wasFetchedSuccessfully: boolean
   },
   currentUser: {avatar: string,
                 user_id: number},
   scrollPosition: number,
   saveScrollPosition: (position: number) => void,
-  getGlobalFeedAtPage: () => void
+  getGlobalAtCursor: (afterCursor :string) => void
 }
 
 function mapStateToProps(state: any) {
@@ -34,8 +37,11 @@ function mapStateToProps(state: any) {
   return {
     global: {
       timeline: global.timeline,
+      afterCursor: global.afterCursor,
       isFetching: global.isFetching,
-      errors: global.errors
+      isFetchingNextPage: global.isFetchingNextPage,
+      errors: global.errors,
+      wasFetchedSuccessfully: global.wasFetchedSuccessfully
     },
     scrollPosition: state.home.scrollPosition,
     currentUser: state.session.currentUser
@@ -54,7 +60,7 @@ const Home = ({getPendingSubscriptionRequests,
               currentUser,
               scrollPosition,
               saveScrollPosition,
-              getGlobalFeedAtPage} : Props) => {
+              getGlobalAtCursor} : Props) => {
 
   const [scrollPercent, setScrollPercent] = useState(0)
   const scrollEl = useRef<HTMLDivElement>(null)
@@ -62,49 +68,40 @@ const Home = ({getPendingSubscriptionRequests,
 
   useEffect(() => {
     let scrollingDiv = scrollEl.current
+    // Only fetch once app launch
+    if (!global.wasFetchedSuccessfully) {
+      getGlobalFeed()
+    }
     getPendingSubscriptionRequests()
     getAcceptedSubscriptionRequests()
     getAllUserLikes()
-    getGlobalFeed()
     scrollingDiv?.scrollTo(0, scrollPosition)
-    document.getElementById("main-scroll")?.addEventListener('scroll', debHandleScroll)
+    document.getElementById("main-scroll")?.addEventListener('scroll', handleScroll)
     return () => {
       saveScrollPosition(scrollingDiv?.scrollTop || 0)
-      document.getElementById("main-scroll")?.removeEventListener('scroll', debHandleScroll)
+      document.getElementById("main-scroll")?.removeEventListener('scroll', () => handleScroll)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
+  }, [])
 
-   function debounced(delay :any, fn :any) {
-      let timerId :any;
-      return function (...args :any) {
-        if (timerId) {
-          clearTimeout(timerId);
-        }
-        timerId = setTimeout(() => {
-          fn(...args);
-          timerId = null;
-        }, delay);
-      }
-    }
-
-  const debHandleScroll = debounced(200, handleScroll);
    /*
     Track vertical scrolling.
+    Inaccurate, should be replced
    */
-   function handleScroll() {
+  const handleScroll = () => {
      let top = scrollEl.current?.scrollTop || 0
      let total = scrollEl.current?.scrollHeight
      let percent = Math.round((top || 0) / (total || 1) * 100)
      setScrollPercent(percent)
    }
 
-   /*
-    If scrolled to bottom, try to fetch next content
-   */
-   if (scrollPercent > 20) {
-     //getGlobalFeedAtPage()
-   }
+  if (scrollPercent > 60) {
+   if (global.afterCursor !== null) {
+     if (!global.isFetchingNextPage) {
+        getGlobalAtCursor(global.afterCursor)
+     }
+    }
+  }
 
    var loadingSpinner = null
    var feedDisplayable = null
@@ -181,4 +178,4 @@ export default connect(mapStateToProps,
                          getAllUserLikes,
                          getGlobalFeed,
                          saveScrollPosition,
-                         getGlobalFeedAtPage})(Home)
+                         getGlobalAtCursor})(Home)

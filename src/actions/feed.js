@@ -15,13 +15,14 @@ export function getGlobalFeed() {
   }
 }
 
-export function getGlobalFeedAtPage() {
+export function getGlobalAtCursor(cursor) {
+  var data = {afterCursor: cursor}
   return dispatch => {
-    dispatch({ type: "GET_GLOBAL_FEED_PAGE" })
-    api.fetch('/feed/global?page=' + 2)
+    dispatch({ type: "GET_GLOBAL_FEED_AT_CURSOR"}) 
+    api.fetch('/feed/global', data)
     .then((response) => {
-      dispatch({ type: "UPDATE_GLOBAL", response });
-      dispatch({ type: "GET_GLOBAL_FEED_PAGE_SUCCESS", response });
+      dispatch({ type: feed.GET_FEED_SUCCESS, response });
+      dispatch({ type: "GET_GLOBAL_FEED_AT_CURSOR_SUCCESS", response });
     })
     .catch((e) => {
       //dispatch({ type: feed.GET_GLOBAL_FEED_FAIL, e });
