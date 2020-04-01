@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
 import NavBar from '../../components/NavBar/NavBar';
 import FloatingPostContainer from '../../components/FloatingPostContainer/FloatingPostContainer';
@@ -34,7 +34,6 @@ class App extends React.Component<any, any> {
   render() {
     let {isAuthenticated} = this.props
       return (
-          <Router>
             <div className="App">
               {
                 isAuthenticated ?
@@ -77,7 +76,6 @@ class App extends React.Component<any, any> {
             }
 
             </div>
-          </Router>
       );
   }
 }
