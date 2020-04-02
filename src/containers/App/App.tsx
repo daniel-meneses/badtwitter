@@ -41,7 +41,6 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
 
 
   return (
-      <Router>
         <div className="App">
           {
             isAuthenticated ?
@@ -84,7 +83,6 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
         }
 
         </div>
-      </Router>
   );
 }
 
