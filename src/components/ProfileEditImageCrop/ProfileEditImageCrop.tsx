@@ -25,8 +25,8 @@ const ProfileEditImageCrop = ({ src, presignedURL, avatar, handleSubmit} : Props
 
   var style = {}
   if (image !== undefined) {
-    style = {height: image!["height"],
-             width: image!["width"]}
+      style = {height: image!["height"],
+               width: image!["width"]}
   }
 
   function onCropComplete(crop: any) {

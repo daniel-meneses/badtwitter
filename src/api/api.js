@@ -19,7 +19,7 @@ function headers(url) {
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer: ${token}`,
+  //  Authorization: `Bearer: ${token}`,
   };
 }
 
@@ -49,6 +49,7 @@ export default {
     return fetch(`${API}${url}${queryString(params)}`, {
       method: 'GET',
       headers: headers(url),
+      credentials: 'include',
     })
     .then(parseResponse);
   },
@@ -60,6 +61,7 @@ export default {
       method: 'POST',
       headers: headers(url),
       body,
+      credentials: 'include',
     })
     .then(parseResponse)
   },
