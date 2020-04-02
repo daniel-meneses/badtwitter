@@ -21,12 +21,12 @@ function mapStateToProps(state :any) {
 const ProfileEditImageCrop = ({ src, presignedURL, avatar, handleSubmit} : Props) => {
   const [crop, setCrop] = useState({aspect: 1/1, minWidth: 200, height: 300, width: 300})
   const [image, setImage] = useState()
-  const [croppedImage, setCroppedImage] = useState()
+  const [croppedImage, setCroppedImage] = useState<Buffer>()
 
   var style = {}
   if (image !== undefined) {
-      style = {height: image.height,
-               width: image.width}
+      style = {height: image!["height"],
+               width: image!["width"]}
   }
 
   function onCropComplete(crop: any) {

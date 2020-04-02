@@ -1,5 +1,5 @@
-//const API = 'http://localhost:4000/api/v1';
-const API = 'https://still-shelf-30581.herokuapp.com/api/v1'
+const API = 'http://localhost:4000/api/v1';
+//const API = 'https://still-shelf-30581.herokuapp.com/api/v1'
 
 function headers(url) {
   var token = ""
@@ -19,7 +19,7 @@ function headers(url) {
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `Bearer: ${token}`,
+  //  Authorization: `Bearer: ${token}`,
   };
 }
 
@@ -49,6 +49,7 @@ export default {
     return fetch(`${API}${url}${queryString(params)}`, {
       method: 'GET',
       headers: headers(url),
+      credentials: 'include',
     })
     .then(parseResponse);
   },
@@ -60,6 +61,7 @@ export default {
       method: 'POST',
       headers: headers(url),
       body,
+      credentials: 'include',
     })
     .then(parseResponse)
   },

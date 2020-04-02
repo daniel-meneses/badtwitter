@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
@@ -14,72 +14,78 @@ import NotFound from '../NotFound/NotFound';
 import { connect } from 'react-redux';
 import { authenticate , unauthenticate} from '../../actions/session';
 
-const mapStateToProps = function(state: any) {
+type Props = {
+  authenticate: () => void,
+  unauthenticate: () => void,
+  isAuthenticated: boolean
+}
+
+function mapStateToProps(state: any) {
   return {
     isAuthenticated: state.session.isAuthenticated
   }
 }
 
-class App extends React.Component<any, any> {
+const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
 
-  componentDidMount() {
+  useEffect(() => {
     const token = localStorage.getItem('token_refresh');
+    console.log(document)
     if (token) {
-      this.props.authenticate();
+      authenticate();
     } else {
-      this.props.unauthenticate();
+      unauthenticate();
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
 
-  render() {
-    let {isAuthenticated} = this.props
-      return (
-          <Router>
-            <div className="App">
-              {
-                isAuthenticated ?
-                <>
-                <FloatingPostContainer />
-                  <header>
-                    <div className='nav_container'>
-                      <NavBar/>
-                    </div>
-                  </header>
-                  <main>
-                  <Switch>
-                    <Route path='/' exact component={Home}/>
-                    <Route path='/home' exact component={Home}/>
-                    <Route path='/user/:id' exact component={UserProfile}/>
-                    <Route path='/inbox' exact component={Inbox}/>
-                    <Route path='/explore' exact component={Explore}/>
-                    <Route path='/account' exact component={Account}/>
-                    <Route path="/signup" render={() => (
-                      isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
-                    )}/>
-                    <Route path="/login" render={() => (
-                      isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
-                    )}/>
-                    <Route component={NotFound}/>
-                  </Switch>
-                  </main>
-                  </>
 
-                  :
-              <>
-              <Route path="/signup" render={() => (
-                isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
-              )}/>
-              <Route path="/login" render={() => (
-                isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
-              )}/>
-              <Redirect path="/" to='signup'/>
+  return (
+      <Router>
+        <div className="App">
+          {
+            isAuthenticated ?
+            <>
+            <FloatingPostContainer />
+              <header>
+                <div className='nav_container'>
+                  <NavBar/>
+                </div>
+              </header>
+              <main>
+              <Switch>
+                <Route path='/' exact component={Home}/>
+                <Route path='/home' exact component={Home}/>
+                <Route path='/user/:id' exact component={UserProfile}/>
+                <Route path='/inbox' exact component={Inbox}/>
+                <Route path='/explore' exact component={Explore}/>
+                <Route path='/account' exact component={Account}/>
+                <Route path="/signup" render={() => (
+                  isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
+                )}/>
+                <Route path="/login" render={() => (
+                  isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
+                )}/>
+                <Route component={NotFound}/>
+              </Switch>
+              </main>
               </>
-            }
 
-            </div>
-          </Router>
-      );
-  }
+              :
+          <>
+          <Route path="/signup" render={() => (
+            isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
+          )}/>
+          <Route path="/login" render={() => (
+            isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
+          )}/>
+          <Redirect path="/" to='signup'/>
+          </>
+        }
+
+        </div>
+      </Router>
+  );
 }
 
 export default connect(mapStateToProps, {authenticate, unauthenticate} )(App);
