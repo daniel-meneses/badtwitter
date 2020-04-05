@@ -28,18 +28,6 @@ function mapStateToProps(state: any) {
 
 const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
 
-  useEffect(() => {
-    const token = localStorage.getItem('token_refresh');
-    console.log(document)
-    if (token) {
-      authenticate();
-    } else {
-      unauthenticate();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
-
-
   return (
         <div className="App">
           {
@@ -69,16 +57,17 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
               </Switch>
               </main>
               </>
-
               :
           <>
-          <Route path="/signup" render={() => (
-            isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
-          )}/>
-          <Route path="/login" render={() => (
-            isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
-          )}/>
-          <Redirect path="/" to='signup'/>
+          <Switch>
+            <Route path="/signup" render={() => (
+              isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
+            )}/>
+            <Route path="/login" render={() => (
+              isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
+            )}/>
+            <Route path="*" component={SignUp}/>
+          </Switch>
           </>
         }
 

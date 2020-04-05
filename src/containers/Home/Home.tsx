@@ -57,7 +57,7 @@ const Home = ({getPendingSubscriptionRequests,
               getAllUserLikes,
               getGlobalFeed,
               global,
-              currentUser,
+              currentUser = {avatar: "", user_id: 0},
               scrollPosition,
               saveScrollPosition,
               getGlobalAtCursor} : Props) => {

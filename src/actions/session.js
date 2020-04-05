@@ -2,14 +2,16 @@ import api from '../api/api.js';
 import * as act from '../constants/acts.js';
 
 function setCurrentUser(dispatch, response) {
-  if (response.token_refresh) {localStorage.setItem('token_refresh', JSON.stringify(response.token_refresh))}
-  if (response.token_access) {setAccessToken(response)}
+  //if (response.token_refresh) {localStorage.setItem('token_refresh', JSON.stringify(response.token_refresh))}
+  //if (response.token_access) {setAccessToken(response)}
   dispatch({ type: act.AUTHENTICATION_SUCCESS, response });
   dispatch({ type: act.APPEND_NEW_USERS, response });
 }
 
 function setAccessToken(response) {
-  if (response.token_access) {localStorage.setItem('token_access', JSON.stringify(response.token_access))}
+  if (response.token_access) {
+  //  localStorage.setItem('token_access', JSON.stringify(response.token_access))
+  }
 }
 
 export function login(data, history) {
@@ -39,9 +41,19 @@ export function signUp(data, history) {
 export function logout(history) {
   return (dispatch) => {
     dispatch({ type: act.LOGOUT })
-    localStorage.clear()
+  //  localStorage.clear()
     history.push("/signup")
   }
+}
+
+export function getSessionUser() {
+  return dispatch => api.fetch('/accounts/session')
+    .then((response) => {
+      setCurrentUser(dispatch, response);
+      })
+    .catch((error) => {
+      dispatch({ type: act.AUTHENTICATION_FAILURE, error})
+    })
 }
 
 export function authenticate() {

@@ -23,7 +23,7 @@ function resetClearForm() {
   return (dispatch: any) => dispatch({ type: "RESET_CLEAR_FORM"})
 }
 
-const PostForm = ({user, postMessage, didUpdate, shouldClearForm, resetClearForm}: Props) => {
+const PostForm = ({user = {avatar: ""}, postMessage, didUpdate, shouldClearForm, resetClearForm}: Props) => {
 
   const [postText, setPostText] = useState("");
   const inputEl = useRef<HTMLDivElement>(null);

@@ -2,6 +2,7 @@ import api from '../api/api.js';
 import * as feed from '../constants/acts.js';
 
 export function getGlobalFeed() {
+  console.log("hey")
   return dispatch => {
     dispatch({ type: feed.GET_GLOBAL_FEED })
     api.fetch('/feed/global')
@@ -18,7 +19,7 @@ export function getGlobalFeed() {
 export function getGlobalAtCursor(cursor) {
   var data = {afterCursor: cursor}
   return dispatch => {
-    dispatch({ type: "GET_GLOBAL_FEED_AT_CURSOR"}) 
+    dispatch({ type: "GET_GLOBAL_FEED_AT_CURSOR"})
     api.fetch('/feed/global', data)
     .then((response) => {
       dispatch({ type: feed.GET_FEED_SUCCESS, response });

@@ -7,8 +7,8 @@ import { Provider } from 'react-redux';
 import store from './store/store.js';
 import { BrowserRouter } from 'react-router-dom';
 
-
-ReactDOM.hydrate(<Provider store={store}>
+ReactDOM.hydrate(
+                <Provider store={store}>
                   <BrowserRouter>
                     This is client
                     <App />

@@ -2,10 +2,11 @@ import 'isomorphic-fetch';
 const API = 'http://localhost:4000/api/v1';
 //const API = 'https://still-shelf-30581.herokuapp.com/api/v1'
 
+const isServer = typeof window === 'undefined'
+
 function headers(data) {
-  const isServer = typeof window === 'undefined'
   if (isServer) {
-    const cookie = (data.headers || {}).cookie
+    const cookie = data.headers.cookie
     return {
       Accept: 'application/json',
       'Content-Type': 'application/json',
