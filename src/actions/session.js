@@ -46,8 +46,8 @@ export function logout(history) {
   }
 }
 
-export function getSessionUser() {
-  return dispatch => api.fetch('/accounts/session')
+export function getSessionUser(data) {
+  return dispatch => api.fetch('/accounts/session', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
       })

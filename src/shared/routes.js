@@ -8,18 +8,13 @@ import Account from '../containers/Account/Account';
 import Explore from '../containers/Explore/Explore';
 import Login from '../containers/Login/Login';
 import NotFound from '../containers/NotFound/NotFound';
-import loadData from '../server/loadData.js';
+import {getSessionUser, getGlobalFeed} from '../server/session.js'
 
 const routes = [
   {
-    path: '/',
-    component: Home,
-    fetchInitialData: (data) => loadData.fetch(data)
-  },
-  {
     path: '/home',
     component: Home,
-    fetchInitialData: (data) => loadData.fetch(data)
+    fetchInitialData: (data) => getGlobalFeed(data)
   },
   {
     path: '/user/:id',
@@ -40,11 +35,16 @@ const routes = [
   {
     path: '/signup',
     component: SignUp,
-    fetchInitialData: (data) => loadData.fetch(data)
+    fetchInitialData: (data) => console.log("data monkey")
   },
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/',
+    component: Home,
+    fetchInitialData: (data) => getGlobalFeed(data)
   },
   {
     path: '*',

@@ -30,6 +30,7 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
 
   return (
         <div className="App">
+          {console.log("Is authenticated? " + isAuthenticated)}
           {
             isAuthenticated ?
             <>
@@ -60,13 +61,9 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
               :
           <>
           <Switch>
-            <Route path="/signup" render={() => (
-              isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
-            )}/>
-            <Route path="/login" render={() => (
-              isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
-            )}/>
-            <Route path="*" component={SignUp}/>
+            <Route path='/signup' exact component={SignUp}/>
+            <Route path='/login' exact component={Login}/>
+            <Route path="*" render={() => <Redirect to="/signup"/>}/>
           </Switch>
           </>
         }

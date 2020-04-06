@@ -2,7 +2,6 @@ import api from '../api/api.js';
 import * as feed from '../constants/acts.js';
 
 export function getGlobalFeed() {
-  console.log("hey")
   return dispatch => {
     dispatch({ type: feed.GET_GLOBAL_FEED })
     api.fetch('/feed/global')

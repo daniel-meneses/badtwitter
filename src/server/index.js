@@ -6,14 +6,13 @@ import App from '../containers/App/App'
 import { Provider } from 'react-redux'
 import { StaticRouter, matchPath } from "react-router-dom";
 import routes from '../shared/routes.js'
-import loadData from './loadData.js'
+import api2 from './api2.js'
 import mainReducer from '../reducers/main.js';
 import {getGlobalFeed} from '../actions/feed.js'
 import thunk from 'redux-thunk';
 import ReactDOMServer from "react-dom/server";
-import {getSessionUser} from '../actions/session.js'
+import {getSessionUser} from './session.js'
 import serialize from 'serialize-javascript'
-
 
 const app = express();
 
@@ -29,20 +28,17 @@ app.get("*", (req, res, next) => {
     mainReducer,
     applyMiddleware(thunk)
   );
-//  store.dispatch()
-  loadData.fetch(req)
-      .then(response => {
-        store.dispatch({type: "AUTHENTICATION_SUCCESS", response})
   const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 
+  const promise = store.dispatch(getSessionUser(req))
 
-  const promise = /*activeRoute.fetchInitialData
-    ? activeRoute.fetchInitialData(req)
-    : */Promise.resolve()
-  var storeState = store.getState()
-  storeState = serialize(storeState)
-  const context = {}
-  promise.then((data) => {
+  promise.then((isAuthenticated) => {
+    if (isAuthenticated && activeRoute.fetchInitialData) {
+      return store.dispatch(activeRoute.fetchInitialData(req))
+    }
+  }).then(() => {
+    const context = {}
+    const serializedStoreState = serialize(store.getState())
     const appClient = ReactDOMServer.renderToString(
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
@@ -51,13 +47,16 @@ app.get("*", (req, res, next) => {
         </StaticRouter>
       </Provider>
       )
+
+    if (context.url) {
+      return res.redirect(context.url)
+    }
+
     return res.render('layout', {
         content: appClient,
-        initialState: storeState
+        initialState: serializedStoreState
       })
     })
-
-  }) //from dispatch
 
 })
 

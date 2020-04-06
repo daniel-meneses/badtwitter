@@ -3,34 +3,23 @@ const API = 'http://localhost:4000/api/v1';
 //const API = 'https://still-shelf-30581.herokuapp.com/api/v1'
 
 function headers(data) {
-  const isServer = typeof window === 'undefined'
   const cookie = ((data || {}).headers || {}).cookie
-  if (isServer && cookie) {
-    return {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Cookie: cookie
-    }
-  } else {
-    return {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }
+  return {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    Cookie: cookie,
+  };
 }
 
 function parseResponse(response) {
   return response.json()
     .then((json) => {
       if (!response.ok) {
+        console.log(json)
         return Promise.reject(json);
       }
       return json;
     })
-}
-
-function parseResponseStatus(response) {
-  return response.ok
 }
 
 function queryString(params) {
@@ -41,36 +30,36 @@ function queryString(params) {
 }
 
 export default {
-  fetch(url, params = {}) {
-    return fetch(`${API}${url}${queryString(params)}`, {
+
+  fetch(url, data) {
+    return fetch(`${API}${url}`, {
       method: 'GET',
-      headers: headers(url),
-      credentials: 'include',
-    })
-    .then(parseResponse);
-  },
+      headers: headers(data),
+      credentials: 'include'
+      })
+      .then(parseResponse)
+    },
 
   post(url, data) {
     const body = JSON.stringify(data);
-
     return fetch(`${API}${url}`, {
       method: 'POST',
-      headers: headers(url),
+      headers: headers(data),
       body,
       credentials: 'include',
-    })
-    .then(parseResponse)
+      })
+      .then(res => {
+      //  console.log("ISO fetch success")
+      //  console.log(res)
+        return res.json();
+      })
+      .catch(e => {
+      //  console.log("ISO fetch failed")
+      //  console.log(e)
+        return e
+        // do nothing
+      });
   },
-
-  postImage(url, data) {
-    return fetch(`${url}`, {
-      method: 'PUT',
-      headers: {},
-      body: data,
-    })
-    .then(parseResponseStatus)
-  },
-
   patch(url, data) {
     const body = JSON.stringify(data);
 
@@ -90,5 +79,5 @@ export default {
       body,
     })
     .then(parseResponse);
-  },
+  }
 };
