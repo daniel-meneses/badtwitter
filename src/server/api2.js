@@ -3,7 +3,7 @@ const API = 'http://localhost:4000/api/v1';
 //const API = 'https://still-shelf-30581.herokuapp.com/api/v1'
 
 function headers(data) {
-  const cookie = ((data || {}).headers || {}).cookie
+  const cookie = (data || {}).cookie
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',

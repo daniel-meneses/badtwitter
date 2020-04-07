@@ -6,7 +6,6 @@ import App from '../containers/App/App'
 import { Provider } from 'react-redux'
 import { StaticRouter, matchPath } from "react-router-dom";
 import routes from '../shared/routes.js'
-import api2 from './api2.js'
 import mainReducer from '../reducers/main.js';
 import {getGlobalFeed} from '../actions/feed.js'
 import thunk from 'redux-thunk';
@@ -22,21 +21,26 @@ app.use('/static', express.static('public'))
 
 app.get('/favicon.ico', (req, res) => res.sendStatus(204))
 
-app.get("*", (req, res, next) => {
+app.use('/user/:id', (req, res, next) => {
+  req.user_id_param = req.params.id
+  next()
+})
 
+app.get("*", (req, res, next) => {
   const store = createStore(
     mainReducer,
     applyMiddleware(thunk)
   );
   const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 
-  const promise = store.dispatch(getSessionUser(req))
+  var promise = store.dispatch(getSessionUser(req.headers))
 
   promise.then((isAuthenticated) => {
     if (isAuthenticated && activeRoute.fetchInitialData) {
       return store.dispatch(activeRoute.fetchInitialData(req))
     }
-  }).then(() => {
+  })
+  .then(() => {
     const context = {}
     const serializedStoreState = serialize(store.getState())
     const appClient = ReactDOMServer.renderToString(

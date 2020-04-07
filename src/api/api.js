@@ -4,7 +4,7 @@ const API = 'http://localhost:4000/api/v1';
 
 function headers(data) {
   const isServer = typeof window === 'undefined'
-  const cookie = ((data || {}).headers || {}).cookie
+  const cookie = (data || {}).cookie
   if (isServer && cookie) {
     return {
       Accept: 'application/json',
@@ -41,10 +41,10 @@ function queryString(params) {
 }
 
 export default {
-  fetch(url, params = {}) {
+  fetch(url, params = {}, header = {}) {
     return fetch(`${API}${url}${queryString(params)}`, {
       method: 'GET',
-      headers: headers(url),
+      headers: headers(header),
       credentials: 'include',
     })
     .then(parseResponse);
