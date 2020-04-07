@@ -78,6 +78,7 @@ export default {
       method: 'PATCH',
       headers: headers(url),
       body,
+      credentials: 'include',
     })
     .then(parseResponse);
   },
@@ -86,8 +87,9 @@ export default {
     const body = JSON.stringify(data);
     return fetch(`${API}${url}`, {
       method: 'DELETE',
-      headers: headers(url),
+      headers: headers(data),
       body,
+      credentials: 'include',
     })
     .then(parseResponse);
   },

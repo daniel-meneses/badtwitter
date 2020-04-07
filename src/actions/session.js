@@ -41,8 +41,9 @@ export function signUp(data, history) {
 export function logout(history) {
   return (dispatch) => {
     dispatch({ type: act.LOGOUT })
+    api.delete('/accounts/session')
+    .then(history.push("/signup"))
   //  localStorage.clear()
-    history.push("/signup")
   }
 }
 
