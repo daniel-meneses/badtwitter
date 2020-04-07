@@ -30,7 +30,6 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
 
   return (
         <div className="App">
-          {console.log("Is authenticated? " + isAuthenticated)}
           {
             isAuthenticated ?
             <>

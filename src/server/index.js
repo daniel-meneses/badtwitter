@@ -46,7 +46,6 @@ app.get("*", (req, res, next) => {
     const appClient = ReactDOMServer.renderToString(
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
-        This is server
           <App />
         </StaticRouter>
       </Provider>

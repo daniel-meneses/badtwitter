@@ -10,7 +10,6 @@ import { BrowserRouter } from 'react-router-dom';
 ReactDOM.hydrate(
                 <Provider store={store}>
                   <BrowserRouter>
-                    This is client
                     <App />
                   </BrowserRouter>
                 </Provider>, document.getElementById('content'));
