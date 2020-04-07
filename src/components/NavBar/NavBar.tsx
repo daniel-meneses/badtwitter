@@ -14,7 +14,7 @@ function mapStateToProps(state :any) {
   };
 }
 
-const NavBar = ({user, dispatch} : Props) => {
+const NavBar = ({user = {}, dispatch} : Props) => {
 
   let history = useHistory()
   let location = useLocation();

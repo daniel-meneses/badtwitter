@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
 import NavBar from '../../components/NavBar/NavBar';
 import FloatingPostContainer from '../../components/FloatingPostContainer/FloatingPostContainer';
@@ -28,20 +28,7 @@ function mapStateToProps(state: any) {
 
 const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
 
-  useEffect(() => {
-    const token = localStorage.getItem('token_refresh');
-    console.log(document)
-    if (token) {
-      authenticate();
-    } else {
-      unauthenticate();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
-
-
   return (
-      <Router>
         <div className="App">
           {
             isAuthenticated ?
@@ -70,21 +57,17 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
               </Switch>
               </main>
               </>
-
               :
           <>
-          <Route path="/signup" render={() => (
-            isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
-          )}/>
-          <Route path="/login" render={() => (
-            isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
-          )}/>
-          <Redirect path="/" to='signup'/>
+          <Switch>
+            <Route path='/signup' exact component={SignUp}/>
+            <Route path='/login' exact component={Login}/>
+            <Route path="*" render={() => <Redirect to="/signup"/>}/>
+          </Switch>
           </>
         }
 
         </div>
-      </Router>
   );
 }
 

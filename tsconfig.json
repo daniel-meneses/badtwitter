@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "outDir": "./dist/",
+    "rootDir": "./",
+    "sourceMap": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,10 +14,17 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

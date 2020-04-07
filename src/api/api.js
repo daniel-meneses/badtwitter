@@ -1,26 +1,22 @@
+import 'isomorphic-fetch';
 const API = 'http://localhost:4000/api/v1';
 //const API = 'https://still-shelf-30581.herokuapp.com/api/v1'
 
-function headers(url) {
-  var token = ""
-  var tokenType = ""
-  // This needs to be set somewhere else
-  if (url === '/accounts/refresh') {
-    tokenType = "token_refresh"
+function headers(data) {
+  const isServer = typeof window === 'undefined'
+  const cookie = (data || {}).cookie
+  if (isServer && cookie) {
+    return {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Cookie: cookie
+    }
   } else {
-    tokenType = "token_access"
+    return {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
   }
-  try {
-    token = JSON.parse(localStorage.getItem(tokenType));
-  } catch (e) {
-    console.log(e)
-  }
-
-  return {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  //  Authorization: `Bearer: ${token}`,
-  };
 }
 
 function parseResponse(response) {
@@ -45,10 +41,10 @@ function queryString(params) {
 }
 
 export default {
-  fetch(url, params = {}) {
+  fetch(url, params = {}, header = {}) {
     return fetch(`${API}${url}${queryString(params)}`, {
       method: 'GET',
-      headers: headers(url),
+      headers: headers(header),
       credentials: 'include',
     })
     .then(parseResponse);
@@ -82,6 +78,7 @@ export default {
       method: 'PATCH',
       headers: headers(url),
       body,
+      credentials: 'include',
     })
     .then(parseResponse);
   },
@@ -90,8 +87,9 @@ export default {
     const body = JSON.stringify(data);
     return fetch(`${API}${url}`, {
       method: 'DELETE',
-      headers: headers(url),
+      headers: headers(data),
       body,
+      credentials: 'include',
     })
     .then(parseResponse);
   },

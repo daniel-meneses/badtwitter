@@ -4,8 +4,11 @@ import mainReducer from '../reducers/main.js';
 import throttle from 'lodash.throttle';
 import { saveStateToLocal, loadState } from '../localStorage.js';
 
+// Load redux state from server
+// Eventually remove saving state to local
+const persistedState = window.__INITIAL_STATE_ ? window.__INITIAL_STATE_ : loadState();
 
-const persistedState = loadState();
+delete window.__PRELOADED_STATE__
 // Redux store.
 // Returns state from reducers
 const store = createStore(
@@ -18,7 +21,6 @@ const store = createStore(
 // https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
 store.subscribe(throttle(() => {
   var state = store.getState();
-  //console.log(state)
   /* Issues caused when saveStateToLoad run after logging out.
      On logout, current user cleared and isAuthenticated = false.
      Check isAuthenticated = false to stop saveState after logout.
