@@ -10,7 +10,7 @@ import mainReducer from '../reducers/main.js';
 import {getGlobalFeed} from '../actions/feed.js'
 import thunk from 'redux-thunk';
 import ReactDOMServer from "react-dom/server";
-import {getSessionUser} from './session.js'
+import {getSessionUser} from '../actions/session.js'
 import serialize from 'serialize-javascript'
 
 const app = express();

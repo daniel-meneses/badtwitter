@@ -8,7 +8,7 @@ import Account from '../containers/Account/Account';
 import Explore from '../containers/Explore/Explore';
 import Login from '../containers/Login/Login';
 import NotFound from '../containers/NotFound/NotFound';
-import {getSessionUser} from '../server/session.js'
+import {getSessionUser} from '../actions/session.js'
 import {getGlobalFeed, getProfileFeed} from '../actions/feed.js'
 
 

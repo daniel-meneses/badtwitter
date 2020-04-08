@@ -48,12 +48,14 @@ export function logout(history) {
 }
 
 export function getSessionUser(data) {
-  return dispatch => api.fetch('/accounts/session', data)
+  return dispatch => api.fetch('/accounts/session', {}, data)
     .then((response) => {
-      setCurrentUser(dispatch, response);
+      dispatch({type: "AUTHENTICATION_SUCCESS", response})
+      return true
       })
     .catch((error) => {
-      dispatch({ type: act.AUTHENTICATION_FAILURE, error})
+      dispatch({ type: "AUTHENTICATION_FAILURE", error})
+      return false
     })
 }
 
