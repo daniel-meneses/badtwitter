@@ -5,7 +5,7 @@ import React from "react"
 import App from '../containers/App/App'
 import { Provider } from 'react-redux'
 import { StaticRouter, matchPath } from "react-router-dom";
-import routes from '../shared/routes.js'
+import routes from './routes.js'
 import mainReducer from '../reducers/main.js';
 import {getGlobalFeed} from '../actions/feed.js'
 import thunk from 'redux-thunk';
@@ -17,7 +17,7 @@ const app = express();
 
 app.set('view engine', 'ejs')
 app.set('views', 'src/views')
-app.use('/static', express.static('public'))
+app.use('/static', express.static('dist'))
 
 app.get('/favicon.ico', (req, res) => res.sendStatus(204))
 

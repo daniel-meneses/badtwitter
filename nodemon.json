@@ -1,5 +1,5 @@
 {
-  "watch": ["public", "dist"],
+  "watch": ["public", "dist", "src"],
   "ext": "tsx, js",
   "ignore": ["src/**/*.spec.ts"]
 }

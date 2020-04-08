@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.scss';
 import { Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
@@ -12,7 +12,6 @@ import Explore from '../Explore/Explore';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import { connect } from 'react-redux';
-import { authenticate , unauthenticate} from '../../actions/session';
 
 type Props = {
   authenticate: () => void,
@@ -71,4 +70,4 @@ const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
   );
 }
 
-export default connect(mapStateToProps, {authenticate, unauthenticate} )(App);
+export default connect(mapStateToProps, {} )(App);
