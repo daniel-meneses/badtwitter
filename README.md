@@ -1,6 +1,6 @@
 
 # BadTwitter
-Single page app built using react, redux, typescript.
+Universal app built using react, redux, express, and a sprinkle of typescript.
 It's the same as Twitter, except green.
 
 ## Run
@@ -8,8 +8,16 @@ It's the same as Twitter, except green.
 ```
 # go to root directory
 $ cd ~/badtwitter
+
 # download dependencies
 $ npm i
-# run locally
-$ npm start
+
+# build server
+$ npm run build:server
+
+# build client
+$ npm run build:client
+
+# run
+$ npm run run:server
 ```
