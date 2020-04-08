@@ -1,11 +1,9 @@
 import 'isomorphic-fetch';
-const API = 'http://localhost:4000/api/v1';
-//const API = 'https://still-shelf-30581.herokuapp.com/api/v1'
+import * as env from '../constants/environment.js'
 
 function headers(data) {
-  const isServer = typeof window === 'undefined'
   const cookie = (data || {}).cookie
-  if (isServer && cookie) {
+  if (env.IS_SERVER && cookie) {
     return {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -42,7 +40,7 @@ function queryString(params) {
 
 export default {
   fetch(url, params = {}, header = {}) {
-    return fetch(`${API}${url}${queryString(params)}`, {
+    return fetch(`${env.API}${url}${queryString(params)}`, {
       method: 'GET',
       headers: headers(header),
       credentials: 'include',
@@ -53,7 +51,7 @@ export default {
   post(url, data) {
     const body = JSON.stringify(data);
 
-    return fetch(`${API}${url}`, {
+    return fetch(`${env.API}${url}`, {
       method: 'POST',
       headers: headers(url),
       body,
@@ -74,7 +72,7 @@ export default {
   patch(url, data) {
     const body = JSON.stringify(data);
 
-    return fetch(`${API}${url}`, {
+    return fetch(`${env.API}${url}`, {
       method: 'PATCH',
       headers: headers(url),
       body,
@@ -85,7 +83,7 @@ export default {
 
   delete(url, data) {
     const body = JSON.stringify(data);
-    return fetch(`${API}${url}`, {
+    return fetch(`${env.API}${url}`, {
       method: 'DELETE',
       headers: headers(data),
       body,
