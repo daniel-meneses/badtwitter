@@ -22,12 +22,13 @@
     "serialize-javascript": "^3.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:client": "webpack -wd --config webpack.client.config.js",
-    "build:server": "webpack -wd --display-modules --config webpack.server.config.js",
+    "build" : "npm-run-all -p build:client build:server",
+    "start" : "npm-run-all -s build run:server",
+    "build:client": "webpack --config webpack.client.config.js",
+    "build:server": "webpack --display-modules --config webpack.server.config.js",
     "run:server": "nodemon dist/app.server.js"
   },
   "eslintConfig": {
@@ -68,6 +69,7 @@
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.5",
     "sass-loader": "^8.0.2",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.1.3",
