@@ -9,6 +9,7 @@
     "lodash": "^4.17.15",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.24.0",
+    "npm-run-all": "^4.1.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.1",
@@ -22,11 +23,10 @@
     "serialize-javascript": "^3.0.0"
   },
   "scripts": {
-    "build": "react-scripts build",
+    "build": "npm-run-all -p build:client build:server",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build" : "npm-run-all -p build:client build:server",
-    "start" : "npm-run-all -s build run:server",
+    "start": "npm-run-all -s build run:server",
     "build:client": "webpack --config webpack.client.config.js",
     "build:server": "webpack --display-modules --config webpack.server.config.js",
     "run:server": "nodemon dist/app.server.js"
@@ -69,7 +69,6 @@
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
-    "npm-run-all": "^4.1.5",
     "sass-loader": "^8.0.2",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.1.3",
