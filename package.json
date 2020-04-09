@@ -28,7 +28,7 @@
     "start" : "npm-run-all -s build run:server",
     "build:client": "webpack --config webpack.client.config.js",
     "build:server": "webpack --display-modules --config webpack.server.config.js",
-    "run:server": "nodemon dist/app.server.js"
+    "run:server": "node --max_old_space_size=2560 dist/app.server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
