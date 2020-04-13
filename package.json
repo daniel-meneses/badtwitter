@@ -22,7 +22,7 @@
     "serialize-javascript": "^3.0.0"
   },
   "scripts": {
-    "dev" : "nodemon dist/app.server.js"
+    "dev" : "nodemon dist/app.server.js",
     "build": "npm-run-all -p build:client build:server",
     "start": "node --max_old_space_size=2560 dist/app.server.js",
     "build:client": "webpack -wd --config webpack.client.config.js",
