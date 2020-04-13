@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "ejs": "^3.0.1",
+    "ejs": "^3.0.2",
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.15",
@@ -22,10 +22,12 @@
     "serialize-javascript": "^3.0.0"
   },
   "scripts": {
-    "build" : "npm-run-all -p build:client build:server",
-    "start" : "node --max_old_space_size=2560 dist/app.server.js",
-    "build:client": "webpack --config webpack.client.config.js",
-    "build:server": "webpack --display-modules --config webpack.server.config.js"
+    "dev" : "nodemon dist/app.server.js"
+    "build": "npm-run-all -p build:client build:server",
+    "start": "node --max_old_space_size=2560 dist/app.server.js",
+    "build:client": "webpack -wd --config webpack.client.config.js",
+    "build:server": "webpack -wd --display-modules --config webpack.server.config.js",
+    "heroku-postbuild": "webpack -p --config webpack.client.config.js && webpack -p --display-modules --config webpack.server.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -64,7 +66,7 @@
     "ignore-loader": "^0.1.2",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.1",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.3",
     "npm-run-all": "^4.1.5",
     "sass-loader": "^8.0.2",
     "source-map-loader": "^0.2.4",
