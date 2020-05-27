@@ -1,7 +1,7 @@
 import React from 'react'
 import FollowersList from '../FollowersList/FollowersList'
 import EmptyListMessage from '../EmptyListMessage/EmptyListMessage'
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash.isempty'
 import { connect } from 'react-redux'
 
 type Props = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import './InboxMessages.scss'
 import { connect } from 'react-redux'
-import isEmpty from 'lodash/isEmpty'
+import isempty from 'lodash.isempty'
 import EmptyListMessage from '../EmptyListMessage/EmptyListMessage'
 import FollowRequestList from '../FollowRequestList/FollowRequestList'
 
@@ -22,7 +22,7 @@ const InboxMessage = ({followRequests} : Props) => {
     followRequestList = <EmptyListMessage message={"Fetching.."}/>
   } else if (followRequests.error) {
     followRequestList = <EmptyListMessage message={"An error occurred please try again"}/>
-  } else if (isEmpty(followRequests.followRequests)) {
+  } else if (isempty(followRequests.followRequests)) {
     followRequestList = <EmptyListMessage message={"No follower requests"}/>
   } else {
     followRequestList = <FollowRequestList followRequests={followRequests.followRequests}/>

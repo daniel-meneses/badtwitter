@@ -5,7 +5,7 @@ type Props = {
   message: string
 }
 
-const EmptyListMessage = ({message}: Props) => {
+const EmptyListMessage = ({ message }: Props) => {
 
   return (
     <div className="empty_list_message">

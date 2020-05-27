@@ -4,7 +4,6 @@ import * as feed from '../constants/acts.js';
 export function getGlobalFeed(headers={}) {
   return dispatch => {
     dispatch({ type: feed.GET_GLOBAL_FEED })
-
     return api.fetch('/feed/global', {}, headers)
       .then((response) => {
         dispatch({ type: feed.GET_FEED_SUCCESS, response });

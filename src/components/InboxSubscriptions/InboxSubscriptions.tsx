@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import SubscriptionsList from '../SubscriptionsList/SubscriptionsList'
 import EmptyListMessage from '../EmptyListMessage/EmptyListMessage'
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash.isempty'
 
 type Props = {
   subscriptions: any

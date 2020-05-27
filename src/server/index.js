@@ -11,13 +11,21 @@ import {getGlobalFeed} from '../actions/feed.js'
 import thunk from 'redux-thunk';
 import ReactDOMServer from "react-dom/server";
 import {getSessionUser} from '../actions/session.js'
+import {createProxyMiddleware} from 'http-proxy-middleware'
 import serialize from 'serialize-javascript'
 
 const app = express();
 
 app.set('view engine', 'ejs')
 app.set('views', 'src/views')
-app.use('/static', express.static('dist'))
+
+app.use('/static', express.static('dist', {
+  setHeaders: function(res, req, path) {
+    if (!req.includes("main.css")) {
+      res.set("Content-Encoding", "gzip")
+    }
+  }}
+))
 
 app.get('/favicon.ico', (req, res) => res.sendStatus(204))
 
@@ -26,7 +34,9 @@ app.use('/user/:id', (req, res, next) => {
   next()
 })
 
-app.get("*", (req, res, next) => {
+app.use('/api/v1', createProxyMiddleware({ target: 'http://localhost:4000/', changeOrigin: true }));
+
+app.get(["/home", "/user/:id", "/signup", "/login", "/account", "/inbox", "/explore"], (req, res, next) => {
   const store = createStore(
     mainReducer,
     applyMiddleware(thunk)

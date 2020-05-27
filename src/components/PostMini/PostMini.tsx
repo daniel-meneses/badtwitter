@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import LikeButton from '../LikeButton/LikeButton'
 import FloatingImage from '../FloatingImageContainer/FloatingImage';
-import isEmpty from 'lodash/isEmpty'
+import isEmpty from 'lodash.isempty'
 
 type Props = {
   postId: number,

@@ -1,5 +1,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const config = {
   entry: "./src/index.js",
@@ -44,7 +45,10 @@ const config = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-        filename: "[name].css",
+      filename: "[name].css",
+    }),
+    new CompressionPlugin({
+      test: /\.(js|tsx|scss)$/,
     })],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".scss", ".json", ".wasm", ".mjs", "*"],
