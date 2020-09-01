@@ -80,7 +80,6 @@ describe('When global feed post', () => {
 
 })
 
-//expect($el).to.be.visible
 
 describe('When login', () => {
 
@@ -182,63 +181,3 @@ describe('When login', () => {
   })
 
 })
-
-
-/*
-Cypress.Commands.add('stubHomescreen', (): void => {
-  cy.route('/oz/containers*', 'fixture:homescreen_data.json').as('stubHomescreen');
-});
-*/
-
-/*
-describe('Fire: Active And Referred Events', () => {
-    beforeEach(() => {
-      cy.server();
-      cy.stubHomescreen();
-      cy.route({
-        url: '/analytics-ingestion/v2/single-event',
-        method: 'POST',
-        status: 200,
-        response: {},
-        onRequest: (req) => {
-          subject.next(req.request.body.event);
-        },
-      }).as('analytics');
-    });
-
-    it('Should trigger active event', () => {
-      cy.visit('/');
-      cy.wait('@analytics')
-        .then((xhr: Cypress.WaitXHR) => {
-          if (typeof xhr.request.body === 'object') {
-            const event = xhr.request.body.event;
-            // temporary solution until we figure out how to use jest and chai expect in the same project
-            (expect(event) as any).to.eql({ active: {} });
-          }
-        });
-    });
-
-    it('Should trigger referred event when URL is deeplinked', () => {
-      const { testContentPlayerUrl } = TEST_EPISODE;
-      const referredType = {
-        campaign: 'campaign',
-        medium: 'medium',
-        source: 'source',
-        referred_type: 'DEEP_LINK',
-      };
-      const output = {
-        ...referredType,
-        video_player_page: {
-            video_id: parseInt(TEST_EPISODE_ID, 10),
-        },
-      };
-      const isReferredEventPromise = gotAnalyticsRequest(subject, 'referred', output);
-
-      cy.visit(`${testContentPlayerUrl}?utm_source=${referredType.source}&utm_medium=${referredType.medium}&utm_campaign=${referredType.campaign}`);
-      cy.url().should('eq', buildUrl(`/${testContentPlayerUrl}?utm_source=${referredType.source}&utm_medium=${referredType.medium}&utm_campaign=${referredType.campaign}`));
-
-      return isReferredEventPromise;
-    });
-});
-
-*/
