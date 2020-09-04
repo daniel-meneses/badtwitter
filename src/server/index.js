@@ -36,7 +36,7 @@ app.use('/user/:id', (req, res, next) => {
 })
 
 app.use('/api/v1', createProxyMiddleware({
-  target: 'https://arcane-shelf-19658.herokuapp.com',
+  target: 'https://still-shelf-30581.herokuapp.com',
   changeOrigin: true,
   cookieDomainRewrite: "arcane-shelf-19658.herokuapp.com"
 }));
