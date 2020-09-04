@@ -34,7 +34,7 @@ app.use('/user/:id', (req, res, next) => {
   next()
 })
 
-app.use('/api/v1', createProxyMiddleware({ target: 'http://localhost:4000/', changeOrigin: false }));
+app.use('/api/v1', createProxyMiddleware({ target: 'https://still-shelf-30581.herokuapp.com/', changeOrigin: true }));
 
 app.get(["/", "/home", "/user/:id", "/signup", "/login", "/account", "/inbox", "/explore"], (req, res, next) => {
   const store = createStore(
