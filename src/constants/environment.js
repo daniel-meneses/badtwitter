@@ -7,7 +7,7 @@ export let SERVER = IS_DEVELOPMENT ?
                 'http://localhost:3000/'
               : 'https://arcane-shelf-19658.herokuapp.com/'
 
-export let LOCAL_API = 'http://localhost:4000/api/v1'
-export let PROD_API = 'https://still-shelf-30581.herokuapp.com/api/v1'
+export let LOCAL_API = 'http://localhost:3000/api/v1'
+export let PROD_API = 'https://arcane-shelf-19658.herokuapp.com/api/v1'
 
 export let API = IS_DEVELOPMENT ? LOCAL_API : PROD_API
