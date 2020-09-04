@@ -34,9 +34,9 @@ app.use('/user/:id', (req, res, next) => {
   next()
 })
 
-app.use('/api/v1', createProxyMiddleware({ target: 'http://localhost:4000/', changeOrigin: true }));
+app.use('/api/v1', createProxyMiddleware({ target: 'http://localhost:4000/', changeOrigin: false }));
 
-app.get(["/home", "/user/:id", "/signup", "/login", "/account", "/inbox", "/explore"], (req, res, next) => {
+app.get(["/", "/home", "/user/:id", "/signup", "/login", "/account", "/inbox", "/explore"], (req, res, next) => {
   const store = createStore(
     mainReducer,
     applyMiddleware(thunk)
