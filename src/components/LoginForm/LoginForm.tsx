@@ -94,7 +94,7 @@ const LoginForm = ({handleLogin, errorResponse} : Props) => {
             id='password'
             autoComplete="off"
             value={loginObject.password}
-            type="text"
+            type="password"
             className={loginObject.password.length > 5 ? "field_completed" : ""}
             onBlur={e => validateInput(e)}
             onChange={e => handleInputChange(e)}

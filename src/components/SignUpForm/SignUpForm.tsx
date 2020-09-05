@@ -224,7 +224,7 @@ export default function SignUpForm(props: any) {
           id='password'
           autoComplete="off"
           value={signupObject.password}
-          type="text"
+          type="password"
           className={signupObject.password.length > 5 ? "field_completed" : ""}
           onBlur={e => validateInput(e)}
           onChange={e => handleInputChange(e)}
@@ -239,7 +239,7 @@ export default function SignUpForm(props: any) {
           autoComplete="off"
           value={signupObject.password_confirmation}
           className={signupObject.password_confirmation.length > 5 ? "field_completed" : ""}
-          type="text"
+          type="password"
           onBlur={e => validateInput(e)}
           onChange={e => handleInputChange(e)}
           onFocus={e => setFocus(e.target.id, true)}
