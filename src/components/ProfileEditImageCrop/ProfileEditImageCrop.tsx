@@ -75,7 +75,7 @@ const ProfileEditImageCrop = ({ src, presignedURL, avatar, handleSubmit} : Props
                             onImageLoaded={(image: any) => setImage(image)}
                             onComplete={onCropComplete} />
             </div>
-            <button className='edit_pic_save' onClick={submitNewProfileImage}> Save </button>
+            <button className='edit_pic_save' disabled={croppedImage ? false : true} onClick={submitNewProfileImage}> Save </button>
          </div>
 }
 
