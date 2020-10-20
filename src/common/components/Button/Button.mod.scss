@@ -1,0 +1,37 @@
+@import '../../styles/colors';
+
+.btn {
+  position: relative;
+  z-index: 5;
+  display: block;
+  border: none;
+  border-radius: 25px;
+  &:enabled {
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.stylePrimary {
+  color: white;
+  background-color: $primary;
+  border: solid white 0.4px;
+  &:hover {
+    background-color: $primary_focused;
+  }
+}
+
+.styleSecondary {
+  flex: 1;
+  color: $primary;
+  background-color: white;
+  border: solid $primary 1.4px;
+  &:hover{
+    background-color: $bg-hover;
+  }
+}

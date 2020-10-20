@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import SubscribeButton from '../SubscribeButton/SubscribeButton'
 import FloatingImage from '../FloatingImageContainer/FloatingImage';
 import { useHistory } from 'react-router-dom'
-
+import Button from '../../common/components/Button/Button'
+import styles from './ProfileHead.mod.scss'
 
 type Props = {
   user: { user_id: number,
@@ -24,7 +25,7 @@ function mapStateToProps(state: any) {
   }
 }
 
-const ProfileHead = ({user, currentUserId} : Props) => {
+const ProfileHead = ({user={}, currentUserId} : Props) => {
   const [displayFloatingImage, setDisplayFloatingImage] = useState(false)
   const history = useHistory()
 
@@ -40,7 +41,13 @@ const ProfileHead = ({user, currentUserId} : Props) => {
       <span className='profile_alias'> {user.alias} </span>
       <div className='profile_head_button'>
         { currentUserId == user.user_id ?
-          <button className='subscribe_request_button' onClick={() => history.push('/account')}> Edit Profile </button>
+          <Button
+            className={styles.editProfile}
+            styling={'primary'}
+            onClick={() => history.push('/account')}
+            >
+            Edit Profile
+          </Button>
             :
         <SubscribeButton userId={user.user_id} />
         }

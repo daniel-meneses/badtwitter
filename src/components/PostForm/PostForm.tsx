@@ -1,73 +1,70 @@
 import React, {useState, useRef} from "react"
-import "./PostForm.scss"
 import { connect } from 'react-redux'
 import { postMessage } from '../../actions/post.js'
+import styles from './PostForm.mod.scss'
+import Avatar from '../Avatar/Avatar'
+import Button from '../../common/components/Button/Button'
 
 type Props = {
-  user: { avatar: string},
-  postMessage: (message: string) => void,
-  didUpdate: any,
-  shouldClearForm: boolean,
-  resetClearForm: () => void
+  avatar: string,
+  createPostStatus: boolean,
+  postMessage: (e: any) => void
 }
 
 function mapStateToProps(state :any) {
+  let { session, post } = state
   return {
-    user: state.session.currentUser,
-    didUpdate: state.post.floatingPostFormIsHidden,
-    shouldClearForm: state.post.shouldClearForm
+    avatar: session.currentUser.avatar,
+    createPostStatus: post.newPostSuccess
   }
 }
 
-function resetClearForm() {
-  return (dispatch: any) => dispatch({ type: "RESET_CLEAR_FORM"})
-}
+const PostForm = (props: Props) => {
 
-const PostForm = ({user = {avatar: ""}, postMessage, didUpdate, shouldClearForm, resetClearForm}: Props) => {
+  const { avatar, postMessage, createPostStatus } = props
 
   const [postText, setPostText] = useState("");
   const inputEl = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = () => {
     postMessage(postText)
     setPostText("")
   }
 
-  if (shouldClearForm === true) {
-    if (inputEl.current !== null) {
-      inputEl.current.innerText = ""
-      setInterval(resetClearForm, 300);
-    }
-  }
-
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target as HTMLElement;
     const inputText = input.textContent as string;
     setPostText(inputText)
   }
 
   return (
-    <div className="p-form">
-      <div className="post_form_main">
-        <img src={user.avatar}
-             alt={'Profile avatar'}/>
-        <div id="input" onInput={handleInputChange}
-                        data-text={"What's happenning?"}
-                        data-value=""
-                        contentEditable
-                        ref={inputEl}
-                        >
-                        </div>
-                      </div>
-        <div className="post_form_footer">
-          <button className={postText.length > 0 ? 'submit_post highlighted' : 'submit_post'}
-                  onClick={handleSubmit}
-                  >
-                  Submit
-                  </button>
-                  </div>
+    <div className={styles.postForm}>
+      <div className={styles.postFormContent}>
+        <Avatar
+          image={avatar}
+          className={styles.postFormAvatar}
+          />
+        <div className={styles.postFormInput}
+              onInput={handleInputChange}
+              data-text={"What's happenning?"}
+              data-value=""
+              contentEditable
+              ref={inputEl}
+              >
+        </div>
+      </div>
+      <div className={styles.postFormFooter}>
+        <Button
+          styling={'primary'}
+          onClick={handleSubmit}
+          className={styles.postFormSubmit}
+    //      disabled={postText.length === 0}
+          >
+          Submit
+        </Button>
+      </div>
     </div>
   );
 }
 
-export default connect(mapStateToProps, {postMessage, resetClearForm})(PostForm);
+export default connect(mapStateToProps, {postMessage})(PostForm);

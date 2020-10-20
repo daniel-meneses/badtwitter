@@ -1,6 +1,7 @@
 @import '../../common/layout/container.scss';
 
 .trending {
+  position: fixed;
   margin-top: 57px;
   margin-left: 14px;
   min-height: 400px;
@@ -73,7 +74,7 @@
     width: 275px;
   }
   @include respond-to('xlarge') {
-    width: 350px;
+    width: 320px;
   }
   @include respond-to('xxlarge') {
     width: 350px;

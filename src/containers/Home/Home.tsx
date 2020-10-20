@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import './Home.scss';
+import { useHistory } from 'react-router-dom'
 import { getPendingSubscriptionRequests,
          getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
 import { getAllUserLikes} from '../../actions/like.js'
@@ -7,10 +7,13 @@ import { getGlobalFeed, getGlobalAtCursor } from '../../actions/feed.js'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import Trending from '../../components/Trending/Trending';
-import GlobalFeed from '../../components/GlobalFeed/GlobalFeed';
-import GreenLoadingCircle from '../../components/ReactLoading/ReactLoading.js';
-import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage'
-import { useHistory } from 'react-router-dom'
+import UserPost from '../../components/PostMini/UserPost';
+import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper'
+import MainContainer from '../MainContainer/MainContainer'
+import Header from '../../components/Header/Header';
+import { usePersistedScroll } from '../../utils/hooks/useScroll';
+import { throttle, debounce } from 'lodash'
+import store from '../../store/store'
 
 type Props = {
   getPendingSubscriptionRequests: () => void,
@@ -28,28 +31,24 @@ type Props = {
   currentUser: {avatar: string,
                 user_id: number},
   scrollPosition: number,
-  saveScrollPosition: (position: number) => void,
-  getGlobalAtCursor: (afterCursor :string) => void
+  getGlobalAtCursor: (afterCursor :string) => void,
 }
 
 function mapStateToProps(state: any) {
-  let global = state.feed.global
+  let feed = state.feed.global
+
   return {
     global: {
-      timeline: global.timeline,
-      afterCursor: global.afterCursor,
-      isFetching: global.isFetching,
-      isFetchingNextPage: global.isFetchingNextPage,
-      errors: global.errors,
-      wasFetchedSuccessfully: global.wasFetchedSuccessfully
+      timeline: feed.timeline,
+      afterCursor: feed.afterCursor,
+      isFetching: feed.isFetching,
+      isFetchingNextPage: feed.isFetchingNextPage,
+      errors: feed.errors,
+      wasFetchedSuccessfully: feed.wasFetchedSuccessfully
     },
-    scrollPosition: state.home.scrollPosition,
-    currentUser: state.session.currentUser
+    currentUser: state.session.currentUser,
+    scrollPosition: state.home.scrollPosition
   }
-}
-
-function saveScrollPosition(position :number) {
-  return (dispatch :any) => dispatch({type: 'SET_HOME_SCROLL_POSITION', position: position})
 }
 
 const Home = ({getPendingSubscriptionRequests,
@@ -59,115 +58,73 @@ const Home = ({getPendingSubscriptionRequests,
               global,
               currentUser = {avatar: "", user_id: 0},
               scrollPosition,
-              saveScrollPosition,
-              getGlobalAtCursor} : Props) => {
+              getGlobalAtCursor,
+              } : Props) => {
 
-  const [scrollPercent, setScrollPercent] = useState(0)
-  const scrollEl = useRef<HTMLDivElement>(null)
-  const history = useHistory()
+  const history = useHistory();
+  const scrollRef = typeof document !== "undefined" && document.getElementById("scrollable")
 
   useEffect(() => {
-    let scrollingDiv = scrollEl.current
-    // Only fetch once app launch
     if (!global.wasFetchedSuccessfully) {
       getGlobalFeed()
     }
     getPendingSubscriptionRequests()
     getAcceptedSubscriptionRequests()
     getAllUserLikes()
-    scrollingDiv?.scrollTo(0, scrollPosition)
-    document.getElementById("main-scroll")?.addEventListener('scroll', handleScroll)
-    return () => {
-      saveScrollPosition(scrollingDiv?.scrollTop || 0)
-      document.getElementById("main-scroll")?.removeEventListener('scroll', () => handleScroll)
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-   /*
-    Track vertical scrolling.
-    Inaccurate, should be replced
-   */
-  const handleScroll = () => {
-     let top = scrollEl.current?.scrollTop || 0
-     let total = scrollEl.current?.scrollHeight
-     let percent = Math.round((top || 0) / (total || 1) * 100)
-     setScrollPercent(percent)
-   }
+  const onScrollExit = () => store.dispatch({type: 'SET_HOME_SCROLL_POSITION', position: scrollRef?.scrollTop})
 
-  if (scrollPercent > 60) {
-   if (global.afterCursor !== null) {
-     if (!global.isFetchingNextPage) {
-        getGlobalAtCursor(global.afterCursor)
-     }
+  const fetchNext = throttle( (cursor) => getGlobalAtCursor(cursor), 2000)
+
+  const onScroll = (pos) => {
+    let percent = Math.round(((pos.y || 0) / (pos.total || 100)) * 100)
+    let shouldFetch = percent > 60
+    if (shouldFetch && global.afterCursor && !global.isFetchingNextPage) {
+      fetchNext(global.afterCursor)
     }
   }
 
-   var loadingSpinner = null
-   var feedDisplayable = null
-   const feedCount = (global.timeline || {}).length
+  usePersistedScroll({
+    ref: scrollRef,
+    initPos: scrollPosition,
+    onScroll: onScroll,
+    onExit: onScrollExit
+  })
 
-   if (global.isFetching) {
-     if (feedCount > 0) {
-       loadingSpinner = <GreenLoadingCircle size='small'/>
-       feedDisplayable = <GlobalFeed globalTimeline={global.timeline}/>
-     } else {
-       loadingSpinner = <GreenLoadingCircle size='large'/>
-     }
-   }
-
-   if (global.errors) {
-     loadingSpinner = null
-     if (!feedCount) {
-       feedDisplayable = <EmptyListMessage message={"Show big error message."} />
-     } else {
-       feedDisplayable = <div>
-          <EmptyListMessage message={"An error occurred please try again"} />
-          <div className={'divider'}> </div>
-          <GlobalFeed globalTimeline={global.timeline}/>
-            </div>
-     }
-   }
-
-   if (!global.isFetching && !global.errors) {
-     if (feedCount > 0) {
-       feedDisplayable = <GlobalFeed globalTimeline={global.timeline}/>
-     } else {
-       feedDisplayable = <EmptyListMessage message={"No post to display."} />
-    }
-   }
 
    return (
-     <div className={'main_container'} id='main-scroll' ref={scrollEl}>
-       <div className={'center_container'}>
+     <MainContainer
 
-         <h2 className={'center_container_header'}>
-           <span className='header_avatar_container'>
-                 <img className='header_avatar'
-                      alt='User Avatar'
-                      src={currentUser.avatar}
-                      onClick={() => history.push('/user/' + currentUser.user_id)}/>
-                      </span>
-           <span className={'selectable'} onClick={() => history.push('/')}>
-           Home
-           </span>
-         </h2>
+       mainCenter=
+       {
+         <>
+           <Header
+             title={'Home'}
+             onTitleClick={() => history.push('/home')}
+             />
+           <PostForm />
+              <LoadingWrapper
+                isFetching={global.isFetching}
+                errors={global.errors}
+                >
+                {
+                  global.timeline && global.timeline.map( (postId: number, i: number) =>
+                    <UserPost key={i} postId={postId}/>
+                )}
+              </LoadingWrapper>
+        </>
+       }
 
-       <div className={'center_container_body'} id='special'>
-         <div className={'new_post_form'}>
-          <PostForm />
-          </div>
-          {loadingSpinner}
-         {feedDisplayable}
-         </div>
-       </div>
-
-       <div className={'right_container'}>
-         <div className={'trending_container'}>
+       mainRight=
+       {
+         <div>
            <Trending postId={1}/>
-           </div>
-        </div>
-    </div>
+         </div>
+       }
+
+     />
    )
 
 }
@@ -177,5 +134,4 @@ export default connect(mapStateToProps,
                          getAcceptedSubscriptionRequests,
                          getAllUserLikes,
                          getGlobalFeed,
-                         saveScrollPosition,
                          getGlobalAtCursor})(Home)

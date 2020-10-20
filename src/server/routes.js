@@ -1,5 +1,5 @@
 import Home from '../containers/Home/Home';
-import NavBar from '../components/NavBar/NavBar';
+import NavBar from '../components/Nav/NavContainer';
 import FloatingPostContainer from '../components/FloatingPostContainer/FloatingPostContainer';
 import SignUp from '../containers/SignUp/SignUp';
 import UserProfile from '../containers/UserProfile/UserProfile';
@@ -27,6 +27,10 @@ const routes = [
   },
   {
     path: '/inbox',
+    component: Inbox
+  },
+  {
+    path: '/inbox/:tab',
     component: Inbox
   },
   {

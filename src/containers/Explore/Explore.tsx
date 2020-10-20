@@ -1,28 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import EmptyListMessage from '../../components/EmptyListMessage/EmptyListMessage'
+import MainContainer from '../MainContainer/MainContainer'
+import Header from '../../components/Header/Header';
 
-class Explore extends React.Component<any, any> {
+const Explore: React.FC = () => {
 
-  componentDidMount() {
-  }
-
-  render() {
-      return (
-        <div className={'main_container'}>
-          <div className={'center_container'}>
-            <h2 className='center_container_header'>
-              Explore
-              </h2>
-            <div className={'center_container_body'}>
-              <EmptyListMessage message={'Work in progress..'} />
-              </div>
-          </div>
-          <div className={'right_container'}>
-            </div>
-        </div>
-      );
-  }
+  return (
+    <MainContainer
+      mainCenter=
+      {
+        <>
+          <Header title={'Explore'} />
+          <h1> Work in Progres.. </h1>
+       </>
+      }
+    />
+  )
 }
 
 export default connect(null, {} )(Explore);

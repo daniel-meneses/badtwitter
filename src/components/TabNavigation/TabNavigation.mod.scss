@@ -1,0 +1,30 @@
+
+
+.tabNav {
+  display: flex;
+  width: 100%;
+}
+
+.tabHeader {
+  display: flex;
+  width: 100%;
+}
+
+.tabHeaderItem {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  border: solid 1px green;
+  cursor: pointer;
+  &:hover{
+    background-color: gray;
+  }
+}
+
+.tabHeaderItemFocused {
+  background: gray;
+}
+
+.tabView {
+  width: 100%;
+}

@@ -1,0 +1,47 @@
+@import '../../common/theme/mixins.scss';
+
+.mainContainer {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  @include respond-to('small') {
+    width: 100%;
+    align-items: stretch;
+  }
+  @include respond-to('medium') {
+    width: 600px;
+    align-items: flex-start;
+  }
+  @include respond-to('large') {
+    width: 920px;
+  }
+  @include respond-to('xxlarge') {
+    width: 990px;
+  }
+}
+
+.mainCenter {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainRight {
+  @include respond-to('mobile') {
+    display: none;
+  }
+  @include respond-to('small') {
+
+  }
+  @include respond-to('medium') {
+  }
+  @include respond-to('large') {
+    display: block;
+    width: 290px;
+    height: 100%;
+  }
+  @include respond-to('xxlarge') {
+    width: 350px;
+  }
+}

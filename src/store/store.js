@@ -6,16 +6,27 @@ import { saveStateToLocal, loadState } from '../localStorage.js';
 
 // Load redux state from server
 // Eventually remove saving state to local
-const persistedState = window.__INITIAL_STATE_ ? window.__INITIAL_STATE_ : loadState();
 
-delete window.__PRELOADED_STATE__
+//const persistedState = window.__INITIAL_STATE_ ? window.__INITIAL_STATE_ : loadState();
+
+// delete window.__PRELOADED_STATE__
 // Redux store.
 // Returns state from reducers
-const store = createStore(
-  mainReducer,
-  persistedState,
-  applyMiddleware(thunk)
-);
+const storeFromState = () => {
+
+  let persistedState = {};
+  if (typeof window !== "undefined") {
+    persistedState = window.__INITIAL_STATE_ ? window.__INITIAL_STATE_ : loadState();
+  }
+
+  return createStore(
+    mainReducer,
+    persistedState,
+    applyMiddleware(thunk)
+  );
+}
+
+const store = storeFromState();
 
 // Persist some state to local.
 // https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e

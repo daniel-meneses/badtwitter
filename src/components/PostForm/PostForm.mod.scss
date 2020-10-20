@@ -1,0 +1,57 @@
+@import '../../common/theme/mixins.scss';
+
+.postForm {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 10px 20px 10px;
+//  border-bottom: #c9d6cd solid 1px;
+//background: white;
+  .postFormContent {
+    display: flex;
+    align-self: stretch;
+    .postFormAvatar {
+      width: 60px;
+      height: 60px;
+    }
+    .postFormInput {
+      flex: 1;
+      align-self: stretch;
+  //    background-color: white;
+//      background-color: -moz-field;
+      max-width: 500px;
+      padding: 12px 0px 0px 10px;
+      overflow: visible;
+      word-wrap: break-word;
+      font-size: 18px;//
+//      outline: none;
+      &:empty:not(:focus):before{
+        font-size: 20px;
+        color: gray;
+        content:attr(data-text)
+      }
+      &:empty:focus:before{
+        font-size: 20px;
+        color: lighten(gray, 30%);
+        content:attr(data-text);
+      }
+      &:hover{
+        cursor: text;
+      }
+    }
+  }
+  .postFormFooter {
+    display: flex;
+    flex: 1;
+    align-self: stretch;
+    justify-content: flex-end;
+    margin: 12px 0px;
+  }
+  .postFormSubmit {
+    flex: 1;
+    align-self: flex-end;
+    max-width: 100px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,31 @@
+
+
+.userPreview {
+  z-index: 100;
+  display: flex;
+  position:relative;
+  padding: 8px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(240, 245, 245);
+  }
+}
+
+.userPreviewButtons {
+  display: flex;
+  flex: 1;
+  position: relative;
+  z-index: 100;
+  align-self: center;
+  justify-content: flex-end;
+}
+
+.previewButton {
+  flex: 1;
+  min-width: 60px;
+  max-width: 80px;
+  min-height: 30px;
+  max-height: 26px;
+  font-weight: 600;
+  margin-right: 4px;
+}

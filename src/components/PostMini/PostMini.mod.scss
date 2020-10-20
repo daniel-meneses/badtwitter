@@ -1,0 +1,130 @@
+@import '../../common/theme/mixins.scss';
+
+.userPost {
+  position:relative;
+  padding: 8px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(240, 245, 245);
+  }
+}
+
+.userInfoContentContainer {
+  //border: solid red 1px;
+}
+
+.userPostMessage {
+  //border: solid red 1px;
+}
+
+.userPostUserDetails {
+  display: flex;
+  .userPostAvatar {
+    height: 44px;
+    width: 44px;
+  }
+  .userPostName {
+    display: flex;
+    align-self: flex-end;
+    font-weight: 600;
+    margin-left: 6px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.userPostFooter {
+  display: flex;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.footerIconWithCount {
+  position:relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+}
+
+.footerIcon {
+  height: 17px;
+  width: 17px;
+  margin-right: 4px;
+}
+
+.footerTimestamp {
+  flex: 1;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.userInfo {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.userInfoAvatarContainer {
+  flex: 0 0 50px;
+  max-width: 50px;
+  margin-right: 10px;
+}
+
+.userInfoContentContainer {
+  flex: 1;
+  position: relative;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.userInfotopDetails {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.userInfoNameAlias {
+  display: flex;
+  flex: 1;
+  padding-bottom: 5px;
+  overflow-wrap: break-word;
+  .userInfoName {
+    overflow-wrap: break-word;
+    max-width: 400px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 4px;
+    &:hover{
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .userInfoAlias {
+    max-width: 400px;
+    font-size: 16px;
+    font-weight: 350;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
+
+.userInfoButtonSelection {
+  display: flex;
+  flex: 1;
+  position: relative;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flexCol {
+  flex-direction: column;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}

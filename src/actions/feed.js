@@ -1,7 +1,15 @@
 import api from '../api/api.js';
 import * as feed from '../constants/acts.js';
+import { STUB_REQ_CYPRESS_TEST } from '../constants/environment'
+import globalStub from '../../cypress/fixtures/global_feed.json'
 
 export function getGlobalFeed(headers={}) {
+  if (STUB_REQ_CYPRESS_TEST) {
+    return dispatch => {
+      dispatch({ type: feed.GET_FEED_SUCCESS, response: globalStub });
+      dispatch({ type: feed.GET_GLOBAL_FEED_SUCCESS, response: globalStub });
+    }
+  }
   return dispatch => {
     dispatch({ type: feed.GET_GLOBAL_FEED })
     return api.fetch('/feed/global', {}, headers)
@@ -16,6 +24,7 @@ export function getGlobalFeed(headers={}) {
 }
 
 export function getGlobalAtCursor(cursor) {
+  console.log('fetching...');
   var data = {afterCursor: cursor}
   return dispatch => {
     dispatch({ type: "GET_GLOBAL_FEED_AT_CURSOR"})

@@ -14,6 +14,7 @@ import {getSessionUser} from '../actions/session.js'
 import {createProxyMiddleware} from 'http-proxy-middleware'
 import serialize from 'serialize-javascript'
 import * as env from '../constants/environment'
+import sessionStub from '../../cypress/fixtures/login_success.json'
 
 const app = express();
 
@@ -41,14 +42,23 @@ app.use('/api/v1', createProxyMiddleware({
   cookieDomainRewrite: env.PROXY_DOMAIN
 }));
 
-app.get(["/", "/home", "/user/:id", "/signup", "/login", "/account", "/inbox", "/explore"], (req, res, next) => {
+app.get(["/", "/home", "/test", "/user/:id", "/signup", "/login", "/account", "/inbox", "/inbox/:tab", "/explore"], (req, res, next) => {
   const store = createStore(
     mainReducer,
     applyMiddleware(thunk)
   );
   const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 
-  var promise = store.dispatch(getSessionUser(req.headers))
+  // Mocking authentication for cypress tests
+  let mockSession = new Promise(resolve => {
+    let shouldMock = req.url !== '/login' && req.url !== '/signup'
+    if (shouldMock) {
+      store.dispatch({type: "AUTHENTICATION_SUCCESS", response: sessionStub})
+    }
+    resolve()
+  })
+
+  var promise = true ? mockSession : store.dispatch(getSessionUser(req.headers))
 
   promise.then((isAuthenticated) => {
     if (isAuthenticated && activeRoute.fetchInitialData) {

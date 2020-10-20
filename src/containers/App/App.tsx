@@ -1,8 +1,6 @@
-import React from 'react';
-import './App.scss';
+import React, { useRef } from 'react';
 import { Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
-import NavBar from '../../components/NavBar/NavBar';
 import FloatingPostContainer from '../../components/FloatingPostContainer/FloatingPostContainer';
 import SignUp from '../SignUp/SignUp';
 import UserProfile from '../UserProfile/UserProfile';
@@ -11,7 +9,10 @@ import Account from '../Account/Account';
 import Explore from '../Explore/Explore';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
+import Nav from '../../components/Nav/NavContainer';
+import MainContainer from '../MainContainer/MainContainer'
 import { connect } from 'react-redux';
+import styles from './App.mod.scss'
 
 type Props = {
   authenticate: () => void,
@@ -28,24 +29,25 @@ function mapStateToProps(state: any) {
 const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
 
   return (
-        <div className="App">
+        <div className={styles.app} id='scrollable'>
           {
             isAuthenticated ?
             <>
             <FloatingPostContainer />
               <header>
-                <div className='nav_container'>
-                  <NavBar/>
+                <div className={styles.navLayout}>
+                  <Nav/>
                 </div>
               </header>
               <main>
               <Switch>
-                <Route path='/' exact component={Home}/>
-                <Route path='/home' exact component={Home}/>
-                <Route path='/user/:id' exact component={UserProfile}/>
-                <Route path='/inbox' exact component={Inbox}/>
-                <Route path='/explore' exact component={Explore}/>
-                <Route path='/account' exact component={Account}/>
+                  <Route path='/' exact component={Home}/>
+                  <Route path='/home' exact component={Home}/>
+                  <Route path='/user/:id' exact component={UserProfile}/>
+                  <Route path='/inbox/:tab' exact component={Inbox}/>
+                  <Route path="/inbox" render={() => <Redirect to="/inbox/messages"/>}/>
+                  <Route path='/explore' exact component={Explore}/>
+                  <Route path='/account' exact component={Account}/>
                 <Route path="/signup" render={() => (
                   isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
                 )}/>

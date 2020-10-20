@@ -1,15 +1,21 @@
 html {
   box-sizing: border-box;
-  overflow: hidden;
+//  overflow: hidden;
 }
 
 body {
-  overflow: auto;
+  // overflow: auto;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
   -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  transition: background-color 0.2s linear;
 }
 
 input:focus,
@@ -17,4 +23,8 @@ select:focus,
 textarea:focus,
 button:focus {
     outline: none;
+}
+
+[contenteditable=true]:focus {
+   outline: none;
 }

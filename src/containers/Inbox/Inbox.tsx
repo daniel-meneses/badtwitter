@@ -1,31 +1,46 @@
 import React, { useEffect } from 'react'
-import './Inbox.scss'
+import { useParams, useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
-import InboxNav from '../../components/InboxNav/InboxNav'
-import InboxMessages from '../../components/InboxMessages/InboxMessages'
-import InboxFollowers from '../../components/InboxFollowers/InboxFollowers'
-import InboxSubscriptions from '../../components/InboxSubscriptions/InboxSubscriptions'
 import { getFollowers, getPendingFollowRequests } from '../../actions/followers.js'
 import { getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
-import * as nav from '../../constants/inboxNav'
+import MainContainer from '../MainContainer/MainContainer'
+import Header from '../../components/Header/Header';
+import TabNavigation from '../../components/TabNavigation/TabNavigation'
+import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper'
+import UserPreview from '../../components/UserPreview/UserPreview'
+import Header from '../../components/Header/Header';
 
 type Props = {
   getFollowers: () => void,
   getPendingFollowRequests: () => void,
   getAcceptedSubscriptionRequests: () => void,
-  focusedTab: string
+  followRequests: any,
+  followers: any,
+  subscriptions: any
 }
 
 function mapStateToProps(state: any) {
   return {
-    focusedTab: state.inbox.focusedTab
+    followers: state.followers.accepted,
+    followRequests: state.followers.pending,
+    subscriptions: state.subscriptions.accepted
   }
 }
+
 
 const Inbox = ({getFollowers,
                 getPendingFollowRequests,
                 getAcceptedSubscriptionRequests,
-                focusedTab} : Props) => {
+                followRequests,
+                followers,
+                subscriptions,
+                } : Props) => {
+
+  const history = useHistory()
+  const { tab } = useParams()
+  const isMessages = tab === 'messages'
+  const isFollowers = tab === 'followers'
+  const isSubscriptions = tab === 'subscriptions'
 
   useEffect(() => {
     getFollowers()
@@ -34,30 +49,52 @@ const Inbox = ({getFollowers,
     // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
-   var view = null;
-   if (focusedTab===nav.INBOX_MESSAGES) {
-     view = <InboxMessages />
-   } else if (focusedTab===nav.INBOX_FOLLOWERS) {
-     view = <InboxFollowers />
-   } else if (focusedTab===nav.INBOX_SUBSCRIPTIONS) {
-     view = <InboxSubscriptions/ >
-   }
+  const inboxViews = [
+    {
+      title: 'Messages',
+      onClick: () => history.push('/inbox/messages'),
+      isFocused: isMessages,
+      data: followRequests.followRequests
+    },
+    {
+      title: 'Followers',
+      onClick: () => history.push('/inbox/followers'),
+      isFocused: isFollowers,
+      data: followers.followRequests
+    },
+    {
+      title: 'Subscriptions',
+      onClick: () => history.push('/inbox/subscriptions'),
+      isFocused: isSubscriptions,
+      data: subscriptions.subscriptionRequests
+    }
+  ]
+
+  const view = inboxViews.find(view => view.isFocused)
 
    return(
-     <div className={'main_container'}>
-       <div className={'center_container'}>
-       <h2 className={'center_container_header'}>
-        Inbox
-        </h2>
-       <div className={'center_container_body'}>
-         <InboxNav focusedTab={focusedTab}/>
-         {view}
-         </div>
-       </div>
-       <div className={'right_container'}>
-       </div>
-     </div>
+     <MainContainer
+       mainCenter={
+         <>
+          <Header
+            title={'Inbox'}
+            onTitleClick={() => history.push('/inbox/messages')}
+            />
+         <TabNavigation tabs={inboxViews} />
+         { view.data &&
+           Object.values(view.data).map((req: any, i: number) =>
+             <UserPreview
+               key={req.id}
+               userId={req.user_id || req.subject_id}
+               isFollowRequest={view.title === 'Messages'}
+               />
+         }
+         </>
+       }
+     />
+
    )
+
 }
 
 export default connect(mapStateToProps,
