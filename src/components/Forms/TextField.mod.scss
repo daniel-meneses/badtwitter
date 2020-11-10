@@ -1,0 +1,97 @@
+@import '../../common/theme/mixins.scss';
+
+.formFields {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-width: 100%;
+  max-width: 100%;
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.textFieldWithError {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: 90px;
+  min-height: 80px;
+  min-width: 100%;
+}
+
+.signUpFieldColumns {
+  @include respond-to('small') {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  @include respond-to('medium') {
+    min-width: 48%;
+    max-width: 48%;
+  }
+}
+
+.textField {
+  height: 40px;
+  width: 100%;
+  margin-top: 2px;
+  padding-left: 4px;
+  font-size: 18px;
+  border-bottom: solid black 1px;
+  border-left: solid #c9d6cd 1px;
+  border-right: solid #c9d6cd 1px;
+  background: lighten(#c9d6cd, 10);
+  border-top: none;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  &:focus{
+    border-bottom: solid green 2px;
+  }
+}
+
+.error {
+  display: flex;
+  flex: 1;
+  span {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.label {
+  font-weight: 600;
+}
+
+.labelFocused {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.errorText {
+  align-content: center;
+  color: red;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.authError {
+  padding-top: 2px;
+  color: red;
+  font-weight: 500;
+  align-self: center;
+}
+
+.errorField {
+  border-bottom: solid red 2px;
+}
+
+.submitButton {
+  align-self: center;
+  font-size: 16px;
+  font-weight: 600;
+  width: 170px;
+  height: 34px;
+}

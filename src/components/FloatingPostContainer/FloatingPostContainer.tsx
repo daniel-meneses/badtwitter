@@ -2,31 +2,32 @@ import React from "react"
 import './FloatingPostContainer.scss'
 import { connect } from 'react-redux'
 import PostForm from '../PostForm/PostForm';
-import { postMessage } from '../../actions/post.js'
+import { postMessage } from '../../actions/post'
+import { PostFormActionTypes } from '../../reducers/ui';
 
 type Props = {
-  floatingPostFormIsHidden: boolean,
+  shouldDisplay: boolean,
   postMessage: (message: string) => void,
   dismissForm: any
 }
 
 const mapStateToProps = (state: any) => {
   return {
-    floatingPostFormIsHidden: state.post.floatingPostFormIsHidden
+    shouldDisplay: state.ui.postForm.shouldDisplayPostForm
   }
 }
 
 const dismissForm = () => {
   return (dispatch: any) => {
-    dispatch({ type: 'HIDE_FLOATING_POST_FORM' })
+    dispatch({ type: PostFormActionTypes.HIDE_FLOATING_POST_FORM })
   }
 }
 
-const FloatingPostContainer = ({ floatingPostFormIsHidden, postMessage, dismissForm }: Props) => {
+const FloatingPostContainer = ({ shouldDisplay, dismissForm }: Props) => {
 
   return (
     <div className="floating_post_form_container"
-      hidden={floatingPostFormIsHidden}>
+      hidden={!shouldDisplay}>
       <div className="floating_post_form_background"
         onClick={dismissForm}>
       </div>

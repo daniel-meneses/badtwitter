@@ -1,51 +1,51 @@
 import React from "react"
 import UserInfo from '../PostMini/UserInfo'
 import { connect } from 'react-redux'
-import { acceptFollowerRequest, rejectFollowerRequest } from '../../actions/followers.js'
-import Button from '../../common/components/Button/Button'
+import { acceptFollowerRequest, rejectFollowerRequest } from '../../actions/followers'
+import Button, { BtnThemes } from '../../common/components/Button/Button'
 import styles from './UserPreview.mod.scss'
 import SubscribeButton from '../SubscribeButton/SubscribeButton'
 
 type Props = {
-  isFollowRequest: false,
-  acceptFollowerRequest: any,
-  rejectFollowerRequest: any,
-  user: any;
+  isFollowRequest?: boolean;
+  acceptFollowerRequest?: any;
+  rejectFollowerRequest?: any;
+  user?: any;
   userId: number;
 }
 
 const UserPreview = (props: Props) => {
 
-  const { user, acceptFollowerRequest, rejectFollowerRequest, isFollowRequest  } = props;
+  if (!props.user) return (<>{'No user'}</>)
+
+  const { user, acceptFollowerRequest, rejectFollowerRequest, isFollowRequest, userId  } = props;
   const { bio, ...userProps } = user
   const { userPreview } = styles
-
-  if (!user) return (<></>)
 
   const btns = isFollowRequest ?
     <div className={styles.userPreviewButtons}>
       <Button
         className={styles.previewButton}
-        styling={'primary'}
-        onClick={() => console.log(acceptFollowerRequest({accepted : true, id: user.user_id}))}
+        theme={BtnThemes.PrimaryFill}
+        onClick={() => acceptFollowerRequest({accepted : true, id: userId})}
         >
         Accept
       </Button>
       <Button
         className={styles.previewButton}
-        styling={'primary'}
-        onClick={() => console.log(rejectFollowerRequest({accepted : false, id: user.user_id})}
+        theme={BtnThemes.RedOutline}
+        onClick={() => rejectFollowerRequest({accepted : false, id: userId})}
         >
         Reject
       </Button>
     </div>
     :
-  <SubscribeButton userId={user.user_id} />
+  <SubscribeButton userId={userId} />
 
   return (
     <div className={styles.userPreview}>
       <UserInfo
-        userId={user.user_id}
+        userId={userId}
         isPreview={true}
         topButtons={btns}
         >
@@ -57,8 +57,8 @@ const UserPreview = (props: Props) => {
 
 export default connect((state: any, ownProps: Props) => {
   let { userId } = ownProps
-  let { users } = state.globalObject
-  let user: any = userId && users[userId]
+  let { byId } = state.users
+  let user: any = byId && byId[userId]
   return {
     user
   }

@@ -1,20 +1,33 @@
 import express from 'express'
 import { createStore, applyMiddleware } from 'redux'
-import { renderToString } from "react-dom/server"
 import React from "react"
 import App from '../containers/App/App'
 import { Provider } from 'react-redux'
 import { StaticRouter, matchPath } from "react-router-dom";
 import routes from './routes.js'
-import mainReducer from '../reducers/main.js';
-import {getGlobalFeed} from '../actions/feed.js'
+import mainReducer from '../reducers/main';
 import thunk from 'redux-thunk';
 import ReactDOMServer from "react-dom/server";
-import {getSessionUser} from '../actions/session.js'
+import {getSessionUser} from '../actions/session'
 import {createProxyMiddleware} from 'http-proxy-middleware'
 import serialize from 'serialize-javascript'
 import * as env from '../constants/environment'
 import sessionStub from '../../cypress/fixtures/login_success.json'
+
+
+const getAppCookies = (req) => {
+   if (req.headers.cookie) {
+    const rawCookies = req.headers.cookie.split('; ');
+    const parsedCookies = {};
+    rawCookies.forEach(rawCookie=>{
+    const parsedCookie = rawCookie.split('=');
+     parsedCookies[parsedCookie[0]] = parsedCookie[1];
+    });
+    return parsedCookies;
+  } else {
+    return []
+  }
+};
 
 const app = express();
 
@@ -42,11 +55,14 @@ app.use('/api/v1', createProxyMiddleware({
   cookieDomainRewrite: env.PROXY_DOMAIN
 }));
 
-app.get(["/", "/home", "/test", "/user/:id", "/signup", "/login", "/account", "/inbox", "/inbox/:tab", "/explore"], (req, res, next) => {
+let values = ["/", "/home", "/test", "/user/:id", "/signup", "/login", "/account", "/inbox", "/inbox/:tab", "/explore"]
+app.get(["*"], (req, res, next) => {
+
   const store = createStore(
     mainReducer,
     applyMiddleware(thunk)
   );
+
   const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 
   // Mocking authentication for cypress tests
@@ -58,8 +74,10 @@ app.get(["/", "/home", "/test", "/user/:id", "/signup", "/login", "/account", "/
     resolve()
   })
 
-  var promise = true ? mockSession : store.dispatch(getSessionUser(req.headers))
-
+  let session = getAppCookies(req)['_twitterclone_key'];
+  //var promise = false ? mockSession : store.dispatch(getSessionUser(req.headers))
+  let promise = session ? store.dispatch(getSessionUser(req.headers)) : new Promise((res) => res(false))
+  
   promise.then((isAuthenticated) => {
     if (isAuthenticated && activeRoute.fetchInitialData) {
       return store.dispatch(activeRoute.fetchInitialData(req))
@@ -87,6 +105,8 @@ app.get(["/", "/home", "/test", "/user/:id", "/signup", "/login", "/account", "/
     })
 
 })
+
+
 
 const PORT = process.env.PORT || 3000
 

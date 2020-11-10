@@ -4,7 +4,14 @@ html {
 }
 
 body {
+  width: 100vw;
+  height: 100vh;
   // overflow: auto;
+}
+
+section {
+  width: inherit;
+  height: inherit;
 }
 
 *, *:before, *:after {

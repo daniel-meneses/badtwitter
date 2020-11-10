@@ -1,25 +1,20 @@
 import React from 'react'
-import './Account.scss'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/session'
-import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
+import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm2'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 import { useHistory } from 'react-router-dom'
 import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
+import styles from './Account.mod.scss'
+import Button, {BtnThemes} from '../../common/components/Button/Button'
 
 type Props = {
-  logout: (history: any) => void,
-  currentUser: any
+  logout: (history: any) => void
 }
 
-function mapStateToProps(state: any) {
-  return {
-    currentUser: state.session.currentUser
-  }
-}
-
-const Account = ({logout, currentUser} : Props) => {
+const Account = ({logout} : Props) => {
+  
   const history = useHistory();
 
   return (
@@ -27,16 +22,16 @@ const Account = ({logout, currentUser} : Props) => {
       mainCenter={
         <>
           <Header title={'Account'} />
-          <div className='edit_container'>
-            <div className='edit_item'>
-              <ProfileEditImage userAvatar={currentUser.avatar}/>
-            </div>
-            <div className='edit_item'>
-              <ProfileEditForm />
-            </div>
-            <button className={'logout_button'}onClick={() => logout(history)}>
-              Log out
-            </button>
+          <div className={styles.accountInfo}>
+            <ProfileEditImage />
+            <ProfileEditForm className={styles.accountName} />
+            <Button
+              className={styles.logoutButton}
+              theme={BtnThemes.PrimaryFill}
+              onClick={() => logout(history)}
+              >
+              {'Logout'}
+              </Button>
           </div>
         </>
       }
@@ -45,4 +40,4 @@ const Account = ({logout, currentUser} : Props) => {
   )
 }
 
-export default connect(mapStateToProps, {logout})(Account);
+export default connect(null, {logout})(Account);

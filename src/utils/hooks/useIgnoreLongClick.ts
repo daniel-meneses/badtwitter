@@ -19,13 +19,11 @@ const useIgnoreLongClick = ({ref, action}: Props) => {
     }
   }, [mouseDownPos])
 
-  const setDownPos = (e: MouseEvent) => {
+  const setDownPos = (e: MouseEvent): void => {
     setMouseDownPos(e.pageX);
   }
 
-  const handleClick = (e: MouseEvent) => {
-    console.log(e);
-
+  const handleClick = (e: MouseEvent): void => {
     e.preventDefault();
     if (mouseDownPos === e.pageX) {
       action()

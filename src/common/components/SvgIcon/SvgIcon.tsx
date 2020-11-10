@@ -12,6 +12,7 @@ type props = {
   styles?: any;
   fill?: string;
   stroke?: string;
+  width?: string;
 };
 
 const SvgIcon: React.FC<props> = (props: props) => {
@@ -26,6 +27,7 @@ const SvgIcon: React.FC<props> = (props: props) => {
     styles,
     fill,
     stroke,
+    width,
     ...otherProps
   } = props
 
@@ -40,6 +42,7 @@ const SvgIcon: React.FC<props> = (props: props) => {
         viewBox={viewBox}
         fill={fill}
         stroke={stroke}
+        strokeWidth={width}
       >
         {children}
       </svg>

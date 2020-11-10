@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { getPendingSubscriptionRequests,
-         getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
-import { getAllUserLikes} from '../../actions/like.js'
-import { getGlobalFeed, getGlobalAtCursor } from '../../actions/feed.js'
+import {
+  getPendingSubscriptionRequests,
+  getAcceptedSubscriptionRequests
+} from '../../actions/subscriptions'
+import { getAllLikes } from '../../actions/likes'
+import { getGlobalFeed } from '../../actions/feed'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import Trending from '../../components/Trending/Trending';
@@ -12,77 +14,72 @@ import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper'
 import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import { usePersistedScroll } from '../../utils/hooks/useScroll';
-import { throttle, debounce } from 'lodash'
-import store from '../../store/store'
+import { SrollPositionActionTypes } from '../../reducers/ui';
 
-type Props = {
+
+type StoreProps = {
   getPendingSubscriptionRequests: () => void,
   getAcceptedSubscriptionRequests: () => void,
-  getAllUserLikes: () => void,
-  getGlobalFeed: () => void,
-  global: {
-      timeline: Array<number>,
-      isFetching: boolean,
-      afterCursor: string | null,
-      isFetchingNextPage: boolean,
-      errors: string | null,
-      wasFetchedSuccessfully: boolean
-  },
-  currentUser: {avatar: string,
-                user_id: number},
+  getAllLikes: () => void,
+  getGlobalFeed: (cursor?: string | null) => void,
+  timeline: number[],
+  nextCursor: string | null,
+  getGlobalFeedReq: any,
   scrollPosition: number,
-  getGlobalAtCursor: (afterCursor :string) => void,
+  onScrollExit: (scrollRef: any) => void,
+  isAuthenticated: boolean,
 }
 
 function mapStateToProps(state: any) {
-  let feed = state.feed.global
+  let { timeline, nextCursor } = state.feed.feed
 
   return {
-    global: {
-      timeline: feed.timeline,
-      afterCursor: feed.afterCursor,
-      isFetching: feed.isFetching,
-      isFetchingNextPage: feed.isFetchingNextPage,
-      errors: feed.errors,
-      wasFetchedSuccessfully: feed.wasFetchedSuccessfully
-    },
-    currentUser: state.session.currentUser,
-    scrollPosition: state.home.scrollPosition
+    timeline,
+    nextCursor,
+    getGlobalFeedReq: state.feed.getGlobalFeedReq,
+    scrollPosition: state.ui.scrollPosition.home,
+    isAuthenticated: state.session.session.isAuthenticated
   }
 }
 
-const Home = ({getPendingSubscriptionRequests,
-              getAcceptedSubscriptionRequests,
-              getAllUserLikes,
-              getGlobalFeed,
-              global,
-              currentUser = {avatar: "", user_id: 0},
-              scrollPosition,
-              getGlobalAtCursor,
-              } : Props) => {
+const onScrollExit = (scrollRef: any) => ({ type: SrollPositionActionTypes.SET_HOME_SCROLL_POSITION, position: scrollRef?.scrollTop || 0 })
+
+const Home = (props: StoreProps) => {
+
+  const {
+    getPendingSubscriptionRequests,
+    getAcceptedSubscriptionRequests,
+    getAllLikes,
+    getGlobalFeed,
+    scrollPosition,
+    timeline,
+    nextCursor,
+    getGlobalFeedReq,
+    onScrollExit,
+    isAuthenticated,
+  } = props
 
   const history = useHistory();
-  const scrollRef = typeof document !== "undefined" && document.getElementById("scrollable")
+  const scrollRef: any = typeof document !== "undefined" && document.getElementById("scrollable")
 
   useEffect(() => {
-    if (!global.wasFetchedSuccessfully) {
+    // Prevent duplicate data fetch on client rehydrate
+    if (!getGlobalFeedReq.didSucceed) {
       getGlobalFeed()
     }
+    // These requests are made only on client rehydrate
     getPendingSubscriptionRequests()
     getAcceptedSubscriptionRequests()
-    getAllUserLikes()
+    getAllLikes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onScrollExit = () => store.dispatch({type: 'SET_HOME_SCROLL_POSITION', position: scrollRef?.scrollTop})
-
-  const fetchNext = throttle( (cursor) => getGlobalAtCursor(cursor), 2000)
-
-  const onScroll = (pos) => {
+  const onScroll = (pos: any) => {
     let percent = Math.round(((pos.y || 0) / (pos.total || 100)) * 100)
     let shouldFetch = percent > 60
-    if (shouldFetch && global.afterCursor && !global.isFetchingNextPage) {
-      fetchNext(global.afterCursor)
+    
+    if (shouldFetch && nextCursor && !getGlobalFeedReq.isFetching) {
+      getGlobalFeed(nextCursor)
     }
   }
 
@@ -93,45 +90,59 @@ const Home = ({getPendingSubscriptionRequests,
     onExit: onScrollExit
   })
 
+  const { isFetching, error } = getGlobalFeedReq;
 
-   return (
-     <MainContainer
-
-       mainCenter=
-       {
-         <>
-           <Header
-             title={'Home'}
-             onTitleClick={() => history.push('/home')}
-             />
-           <PostForm />
-              <LoadingWrapper
-                isFetching={global.isFetching}
-                errors={global.errors}
-                >
-                {
-                  global.timeline && global.timeline.map( (postId: number, i: number) =>
-                    <UserPost key={i} postId={postId}/>
-                )}
-              </LoadingWrapper>
+  return (
+    <MainContainer
+      mainCenter=
+      {
+        <>
+          <Header
+            title={'Home'}
+            onTitleClick={() => history.push('/home')}
+          />
+          <PostForm />
+          <LoadingWrapper
+            isFetching={isFetching}
+            errors={error}
+          >
+            {
+              timeline && timeline.map((postId: number, i: number) =>
+                <UserPost
+                  key={i}
+                  postId={postId}
+                  />
+              )}
+          </LoadingWrapper>
         </>
-       }
+      }
 
-       mainRight=
-       {
-         <div>
-           <Trending postId={1}/>
-         </div>
-       }
+      mainRight=
+      {
+        <>
+        {
+          !isAuthenticated && <Header
+          title={'Login/Register'}
+          isRightHeader={true}
+          onTitleClick={() => history.push('/signup')}
+        />
+        }
+        <div>
+          <Trending postId={1} />
+        </div>
+        </>
+      }
 
-     />
-   )
+    />
+  )
 
 }
 
 export default connect(mapStateToProps,
-                        {getPendingSubscriptionRequests,
-                         getAcceptedSubscriptionRequests,
-                         getAllUserLikes,
-                         getGlobalFeed,
-                         getGlobalAtCursor})(Home)
+  {
+    getPendingSubscriptionRequests,
+    getAcceptedSubscriptionRequests,
+    getGlobalFeed,
+    getAllLikes,
+    onScrollExit,
+  })(Home)

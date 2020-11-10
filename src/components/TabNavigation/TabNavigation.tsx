@@ -5,22 +5,19 @@ import styles from './TabNavigation.mod.scss'
 type props = {
   className?: string;
   tabs: Array<any>;
-  isFocused: string;
 }
 
 const TabNavigation = (props: props) => {
 
-  const { className, tabs, focusedTab } = props
+  const { className, tabs } = props
 
   const focusedStyle = classNames(
     styles.tabHeaderItem,
     styles.tabHeaderItemFocused
   )
 
-  const isFocused = (item: any) => focusedTab === item.title
-
   return (
-    <div className={styles.tabHeader}>
+    <div className={styles.tabContainer}>
       {
         tabs.map( (item: any, i) =>
           <div className={styles.tabHeader} key={i}>

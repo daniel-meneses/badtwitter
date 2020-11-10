@@ -1,7 +1,11 @@
 @import '../../common/theme/mixins.scss';
 
+$outline: lighten(#c9d6cd, 6%);
+
 .mainContainer {
+  position: relative;
   display: flex;
+  height: 100%;
   flex-grow: 1;
   flex-shrink: 1;
   @include respond-to('small') {
@@ -13,21 +17,28 @@
     align-items: flex-start;
   }
   @include respond-to('large') {
-    width: 920px;
+    width: 890px;
   }
   @include respond-to('xxlarge') {
     width: 990px;
   }
 }
 
+
 .mainCenter {
+  position: relative;
   width: 100%;
   max-width: 600px;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  border-left: $outline solid 1px;
+  border-right: $outline solid 1px;
+  border-bottom: $outline solid 1px;
 }
 
 .mainRight {
+  position: relative;
   @include respond-to('mobile') {
     display: none;
   }
@@ -35,10 +46,11 @@
 
   }
   @include respond-to('medium') {
+    width: 290px;
   }
   @include respond-to('large') {
     display: block;
-    width: 290px;
+    width: 320px;
     height: 100%;
   }
   @include respond-to('xxlarge') {

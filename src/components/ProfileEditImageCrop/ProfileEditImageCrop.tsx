@@ -6,19 +6,17 @@ import 'react-image-crop/lib/ReactCrop.scss'
 
 type Props = {
   src: string,
-  presignedURL: string,
-  avatar: string,
-  handleSubmit: (presignedURL: any, croppedImage: any) => void
+  preSignedURL: string,
+  handleSubmit: (preSignedURL: any, croppedImage: any) => void
 }
 
 function mapStateToProps(state :any) {
   return {
-    presignedURL: state.profileEdit.presigned_Url.url,
-    avatar: state.profileEdit.avatar
+    preSignedURL: state.account.account.preSignedURL,
    }
 }
 
-const ProfileEditImageCrop = ({ src, presignedURL, avatar, handleSubmit} : Props) => {
+const ProfileEditImageCrop = ({ src, preSignedURL, handleSubmit} : Props) => {
   const [crop, setCrop] = useState({aspect: 1/1, minWidth: 200, height: 300, width: 300})
   const [image, setImage] = useState()
   const [croppedImage, setCroppedImage] = useState<Buffer>()
@@ -62,7 +60,7 @@ const ProfileEditImageCrop = ({ src, presignedURL, avatar, handleSubmit} : Props
   }
 
   function submitNewProfileImage() {
-    handleSubmit(presignedURL, croppedImage)
+    handleSubmit(preSignedURL, croppedImage)
   }
 
   return <div id='uploaded_image'>

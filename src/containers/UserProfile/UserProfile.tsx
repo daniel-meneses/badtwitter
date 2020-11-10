@@ -2,51 +2,59 @@ import React, { useEffect } from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import './UserProfile.scss';
 import { connect } from 'react-redux';
-import { getProfileFeed } from '../../actions/feed.js'
+import { getUserProfile } from '../../actions/userProfile'
 import Trending from '../../components/Trending/Trending';
 import ProfileHead from '../../components/ProfileHead/ProfileHead'
 import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper'
 import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import UserPost from "../../components/PostMini/UserPost"
-import { RootState } from '../../store/common/types';
 
-type Props = {
-  users: any,
-  userProfiles: any,
-  isFetching: boolean,
-  errors: null | string,
-  getProfileFeed: (id: number) => void;
-  postSubscriptionRequest: (id: number) => void;
+type ConnectedProps = {
+  profileFeed: {
+    timeline: number[];
+  };
+  getUserProfileReq: any;
+  getUserProfile: (id: number) => void;
+  userId: number;
 };
 
-function mapStateToProps(state: any, ownProps: any) {
-  let { feed, globalObject } = state;
+type OwnProps = {
+  match: {
+    params: {
+      id: number;
+    }
+  }
+}
+
+type Props = ConnectedProps & OwnProps;
+
+function mapStateToProps(state: any, ownProps: OwnProps) {
+  
+  let { userProfiles, getUserProfileReq } = state.userProfiles
   let { match } = ownProps
   let userId = match && match.params.id
+  let profileFeed = userProfiles.byUserId[userId] || {}  
   return {
-    userProfile: globalObject.users[userId],
-    userFeed: feed.profiles[userId],
-    isFetching: (feed.profile || {}).isFetching,
-    errors: (feed.profile || {}).errors,
+    userId,
+    profileFeed,
+    getUserProfileReq,
   }
 }
 
 const UserProfile: React.FC<Props> = (props: Props) => {
 
-  const { userProfile, userFeed, isFetching, errors, getProfileFeed, postSubscriptionRequest } = props;
-  const { id } = useParams()
+  const { userId, profileFeed, getUserProfile, getUserProfileReq } = props;
   const history = useHistory()
 
   useEffect(() => {
-    getProfileFeed(id)
+    // TODO: Prevent duplicate profile fetch on client rehydrate
+      getUserProfile(userId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const submitFollowRequest = () => {
-    postSubscriptionRequest(id)
-  }
-
+  const { timeline } = profileFeed;
+  
   return (
     <MainContainer
       mainCenter={
@@ -57,13 +65,13 @@ const UserProfile: React.FC<Props> = (props: Props) => {
             onTitleClick={() => history.push('/home')}
             displayBackButton={true}
             />
-          <ProfileHead user={userProfile}/>
+          <ProfileHead userId={userId}/>
              <LoadingWrapper
-               isFetching={isFetching}
-               errors={errors}
+               isFetching={getUserProfileReq.isFetching}
+               errors={getUserProfileReq.error}
                >
-               { userFeed &&
-                 userFeed.timeline.map( (postId: number) =>
+               { timeline &&
+                 timeline.map( (postId: number) =>
                  <UserPost key={postId}
                            postId={postId}
                            />)
@@ -82,4 +90,4 @@ const UserProfile: React.FC<Props> = (props: Props) => {
 
 }
 
-export default connect(mapStateToProps, {getProfileFeed})(UserProfile);
+export default connect(mapStateToProps, {getUserProfile})(UserProfile);

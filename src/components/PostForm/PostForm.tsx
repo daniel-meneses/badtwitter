@@ -1,34 +1,57 @@
-import React, {useState, useRef} from "react"
+import React, {useState, useRef, useEffect} from "react"
 import { connect } from 'react-redux'
-import { postMessage } from '../../actions/post.js'
+import { postMessage } from '../../actions/post'
 import styles from './PostForm.mod.scss'
 import Avatar from '../Avatar/Avatar'
-import Button from '../../common/components/Button/Button'
+import Button, { BtnThemes } from '../../common/components/Button/Button'
+import { getCurrentUser } from '../../selectors/users';
+import showGuestToast from "../Toast/GuestToast"
+import { PostFormActionTypes } from '../../reducers/ui';
 
 type Props = {
   avatar: string,
   createPostStatus: boolean,
-  postMessage: (e: any) => void
+  postMessage: (e: any) => void,
+  isAuthenticated: boolean,
+  postFormText: string,
+  persistPostForm: (text: string) => void;
 }
 
 function mapStateToProps(state :any) {
-  let { session, post } = state
+  let { post } = state;
+  let user = getCurrentUser(state);  
   return {
-    avatar: session.currentUser.avatar,
-    createPostStatus: post.newPostSuccess
+    avatar: ( user || {}).avatar,
+    createPostStatus: post.newPostSuccess,
+    isAuthenticated: state.session.session.isAuthenticated,
+    postFormText: state.ui.postForm.postFormText
   }
 }
 
+const persistPostForm = (text: string) => 
+    (dispatch: any) => dispatch({ type: PostFormActionTypes.SET_POST_FORM_TEXT, text: text })
+
 const PostForm = (props: Props) => {
 
-  const { avatar, postMessage, createPostStatus } = props
+  const { avatar, postMessage, isAuthenticated, postFormText, persistPostForm } = props
 
-  const [postText, setPostText] = useState("");
+  const persistedText = postFormText || ''
+  const [postText, setPostText] = useState(persistedText);
   const inputEl = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    inputEl.current?.innerText = persistedText
+  }, [])
+  
+  useEffect(() => {
+    persistPostForm(postText)
+  }, [postText])
+
   const handleSubmit = () => {
+    if (!isAuthenticated) { return showGuestToast('Log in or sign up to post your message') }
     postMessage(postText)
     setPostText("")
+    inputEl.current?.innerText = ""
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,10 +78,10 @@ const PostForm = (props: Props) => {
       </div>
       <div className={styles.postFormFooter}>
         <Button
-          styling={'primary'}
           onClick={handleSubmit}
+          isDisabled={postText.length === 0}
           className={styles.postFormSubmit}
-    //      disabled={postText.length === 0}
+          theme={BtnThemes.PrimaryFill}
           >
           Submit
         </Button>
@@ -67,4 +90,4 @@ const PostForm = (props: Props) => {
   );
 }
 
-export default connect(mapStateToProps, {postMessage})(PostForm);
+export default connect(mapStateToProps, {postMessage, persistPostForm})(PostForm);

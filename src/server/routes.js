@@ -1,6 +1,4 @@
 import Home from '../containers/Home/Home';
-import NavBar from '../components/Nav/NavContainer';
-import FloatingPostContainer from '../components/FloatingPostContainer/FloatingPostContainer';
 import SignUp from '../containers/SignUp/SignUp';
 import UserProfile from '../containers/UserProfile/UserProfile';
 import Inbox from '../containers/Inbox/Inbox';
@@ -8,22 +6,20 @@ import Account from '../containers/Account/Account';
 import Explore from '../containers/Explore/Explore';
 import Login from '../containers/Login/Login';
 import NotFound from '../containers/NotFound/NotFound';
-import {getSessionUser} from '../actions/session.js'
-import {getGlobalFeed, getProfileFeed} from '../actions/feed.js'
+import { getGlobalFeed } from '../actions/feed'
+import { getUserProfile } from '../actions/userProfile';
 
 
 const routes = [
   {
     path: '/home',
     component: Home,
-    fetchInitialData: (req) => getGlobalFeed(req.headers)
+    fetchInitialData: (req) => getGlobalFeed(null, req.headers)
   },
   {
     path: '/user/:id',
     component: UserProfile,
-    fetchInitialData: (req) => {
-      return getProfileFeed(req.user_id_param, req.headers)
-    }
+    fetchInitialData: (req) =>  getUserProfile(req.user_id_param, req.headers)
   },
   {
     path: '/inbox',

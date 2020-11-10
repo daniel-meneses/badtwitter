@@ -1,7 +1,8 @@
 import React, { FunctionComponent, ReactElement, MouseEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Button from '../../common/components/Button/Button'
+import { Dispatch } from 'redux';
+import Button, { BtnThemes } from '../../common/components/Button/Button'
 import HomeIcon from '../../common/components/SvgLib/HomeIcon'
 import ExploreIcon from '../../common/components/SvgLib/ExploreIcon'
 import InboxIcon from '../../common/components/SvgLib/InboxIcon'
@@ -12,7 +13,10 @@ import NewPostIcon from '../../common/components/SvgLib/NewPostIcon'
 import styles from './Nav.mod.scss'
 import Selectable from '../../common/components/Selectable/Selectable'
 import classNames from 'classnames'
-//import { Dispatch } from 'react-redux'
+import { PostFormActionTypes } from '../../reducers/ui'
+import showGuestToast from '../Toast/GuestToast';
+
+
 
 type NavItem = {
   text: string;
@@ -22,56 +26,84 @@ type NavItem = {
 }
 
 type Props = {
-  dispatch: any;
+  dispatch: Dispatch;
+  currentUserId: number;
+  isAuthenticated: boolean;
+  focusedInboxTab: string;
 }
 
 const NavContainer = (props: Props) => {
 
+  const { currentUserId, focusedInboxTab, isAuthenticated } = props
   const history = useHistory();
   const location = useLocation();
-  const userId: number = 39;
 
   const logoStyle = { className: styles.navItemIcon }
-  const isSelected = (loc: string) => location.pathname === loc
 
-  const showFloatingPostForm = () => props.dispatch({type: 'DISPLAY_FLOATING_POST_FORM' })
+  const isSelected = (loc: string) => location.pathname.includes(loc)
 
-  const navItems: NavItem[] = [
+  const showFloatingPostForm = () => {
+    if (!isAuthenticated) { return showGuestToast(); }
+    props.dispatch({type: PostFormActionTypes.DISPLAY_FLOATING_POST_FORM })
+  }
+
+  const navList: NavItem[] = [
     {
       text: '',
-      icon: <AppLogo {...logoStyle} styles={{fill: 'green'}} />,
+      icon: <AppLogo  {...logoStyle} styles={{fill: 'green'}} />,
       selected: false,
-      onClick: () => history.push('/home')
+      onClick: () => {
+        location.pathname !== `/home` &&
+        history.push('/home')
+      }
     },
     {
       text: 'Home',
-      icon: <HomeIcon {...logoStyle} />,
-      selected: isSelected('/home') || isSelected('/'),
-      onClick: () => history.push('/home')
+      icon: <HomeIcon  {...logoStyle} />,
+      selected: isSelected('/home'),
+      onClick: () => {
+        location.pathname !== `/home` &&
+        history.push('/home')
+      }
     },
     {
       text: 'Explore',
-      icon: <ExploreIcon {...logoStyle} />,
+      icon: <ExploreIcon  {...logoStyle} />,
       selected: isSelected('/explore'),
-      onClick: () => history.push('/explore')
+      onClick: () => {
+        location.pathname !== `/explore` &&
+        history.push('/explore')
+      }
     },
     {
       text: 'Inbox',
-      icon: <InboxIcon {...logoStyle} />,
-      selected: isSelected('/inbox/messages'),
-      onClick: () => history.push('/inbox')
+      icon: <InboxIcon  {...logoStyle} />,
+      selected: isSelected('/inbox'),
+      onClick: () => {
+        if (!isAuthenticated) { return }
+        location.pathname !== `/inbox/${focusedInboxTab}` &&
+        history.push('/inbox/' + focusedInboxTab)
+      }
     },
     {
       text: 'Profile',
       icon: <ProfileIcon {...logoStyle} />,
-      selected: isSelected(`/user/${userId}`),
-      onClick: () => history.push('/user/' + userId)
+      selected: isSelected(`/user/${currentUserId}`),
+      onClick: () => {
+        if (!isAuthenticated) { return }
+        location.pathname !== `/user/${currentUserId}` &&
+        history.push(`/user/${currentUserId}`)
+      }
     },
     {
       text: 'Account',
       icon: <AccountIcon {...logoStyle} />,
       selected: isSelected('/account'),
-      onClick: () => history.push('/account')
+      onClick: () => {
+        if (!isAuthenticated) { return }
+        location.pathname !== `/account` &&
+        history.push('/account')
+      }
     }
   ]
 
@@ -80,12 +112,17 @@ const NavContainer = (props: Props) => {
     { [styles.navItemSelected] : isSelected }
   )
 
+  const shouldDisable = (i: number) => {
+    // disable nav options 2-6 for guest
+    return i > 2 && !isAuthenticated
+  }
+
   return (
     <div className={styles.navContainer}>
       {
-        navItems.map( (item: NavItem, i: any) =>
+        navList.map( (item: NavItem, i: any) =>
             <Selectable
-              colorStyle={'secondary'}
+              colorStyle={shouldDisable(i) ? 'unavailable' : 'secondary'}
               key={i}
               className={navItemStyles(item.selected)}
               onClick={item.onClick}
@@ -108,8 +145,8 @@ const NavContainer = (props: Props) => {
       </Selectable>
         <Button
           className={styles.navPostBtn}
-          styling={'primary'}
-          onClick={() => console.log('Do Something')}
+          theme={BtnThemes.PrimaryFill}
+          onClick={showFloatingPostForm}
           >
           {'New Post'}
         </Button>
@@ -119,4 +156,10 @@ const NavContainer = (props: Props) => {
 
 }
 
-export default connect()(NavContainer);
+export default connect((state: any) => {
+    return {
+      isAuthenticated: state.session.session.isAuthenticated,
+      currentUserId: state.session.session.currentUserId, 
+      focusedInboxTab: state.ui.inbox.focusedTab,
+    }
+})(NavContainer);

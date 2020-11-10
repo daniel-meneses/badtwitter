@@ -1,11 +1,7 @@
 @import '../../styles/colors';
 
-
-.selectable {
+.borderRound {
   border-radius: 25px;
-  &:hover{
-    cursor: pointer;
-  }
 }
 
 .colorPrimary {
@@ -15,6 +11,7 @@
   &:hover {
     background-color: $primary_focused;
     color: $primary;
+    cursor: pointer;
     svg {
       transition: fill 0.2s linear;
       stroke: $primary;
@@ -32,11 +29,22 @@
   &:hover{
     background-color: $bg-hover;
     color: $primary;
+    cursor: pointer;
     svg {
       stroke: $primary;
       stroke-width: 0.5px;
       fill: $primary;
     }
+  }
+}
+
+.colorUnavailable {
+  color: lighten(gray, 18%);
+  fill: lighten(gray, 18%);
+  background-color: white;
+  border: solid white 0.4px;
+  &:hover{
+    cursor: default;
   }
 }
 

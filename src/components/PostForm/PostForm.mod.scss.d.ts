@@ -7,6 +7,7 @@ interface CssExports {
   'postFormFooter': string;
   'postFormInput': string;
   'postFormSubmit': string;
+  'profile-image-alias': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

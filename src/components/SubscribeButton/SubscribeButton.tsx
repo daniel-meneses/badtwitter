@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { postSubscriptionRequest } from '../../actions/subscription.js';
-import Button from '../../common/components/Button/Button';
+import { postSubscriptionRequest, deleteSubscription } from '../../actions/subscriptions';
+import Button, { BtnThemes } from '../../common/components/Button/Button';
 import styles from './SubscribeButton.mod.scss'
+import showGuestToast from "../Toast/GuestToast";
+
+
+type OwnProps = {
+  userId: number;
+}
 
 type Props = {
-  userId: number,
-  isRequested: boolean,
-  isAccepted: boolean,
-  postSubscriptionRequest: (e: any) => void
+  userId: number;
+  isRequested?: boolean,
+  isAccepted?: boolean,
+  postSubscriptionRequest: (e: any) => void,
+  deleteSubscription: (object: object) => void,
+  isAuthenticated: boolean,
 }
 
 const SubscribeButton = (props: Props) => {
 
-  const [buttonText, setButtonText] = useState("Follow")
+  const {isRequested, isAccepted, postSubscriptionRequest, userId, isAuthenticated, deleteSubscription} = props
 
-  const {isRequested, isAccepted, postSubscriptionRequest} = props
+  const [buttonText, setButtonText] = useState(isAccepted ? "Following" : isRequested ? "Pending" : "Follow")
 
   const btnStyle = classNames(
     styles.subscribeBtn,
@@ -32,11 +40,20 @@ const SubscribeButton = (props: Props) => {
     setButtonText(text)
   }
 
+  const handleOnClick = () => {
+    if (!isAuthenticated) { return showGuestToast() }
+    if (isAccepted) {
+      deleteSubscription({user_id: userId})
+    } else {
+      postSubscriptionRequest(userId)
+    }
+  }
+
   return (
     <Button
       className={btnStyle}
-      styling={'primary'}
-      onClick={() => postSubscriptionRequest(userId)}
+      theme={BtnThemes.PrimaryFill}
+      onClick={handleOnClick}
       onMouseEnter={setHoverText}
       onMouseLeave={resetText}
       >
@@ -44,13 +61,15 @@ const SubscribeButton = (props: Props) => {
     </Button>
   );
 }
-export default connect((state :any, ownProps: Props) => {
+export default connect((state :any, ownProps: OwnProps) => {
   let { userId } = ownProps
-  let subs = state.subscriptions
-  let pending = subs.pending.userIds;
-  let accepted = subs.accepted.userIds
-  let isRequested = (pending || []).includes(userId);
-  let isAccepted = (accepted || []).includes(userId);
-  return ({isRequested, isAccepted})
-}{ postSubscriptionRequest })
+  let subs = state.subscriptions.subscriptions
+  let { pendingUserIds, acceptedUserIds } = subs;
+  let isRequested = (pendingUserIds).includes(userId);
+  let isAccepted = (acceptedUserIds).includes(userId);
+  let isAuthenticated = state.session.session.isAuthenticated;
+  return ({isRequested, isAccepted, isAuthenticated})
+  },
+  { postSubscriptionRequest,
+    deleteSubscription })
 (SubscribeButton);

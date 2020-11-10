@@ -2,8 +2,13 @@
 // Please do not change this file!
 interface CssExports {
   'btn': string;
+  'btnDisabled': string;
   'stylePrimary': string;
   'styleSecondary': string;
+  'theme-PrimaryFill': string;
+  'theme-PrimaryOutline': string;
+  'theme-RedFill': string;
+  'theme-RedOutline': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

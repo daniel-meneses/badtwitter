@@ -1,0 +1,94 @@
+@import '../../common/theme/mixins.scss';
+
+.formDefault {
+  max-height: 360px;
+  min-height: 360px;
+  z-index: 3;
+  padding: 20px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+  align-self: center;
+  border: 1px solid white;
+  @include respond-to('small') {
+    width: 100%;
+  }
+  @include respond-to('medium') {
+    width: 70%;
+  }
+}
+
+.editFormHover {
+  align-self: center;
+  cursor: pointer;
+  @include respond-to('small') {
+    input {
+      border-left: none;
+      border-right: none;
+      border-bottom: solid 3px #EEEEEE;
+      cursor: pointer;
+      background: white;
+    }
+  }
+  @include respond-to('medium') {
+    &:hover {
+      box-shadow: 0 8px 6px -6px black;
+      border: 1px solid rgb(240, 245, 245);
+      input {
+        border-bottom: 4px solid #EEEEEE;
+      }
+    }
+  }
+}
+
+.isEditing {
+  @include respond-to('small') {
+    input {
+      border-left: none;
+      border-right: none;
+      background: white;
+    }
+  }
+  @include respond-to('medium') {
+    width: 70%;
+    box-shadow: 0 8px 6px -6px black;
+    border: 1px solid rgb(240, 245, 245);
+    input {
+      border-left: none;
+      border-right: none;
+      background: white;
+    }
+  }
+}
+
+.overlay {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.editForm {
+  border: none;
+}
+
+.acceptEdit {
+  font-size: 15px;
+  font-weight: 600;
+  width: 100px;
+  max-height: 30px;
+  min-height: 30px;
+}
+
+.rejectEdit {
+  border: red solid 1px;;
+  color: red;
+  font-size: 15px;
+  font-weight: 600;
+  width: 80px;
+  max-height: 30px;
+  min-height: 30px;
+}

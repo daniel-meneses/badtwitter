@@ -2,20 +2,64 @@
 
 .btn {
   position: relative;
-  z-index: 5;
-  display: block;
+//  z-index: 5;
   border: none;
   border-radius: 25px;
-  &:enabled {
-    &:hover{
-      cursor: pointer;
-    }
+  &:enabled:hover{
+    cursor: pointer;
   }
   &:disabled {
     opacity: 0.4;
     cursor: default;
   }
 }
+
+.theme-PrimaryFill {
+  color: white;
+  background-color: $primary;
+  border: solid white 0.4px;
+  &:hover {
+    background-color: $primary_focused;
+  }
+}
+
+.theme-PrimaryOutline {
+  flex: 1;
+  color: $primary;
+  background-color: white;
+  border: solid $primary 1.4px;
+  &:hover{
+    background-color: $bg-hover;
+  }
+}
+
+.theme-RedFill {
+  color: white;
+  background-color: red;
+  border: solid white 0.4px;
+  &:hover {
+    background-color: darken(red, 5);
+  }
+}
+
+.theme-RedOutline {
+  color: red;
+  background-color: white;
+  border: solid red 0.4px;
+  &:hover {
+    background-color: darken(white, 5);
+  }
+}
+
+.btnDisabled {
+  opacity: 0.4;
+  cursor: default;
+  &:hover {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
 
 .stylePrimary {
   color: white;
@@ -33,5 +77,14 @@
   border: solid $primary 1.4px;
   &:hover{
     background-color: $bg-hover;
+  }
+}
+
+.btnDisabled {
+  opacity: 0.4;
+  cursor: default;
+  &:hover {
+    opacity: 0.4;
+    cursor: default;
   }
 }

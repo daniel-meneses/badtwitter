@@ -1,41 +1,36 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import styles from './PostMini.mod.scss'
 import UserInfo from './UserInfo'
-import { IUser, IPost } from '../../store/globalObjects/types'
 import moment from 'moment'
 import LikeButton from '../LikeButton/LikeButton'
 
+type OwnProps = {
+  postId: number;
+}
+
 type Props = {
   className?: string;
-  postId: number;
   post: any;
-  user: any;
 }
 
 const UserPost = (props: Props) => {
 
-  const { className, post, user } = props;
-
-  const { id, likes, created, post: message } = post
-
-  if (!user) { return <></> }
-  const { user_id: userId } = user
+  const { post } = props;
+  const { id: postId, likes, created, post: message, user_id: userId } = post
 
   const timeStamp = moment(created).format("MMM Do LT");
-  const history = useHistory()
 
   return (
     <div className={styles.userPost}>
       <UserInfo userId={userId}>
-        <div className={styles.userPostMessage}>
+        <div>
           {message}
           </div>
       </UserInfo>
       <div className={styles.userPostFooter}>
         <div className={styles.footerIconWithCount}>
-          <LikeButton className={styles.footerIcon} postId={id} />
+          <LikeButton className={styles.footerIcon} postId={postId} />
           {likes && <div>{likes}</div>}
         </div>
         <div className={styles.footerTimestamp}>
@@ -46,12 +41,10 @@ const UserPost = (props: Props) => {
   )
 }
 
-export default connect((state: any, ownProps: Props) => {
+export default connect((state: any, ownProps: OwnProps) => {
   let { postId } = ownProps
-  let { users, posts } = state.globalObject
-  let post: any = posts[postId] || {}
-  let user: any = post && users[post.user_id]
+  let post: any = state.post.byId[postId] || {}
   return {
-    post, user
+    post
   }
 }, {})(UserPost)

@@ -1,29 +1,29 @@
 @import '../../common/theme/mixins.scss';
+$outline: lighten(#c9d6cd, 6%);
 
 .postForm {
   display: flex;
   flex-direction: column;
+  border-bottom: $outline solid 1px;
   padding: 16px 10px 20px 10px;
-//  border-bottom: #c9d6cd solid 1px;
-//background: white;
   .postFormContent {
     display: flex;
     align-self: stretch;
     .postFormAvatar {
       width: 60px;
       height: 60px;
+      &:hover{
+        cursor: default;
+      }
     }
     .postFormInput {
       flex: 1;
       align-self: stretch;
-  //    background-color: white;
-//      background-color: -moz-field;
       max-width: 500px;
       padding: 12px 0px 0px 10px;
       overflow: visible;
       word-wrap: break-word;
-      font-size: 18px;//
-//      outline: none;
+      font-size: 18px;
       &:empty:not(:focus):before{
         font-size: 20px;
         color: gray;
@@ -54,4 +54,8 @@
     font-size: 16px;
     font-weight: 600;
   }
+}
+
+.profile-image-alias{ 
+  display: flex;
 }

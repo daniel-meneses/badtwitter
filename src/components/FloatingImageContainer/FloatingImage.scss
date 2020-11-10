@@ -4,11 +4,10 @@
   overflow: hidden;
   .floating-image{
     position: absolute;
-    top: 38px;
-    left: 38px;
-    z-index: 10;
+    top: -100px;
+    left: 4px;
+    z-index: 400;
     img{
-      border: solid green 2px;
       border-radius: 25px;
       z-index: 1000;
       @include respond-to('mobile') {

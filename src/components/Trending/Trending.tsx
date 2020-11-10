@@ -3,20 +3,8 @@ import './Trending.scss'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-type Props = {
-  postId: any,
-  posts: any,
-  users: any
-}
 
-function mapStateToProps(state :any) {
-  return {
-    posts: state.globalObject.posts,
-    users: state.globalObject.users,
-   };
-}
-
-const Trending = ({postId, posts, users}: Props) => {
+const Trending = (props: any) => {
 
   let history = useHistory()
 
@@ -52,4 +40,4 @@ const Trending = ({postId, posts, users}: Props) => {
   );
 }
 
-export default connect(mapStateToProps, {})(Trending)
+export default connect(null, {})(Trending)

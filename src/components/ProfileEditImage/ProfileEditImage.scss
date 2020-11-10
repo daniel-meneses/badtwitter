@@ -2,15 +2,19 @@
 
 .profile_edit_image_container {
   position: relative;
-  z-index: 4;
   background-color: white;
   border-radius: 10px;
+  margin-top: 20px;
   @include respond-to('small') {
     width: 100%;
   }
   @include respond-to('medium') {
     width: 100%;
   }
+}
+
+#uploaded_image {
+  z-index: 1000;
 }
 
 .float_bg {
@@ -20,48 +24,52 @@
   background: black;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 999;
   opacity: 0.5;
 }
-
 
 .uploader {
   position: relative;
   width: 240px;
   height: 240px;
   margin: 0 auto;
-  z-index: 200;
   text-align: center;
   font-size: 22px;
   &:hover {
-    z-index: 100;
     cursor: pointer;
     background: gray;
     border-radius: 25px;
   }
   div:focus {outline:none;}
   -webkit-tap-highlight-color: transparent;
+  transition: none;
 
+}
+
+.poop {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .plus_svg{
+  flex: 1;
   position: absolute;
-//  border-radius: 150px;
-//  border: solid black 10px;
-  margin-left: 50px;
-  margin-top: 50px;
-  width: 140px;
-  height: 140px;
+  max-width: 140px;
+  max-height: 140px;
 }
 
 .upload_placeholder{
+  flex: 0;
   position: relative;
   width: 240px;
   height: 240px;
   border-radius: 25px;
+  transition: none;
   &:hover {
     cursor: pointer;
-    transition: opacity 0.2s;
     opacity: 0.65;
     background: #e1ede8;
   }

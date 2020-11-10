@@ -1,43 +1,53 @@
-import React from 'react'
-import './LikeButton.scss'
-import { connect } from 'react-redux'
-import { postLike, deleteLike} from '../../actions/like.js'
-import LikeIcon from '../../common/components/SvgLib/LikeIcon'
-import Selectable from '../../common/components/Selectable/Selectable'
-import classNames from  'classnames'
+import React from 'react';
+import { connect } from 'react-redux';
+import { likeUserPost, unlikeUserPost } from '../../actions/likes';
+import LikeIcon from '../../common/components/SvgLib/LikeIcon';
+import Selectable from '../../common/components/Selectable/Selectable';
+import { postIsLiked } from '../../selectors/likes';
+import showGuestToast from '../Toast/GuestToast';
 
-type Props = {
-  className?: string,
+type StoreProps = {
+  likeUserPost: (postId: number) => void,
+  unlikeUserPost: (postId: number) => void,
+  isLiked: boolean;
+  isAuthenticated: boolean;
+}
+
+type OwnProps = {
   postId: number,
-  likedPostIds: Array<number>,
-  postLike: (postId: number) => void,
-  deleteLike: (postId: number) => void
+  className?: string,
 }
 
-function mapStateToProps(state :any) {
-  return { likedPostIds: state.likes.likedPostIds }
-}
+type Props = StoreProps & OwnProps
 
-const LikeButton = ({postId, likedPostIds, postLike, deleteLike, className }: Props) => {
+const mapState = (state: any, { postId }: OwnProps) => ({ 
+    isLiked: postIsLiked(state, postId),
+    isAuthenticated: state.session.session.isAuthenticated
+})
 
-  let isLiked = likedPostIds.includes(postId);
+const LikeButton: React.FC<Props> = (props: Props) => {
 
-  let handlePostLikeClick = (e: any) => {
-      if (isLiked) {
-        deleteLike(postId)
-      } else {
-        postLike(postId)
-      }
-    }
+  const { postId, isLiked, likeUserPost, unlikeUserPost, className, isAuthenticated } = props;
+
+  let handlePostLikeClick = () => {
+    if (!isAuthenticated) { return showGuestToast('Log in or sign up to like posts') }
+    isLiked ? unlikeUserPost(postId) : likeUserPost(postId)
+  }
 
   return (
+    <>
     <Selectable
+      testid='like-selectable'
       className={className}
       onClick={handlePostLikeClick}
       >
-      <LikeIcon stroke='green' fill={isLiked ? 'green' : 'white'}/>
+      <LikeIcon 
+        data-testid="like-button"
+        stroke='green' 
+        fill={isLiked ? 'green' : 'white'} />
     </Selectable>
+    </>
   );
 }
 
-export default connect(mapStateToProps, {postLike, deleteLike})(LikeButton);
+export default connect(mapState, { likeUserPost, unlikeUserPost })(LikeButton);

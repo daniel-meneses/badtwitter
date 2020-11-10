@@ -3,6 +3,7 @@
 interface CssExports {
   'backButton': string;
   'header': string;
+  'rightHeader': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

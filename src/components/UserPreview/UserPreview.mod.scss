@@ -1,10 +1,12 @@
 
+$outline: lighten(#c9d6cd, 6%);
+
 
 .userPreview {
-  z-index: 100;
   display: flex;
   position:relative;
   padding: 8px;
+  border-bottom: $outline solid 1px;
   &:hover {
     cursor: pointer;
     background-color: rgb(240, 245, 245);
@@ -15,7 +17,7 @@
   display: flex;
   flex: 1;
   position: relative;
-  z-index: 100;
+  //z-index: 100;
   align-self: center;
   justify-content: flex-end;
 }
