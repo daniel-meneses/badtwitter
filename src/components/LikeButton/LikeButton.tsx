@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { likeUserPost, unlikeUserPost } from '../../actions/likes';
 import LikeIcon from '../../common/components/SvgLib/LikeIcon';
 import Selectable from '../../common/components/Selectable/Selectable';
-import { postIsLiked } from '../../selectors/likes';
 import showGuestToast from '../Toast/GuestToast';
+import { selectIsAuthenticated } from '../../reducers/session';
+import { selectLikedPosts } from '../../reducers/likes';
 
 type StoreProps = {
   likeUserPost: (postId: number) => void,
@@ -19,11 +20,6 @@ type OwnProps = {
 }
 
 type Props = StoreProps & OwnProps
-
-const mapState = (state: any, { postId }: OwnProps) => ({ 
-    isLiked: postIsLiked(state, postId),
-    isAuthenticated: state.session.session.isAuthenticated
-})
 
 const LikeButton: React.FC<Props> = (props: Props) => {
 
@@ -50,4 +46,11 @@ const LikeButton: React.FC<Props> = (props: Props) => {
   );
 }
 
-export default connect(mapState, { likeUserPost, unlikeUserPost })(LikeButton);
+export default connect((state: RootState, { postId }: OwnProps) => ({ 
+  isLiked: selectLikedPosts(state).includes(postId),
+  isAuthenticated: selectIsAuthenticated(state)
+}), { 
+  likeUserPost, 
+  unlikeUserPost 
+})
+(LikeButton);

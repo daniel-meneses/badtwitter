@@ -1,5 +1,5 @@
-import { Post, Posts } from '../types/common';
-import { getPostById } from '../selectors/posts';
+import { createSelector } from 'reselect';
+import { Post } from '../types/common';
 
 export enum PostReqActionTyoes {
   POST_NEW_POST = 'POST_NEW_POST'
@@ -14,29 +14,49 @@ export enum PostActionTypes {
 
 type PostResponse = {
   id: number;
-  likes: number[];
+  likes: number;
   post: string;
   user_id: number;
   created: string;
 }
 
-type PostsResponse = {
-  [id: string]: PostReqActionTyoes
+export const selectPosts = (state: RootState) =>  state.post.byId;
+
+export const selectPostById = createSelector(
+    [selectPosts, (state: RootState, postId: number) => postId],
+    (posts: any, postId: number) => posts[postId]
+)
+
+function formatPostResponse(posts: {[id: string]: PostResponse}): {[id: string]: Post} {
+  let postState: {[id: string]: Post} = {}
+  Object.values(posts).forEach( (post) => { 
+      let id = post.id;
+      postState[id] = formatPost(post) 
+  })
+  return postState
 }
 
-const posts = (state: any = {}, action: any): any => {
+function formatPost(post: PostResponse): Post {
+  const { user_id: userId, ...postInfo } = post
+  return ({ userId, ...postInfo })
+}
+
+const posts = (state: any = { byId: {}}, action: any): any => {
   switch (action.type) {
     case PostActionTypes.APPEND_POSTS:
+      const { posts } = action.response; 
+      let formattedPosts = formatPostResponse(posts)
       return {
-        byId: Object.assign({}, state.byId, action.response.posts)
+        byId: Object.assign({}, state.byId, formattedPosts)
       }
     case PostActionTypes.APPEND_NEW_USER_POST:
+      var post = formatPostResponse(action.response)
       return {
-        byId: Object.assign({}, state.byId, action.response)
+        byId: Object.assign({}, state.byId, post)
       }
     case PostActionTypes.INCREMENT_POST_LIKE:
       var postId = action.response.post_id
-      var post = getPostById(state, postId)
+      var post = {...state.byId[postId]}
       var likes = post.likes + 1
       var updated = {[post.id] : {...post, likes}}
       return {
@@ -44,7 +64,7 @@ const posts = (state: any = {}, action: any): any => {
        }
     case PostActionTypes.DECREMENT_POST_LIKE:
       var postId = action.response.post_id
-      var post = getPostById(state, postId)
+      var post = {...state.byId[postId]}
       var likes: any = post.likes - 1
       var updated = {[post.id] : {...post, likes}}
       return {

@@ -25,4 +25,4 @@ const FloatingImage = ({image, isDisplayed, dismiss, onBackgroundHover} : Props)
   )
 }
 
-export default connect(null, {})(FloatingImage)
+export default FloatingImage;

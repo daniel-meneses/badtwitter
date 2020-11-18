@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { createSelector } from 'reselect';
+import { Follower, Followers } from '../types/common';
 import { createReqReducer } from './common'
 
 type iniitalState = {
@@ -27,13 +29,50 @@ export enum FollowersReqActionTypes {
     UPDATE_PENDING_FOLLOW_REQUEST = 'UPDATE_PENDING_FOLLOW_REQUEST'
 }
 
+
+export const selectFollowRequests = (state: RootState): Followers => state.followers.followers.byId;
+export const selectAcceptedFollowerIds = (state: RootState): number[] => state.followers.followers.accepted;
+export const selectPendingFollowerIds = (state: RootState): number[] => state.followers.followers.pending;
+
+export const selectAcceptedFollowRequests = createSelector(
+  [selectFollowRequests, selectAcceptedFollowerIds],
+  (followReqs, acceptedFollowers) => {
+    return acceptedFollowers.reduce((o, id) => ({ ...o, [id]: followReqs[id]}), {})
+   }
+)
+
+export const selectPendingFollowRequests = createSelector(
+  [selectFollowRequests, selectPendingFollowerIds],
+  (followReqs, pendingFollowers) => {
+    return pendingFollowers.reduce((o, id) => ({ ...o, [id]: followReqs[id]}), {})
+   }
+)
+
+
+function formatFollowersResponse(follower: {[id: string]: any}) {
+  let followState: {[id: string] : Follower} = {}
+  Object.values(follower).forEach( (follow: any) => {
+    followState[`${follow.id}`] = formatFollower(follow);
+  })
+  return followState
+}
+
+function formatFollower(follower: any): any {
+  const { id, inserted_at: insertedAt, user_id: userId } = follower
+  return ({
+    id, insertedAt, userId
+  })
+}
+
+
 const followers = (state = iniitalState, action: any) => {
   switch (action.type) {
     case FollowersActionTypes.APPEND_FOLLOWWERS:
       var { followers } = action.response
+      var formattedFollowers = formatFollowersResponse(followers)
       return {
         ...state,
-        byId: Object.assign({}, state.byId, followers)
+        byId: Object.assign({}, state.byId, formattedFollowers)
       };
     case FollowersActionTypes.APPEND_ACCEPTED:
       var { followers } = action.response

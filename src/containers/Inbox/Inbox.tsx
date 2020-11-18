@@ -2,10 +2,7 @@ import React, { useEffect } from 'react'
 import { useParams, useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
 import { getFollowers, getPendingFollowRequests } from '../../actions/followers'
-import { 
-  getPendingSubscriptionRequests,
-  getAcceptedSubscriptionRequests,
-  } from '../../actions/subscriptions'
+import { getPendingSubscriptionRequests, getAcceptedSubscriptionRequests } from '../../actions/subscriptions'
 import MainContainer from '../MainContainer/MainContainer'
 import TabNavigation from '../../components/TabNavigation/TabNavigation'
 import Header from '../../components/Header/Header';
@@ -13,29 +10,29 @@ import styles from './Inbox.mod.scss'
 import MessageList from '../../components/MessagesList/MessagesList';
 import FollowersList from '../../components/FollowersList/FollowersList';
 import Trending from '../../components/Trending/Trending';
-
 import { InboxActionTypes } from '../../reducers/ui';
+import SubscriptionsList from '../../components/SubscriptionsList/SubscriptionsList';
 
 type Props = {
-  getFollowers: () => void,
-  getPendingFollowRequests: () => void,
-  getAcceptedSubscriptionRequests: () => void,
-  getPendingSubscriptionRequests: () => void,
-  focusedTab: string,
+  getFollowers: () => void;
+  getPendingFollowRequests: () => void;
+  getAcceptedSubscriptionRequests: () => void;
+  getPendingSubscriptionRequests: () => void;
   setFocusedTab: (tab: string) => void;
 }
 
+const setFocusedTab = (tab: string) => 
+    (dispatch: any) => dispatch({ type: InboxActionTypes.SET_INBOX_TAB_FOCUS, tab: tab })
 
-const setFocusedTab = (tab: string ) => (dispatch: any) => dispatch({type: InboxActionTypes.SET_INBOX_TAB_FOCUS, tab: tab})
+const Inbox: React.FC<Props> = (props) => {
 
-const Inbox = (props: Props) => {
-
-  const { focusedTab,
-          setFocusedTab,
-          getFollowers, 
-          getPendingFollowRequests, 
-          getPendingSubscriptionRequests,
-          getAcceptedSubscriptionRequests } = props;
+  const {
+    setFocusedTab,
+    getFollowers,
+    getPendingFollowRequests,
+    getPendingSubscriptionRequests,
+    getAcceptedSubscriptionRequests
+  } = props;
 
   const history = useHistory()
   const { tab } = useParams()
@@ -48,15 +45,13 @@ const Inbox = (props: Props) => {
     getPendingFollowRequests()
     getPendingSubscriptionRequests()
     getAcceptedSubscriptionRequests()
-    console.log('Use Effect Hit');
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const inboxTabs = [
     {
       title: 'Messages',
-      onClick: () => {                       
+      onClick: () => {
         setFocusedTab('messages')
         history.push('/inbox/messages')
       },
@@ -97,7 +92,7 @@ const Inbox = (props: Props) => {
               isFollowers && <FollowersList />
             }
             {
-              isSubscriptions && <FollowersList isSubscriptions={true}/>
+              isSubscriptions && <SubscriptionsList />
             }
           </div>
         </>
@@ -114,9 +109,9 @@ const Inbox = (props: Props) => {
 
 }
 
-export default connect((state: any) => { 
-  console.log(state)
-  return {focusedTab: state.ui.inbox} },
+export default connect((state: any) => {
+  return { focusedTab: state.ui.inbox }
+},
   {
     getFollowers,
     getPendingFollowRequests,

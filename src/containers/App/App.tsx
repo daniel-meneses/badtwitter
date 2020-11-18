@@ -14,18 +14,19 @@ import { connect } from 'react-redux';
 import styles from './App.mod.scss'
 import ReduxToastr from 'react-redux-toastr'
 import { useLocation } from 'react-router-dom';
+import { selectIsAuthenticated } from '../../reducers/session';
 
-type Props = {
+type StoreProps = {
   isAuthenticated: boolean
 }
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: RootState): StoreProps {
   return {
-    isAuthenticated: state.session.session.isAuthenticated
+    isAuthenticated: selectIsAuthenticated(state),
   }
 }
 
-const App = ({ isAuthenticated }: Props) => {
+const App = ({ isAuthenticated }: StoreProps) => {
 
   const loc = useLocation();
 
@@ -66,7 +67,8 @@ const App = ({ isAuthenticated }: Props) => {
           position="top-right"
           preventDuplicates
           closeOnToastrClick
-          getState={(state: any) => state.toastrReducer}
+          // @ts-ignore
+          getState={(state: RootState) => state.toastrReducer}
         />
       </main>
     </div>

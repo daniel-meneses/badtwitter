@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { createSelector } from 'reselect';
+import { Subscription } from '../types/common';
 import { createReqReducer } from './common'
 
 export enum SubscriptionReqActionTypes {
@@ -13,6 +15,13 @@ export enum SubscriptionActionTypes {
   APPEND_PENDING_REQUEST_IDS = 'APPEND_PENDING_REQUEST_IDS',
   APPEND_ACCEPTED_REQUEST_IDS = 'APPEND_ACCEPTED_REQUEST_IDS',
   REMOVE_SUBSCRIPTION = 'REMOVE_SUBSCRIPTION',
+}
+
+type SubscriptionResponse = {
+  id: number;
+  subject_id: number;
+  inserted_at: string;
+  updated_at: string;
 }
 
 interface SubscriptionRequest {
@@ -38,17 +47,50 @@ const initialState: initialState = {
   acceptedUserIds: []
 }
 
-/*
-    TODO - Clear 'any' types
-*/
+function formatSubscriptionResponse(subscriptions: {[id: string]: SubscriptionResponse}) {
+  let subscriptionsState: {[id: string] : Subscription} = {}
+  Object.values(subscriptions).forEach( (sub: SubscriptionResponse) => {
+    subscriptionsState[`${sub.id}`] = formatSubscription(sub);
+  })
+  return subscriptionsState
+}
+
+function formatSubscription(sub: SubscriptionResponse): Subscription {
+  const { id, subject_id: subjectId, inserted_at: insertedAt, updated_at: updatedAt } = sub
+  return ({
+    id, subjectId, insertedAt, updatedAt
+  })
+}
+
+export const selectSubscriptions = (state: RootState): any => state.subscriptions.subscriptions.byId;
+export const selectPendingSubscriptionIds = (state: RootState) => state.subscriptions.subscriptions.pendingReqIds;
+export const selectPendingSubscriptionUsers = (state: RootState) => state.subscriptions.subscriptions.pendingUserIds;
+export const selectAcceptedSubscriptionIds = (state: RootState) => state.subscriptions.subscriptions.acceptedReqIds;
+export const selectAcceptedSubscriptionUsers = (state: RootState) => state.subscriptions.subscriptions.acceptedUserIds;
+
+export const selectAcceptedSubscriptionRequests: any = createSelector(
+  [selectSubscriptions, selectAcceptedSubscriptionIds],
+  (subscriptions: { [id: string] : Subscription}, acceptedSubscriptionIds: number[]) => {
+    return acceptedSubscriptionIds.reduce((o, id) => ({ ...o, [id]: subscriptions[id]}), {})
+   }
+)
+
+
+export const selectPendingSubscriptionRequests = createSelector(
+  [selectSubscriptions, selectPendingSubscriptionIds],
+  (subscriptions: { [id: string] : Subscription}, pendingSubscriptionIds: number[]) => {
+    return [...pendingSubscriptionIds].map(id => subscriptions[id]);
+   }
+)
 
 const subscriptions = (state = initialState, action: any) => {
   switch (action.type) {
-    case SubscriptionActionTypes.APPEND_SUBSCRIPTIONS: 
-      var { subscriptions } = action.response
+    case SubscriptionActionTypes.APPEND_SUBSCRIPTIONS:
+      var { subscriptions } = action.response;
+      var formattedSubscriptions = formatSubscriptionResponse(subscriptions);
       return {
         ...state,
-        byId: Object.assign({}, state.byId, subscriptions)
+        byId: Object.assign({}, state.byId, formattedSubscriptions),
       };
     case SubscriptionActionTypes.APPEND_PENDING_REQUEST_IDS:
       console.log(action);
@@ -76,28 +118,20 @@ const subscriptions = (state = initialState, action: any) => {
       var sub: any = Object.values(subscriptions || {});
       var userId = sub[0].subject_id;
       var subId: any = sub[0].id;
-      console.log(sub);
-      console.log(userId);
-      console.log(subId);
-      
-      
-      console.log(state.acceptedReqIds.filter(id => id !== subId ));
-      console.log(state.acceptedUserIds.filter(id => id !== userId ));
-      
       return {
         ...state,
-        acceptedReqIds: state.acceptedReqIds.filter(id => id !== subId ),
-        acceptedUserIds: state.acceptedUserIds.filter(id => id !== userId ),
+        acceptedReqIds: state.acceptedReqIds.filter(id => id !== subId),
+        acceptedUserIds: state.acceptedUserIds.filter(id => id !== userId),
       };
     default:
       return state;
   }
 }
 
-const subscriptionsReducer = combineReducers({
-    subscriptions,
-    getAcceptedSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_ACCEPTED_SUBSCRIPTIONS),
-    getPendingSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_PENDING_SUBSCRIPTIONS),
-  })
-  
+export const subscriptionsReducer = combineReducers({
+  subscriptions,
+  getAcceptedSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_ACCEPTED_SUBSCRIPTIONS),
+  getPendingSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_PENDING_SUBSCRIPTIONS),
+})
+
 export default subscriptionsReducer;

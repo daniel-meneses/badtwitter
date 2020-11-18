@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import {throttle, debounce} from 'lodash';
+import { useEffect, useState } from 'react';
+import { throttle } from 'lodash';
 
-
-type scrollPosition = {
+export type scrollPosition = {
   y: number;
   total: number;
 } | undefined

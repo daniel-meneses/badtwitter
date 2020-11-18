@@ -1,0 +1,66 @@
+$outline: lighten(#c9d6cd, 6%);
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    .avatar {
+        width: 200px;
+        border-radius: 100px;;
+    }
+    .nameAndSubheader {
+        text-align: center;
+        width: 80%;
+        border-top: 1px solid $outline;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 6px;
+        margin-bottom: 6px;
+        a {
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+    }
+
+    .aboutDescription {
+        font-size: 22px;
+    }
+    .linkedInIcon {
+        width: 40px;
+        height: 40px;
+        fill: black;
+        &:hover {
+            fill: var(--blue-70,#0073b1);
+        }
+    }
+    .gitHubIcon {
+        width: 40px;
+        height: 40px;
+        fill: black;
+        &:hover {
+            fill: #6e5494;
+        }
+    }
+    .techStack {
+        margin-top: 12px;
+    }
+}
+
+.techStack {
+    width: 100%;
+    ul {
+        margin-left: 20px;
+        margin-bottom: 8px;
+    }
+    h3 {
+        margin-bottom: 8px;
+        border-bottom: 1px solid $outline;
+    }
+}

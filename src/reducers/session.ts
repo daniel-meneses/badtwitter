@@ -19,6 +19,9 @@ const initialState = {
     currentUserId: null,
 };
 
+export const selectIsAuthenticated = (state: RootState): boolean => state.session.session.isAuthenticated;
+export const selectCurrenUserId = (state: RootState): number | null => state.session.session.currentUserId;
+
 const session = (state: any = initialState, action: any): any => {
     switch (action.type) {
         case SessionActionTypes.SET_CURRENT_USER:

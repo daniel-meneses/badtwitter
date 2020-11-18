@@ -4,9 +4,10 @@ import { postMessage } from '../../actions/post'
 import styles from './PostForm.mod.scss'
 import Avatar from '../Avatar/Avatar'
 import Button, { BtnThemes } from '../../common/components/Button/Button'
-import { getCurrentUser } from '../../selectors/users';
 import showGuestToast from "../Toast/GuestToast"
 import { PostFormActionTypes } from '../../reducers/ui';
+import { selectIsAuthenticated } from "../../reducers/session"
+import { selectCurrentUser } from "../../reducers/users"
 
 type Props = {
   avatar: string,
@@ -17,13 +18,12 @@ type Props = {
   persistPostForm: (text: string) => void;
 }
 
-function mapStateToProps(state :any) {
+function mapStateToProps(state :RootState) {
   let { post } = state;
-  let user = getCurrentUser(state);  
   return {
-    avatar: ( user || {}).avatar,
+    avatar: (selectCurrentUser(state) || {} ).avatar,
     createPostStatus: post.newPostSuccess,
-    isAuthenticated: state.session.session.isAuthenticated,
+    isAuthenticated: selectIsAuthenticated(state),
     postFormText: state.ui.postForm.postFormText
   }
 }
@@ -31,7 +31,7 @@ function mapStateToProps(state :any) {
 const persistPostForm = (text: string) => 
     (dispatch: any) => dispatch({ type: PostFormActionTypes.SET_POST_FORM_TEXT, text: text })
 
-const PostForm = (props: Props) => {
+const PostForm: React.FC<Props> = (props) => {
 
   const { avatar, postMessage, isAuthenticated, postFormText, persistPostForm } = props
 
@@ -40,6 +40,7 @@ const PostForm = (props: Props) => {
   const inputEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // @ts-ignore
     inputEl.current?.innerText = persistedText
   }, [])
   
@@ -51,6 +52,7 @@ const PostForm = (props: Props) => {
     if (!isAuthenticated) { return showGuestToast('Log in or sign up to post your message') }
     postMessage(postText)
     setPostText("")
+    // @ts-ignore
     inputEl.current?.innerText = ""
   }
 

@@ -1,55 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
+import { selectAcceptedFollowRequests } from '../../reducers/followers';
+import { Follower } from '../../types/common';
 import UserPreview from '../UserPreview/UserPreview';
 
-
-type OwnProps = {
-    isSubscriptions?: boolean;
-}
-
 type StoreProps = {
-    acceptedSubscriptions: any;
+    acceptedFollowers: Follower[];
 }
 
-type Props = OwnProps & StoreProps;
+const FollowersList: React.FC<StoreProps> = ({ acceptedFollowers }) => {
 
-const mapState = (state: any, own: OwnProps) => {
-    let { isSubscriptions = false } = own;
-    if (isSubscriptions) {
-        let { subscriptions } = state.subscriptions;
-        let { byId, acceptedReqIds } = subscriptions;
-        let acceptedSubscriptions = [...acceptedReqIds].map(id => byId[id]);
-        return { acceptedSubscriptions };
-    } else {
-        let { followers } = state.followers;
-        let { byId, accepted } = followers
-        let acceptedSubscriptions = [...accepted].map(id => byId[id]);
-        return { acceptedSubscriptions };
-    }
-}
-
-const FollowersList = (props: Props) => {
-
-    const { acceptedSubscriptions, isSubscriptions } = props;
-
-    let userIdKey = isSubscriptions ? 'subject_id' : 'user_id'
-            
     return (
         <div>
         {
-            acceptedSubscriptions.length ? 
-            Object.values(acceptedSubscriptions).map( (req: any, i: number) =>
+            acceptedFollowers.length ? 
+            acceptedFollowers.map( (req: Follower, i: number) =>
             <UserPreview
                 key={req.id}
-                userId={req[userIdKey]}
-                isFollowRequest={false}
+                userId={req.userId}
             />
              )
             :
-            <div>{'EmptyList'}</div>
+            <ErrorMessage text={'No followers to display'} />
         }
         </div>
     )
 }
 
-export default connect(mapState, {})(FollowersList);
+export default connect((state: RootState): StoreProps => ({ 
+    acceptedFollowers: Object.values(selectAcceptedFollowRequests(state)) 
+}))(FollowersList);

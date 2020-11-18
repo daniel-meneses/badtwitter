@@ -1,6 +1,8 @@
 @import '../../common/theme/mixins.scss';
-@import '../../common/layout/container.scss';
-@import '../../common/layout/resets.scss';
+@import '../../common/styles/resets.scss';
+
+$outline: lighten(#c9d6cd, 6%);
+
 
 .app{
   display: flex;
@@ -10,18 +12,56 @@
   min-height: 100%;
   width: 100%;
 }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 
 header {
   display: flex;
-  flex-direction: column;
   flex-grow: 1;
   align-items: flex-end;
+  @include respond-to('mobile') {
+    align-items: center;
+    flex-direction: row;
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    background-color: white;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    z-index: 100;
+    border-top: $outline 2px solid;
+  }
+  @include respond-to('small') {
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: flex-end;
+    position: relative;
+    width: 76px;
+    z-index: 1;
+    padding: 0px;
+    border-top: none;
+  }
 }
 
 main {
   display: flex;
   flex-grow: 1;
   flex-shrink: 1;
+  @include respond-to('mobile') {
+    width: 100%;
+  }
   @include respond-to('small') {
     flex-grow: 2;
     width: 100%;
@@ -38,18 +78,23 @@ main {
 .navLayout {
   display: flex;
   @include respond-to('mobile') {
-    width: 68px;
-    padding-left: 5px;
-    padding-right: 5px;
+    display: flex;
+    justify-content: stretch;
+    width: 100%;
+    height: 48px;
+    z-index: 100;
+    background-color: white;
   }
   @include respond-to('small') {
-
+    width: 70px;
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 1;
   }
   @include respond-to('medium') {
     width: 76px;
     padding-left: 10px;
     padding-right: 10px;
-
   }
   @include respond-to('large') {
 

@@ -20,21 +20,26 @@ $outline: lighten(#c9d6cd, 6%);
     width: 890px;
   }
   @include respond-to('xxlarge') {
-    width: 990px;
+    width: 780px;
   }
 }
 
 
 .mainCenter {
   position: relative;
-  width: 100%;
-  max-width: 600px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   border-left: $outline solid 1px;
   border-right: $outline solid 1px;
   border-bottom: $outline solid 1px;
+  @include respond-to('mobile') {
+    width: 100vw;
+  }
+  @include respond-to('small') {
+    width: 100%;
+    max-width: 600px;
+  }
 }
 
 .mainRight {
@@ -43,7 +48,6 @@ $outline: lighten(#c9d6cd, 6%);
     display: none;
   }
   @include respond-to('small') {
-
   }
   @include respond-to('medium') {
     width: 290px;

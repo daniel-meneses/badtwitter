@@ -4,7 +4,6 @@ import { UsersActionTypes } from '../reducers/users';
 import { PostActionTypes } from '../reducers/posts';
 import * as actions from './common';
 import api from '../api/api';
-import { AppThunk } from '../store/types';
 
 export function getGlobalFeed(nextCursor: string | null = null, headers = {}): AppThunk {
     let type = FeedReqActionTypes.GET_GLOBAL_FEED

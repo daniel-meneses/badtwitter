@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState } from 'react';
-//import styles from './ErrorMessage.mod.scss';
-import classNames from  'classnames'
+import React from 'react';
+import classNames from 'classnames';
+import styles from './ErrorMessage.mod.scss';
 
 type props = {
   className?: string;
@@ -9,10 +9,10 @@ type props = {
 
 const ErrorMessage: React.FC<props> = (props: props) => {
 
-  const { className, text } = props
+  const { text, className } = props
 
   return (
-      <div>
+      <div className={classNames(styles.error, className)}>
         {text}
       </div>
     );

@@ -1,4 +1,5 @@
-import { User, Users } from '../types/common';
+import { User } from '../types/common';
+import { createSelector } from 'reselect'
 
 export enum UsersActionTypes {
     APPEND_USERS = 'APPEND_USERS',
@@ -14,15 +15,35 @@ type UserResponse = {
 }
 
 type UsersResponse = {
-    [id: string] : UserResponse
+    [id: string]: UserResponse
 }
+
+type ACTION_APPEND_USERS = {
+    type: UsersActionTypes.APPEND_USERS,
+    response: UsersResponse,
+}
+
+const selectCurrentUserId = (state: RootState) => state.session.session.currentUserId;
+const selectUsers = (state: RootState) => {
+    return state.users.byId;
+}
+
+export const selectUserById = createSelector(
+    [selectUsers, (state: RootState, itemId: number) => itemId],
+    (users: any, userId: any) => users[userId]
+)
+
+export const selectCurrentUser = createSelector(
+    [selectUsers, selectCurrentUserId],
+    (users: any, userId: any) =>  users[userId]
+)
 
 function formatUsersResponse(users: UsersResponse): any {
     let tempFormat = users.users || users
-    let usersObj: Users = {}
-    Object.values(tempFormat).forEach((user: any) => { 
+    let usersObj: any = {}
+    Object.values(tempFormat).forEach((user: any) => {
         let userId: number = user.user_id;
-        usersObj[userId] = formatUser(user) 
+        usersObj[userId] = formatUser(user)
     })
     return usersObj
 }
@@ -34,11 +55,15 @@ function formatUser(user: UserResponse): User {
     })
 }
 
-type state = {
-    byId: Users;
+type usersState = {
+    byId: { [userId: string]: User } | {};
 }
 
-const users = (state: state = { byId: {} }, action: any): any => {
+const initialState: usersState = {
+    byId: {}
+}
+
+const users = (state = initialState, action: ACTION_APPEND_USERS): any => {
     switch (action.type) {
         case UsersActionTypes.APPEND_USERS:
             var users = formatUsersResponse(action.response);

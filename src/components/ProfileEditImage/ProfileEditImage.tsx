@@ -5,8 +5,8 @@ import './ProfileEditImage.scss'
 import { connect } from 'react-redux'
 import { getPresignedUrl, postImageToPresignedURL } from '../../actions/account'
 import ProfileEditImageCrop from '../ProfileEditImageCrop/ProfileEditImageCrop'
-import { getCurrentUser } from '../../selectors/users';
 import Avatar from '../Avatar/Avatar'
+import { selectCurrentUser } from '../../reducers/users';
 
 type Props = {
   getPresignedUrl: () => void,
@@ -19,7 +19,7 @@ type Props = {
 function mapStateToProps(state: any, ownProps: any) {
   let { account } = state.account
   let { presignedURL, preSignedImage } = account;
-  let user = getCurrentUser(state) || {}
+  let user = selectCurrentUser(state) || {}
   return {
     userAvatar: user.avatar,
     presignedURL,

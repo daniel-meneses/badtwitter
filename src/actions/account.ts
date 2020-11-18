@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux';
-import { AppThunk } from '../store/types';
 import { UsersActionTypes } from '../reducers/users'
 import { AccountActionTypes, AccountReqActionTypes } from '../reducers/account'
 import * as actions from './common'
@@ -9,7 +8,7 @@ type AvatarPayload = {
     image: string
 }
 
-type AccountInfoPayload = {
+export type AccountInfoPayload = {
     first_name: string;
     last_name: string;
     bio: string;

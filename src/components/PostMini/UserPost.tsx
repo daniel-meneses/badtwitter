@@ -1,50 +1,50 @@
 import React from "react"
 import { connect } from 'react-redux'
 import styles from './PostMini.mod.scss'
-import UserInfo from './UserInfo'
+import UserInfo from '../UserInfo/UserInfo'
 import moment from 'moment'
 import LikeButton from '../LikeButton/LikeButton'
+import { Post } from "../../types/common"
+import { selectPostById } from '../../reducers/posts';
 
 type OwnProps = {
-  postId: number;
+    postId: number;
+    className?: string;
 }
 
-type Props = {
-  className?: string;
-  post: any;
+type StoreProps = {
+    post: Post;
 }
 
-const UserPost = (props: Props) => {
+type Props = OwnProps & StoreProps
 
-  const { post } = props;
-  const { id: postId, likes, created, post: message, user_id: userId } = post
+const UserPost: React.FC<Props> = (props) => {
 
-  const timeStamp = moment(created).format("MMM Do LT");
+    const { post } = props;
+    const { id: postId, likes, created, post: message, userId } = post
 
-  return (
-    <div className={styles.userPost}>
-      <UserInfo userId={userId}>
-        <div>
-          {message}
-          </div>
-      </UserInfo>
-      <div className={styles.userPostFooter}>
-        <div className={styles.footerIconWithCount}>
-          <LikeButton className={styles.footerIcon} postId={postId} />
-          {likes && <div>{likes}</div>}
+    const timeStamp = moment(created).format("MMM Do LT");
+
+    return (
+        <div className={styles.userPost}>
+            <UserInfo userId={userId}>
+                <div>
+                {message}
+                    </div>
+            </UserInfo>
+            <div className={styles.userPostFooter}>
+                <div className={styles.footerIconWithCount}>
+                    <LikeButton className={styles.footerIcon} postId={postId} />
+                    {likes && <div>{likes}</div>}
+                </div>
+                <div className={styles.footerTimestamp}>
+                    {timeStamp}
+                </div>
+            </div>
         </div>
-        <div className={styles.footerTimestamp}>
-          {timeStamp}
-        </div>
-      </div>
-    </div>
-  )
+    )
 }
 
-export default connect((state: any, ownProps: OwnProps) => {
-  let { postId } = ownProps
-  let post: any = state.post.byId[postId] || {}
-  return {
-    post
-  }
-}, {})(UserPost)
+export default connect((state: RootState, { postId }: OwnProps) => ({ 
+    post: selectPostById(state, postId) 
+}))(UserPost)

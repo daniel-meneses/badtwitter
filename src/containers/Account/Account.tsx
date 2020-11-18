@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/session'
-import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm2'
+import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 import { useHistory } from 'react-router-dom'
 import MainContainer from '../MainContainer/MainContainer'

@@ -1,4 +1,5 @@
-
+@import "../../common/styles/colors";
+@import '../../common/theme/mixins.scss';
 
 $outline: lighten(#c9d6cd, 6%);
 
@@ -7,17 +8,25 @@ $outline: lighten(#c9d6cd, 6%);
   position: fixed;
   z-index: 50;
   margin-top: 53px;
-  width: 100%;
-  max-width: 599px;
+  width: inherit;
+  max-width: inherit;
   border-bottom: solid 1px $outline;
+  @include respond-to('mobile') {
+    
+  }
+  @include respond-to('small') {
+    max-width: inherit;
+  }
+  @include respond-to('medium') {
+    max-width: 598px;
+  }
 }
 
 .tabHeader {
   display: flex;
   flex: 1;
-  width: 100%;
   background: white;
-  border-right: solid 1px $outline;
+  border: solid $outline 1px;
 }
 
 .tabHeaderItem {
@@ -35,8 +44,4 @@ $outline: lighten(#c9d6cd, 6%);
 .tabHeaderItemFocused {
   color: darken(green, 10%);
   background: #f0f5f5;
-}
-
-.tabView {
-  width: 100%;
 }

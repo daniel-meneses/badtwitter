@@ -11,12 +11,6 @@ type Props = {
   dismissForm: any
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    shouldDisplay: state.ui.postForm.shouldDisplayPostForm
-  }
-}
-
 const dismissForm = () => {
   return (dispatch: any) => {
     dispatch({ type: PostFormActionTypes.HIDE_FLOATING_POST_FORM })
@@ -45,4 +39,10 @@ const FloatingPostContainer = ({ shouldDisplay, dismissForm }: Props) => {
   );
 }
 
-export default connect(mapStateToProps, { postMessage, dismissForm })(FloatingPostContainer);
+export default connect((state: RootState) => ({
+    shouldDisplay: state.ui.postForm.shouldDisplayPostForm
+  }),
+  {
+    postMessage,
+    dismissForm
+  })(FloatingPostContainer);

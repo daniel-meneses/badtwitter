@@ -105,6 +105,7 @@ export const SignUpForm = (props: Props) => {
 
   const handleSignUp = (e: any) => {
     e.preventDefault()
+    if (!enableSubmit) { return }
     const {
       alias,
       email,
@@ -187,5 +188,5 @@ export const SignUpForm = (props: Props) => {
 }
 
 export default connect((state: any) => {
-  return {signupError: state.session.error}
+  return {signupError: state.session.postRegisterReq.error}
 }, { signUp })(SignUpForm);

@@ -61,7 +61,7 @@ export const SignInForm = (props: Props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    login(formData, redirectOnSuccess)
+    enableSubmit && login(formData, redirectOnSuccess) 
   }
   
   return (
@@ -103,5 +103,5 @@ export const SignInForm = (props: Props) => {
 }
 
 export default connect((state: any) => {
-  return {loginError: state.session.error}
+  return {loginError: state.session.postLoginReq.error}
 }, { login })(SignInForm);

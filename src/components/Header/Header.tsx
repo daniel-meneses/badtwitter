@@ -22,7 +22,6 @@ const Header = (props: Props) => {
 
   const { title, subtitle, displayBackButton, 
     selectableIcon, onIconClick, onTitleClick, onBackClick, className, isRightHeader } = props
-  const history = useHistory()
 
   const headerCss = classNames(
     { [styles.header] : !isRightHeader},

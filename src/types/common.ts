@@ -1,10 +1,10 @@
 
 
-export interface FetchRequest {
-    isFetching: boolean,
-    didSucceed: boolean,
-    didFail: boolean,
-    error: null | object 
+export type FetchRequest = {
+    isFetching?: boolean,
+    didSucceed?: boolean,
+    didFail?: boolean,
+    error?: null | { error: string }
 }
 
 export interface User {
@@ -14,10 +14,6 @@ export interface User {
     avatar: string;
     bio: string;
     userId: number;
-}
-
-export interface Users {
-    [id: string]: User
 }
 
 export interface Post {
@@ -50,11 +46,13 @@ export interface Followers {
     [id: string] : Follower;
 }
 
-export interface Subscription {
+export type Subscription = {
     id: number;
     subjectId: number;
+    insertedAt: string;
+    updatedAt: string;
 }
 
-export interface Subscriptions {
+export type Subscriptions = {
     [id: string] : Subscription;
 }

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { editAccountInfo } from '../../actions/account'
+import { editAccountInfo, AccountInfoPayload } from '../../actions/account'
 import TextField from '../Forms/TextField'
 import * as validate from '../Forms/FormValidations'
 import Button from '../../common/components/Button/Button'
 import styles from './ProfileEditForm.mod.scss'
 import { isEqual } from 'lodash'
-import { AppThunk } from '../../store/types';
-import { getCurrentUser } from '../../selectors/users';
+import { selectCurrentUser } from "../../reducers/users"
 
 type OwnProps = {
   className?: string
@@ -16,21 +15,14 @@ type OwnProps = {
 
 type ConnectProps = {
   currentUser: any,
-  editAccountInfo: (data: any) => AppThunk,
+  editAccountInfo: (data: AccountInfoPayload) => void,
 };
 
 type Props = OwnProps & ConnectProps;
 
-const mapStateToProps = (state: any, own: any) => {
-  let user = getCurrentUser(state);  
-  return ({ currentUser: user })
-}
-
-const ProfileEditForm = (props: Props) => {
+const ProfileEditForm: React.FunctionComponent<Props> = (props) => {
 
   const { currentUser, editAccountInfo, className } = props;
-
-  if(!currentUser) { return <></> }
 
   const initial = {
     first_name: currentUser.firstName,
@@ -120,7 +112,6 @@ const ProfileEditForm = (props: Props) => {
           <Button
             className={styles.acceptEdit}
             onClick={handleOnClick}
-            styling='primary'
             isDisabled={enableSubmit}
           >
             {'Update'}
@@ -131,4 +122,7 @@ const ProfileEditForm = (props: Props) => {
   );
 }
 
-export default connect( mapStateToProps, { editAccountInfo } )(ProfileEditForm);
+export default connect((state: RootState) => ({ 
+  currentUser: selectCurrentUser(state) || {}
+}),
+{ editAccountInfo })(ProfileEditForm);

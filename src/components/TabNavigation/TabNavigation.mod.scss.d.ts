@@ -5,7 +5,6 @@ interface CssExports {
   'tabHeader': string;
   'tabHeaderItem': string;
   'tabHeaderItemFocused': string;
-  'tabView': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

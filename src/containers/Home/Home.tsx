@@ -13,7 +13,7 @@ import UserPost from '../../components/PostMini/UserPost';
 import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper'
 import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
-import { usePersistedScroll } from '../../utils/hooks/useScroll';
+import { usePersistedScroll, scrollPosition } from '../../utils/hooks/useScroll';
 import { SrollPositionActionTypes } from '../../reducers/ui';
 
 
@@ -26,11 +26,14 @@ type StoreProps = {
   nextCursor: string | null,
   getGlobalFeedReq: any,
   scrollPosition: number,
-  onScrollExit: (scrollRef: any) => void,
+  onScrollExit: (scrollRef: HTMLElement | null) => void,
   isAuthenticated: boolean,
 }
 
 function mapStateToProps(state: any) {
+
+  console.log(state)
+
   let { timeline, nextCursor } = state.feed.feed
 
   return {
@@ -42,7 +45,7 @@ function mapStateToProps(state: any) {
   }
 }
 
-const onScrollExit = (scrollRef: any) => ({ type: SrollPositionActionTypes.SET_HOME_SCROLL_POSITION, position: scrollRef?.scrollTop || 0 })
+const onScrollExit = (scrollRef: HTMLElement | null) => ({ type: SrollPositionActionTypes.SET_HOME_SCROLL_POSITION, position: scrollRef?.scrollTop || 0 })
 
 const Home = (props: StoreProps) => {
 
@@ -60,7 +63,7 @@ const Home = (props: StoreProps) => {
   } = props
 
   const history = useHistory();
-  const scrollRef: any = typeof document !== "undefined" && document.getElementById("scrollable")
+  const scrollRef: HTMLElement | null = typeof document !== "undefined" ? document.getElementById("scrollable") : null
 
   useEffect(() => {
     // Prevent duplicate data fetch on client rehydrate
@@ -68,16 +71,17 @@ const Home = (props: StoreProps) => {
       getGlobalFeed()
     }
     // These requests are made only on client rehydrate
-    getPendingSubscriptionRequests()
-    getAcceptedSubscriptionRequests()
-    getAllLikes()
+    if (isAuthenticated) {
+      getPendingSubscriptionRequests()
+      getAcceptedSubscriptionRequests()
+      getAllLikes()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onScroll = (pos: any) => {
-    let percent = Math.round(((pos.y || 0) / (pos.total || 100)) * 100)
+  const onScroll = (pos: scrollPosition) => {
+    let percent = Math.round(((pos?.y || 0) / (pos?.total || 100)) * 100)
     let shouldFetch = percent > 60
-    
     if (shouldFetch && nextCursor && !getGlobalFeedReq.isFetching) {
       getGlobalFeed(nextCursor)
     }
@@ -121,11 +125,12 @@ const Home = (props: StoreProps) => {
       {
         <>
         {
-          !isAuthenticated && <Header
-          title={'Login/Register'}
-          isRightHeader={true}
-          onTitleClick={() => history.push('/signup')}
-        />
+          !isAuthenticated && 
+          <Header
+            title={'Login/Register'}
+            isRightHeader={true}
+            onTitleClick={() => history.push('/signup')}
+          />
         }
         <div>
           <Trending postId={1} />

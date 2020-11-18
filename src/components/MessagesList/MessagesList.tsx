@@ -1,40 +1,35 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
+import { selectPendingFollowRequests } from '../../reducers/followers';
+import { Follower } from '../../types/common';
 import UserPreview from '../UserPreview/UserPreview';
+import FollowRequestButtons from './FollowRequestButtons';
 
-type Props = {
-    pendingFollowRequests: any,
+type StoreProps = {
+    pendingFollowRequests: Follower[],
 }
 
-const mapState = (state: any, ownProps: any) => {
-
-    let { followers } = state.followers
-    let { byId, pending } = followers
-    let pendingFollowRequests = [...pending].map(id => byId[id])
-    
-    return {
-        pendingFollowRequests,
-    }
-}
-
-
-const MessagesList = (props: Props) => {
-
-    const { pendingFollowRequests } = props;
+const MessagesList: React.FC<StoreProps> = ({ pendingFollowRequests }) => {
 
     return (
         <div>
             {
-            Object.values(pendingFollowRequests).map( (req: any, i: number) =>
-            <UserPreview
-                key={req.id}
-                userId={req.user_id}
-                isFollowRequest={true}
-            />
-             )}
+            pendingFollowRequests.length ? 
+            pendingFollowRequests.map( (req: any, i: number) =>
+                <UserPreview
+                    key={req.id}
+                    userId={req.userId}
+                    topButtons={ <FollowRequestButtons userId={req.userId} /> }
+                />)
+                :
+                <ErrorMessage text={'No messages'} />
+            }
         </div>
     )
 }
 
-export default connect(mapState, {})(MessagesList);
+export default connect((state: RootState): StoreProps => ({
+    pendingFollowRequests: Object.values(selectPendingFollowRequests(state))
+}))(MessagesList);

@@ -1,0 +1,69 @@
+.userInfo {
+    display: flex;
+    flex: 1;
+    position: relative;
+  }
+  
+  .userInfoAvatarContainer {
+    flex: 0 0 50px;
+    max-width: 50px;
+    margin-right: 10px;
+  }
+  
+  .userInfoContentContainer {
+    flex: 1;
+    position: relative;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  
+.userInfotopDetails {
+    display: flex;
+    flex: 1;
+    position: relative;
+  }
+  
+  .userInfoNameAlias {
+    display: flex;
+    flex: 1;
+    padding-bottom: 5px;
+    overflow-wrap: break-word;
+    .userInfoName {
+      overflow-wrap: break-word;
+      max-width: 400px;
+      font-size: 16px;
+      font-weight: 600;
+      margin-right: 4px;
+      &:hover{
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+    .userInfoAlias {
+      max-width: 400px;
+      font-size: 16px;
+      font-weight: 350;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+  
+  .userInfoButtonSelection {
+    display: flex;
+    flex: 1;
+    position: relative;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .flexCol {
+    flex-direction: column;
+  }
+  
+  .flexRow {
+    display: flex;
+    flex-direction: row;
+  }
+  

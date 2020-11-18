@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, MouseEvent, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -15,7 +15,7 @@ import Selectable from '../../common/components/Selectable/Selectable'
 import classNames from 'classnames'
 import { PostFormActionTypes } from '../../reducers/ui'
 import showGuestToast from '../Toast/GuestToast';
-
+import { selectIsAuthenticated, selectCurrenUserId } from '../../reducers/session';
 
 
 type NavItem = {
@@ -27,12 +27,12 @@ type NavItem = {
 
 type Props = {
   dispatch: Dispatch;
-  currentUserId: number;
+  currentUserId: number | null;
   isAuthenticated: boolean;
   focusedInboxTab: string;
 }
 
-const NavContainer = (props: Props) => {
+const NavContainer: React.FC<Props> = (props) => {
 
   const { currentUserId, focusedInboxTab, isAuthenticated } = props
   const history = useHistory();
@@ -44,122 +44,113 @@ const NavContainer = (props: Props) => {
 
   const showFloatingPostForm = () => {
     if (!isAuthenticated) { return showGuestToast(); }
-    props.dispatch({type: PostFormActionTypes.DISPLAY_FLOATING_POST_FORM })
+    props.dispatch({ type: PostFormActionTypes.DISPLAY_FLOATING_POST_FORM })
   }
 
+  const handleNavOnclick = (url: string, blockForGuest: boolean = false) => {
+    if (blockForGuest && !isAuthenticated) { return }
+    location.pathname !== url &&
+      history.push(url)
+  }
+
+  const topNavLogo = 
+  <Selectable
+    colorStyle={'secondary'}
+    className={classNames(styles.navItem, styles.logo)}
+    onClick={() => handleNavOnclick('/home')}
+    >
+    <AppLogo className={classNames(styles.navItemIcon, styles.logo)} styles={{ fill: 'green' }} />,
+  </Selectable>
+
   const navList: NavItem[] = [
-    {
-      text: '',
-      icon: <AppLogo  {...logoStyle} styles={{fill: 'green'}} />,
-      selected: false,
-      onClick: () => {
-        location.pathname !== `/home` &&
-        history.push('/home')
-      }
-    },
     {
       text: 'Home',
       icon: <HomeIcon  {...logoStyle} />,
       selected: isSelected('/home'),
-      onClick: () => {
-        location.pathname !== `/home` &&
-        history.push('/home')
-      }
+      onClick: () => handleNavOnclick('/home')
     },
     {
       text: 'Explore',
       icon: <ExploreIcon  {...logoStyle} />,
       selected: isSelected('/explore'),
-      onClick: () => {
-        location.pathname !== `/explore` &&
-        history.push('/explore')
-      }
+      onClick: () => handleNavOnclick('/explore')
     },
     {
       text: 'Inbox',
       icon: <InboxIcon  {...logoStyle} />,
       selected: isSelected('/inbox'),
-      onClick: () => {
-        if (!isAuthenticated) { return }
-        location.pathname !== `/inbox/${focusedInboxTab}` &&
-        history.push('/inbox/' + focusedInboxTab)
-      }
+      onClick: () => handleNavOnclick(`/inbox/${focusedInboxTab}`, true)
     },
     {
       text: 'Profile',
       icon: <ProfileIcon {...logoStyle} />,
       selected: isSelected(`/user/${currentUserId}`),
-      onClick: () => {
-        if (!isAuthenticated) { return }
-        location.pathname !== `/user/${currentUserId}` &&
-        history.push(`/user/${currentUserId}`)
-      }
+      onClick: () => handleNavOnclick(`/user/${currentUserId}`, true)
     },
     {
       text: 'Account',
       icon: <AccountIcon {...logoStyle} />,
       selected: isSelected('/account'),
-      onClick: () => {
-        if (!isAuthenticated) { return }
-        location.pathname !== `/account` &&
-        history.push('/account')
-      }
+      onClick: () => handleNavOnclick('/account', true)
     }
   ]
 
   const navItemStyles = (isSelected: boolean) => classNames(
     styles.navItem,
-    { [styles.navItemSelected] : isSelected }
+    { [styles.navItemSelected]: isSelected }
   )
 
   const shouldDisable = (i: number) => {
     // disable nav options 2-6 for guest
-    return i > 2 && !isAuthenticated
+    return i > 1 && !isAuthenticated
   }
 
   return (
     <div className={styles.navContainer}>
       {
-        navList.map( (item: NavItem, i: any) =>
-            <Selectable
-              colorStyle={shouldDisable(i) ? 'unavailable' : 'secondary'}
-              key={i}
-              className={navItemStyles(item.selected)}
-              onClick={item.onClick}
-            >
-              {item.icon}
-              {
-                item.text &&
-                  <div className={styles.navItemText}>
-                    {item.text}
-                  </div>
-              }
-            </Selectable>
+        topNavLogo
+      }
+      {
+        navList.map((item: NavItem, i: any) =>
+          <Selectable
+            colorStyle={shouldDisable(i) ? 'unavailable' : 'secondary'}
+            key={i}
+            className={navItemStyles(item.selected)}
+            onClick={item.onClick}
+          >
+            {item.icon}
+            {
+              item.text &&
+              <div className={styles.navItemText}>
+                {item.text}
+              </div>
+            }
+          </Selectable>
         )
       }
       <div className={styles.navPostContainer}>
-      <Selectable className={styles.navPostIcon}>
-        <NewPostIcon
-          onClick={showFloatingPostForm}
+        <Selectable className={styles.navPostIcon}>
+          <NewPostIcon
+            onClick={showFloatingPostForm}
           />
-      </Selectable>
+        </Selectable>
         <Button
           className={styles.navPostBtn}
           theme={BtnThemes.PrimaryFill}
           onClick={showFloatingPostForm}
-          >
+        >
           {'New Post'}
         </Button>
-        </div>
+      </div>
     </div>
   );
 
 }
 
-export default connect((state: any) => {
-    return {
-      isAuthenticated: state.session.session.isAuthenticated,
-      currentUserId: state.session.session.currentUserId, 
-      focusedInboxTab: state.ui.inbox.focusedTab,
-    }
+export default connect((state: RootState) => {
+  return {
+    isAuthenticated: selectIsAuthenticated(state),
+    currentUserId: selectCurrenUserId(state),
+    focusedInboxTab: state.ui.inbox.focusedTab,
+  }
 })(NavContainer);

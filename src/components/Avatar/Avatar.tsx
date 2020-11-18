@@ -31,7 +31,7 @@ const Avatar: React.FC<props> = (props: props) => {
   })
 
   return (
-    <div>
+    <>
       { showImageOnHover &&
       <FloatingImage
         isDisplayed={displayFloatingImage}
@@ -47,7 +47,7 @@ const Avatar: React.FC<props> = (props: props) => {
         onClick={onClick}
         alt={'Profile avatar'}
       />
-    </div>
+    </>
   );
 
 }

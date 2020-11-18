@@ -21,7 +21,6 @@ export interface Accounts {
     postAccountInfoReq: RequestState,
 }
 
-
 type Account = {
     preSignedURL: null | string,
     preSignedImage: null | string,

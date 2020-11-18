@@ -22,6 +22,7 @@ export enum LikeReqActionTypes {
   DELETE_LIKE = 'DELETE_LIKE',
 }
 
+export const selectLikedPosts = (state: RootState): number[] => state.likes.likes.postIds
 
 const likes = (state: ILikes = initial, action: any) => {
   switch (action.type) {

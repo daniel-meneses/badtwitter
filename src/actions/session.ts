@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux';
-import { AppThunk } from '../store/types'
 import * as actions from './common'
 import api from '../api/api';
 import { SessionActionTypes, SessionReqActionTypes } from '../reducers/session'

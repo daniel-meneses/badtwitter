@@ -2,29 +2,36 @@ import React, { useRef } from "react"
 import { useHistory, useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Avatar from '../Avatar/Avatar'
-import styles from './PostMini.mod.scss'
+import styles from './UserInfo.mod.scss'
 import classNames from 'classnames'
 import useIgnoreLongClick from '../../utils/hooks/useIgnoreLongClick'
+import { User } from "../../types/common"
+import { selectUserById } from "../../reducers/users"
 
+/*
+    Base componenet for displaying user as feed / inbox list item
+    Extended to create UserPost and UserPreview componenets
+*/
 
 type OwnProps = {
   userId: number;
+  className?: string;
+  children?: React.ReactChild;
 }
 
-type Props = {
-  className?: string;
-  userId?: number;
-  user?: any;
+type StoreProps = {
+  user: User;
   topButtons?: React.ReactNode;
   isPreview?: boolean;
-  children?: React.ReactNode;
 }
 
-const UserInfo = (props: Props) => {
+type Props = OwnProps & StoreProps;
+
+const UserInfo: React.FunctionComponent<Props> = (props) => {
 
   const history = useHistory();
   const location = useLocation();
-  const childDiv:any = useRef<any>();
+  const childRenderDiv:any = useRef<any>();
   const nameAliasDiv:any = useRef<any>();
 
   const clickAction = () => {
@@ -34,20 +41,12 @@ const UserInfo = (props: Props) => {
   };
 
   useIgnoreLongClick({ ref: nameAliasDiv, action: clickAction });
-  useIgnoreLongClick({ ref: childDiv, action: clickAction });
+  useIgnoreLongClick({ ref: childRenderDiv, action: clickAction });
 
-  const { user , isPreview, topButtons, children } = props;
-    
-  if (!user) return (<></>)
+  const { user, isPreview, topButtons, children } = props;
 
-  const {
-    alias,
-    avatar,
-    bio,
-    firstName,
-    lastName,
-    userId
-  } = user;
+
+  const { alias, avatar, bio, firstName, lastName, userId } = user;
 
   const userInfoNameAlias = classNames(
     styles.userInfoNameAlias,
@@ -79,16 +78,13 @@ const UserInfo = (props: Props) => {
             </div>
         }
         </div>
-        <div ref={childDiv}>{children}</div>
+        <div ref={childRenderDiv}>{ isPreview ? bio : children }</div>
       </div>
     </div>
   );
 
 }
 
-export default connect((state: any, ownProps: OwnProps) => {
-  let { byId } = state.users;
-  let { userId } = ownProps;  
-  let user: any = byId[userId]
-  return {user}
-}, {})(UserInfo)
+export default connect((state: any, { userId }: OwnProps) => ({ 
+  user: selectUserById(state, userId)
+}))(UserInfo)

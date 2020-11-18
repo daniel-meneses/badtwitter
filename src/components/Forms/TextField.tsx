@@ -5,11 +5,9 @@ import styles from './TextField.mod.scss'
 type Props ={
   value: string;
   label: string;
-  onFocus?: () => void;
   className?: string;
   setErrorMessage: (value: string) => string;
   setValue: (value: string) => void;
-  width?: string;
   type?: string
 }
 
@@ -18,7 +16,7 @@ const TextField = (props: Props) => {
   const [error, setError] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const [shouldDisplayError, setShouldDisplayError] = useState(false)
-  const { value, label, onFocus, className, setErrorMessage, setValue, width, type } = props;
+  const { value, label, className, setErrorMessage, setValue, type } = props;
 
   useEffect(()=> {
     let err = setErrorMessage(value)

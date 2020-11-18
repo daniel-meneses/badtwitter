@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
+import About from '../../components/About/About';
 
 const Explore: React.FC = () => {
 
@@ -11,7 +12,7 @@ const Explore: React.FC = () => {
       {
         <>
           <Header title={'Explore'} />
-          <h1> Work in Progres.. </h1>
+          < About/>
        </>
       }
     />
