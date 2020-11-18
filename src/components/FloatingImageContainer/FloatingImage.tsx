@@ -1,6 +1,5 @@
 import React from 'react'
 import './FloatingImage.scss'
-import {connect} from 'react-redux'
 
 type Props = {
   image: string,

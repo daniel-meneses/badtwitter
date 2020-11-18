@@ -50,9 +50,9 @@ const posts = (state: any = { byId: {}}, action: any): any => {
         byId: Object.assign({}, state.byId, formattedPosts)
       }
     case PostActionTypes.APPEND_NEW_USER_POST:
-      var post = formatPostResponse(action.response)
+      var postResponse = formatPostResponse(action.response)
       return {
-        byId: Object.assign({}, state.byId, post)
+        byId: Object.assign({}, state.byId, postResponse)
       }
     case PostActionTypes.INCREMENT_POST_LIKE:
       var postId = action.response.post_id

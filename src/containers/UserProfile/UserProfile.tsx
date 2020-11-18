@@ -75,7 +75,7 @@ const UserProfile: React.FC<Props> = (props) => {
                   postId={postId}
                 />)
                 :
-              <ErrorMessage text={'No posts to display'} />
+              getUserProfileReq.didSucceed && <ErrorMessage text={'No posts to display'} />
             }
           </LoadingWrapper>
         </>

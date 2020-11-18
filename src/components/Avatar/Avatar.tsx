@@ -20,19 +20,17 @@ const Avatar: React.FC<props> = (props: props) => {
 
   const img = image || 'https://images-03.s3-ap-southeast-2.amazonaws.com/user_placeholder.png'
 
-  const avatarClass = classNames(
-    styles.avatar,
-    className
-  )
+  const showFloatingImageOnHover = debounce(() => 
+    setDisplayFloatingImage(true), 400, {
+      'leading': false,
+      'trailing': true
+    })
 
-  const showAfterWait = debounce(() => setDisplayFloatingImage(true), 400, {
-    'leading': false,
-    'trailing': true
-  })
+  const shouldDisplayFloatingImage = showImageOnHover && displayFloatingImage
 
   return (
     <>
-      { showImageOnHover &&
+      { shouldDisplayFloatingImage &&
       <FloatingImage
         isDisplayed={displayFloatingImage}
         image={img}
@@ -41,9 +39,14 @@ const Avatar: React.FC<props> = (props: props) => {
         />
       }
       <img src={img}
-        onMouseEnter={showAfterWait}
-        onMouseLeave={showAfterWait.cancel}
-        className={avatarClass}
+        width='50px'
+        height='50px'
+        onMouseEnter={showFloatingImageOnHover}
+        onMouseLeave={showFloatingImageOnHover.cancel}
+        className={classNames(
+          styles.avatar,
+          className
+        )}
         onClick={onClick}
         alt={'Profile avatar'}
       />

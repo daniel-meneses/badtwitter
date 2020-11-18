@@ -56,10 +56,11 @@ const UserInfo: React.FunctionComponent<Props> = (props) => {
   return (
     <div className={styles.userInfo}>
       <div className={styles.userInfoAvatarContainer}>
-        <Avatar 
-        image={avatar}
-        showImageOnHover={true}
-        />
+        <Avatar
+          className={styles.avatar}
+          image={avatar}
+          showImageOnHover={true}
+          />
         </div>
       <div className={styles.userInfoContentContainer}>
         <div className={styles.userInfotopDetails}>

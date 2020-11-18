@@ -7,7 +7,7 @@ type props = {
   className?: string;
   isFetching?: boolean;
   overrideError?: boolean;
-  errors?: { error: string };
+  errors?: { error: string } | null;
   children?: React.ReactNode;
 }
 

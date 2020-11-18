@@ -23,6 +23,7 @@ const Tag = (props: Props) => {
 
     const tagStyle = classNames(
         styles.tag,
+        // @ts-ignore
         styles[type]
     )
 

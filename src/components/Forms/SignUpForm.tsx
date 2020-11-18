@@ -170,7 +170,6 @@ export const SignUpForm = (props: Props) => {
         theme={BtnThemes.PrimaryFill}
         className={styles.submitButton}
         onClick={handleSignUp}
-        styling='primary'
         isDisabled={!enableSubmit}
         >
         {'Submit'}
