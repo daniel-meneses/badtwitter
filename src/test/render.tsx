@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react';
 import { createStore } from 'redux';
-import mainReducer from './../reducers/main';
+import mainReducer from '../reducers/main';
 import { Provider } from "react-redux";
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';

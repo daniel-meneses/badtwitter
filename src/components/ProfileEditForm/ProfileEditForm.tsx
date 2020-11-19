@@ -92,19 +92,19 @@ const ProfileEditForm: React.FunctionComponent<Props> = (props) => {
         label={'First Name'}
         value={formData.first_name}
         setValue={(val: any) => setFormData({ ...formData, first_name: val })}
-        setErrorMessage={validateName}
+        validateAndReturnError={validateName}
       />
       <TextField
         label={'Last Name'}
         value={formData.last_name}
         setValue={(val: any) => setFormData({ ...formData, last_name: val })}
-        setErrorMessage={validateName}
+        validateAndReturnError={validateName}
       />
       <TextField
         label={'Bio'}
         value={formData.bio}
         setValue={(val: any) => setFormData({ ...formData, bio: val })}
-        setErrorMessage={validateBio}
+        validateAndReturnError={validateBio}
       />
       {
         isEditable &&

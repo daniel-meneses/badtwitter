@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import classNames from 'classnames'
 import styles from './TextField.mod.scss'
 
@@ -6,21 +6,20 @@ type Props ={
   value: string;
   label: string;
   className?: string;
-  setErrorMessage: (value: string) => string;
+  validateAndReturnError: (value: string) => string;
   setValue: (value: string) => void;
   type?: string
 }
 
-const TextField = (props: Props) => {
+const TextField: React.FC<Props> = (props) => {
 
-  const [error, setError] = useState('')
+  const [error, setError] = useState<string>('')
   const [isFocused, setIsFocused] = useState(false)
   const [shouldDisplayError, setShouldDisplayError] = useState(false)
-  const { value, label, className, setErrorMessage, setValue, type } = props;
+  const { value, label, className, validateAndReturnError, setValue, type } = props;
 
   useEffect(()=> {
-    let err = setErrorMessage(value)
-    setError(err)
+    setError(validateAndReturnError(value))
   }, [value])
 
   const handleOnBlur = () => {
@@ -28,9 +27,10 @@ const TextField = (props: Props) => {
     setIsFocused(false)
   }
 
-  const handleOnChange = (e: any) => {
+  const handleOnChange = (e: ChangeEvent) => {
     setShouldDisplayError(false)
-    setValue(e.target.value)
+    const inputEl = e.target as HTMLInputElement
+    setValue(inputEl.value)
   }
 
   const textfieldStyle = classNames(
@@ -58,9 +58,9 @@ const TextField = (props: Props) => {
           onFocus={() => setIsFocused(true)}
           onBlur={handleOnBlur}
           />
-        { setErrorMessage &&
+        { shouldDisplayError &&
           <div className={styles.errorText}>
-            {shouldDisplayError && error}
+            {error}
             </div>
         }
     </div>

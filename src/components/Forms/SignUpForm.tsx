@@ -126,28 +126,28 @@ export const SignUpForm = (props: Props) => {
           label={'Alias'}
           value={formData.alias}
           setValue={(val: any) => setFormData({...formData, alias: val})}
-          setErrorMessage={validateAlias}
+          validateAndReturnError={validateAlias}
           />
         <TextField
           className={styles.signUpFieldColumns}
           label={'Email'}
           value={formData.email}
           setValue={(val: any) => setFormData({...formData, email: val})}
-          setErrorMessage={validateEmail}
+          validateAndReturnError={validateEmail}
           />
         <TextField
           className={styles.signUpFieldColumns}
           label={'First Name'}
           value={formData.firstName}
           setValue={(val: any) => setFormData({...formData, firstName: val})}
-          setErrorMessage={validateFirstName}
+          validateAndReturnError={validateFirstName}
           />
         <TextField
           className={styles.signUpFieldColumns}
           label={'Last Name'}
           value={formData.lastName}
           setValue={(val: any) => setFormData({...formData, lastName: val})}
-          setErrorMessage={validateLastName}
+          validateAndReturnError={validateLastName}
           />
         <TextField
           className={styles.signUpFieldColumns}
@@ -155,7 +155,7 @@ export const SignUpForm = (props: Props) => {
           type={'password'}
           value={formData.password}
           setValue={(val: any) => setFormData({...formData, password: val})}
-          setErrorMessage={validatePassword}
+          validateAndReturnError={validatePassword}
           />
         <TextField
           className={styles.signUpFieldColumns}
@@ -163,7 +163,7 @@ export const SignUpForm = (props: Props) => {
           type={'password'}
           value={formData.passwordConfirm}
           setValue={(val: any) => setFormData({...formData, passwordConfirm: val})}
-          setErrorMessage={validateConfrimation}
+          validateAndReturnError={validateConfrimation}
           />
         </div>
       <Button

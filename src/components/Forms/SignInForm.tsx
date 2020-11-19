@@ -73,7 +73,7 @@ export const SignInForm = (props: Props) => {
           label={'Email'}
           value={formData.email}
           setValue={(val: any) => setFormData({...formData, email: val})}
-          setErrorMessage={validateEmail}
+          validateAndReturnError={validateEmail}
           />
         <TextField
           className={styles.signUpFieldColumns}
@@ -81,7 +81,7 @@ export const SignInForm = (props: Props) => {
           type={'password'}
           value={formData.password}
           setValue={(val: any) => setFormData({...formData, password: val})}
-          setErrorMessage={validatePassword}
+          validateAndReturnError={validatePassword}
           />
           </div>
       <Button
