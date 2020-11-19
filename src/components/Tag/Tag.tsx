@@ -28,7 +28,7 @@ const Tag = (props: Props) => {
     )
 
     return (
-        <a href={url || '#'} className={tagStyle}>
+        <a href={url || '#'} target="_blank" className={tagStyle}>
             <span>
                 {`#${type}`}
             </span>

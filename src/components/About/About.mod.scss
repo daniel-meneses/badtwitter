@@ -6,6 +6,7 @@ $outline: lighten(#c9d6cd, 6%);
     width: 100%;
     height: 100%;
     align-items: center;
+    padding-top: 26px;;
     padding-left: 20px;
     padding-right: 20px;
     .avatar {
@@ -35,21 +36,15 @@ $outline: lighten(#c9d6cd, 6%);
     .linkedInIcon {
         width: 40px;
         height: 40px;
-        fill: black;
-        &:hover {
-            fill: var(--blue-70,#0073b1);
-        }
+        fill: var(--blue-70,#0073b1);
     }
     .gitHubIcon {
         width: 40px;
         height: 40px;
-        fill: black;
-        &:hover {
-            fill: #6e5494;
-        }
+        fill: black;// #6e5494;
     }
     .techStack {
-        margin-top: 12px;
+        margin-top: 22px;
     }
 }
 
@@ -62,5 +57,21 @@ $outline: lighten(#c9d6cd, 6%);
     h3 {
         margin-bottom: 8px;
         border-bottom: 1px solid $outline;
+    }
+}
+
+.logoIcon {
+    width: 140px;
+    height: 140px;
+    fill: #009a00;
+    margin-bottom: 20px;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row-reverse;
+    a {
+        padding-left: 4px;
+        padding-right: 4px;
     }
 }

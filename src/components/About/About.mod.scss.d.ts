@@ -4,8 +4,10 @@ interface CssExports {
   'aboutDescription': string;
   'avatar': string;
   'container': string;
+  'footer': string;
   'gitHubIcon': string;
   'linkedInIcon': string;
+  'logoIcon': string;
   'nameAndSubheader': string;
   'tags': string;
   'techStack': string;
