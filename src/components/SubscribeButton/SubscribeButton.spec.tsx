@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react';
-import { fireEvent, getByRole } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import SubscribeButton from './SubscribeButton';
 import showGuestToast from '../Toast/GuestToast';
 import * as subscriptionActions from '../../actions/subscriptions';
@@ -32,14 +32,23 @@ const sessionState = (isAuth: boolean) => ({
     }
 })
 
+const expectedPayload = (userId: number) => ({user_id: userId})
+
 test("When subscription not requested then text is 'Follow'", () => {
     const { getByRole } = renderWithProviders(<SubscribeButton userId={1} />, {})
     const btn = getByRole('button')
     expect(btn).toHaveTextContent('Follow');
 });
 
-test("When subscription requested then text is 'Pending", () => {
-    const { getByRole } = renderWithProviders(<SubscribeButton userId={12} />, subState([], [12]))
+test("When 'Follow' selected then subscription request made", () => {
+    const { getByRole } = renderWithMockStore(<SubscribeButton userId={12} />, {...subState([], [12]), ...sessionState(true)} )
+    const btn = getByRole('button')
+    fireEvent.click(btn)
+    expect(mockSubscriptionRequest).toHaveBeenCalledWith(expectedPayload(12))
+});
+
+test("When subscription requested then text is 'Pending' ", () => {
+    const { getByRole } = renderWithProviders(<SubscribeButton userId={12} />, {...subState([], [12]), ...sessionState} )
     const btn = getByRole('button')
     expect(btn).toHaveTextContent('Pending');
 });
@@ -50,9 +59,26 @@ test("When subscription accepted then text is 'Following", () => {
     expect(btn).toHaveTextContent('Following');
 });
 
-test("When subscription accepted and button hovered then text is 'Pending", () => {
+
+test("When subscription accepted and button hovered then text is 'Unfollow'", () => {
     const { getByRole } = renderWithProviders(<SubscribeButton userId={12} />, subState([12], []))
     const btn = getByRole('button')
     fireEvent.mouseOver(btn)
     expect(btn).toHaveTextContent('Unfollow');
 });
+
+test("When 'Unfollow' selected then delete subscription request made", () => {
+    const { getByRole } = renderWithMockStore(<SubscribeButton userId={12} />, {...subState([12], []), ...sessionState(true)} )
+    const btn = getByRole('button')
+    fireEvent.mouseOver(btn)
+    fireEvent.click(btn)
+    expect(mockDeleteSubscription).toHaveBeenCalledWith(expectedPayload(12))
+});
+
+
+test("When guest user selects like icon then guest prompt triggered", () => {
+    const { getByRole } = renderWithMockStore(<SubscribeButton userId={12} />, {...subState([], []), ...sessionState(false)} )
+    const btn = getByRole('button');
+    fireEvent.click(btn)
+    expect(showGuestToast).toHaveBeenCalled();
+  });
