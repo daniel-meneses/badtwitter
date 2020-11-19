@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { postSubscriptionRequest, deleteSubscription, subscriptionPayload } from '../../actions/subscriptions';
+import * as subscriptionActions from '../../actions/subscriptions';
 import Button, { BtnThemes } from '../../common/components/Button/Button';
 import styles from './SubscribeButton.mod.scss'
 import showGuestToast from "../Toast/GuestToast";
@@ -16,38 +16,27 @@ type Props = {
   userId: number;
   isRequested?: boolean,
   isAccepted?: boolean,
-  postSubscriptionRequest: (payload: subscriptionPayload) => void,
-  deleteSubscription: (payload: subscriptionPayload) => void,
   isAuthenticated: boolean,
+  dispatch: any;
 }
 
 const SubscribeButton: React.FC<Props> = (props) => {
 
-  const {isRequested, isAccepted, postSubscriptionRequest, userId, isAuthenticated, deleteSubscription} = props
+  const { isRequested, isAccepted, userId, isAuthenticated, dispatch } = props
+  const { postSubscriptionRequest, deleteSubscription } = subscriptionActions;
 
-  const [buttonText, setButtonText] = useState(isAccepted ? "Following" : isRequested ? "Pending" : "Follow")
+  const initialText = isAccepted ? "Following" : isRequested ? "Pending" : "Follow";
+  const [buttonText, setButtonText] = useState(initialText)
 
   const btnStyle = classNames(
     styles.subscribeBtn,
     {[styles.unsubscribe] : isAccepted}
   )
 
-  const setHoverText = () => {
-    if (isAccepted) { setButtonText("Unfollow") }
-  }
-
-  const resetText = () => {
-    let text = isAccepted ? "Following" : isRequested ? "Pending" : "Follow"
-    setButtonText(text)
-  }
-
   const handleOnClick = () => {
     if (!isAuthenticated) { return showGuestToast() }
-    if (isAccepted) {
-      deleteSubscription({user_id: userId})
-    } else {
-      postSubscriptionRequest({user_id: userId})
-    }
+    let payload = { user_id: userId }
+    dispatch(isAccepted ? deleteSubscription(payload) : postSubscriptionRequest(payload))
   }
 
   return (
@@ -55,20 +44,17 @@ const SubscribeButton: React.FC<Props> = (props) => {
       className={btnStyle}
       theme={BtnThemes.PrimaryFill}
       onClick={handleOnClick}
-      onMouseEnter={setHoverText}
-      onMouseLeave={resetText}
+      onMouseEnter={() => isAccepted && setButtonText("Unfollow")}
+      onMouseLeave={() => setButtonText(initialText)}
       >
       {buttonText}
     </Button>
   );
 }
+
 export default connect((state: RootState, { userId }: OwnProps) => ({
     isRequested: selectPendingSubscriptionUsers(state).includes(userId),
     isAccepted: selectAcceptedSubscriptionUsers(state).includes(userId),
     isAuthenticated: selectIsAuthenticated(state)
-  }),
-  { 
-    postSubscriptionRequest,
-    deleteSubscription 
-  })
+  }))
 (SubscribeButton);
