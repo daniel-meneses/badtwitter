@@ -16,7 +16,6 @@ export function likeUserPost(postId: number) {
         dispatch({ type: PostActionTypes.INCREMENT_POST_LIKE, response });
       })
       .catch((error) => {
-        console.log(error);
         dispatch(actions.reqFail(type, error))
       });
   }
@@ -39,7 +38,7 @@ export function getAllLikes() {
 
 export function unlikeUserPost(postId: number) {
   let data = {post_id: postId};
-  let type = LikeReqActionTypes.GET_ALL_LIKES
+  let type = LikeReqActionTypes.DELETE_LIKE
   return (dispatch: Dispatch) => {
     dispatch(actions.reqStart(type))
     return api.delete('/like/delete', data)

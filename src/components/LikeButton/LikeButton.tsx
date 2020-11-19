@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { likeUserPost, unlikeUserPost } from '../../actions/likes';
+import * as likeActions from '../../actions/likes';
 import LikeIcon from '../../common/components/SvgLib/LikeIcon';
 import Selectable from '../../common/components/Selectable/Selectable';
 import showGuestToast from '../Toast/GuestToast';
@@ -8,10 +8,9 @@ import { selectIsAuthenticated } from '../../reducers/session';
 import { selectLikedPosts } from '../../reducers/likes';
 
 type StoreProps = {
-  likeUserPost: (postId: number) => void,
-  unlikeUserPost: (postId: number) => void,
   isLiked: boolean;
   isAuthenticated: boolean;
+  dispatch: any;
 }
 
 type OwnProps = {
@@ -19,26 +18,25 @@ type OwnProps = {
   className?: string,
 }
 
-type Props = StoreProps & OwnProps
+export const LikeButton: React.FC<StoreProps & OwnProps> = (props) => {
 
-const LikeButton: React.FC<Props> = (props: Props) => {
-
-  const { postId, isLiked, likeUserPost, unlikeUserPost, className, isAuthenticated } = props;
+  const { postId, isLiked, className, isAuthenticated, dispatch } = props;
+  const { unlikeUserPost, likeUserPost } = likeActions
 
   let handlePostLikeClick = () => {
     if (!isAuthenticated) { return showGuestToast('Log in or sign up to like posts') }
-    isLiked ? unlikeUserPost(postId) : likeUserPost(postId)
+    isLiked ? dispatch(unlikeUserPost(postId)) : dispatch(likeUserPost(postId))
   }
 
   return (
     <>
     <Selectable
-      testid='like-selectable'
+      testid={testIds.likeContainer}
       className={className}
       onClick={handlePostLikeClick}
       >
       <LikeIcon 
-        data-testid="like-button"
+        data-testid={testIds.likeSVG}
         stroke='green' 
         fill={isLiked ? 'green' : 'white'} />
     </Selectable>
@@ -46,11 +44,13 @@ const LikeButton: React.FC<Props> = (props: Props) => {
   );
 }
 
+export const testIds = {
+  likeContainer: 'like-selectable',
+  likeSVG: 'like-button'
+}
+
 export default connect((state: RootState, { postId }: OwnProps) => ({ 
   isLiked: selectLikedPosts(state).includes(postId),
   isAuthenticated: selectIsAuthenticated(state)
-}), { 
-  likeUserPost, 
-  unlikeUserPost 
-})
+}))
 (LikeButton);
