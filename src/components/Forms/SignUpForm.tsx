@@ -3,25 +3,25 @@ import Button, { BtnThemes } from '../../common/components/Button/Button';
 import * as validate from './FormValidations';
 import TextField from './TextField'
 import styles from './TextField.mod.scss'
-import { signUp } from '../../actions/session';
+import * as sessionActions from '../../actions/session';
 import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom'
 import { parseQuery } from '../../common/helpers';
 
 
 type Props = {
-  signUp: (e: any, h: any) => void,
+  dispatch: any;
   signupError: { error: any }
 }
 
 export const SignUpForm = (props: Props) => {
 
-  const { signUp, signupError } = props
+  const { signupError, dispatch } = props
 
   const history = useHistory();
   const { search } = useLocation();
 
-  const redirectUrl = parseQuery(search, 'redirect')
+  const redirectUrl = search && parseQuery(search, 'redirect')
 
   const [formData, setFormData] = useState({
     alias: '',
@@ -114,7 +114,7 @@ export const SignUpForm = (props: Props) => {
       password: password,
       passwordConfirm: password_confirmation
     } = formData
-    signUp({alias, email, first_name, last_name, password, password_confirmation}, redirectOnSuccess)
+    dispatch(sessionActions.signUp({alias, email, first_name, last_name, password, password_confirmation}, redirectOnSuccess))
   }
 
   return (
@@ -177,8 +177,8 @@ export const SignUpForm = (props: Props) => {
         </form>
         <div className={styles.error}>
         {signupError &&
-          <span className={styles.authError}>{
-            signupError.error.alias || signupError.error.alias || signupError.error
+          <span data-testid='error' className={styles.authError}>{
+            signupError.error.alias || signupError.error.email || signupError.error
           }</span>
         }
         </div>
@@ -188,4 +188,4 @@ export const SignUpForm = (props: Props) => {
 
 export default connect((state: any) => {
   return {signupError: state.session.postRegisterReq.error}
-}, { signUp })(SignUpForm);
+})(SignUpForm);

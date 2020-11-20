@@ -19,3 +19,7 @@ export function renderWithMockStore(ui: any, testStoreState: any = {}) {
   const store = mockStore(testStoreState);
   return render(<Provider store={store}>{ui}</Provider>);
 }
+
+export function renderWithNewProps(ui: any, container: any) {
+  return render(ui, container);
+}

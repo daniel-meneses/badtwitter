@@ -40,7 +40,12 @@ const Button: React.FC<props> = (props: props) => {
   }
 
   return (
-      <button onClick={handleOnClick} className={btnStyle} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <button 
+        data-testid={'button'}
+        onClick={handleOnClick} 
+        className={btnStyle} 
+        onMouseEnter={onMouseEnter} 
+        onMouseLeave={onMouseLeave}>
         {children}
       </button>
     );

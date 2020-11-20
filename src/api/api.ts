@@ -31,7 +31,7 @@ function parseResponse(response: any) {
       if (error) {
         return Promise.reject({error, status})
       } else {
-        return Promise.reject({error: setErrorByCode(status)})
+        return Promise.reject({error: setErrorByCode(status), status})
       }
     })
 

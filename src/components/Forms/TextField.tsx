@@ -11,22 +11,31 @@ type Props ={
   type?: string
 }
 
+/*
+  Textfield with error message.
+  Manages setting, displaying, and removing error message.
+*/
+
 const TextField: React.FC<Props> = (props) => {
 
-  const [error, setError] = useState<string>('')
+  const [error, setError] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const [shouldDisplayError, setShouldDisplayError] = useState(false)
   const { value, label, className, validateAndReturnError, setValue, type } = props;
 
+  // Text new value for validation errors
   useEffect(()=> {
-    setError(validateAndReturnError(value))
+    let validateError = validateAndReturnError(value);
+    (validateError !== error) && setError(validateError)
   }, [value])
 
+  // Show error message on blur
   const handleOnBlur = () => {
     setShouldDisplayError(error ? true : false)
     setIsFocused(false)
   }
 
+  // Remove error message if input is changing
   const handleOnChange = (e: ChangeEvent) => {
     setShouldDisplayError(false)
     const inputEl = e.target as HTMLInputElement
@@ -51,15 +60,18 @@ const TextField: React.FC<Props> = (props) => {
           </span>
       }
         <input
+          data-testid={'textfield'}
           value={value}
-          type={type ? type : "text"}
+          type={type || "text"}
           className={cssStyle}
           onChange={handleOnChange}
           onFocus={() => setIsFocused(true)}
           onBlur={handleOnBlur}
           />
         { shouldDisplayError &&
-          <div className={styles.errorText}>
+          <div 
+            data-testid={'textfield-error'}
+            className={styles.errorText}>
             {error}
             </div>
         }

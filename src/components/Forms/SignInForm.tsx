@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { connect } from 'react-redux';
 import TextField from './TextField'
 import * as validate from './FormValidations'
@@ -7,22 +7,29 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { login } from '../../actions/session'
 import styles from './TextField.mod.scss'
 import { parseQuery } from "../../common/helpers";
+import * as sessionAction from '../../actions/session'
 
 type Props = {
-  login: (e: any, h: any) => void;
-  loginError: any;
+//  login: (payload: LoginPayload, redirectOnSuccess: () => void) => void;
+  loginError?: any;
   className?: string;
+  dispatch: any;
 }
 
-export const SignInForm = (props: Props) => {
+type LoginPayload = {
+  email: string;
+  password: string;
+}
 
-  const { login, loginError, className } = props;
+export const SignInForm: React.FC<Props> = (props) => {
+
+  const { loginError } = props;
   const history = useHistory();
   const { search } = useLocation();
 
-  const redirectUrl = parseQuery(search, 'redirect')
+  const redirectUrl = search && parseQuery(search, 'redirect')
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginPayload>({
     email: '',
     password: '',
   })
@@ -39,7 +46,7 @@ export const SignInForm = (props: Props) => {
     setEnableSubmit(!isInvalid)
   }, [isValid])
 
-  const validateEmail = (text: string) => {
+  const validateEmail = (text: string):string => {
     let label = 'Email'
     let error = validate.cannotStartWithSpace(label, text)
             || validate.cannotBeBlank(label, text)
@@ -48,7 +55,7 @@ export const SignInForm = (props: Props) => {
     return error
   }
 
-  const validatePassword = (text: string) => {
+  const validatePassword = (text: string):string => {
     let label = 'Password'
     let error = validate.cannotBeBlank(label, text)
       || validate.min6Characters(label, text)
@@ -57,11 +64,11 @@ export const SignInForm = (props: Props) => {
     return error
   }
 
-  const redirectOnSuccess = () => history.push(redirectUrl || '/home')
+  const redirectOnSuccess = ():void => history.push(redirectUrl || '/home')
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    enableSubmit && login(formData, redirectOnSuccess) 
+  const handleSubmit = (e: FormEvent | MouseEvent | undefined):void => {
+    e && e.preventDefault()
+    enableSubmit && props.dispatch(sessionAction.login(formData, redirectOnSuccess))
   }
   
   return (
@@ -72,7 +79,7 @@ export const SignInForm = (props: Props) => {
           className={styles.signUpFieldColumns}
           label={'Email'}
           value={formData.email}
-          setValue={(val: any) => setFormData({...formData, email: val})}
+          setValue={(val: string) => setFormData({...formData, email: val})}
           validateAndReturnError={validateEmail}
           />
         <TextField
@@ -80,7 +87,7 @@ export const SignInForm = (props: Props) => {
           label={'Password'}
           type={'password'}
           value={formData.password}
-          setValue={(val: any) => setFormData({...formData, password: val})}
+          setValue={(val: string) => setFormData({...formData, password: val})}
           validateAndReturnError={validatePassword}
           />
           </div>
@@ -95,13 +102,17 @@ export const SignInForm = (props: Props) => {
         </form>
         <div className={styles.error}>
         {loginError &&
-          <span className={styles.authError}>{loginError.status === 422 ? 'Invalid username or password' : loginError.error}</span>
+          <span 
+            data-testid={'error'}
+            className={styles.authError}>
+                {loginError.status === 422 ? 'Invalid username or password' : loginError.error}
+                </span>
         }
         </div>
     </div>
   )
 }
 
-export default connect((state: any) => {
-  return {loginError: state.session.postLoginReq.error}
-}, { login })(SignInForm);
+export default connect((state: any) => 
+  ({loginError: state.session.postLoginReq.error}))
+  (SignInForm);
