@@ -7,8 +7,6 @@ $outline: lighten(#c9d6cd, 6%);
   border-bottom: $outline solid 1px;
   padding: 16px 10px 20px 10px;
   min-height: 150px;
-  flex-grow: 1;
-  flex-shrink: 0;
   .postFormContent {
     display: flex;
     align-self: stretch;
