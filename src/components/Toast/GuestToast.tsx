@@ -4,6 +4,7 @@ import styles from './GuestToast.mod.scss';
 import { useHistory, useLocation } from 'react-router-dom';
 import {toastr} from 'react-redux-toastr'
 import { Link } from "react-router-dom";
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 
 
 const AuthComponent = () => {

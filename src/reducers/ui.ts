@@ -66,8 +66,6 @@ const postForm = (state: any = {}, action: any) => {
                 shouldDisplayPostForm: false,
             };
         case PostFormActionTypes.SET_POST_FORM_TEXT:
-            console.log(action);
-            
             return {
                 ...state,
                 postFormText: action.text,

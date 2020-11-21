@@ -1,5 +1,5 @@
-import React from 'react'
-import './FloatingImage.scss'
+import React from 'react';
+import styles from './FloatingImage.mod.scss';
 
 type Props = {
   image: string,
@@ -11,12 +11,12 @@ type Props = {
 const FloatingImage = ({image, isDisplayed, dismiss, onBackgroundHover} : Props) => {
 
   return (
-      <div className={isDisplayed ? 'floating-image-container' : 'isHidden' }>
-        <div className='floating-image'>
+      <div className={isDisplayed ? styles.container : styles.isHidden }>
+        <div className={styles.imageLarge}>
           <img src={image} alt={'Profile Avatar'} onClick={dismiss} />
         </div>
         <div 
-            className={isDisplayed ? 'float-bg' : 'hidden'}
+            className={isDisplayed ? styles.fullscreenBackground : styles.isHidden}
             onClick={dismiss}
             onMouseEnter={onBackgroundHover}
             />

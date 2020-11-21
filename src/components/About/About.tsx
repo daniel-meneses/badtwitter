@@ -26,25 +26,22 @@ const About = () => {
                 <h3>Frontend</h3>
                 <ul>
                     <li>
-                        Universal app built using React JS
+                        Built using React JS
                     </li>
                     <li>
-                        Redux single store data architecture
+                        Redux state management using react-redux, reselect, and redux-Thunk
                     </li>
                     <li>
-                        Express server rendering and http proxying
+                        Express http proxying
                     </li>
                     <li>
-                        Webpack build and performance improvements
+                        Webpack server and client builds
                     </li>
                     <li>
-                        CSS modules
+                        Unit tests using jest and testing library
                     </li>
                     <li>
-                        Unit tests using react testing library and jest-dom
-                    </li>
-                    <li>
-                        UI tests using Cypress
+                        UI tests using cypress
                     </li>
                 </ul>
                 <h4>Tech Stack</h4>
@@ -72,16 +69,16 @@ const About = () => {
                 <h3>Backend</h3>
                 <ul>
                     <li>
-                        Phoenix framework serving as backend API.
+                        Phoenix framework API
                     </li>
                     <li>
-                        Guardian session based authentication.
+                        Guardian session based authentication
                     </li>
                     <li>
                         PostgreSQL database
                     </li>
                     <li>
-                        Model view controller design pattern.
+                        Model view controller design pattern
                     </li>
                 </ul>
                 <div>

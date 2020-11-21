@@ -11,16 +11,12 @@ export function getUserProfile(userId: number, headers = {}): AppThunk {
         dispatch(actions.reqStart(type))
         return api.fetch('/feed/user/' + userId, {}, headers)
             .then((response) => {
-                console.log(response);
-                
                 dispatch(actions.reqSuccess(type))
                 dispatch({ type: UsersActionTypes.APPEND_USERS, response})
                 dispatch({ type: PostActionTypes.APPEND_POSTS, response})
                 dispatch({ type: UserProfileActionTypes.APPEND_USER_PROFILE, response });
             })
-            .catch((error) => {
-                console.log(error);
-                
+            .catch((error) => {                
                 dispatch(actions.reqFail(type, error))
             });
     }

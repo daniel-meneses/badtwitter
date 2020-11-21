@@ -19,6 +19,5 @@ const storeFromState = () => {
 }
 
 const store = storeFromState();
-console.log(store.getState());
 
 export default store;

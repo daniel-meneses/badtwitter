@@ -31,11 +31,7 @@ type StoreProps = {
 }
 
 function mapStateToProps(state: any) {
-
-  console.log(state)
-
   let { timeline, nextCursor } = state.feed.feed
-
   return {
     timeline,
     nextCursor,

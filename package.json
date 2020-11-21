@@ -33,12 +33,13 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "serialize-javascript": "^4.0.0",
+    "serve-favicon": "^2.5.0",
     "ts-jest": "^26.4.3",
     "wait-on": "^5.2.0"
   },
   "scripts": {
-    "dev:build:client": "webpack -wd --mode development --config ./webpack/webpack.client.config.js",
-    "dev:build:server": "webpack -wd --mode development --config ./webpack/webpack.server.config.js",
+    "dev:build:client": "NODE_ENV=development webpack -wd --env development --config ./webpack/webpack.client.config.js",
+    "dev:build:server": "NODE_ENV=development webpack -wd --env development --config ./webpack/webpack.server.config.js",
     "dev:build": "npm-run-all -p dev:build:client dev:build:server",
     "dev:run": "nodemon -d dist/app.server.js",
     "cy:build:client": "webpack --mode development --config ./webpack/webpack.client.config.js",
@@ -48,8 +49,8 @@
     "cy:test": "ENV=CY_TEST cypress run --headed --no-exit",
     "test": "npm-run-all -s cy:run cy:test",
     "dev": "nodemon dist/app.server.js",
-    "prod:build:client": "webpack --mode production --config ./webpack/webpack.client.config.js",
-    "prod:build:server": "webpack --mode production --config ./webpack/webpack.server.config.js",
+    "prod:build:client": "NODE_ENV=production webpack --env production --config ./webpack/webpack.client.config.js",
+    "prod:build:server": "NODE_ENV=production webpack --env production --config ./webpack/webpack.server.config.js",
     "prod:build": "npm-run-all -p prod:build:client prod:build:server",
     "start": "node --max_old_space_size=2560 dist/app.server.js & wait-on http://localhost:3000",
     "heroku-postbuild": "webpack -p --config ./webpack/webpack.client.config.js && webpack -p --config ./webpack/webpack.server.config.js"
@@ -118,6 +119,7 @@
     "typescript": "^3.8.3",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.11",
+    "webpack-merge": "^5.4.0",
     "webpack-node-externals": "^1.7.2"
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoadingCircle.scss'
+import styles from './LoadingCircle.mod.scss';
 import ReactLoading from 'react-loading';
 
 function setSize(size) {
@@ -24,7 +24,7 @@ const LoadingCirc = ({size}) => {
   var loadingSize = setSize(size)
 
   return (
-  <div className='loading_container'>
+  <div className={styles.container}>
     <ReactLoading type={'spin'}
                   color={'green'}
                   height={loadingSize} width={loadingSize}

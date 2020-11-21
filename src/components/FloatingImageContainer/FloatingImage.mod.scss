@@ -1,9 +1,9 @@
 @import '../../common//theme/mixins.scss';
 
 
-.floating-image-container{
+.container{
   overflow: hidden;
-  .floating-image{
+  .imageLarge{
     position: absolute;
     top: -100px;
     left: 4px;
@@ -23,7 +23,7 @@
   }
 }
 
-.float-bg {
+.fullscreenBackground {
   position: fixed;
   width: 100vw;
   height: 100vh;

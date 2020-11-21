@@ -13,7 +13,8 @@ import {createProxyMiddleware} from 'http-proxy-middleware'
 import serialize from 'serialize-javascript'
 import * as env from '../constants/environment'
 import sessionStub from '../../cypress/fixtures/login_success.json'
-
+import favicon from 'serve-favicon';
+import path from 'path'
 
 const getAppCookies = (req) => {
    if (req.headers.cookie) {
@@ -39,10 +40,11 @@ app.use('/static', express.static('dist', {
     if (!req.includes("main.css")) {
       res.set("Content-Encoding", "gzip")
     }
+    if (req.includes("main.css")) {
+      res.set("Content-Type", "text/css")
+    }
   }}
 ))
-
-app.get('/favicon.ico', (req, res) => res.sendStatus(204))
 
 app.use('/user/:id', (req, res, next) => {
   req.user_id_param = req.params.id
@@ -54,6 +56,8 @@ app.use('/api/v1', createProxyMiddleware({
   changeOrigin: true,
   cookieDomainRewrite: env.PROXY_DOMAIN
 }));
+
+app.use(favicon(path.join('./src/static/favicon.ico')));
 
 let values = ["/", "/home", "/test", "/user/:id", "/signup", "/login", "/account", "/inbox", "/inbox/:tab", "/explore"]
 app.get(["*"], (req, res, next) => {

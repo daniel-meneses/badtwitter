@@ -59,7 +59,9 @@
     stroke-width: 0.8px;
     fill: $primary;
   }
-  color: $primary;
+  div {
+    color: $primary;
+  }
 }
 
 .navPostContainer {

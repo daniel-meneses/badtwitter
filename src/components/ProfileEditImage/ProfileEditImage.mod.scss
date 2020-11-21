@@ -1,34 +1,34 @@
 @import '../../common/theme/mixins.scss';
 
-.profile_edit_image_container {
+.editContainer {
   position: relative;
   background-color: white;
   border-radius: 10px;
   margin-top: 20px;
-  @include respond-to('small') {
-    width: 100%;
-  }
-  @include respond-to('medium') {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 #uploaded_image {
   z-index: 1000;
 }
 
-.float_bg {
+.editImageContainer {
+  max-width: inherit;
+  z-index: 20;
+}
+
+.editInProgressBackground {
   position: fixed;
   width: 100vw;
   height: 100vh;
   background: black;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 12;
   opacity: 0.5;
 }
 
-.uploader {
+.editUploader {
   position: relative;
   width: 240px;
   height: 240px;
@@ -54,14 +54,15 @@
   justify-content: space-around;
 }
 
-.plus_svg{
+.plusIcon{
   flex: 1;
   position: absolute;
-  max-width: 140px;
-  max-height: 140px;
+  max-width: 80%;
+  max-height: 80%;
+  fill: white;
 }
 
-.upload_placeholder{
+.uploadPlaceholder{
   flex: 0;
   position: relative;
   min-width: 240px;
@@ -74,3 +75,4 @@
     background: #e1ede8;
   }
 }
+

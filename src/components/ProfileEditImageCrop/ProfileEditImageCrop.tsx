@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import ReactCrop from 'react-image-crop'
-import './ProfileEditImageCrop.scss'
+import './ProfileEditImageCrop.mod.scss'
 import { connect } from 'react-redux'
 import 'react-image-crop/lib/ReactCrop.scss'
+import styles from './ProfileEditImageCrop.mod.scss';
+import Button, { BtnThemes} from '../../common/components/Button/Button'
 
 type Props = {
   src: string,
@@ -63,17 +65,22 @@ const ProfileEditImageCrop = ({ src, preSignedURL, handleSubmit} : Props) => {
     handleSubmit(preSignedURL, croppedImage)
   }
 
-  return <div id='uploaded_image'>
-            <div>
+  return <div className={styles.editImageContainer}>
                 <ReactCrop src={src}
-                            style={style}
+                            style={{maxWidth: 'inherit', maxHeight: 'inherit', display: 'flex', justifyContent: 'center'}}
                             crop={crop}
                             keepSelection={true}
                             onChange={(newCrop: any) => setCrop(newCrop)}
                             onImageLoaded={(image: any) => setImage(image)}
                             onComplete={onCropComplete} />
-            </div>
-            <button className='edit_pic_save' disabled={croppedImage ? false : true} onClick={submitNewProfileImage}> Save </button>
+            <Button
+                className={styles.saveButton}
+                theme={BtnThemes.PrimaryFill}
+                onClick={submitNewProfileImage}
+                isDisabled={croppedImage ? false : true}
+              >
+                {'Save'}
+              </Button>
          </div>
 }
 

@@ -59,7 +59,7 @@ const NavContainer: React.FC<Props> = (props) => {
     className={classNames(styles.navItem, styles.logo)}
     onClick={() => handleNavOnclick('/home')}
     >
-    <AppLogo className={classNames(styles.navItemIcon, styles.logo)} styles={{ fill: 'green' }} />,
+    <AppLogo className={classNames(styles.navItemIcon, styles.logo)} styles={{ fill: 'green' }} />
   </Selectable>
 
   const navList: NavItem[] = [

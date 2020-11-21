@@ -18,14 +18,14 @@ const Selectable: React.FC<props> = (props: props) => {
   const { colorStyle, className, onClick, borderStyle, children, testid } = props
 
   const cssStyles = classNames(
-    className,
     styles.borderRound,
     {
       [styles.colorPrimary]: colorStyle==='primary',
       [styles.colorSecondary]: colorStyle==='secondary',
       [styles.colorUnavailable]: colorStyle==='unavailable',
       [styles.borderNone]: !borderStyle,
-    }
+    },
+    className
   )
 
   return (

@@ -93,7 +93,6 @@ const subscriptions = (state = initialState, action: any) => {
         byId: Object.assign({}, state.byId, formattedSubscriptions),
       };
     case SubscriptionActionTypes.APPEND_PENDING_REQUEST_IDS:
-      console.log(action);
       var { subscriptions } = action.response
       var subs: any = Object.values(subscriptions || {})
       var userIds = subs.map((sub: any) => sub.subject_id);
