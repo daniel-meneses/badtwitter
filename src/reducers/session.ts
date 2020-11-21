@@ -25,8 +25,6 @@ export const selectCurrenUserId = (state: RootState): number | null => state.ses
 const session = (state: any = initialState, action: any): any => {
     switch (action.type) {
         case SessionActionTypes.SET_CURRENT_USER:
-            console.log(action.response);
-            
             return {
                 ...state,
                 isAuthenticated: true,
@@ -40,8 +38,6 @@ const session = (state: any = initialState, action: any): any => {
             }
         case SessionActionTypes.SET_CURRENT_USER_NEW_INFO:
             let user: any = Object.values(action.response)[0]
-            let { first_name: firstName, last_name: lastName, bio } = user
-            console.log(user);
             return {
                 ...state
             }
