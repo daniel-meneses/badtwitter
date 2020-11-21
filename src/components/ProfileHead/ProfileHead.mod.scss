@@ -1,0 +1,67 @@
+$outline: lighten(#c9d6cd, 6%);
+
+.editProfile {
+  flex: 1;
+  min-width: 100px;
+  max-width: 120px;
+  min-height: 30px;
+  max-height: 26px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 4px;
+  align-self: flex-end;
+}
+
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-bottom: $outline solid 1px;
+  .topLine {
+    position: relative;
+    background: #f2f5f3;
+    top: 62px;
+    margin-top: -77px;
+    margin-left: -15px;
+    margin-right: -15px;
+    height: 92px;
+    z-index: -1;
+    border-bottom: $outline solid 1px;
+  }
+  .topRow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 100px;
+      &:hover {
+        cursor: default;
+      }
+    }
+    .topButton {
+      align-self: flex-end;
+    }
+  }
+  .middleRow {
+    display: flex;
+    flex-direction: column;
+    margin-top: 4px;
+    .fullName {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .alias {
+      font-weight: 300;
+      font-size: 14px;
+    }
+  }
+  .bottomRow {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+}

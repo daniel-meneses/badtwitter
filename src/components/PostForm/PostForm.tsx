@@ -1,73 +1,95 @@
-import React, {useState, useRef} from "react"
-import "./PostForm.scss"
+import React, {useState, useRef, useEffect} from "react"
 import { connect } from 'react-redux'
-import { postMessage } from '../../actions/post.js'
+import { postMessage } from '../../actions/post'
+import styles from './PostForm.mod.scss'
+import Avatar from '../Avatar/Avatar'
+import Button, { BtnThemes } from '../../common/components/Button/Button'
+import showGuestToast from "../Toast/GuestToast"
+import { PostFormActionTypes } from '../../reducers/ui';
+import { selectIsAuthenticated } from "../../reducers/session"
+import { selectCurrentUser } from "../../reducers/users"
 
 type Props = {
-  user: { avatar: string},
-  postMessage: (message: string) => void,
-  didUpdate: any,
-  shouldClearForm: boolean,
-  resetClearForm: () => void
+  avatar: string,
+  createPostStatus: boolean,
+  postMessage: (e: any) => void,
+  isAuthenticated: boolean,
+  postFormText: string,
+  persistPostForm: (text: string) => void;
 }
 
-function mapStateToProps(state :any) {
+function mapStateToProps(state :RootState) {
+  let { post } = state;
   return {
-    user: state.session.currentUser,
-    didUpdate: state.post.floatingPostFormIsHidden,
-    shouldClearForm: state.post.shouldClearForm
+    avatar: (selectCurrentUser(state) || {} ).avatar,
+    createPostStatus: post.newPostSuccess,
+    isAuthenticated: selectIsAuthenticated(state),
+    postFormText: state.ui.postForm.postFormText
   }
 }
 
-function resetClearForm() {
-  return (dispatch: any) => dispatch({ type: "RESET_CLEAR_FORM"})
-}
+const persistPostForm = (text: string) => 
+    (dispatch: any) => dispatch({ type: PostFormActionTypes.SET_POST_FORM_TEXT, text: text })
 
-const PostForm = ({user = {avatar: ""}, postMessage, didUpdate, shouldClearForm, resetClearForm}: Props) => {
+const PostForm: React.FC<Props> = (props) => {
 
-  const [postText, setPostText] = useState("");
+  const { avatar, postMessage, isAuthenticated, postFormText, persistPostForm } = props
+
+  const persistedText = postFormText || ''
+  const [postText, setPostText] = useState(persistedText);
   const inputEl = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = (e: any) => {
+  useEffect(() => {
+    // @ts-ignore
+    inputEl.current?.innerText = persistedText
+  }, [])
+  
+  useEffect(() => {
+    persistPostForm(postText)
+  }, [postText])
+
+  const handleSubmit = () => {
+    if (!isAuthenticated) { return showGuestToast('Log in or sign up to post your message') }
     postMessage(postText)
     setPostText("")
+    // @ts-ignore
+    inputEl.current?.innerText = ""
   }
 
-  if (shouldClearForm === true) {
-    if (inputEl.current !== null) {
-      inputEl.current.innerText = ""
-      setInterval(resetClearForm, 300);
-    }
-  }
-
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target as HTMLElement;
     const inputText = input.textContent as string;
     setPostText(inputText)
   }
 
   return (
-    <div className="p-form">
-      <div className="post_form_main">
-        <img src={user.avatar}
-             alt={'Profile avatar'}/>
-        <div id="input" onInput={handleInputChange}
-                        data-text={"What's happenning?"}
-                        data-value=""
-                        contentEditable
-                        ref={inputEl}
-                        >
-                        </div>
-                      </div>
-        <div className="post_form_footer">
-          <button className={postText.length > 0 ? 'submit_post highlighted' : 'submit_post'}
-                  onClick={handleSubmit}
-                  >
-                  Submit
-                  </button>
-                  </div>
+    <div className={styles.postForm}>
+      <div className={styles.postFormContent}>
+        <Avatar
+          image={avatar}
+          className={styles.postFormAvatar}
+          />
+        <div className={styles.postFormInput}
+              onInput={handleInputChange}
+              data-text={"What's happenning?"}
+              data-value=""
+              contentEditable
+              ref={inputEl}
+              >
+        </div>
+      </div>
+      <div className={styles.postFormFooter}>
+        <Button
+          onClick={handleSubmit}
+          isDisabled={postText.length === 0}
+          className={styles.postFormSubmit}
+          theme={BtnThemes.PrimaryFill}
+          >
+          Submit
+        </Button>
+      </div>
     </div>
   );
 }
 
-export default connect(mapStateToProps, {postMessage, resetClearForm})(PostForm);
+export default connect(mapStateToProps, {postMessage, persistPostForm})(PostForm);

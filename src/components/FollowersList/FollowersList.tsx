@@ -1,24 +1,33 @@
 import React from 'react';
-import InboxListItem from '../../components/InboxListItem/InboxListItem'
+import { connect } from 'react-redux';
+import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
+import { selectAcceptedFollowRequests } from '../../reducers/followers';
+import { Follower } from '../../types/common';
+import UserPreview from '../UserPreview/UserPreview';
 
-type Props = {
-  followers : {
-      followRequests: {}
-    }
+type StoreProps = {
+    acceptedFollowers: Follower[];
 }
 
-const FollowersList = ({followers} : Props) => {
-  return (
-    <div>
-      {
-       Object.values(followers.followRequests).map( (follower: any) =>
-       <InboxListItem key={follower.id}
-                      user_id={follower.user_id}
-                      isFollowRequest={false}
-                      />
-     )}
-    </div>
-  )
+const FollowersList: React.FC<StoreProps> = ({ acceptedFollowers }) => {
+
+    return (
+        <div>
+        {
+            acceptedFollowers.length ? 
+            acceptedFollowers.map( (req: Follower, i: number) =>
+            <UserPreview
+                key={req.id}
+                userId={req.userId}
+            />
+             )
+            :
+            <ErrorMessage text={'No followers to display'} />
+        }
+        </div>
+    )
 }
 
-export default FollowersList;
+export default connect((state: RootState): StoreProps => ({ 
+    acceptedFollowers: Object.values(selectAcceptedFollowRequests(state)) 
+}))(FollowersList);

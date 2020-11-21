@@ -1,0 +1,16 @@
+
+
+
+.avatar {
+  display: flex;
+  border-radius: 50px;
+  max-width: 100%;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+}
+
+.flex {
+  flex: 1;
+}

@@ -1,8 +1,6 @@
 import React from 'react';
-import './App.scss';
 import { Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
-import NavBar from '../../components/NavBar/NavBar';
 import FloatingPostContainer from '../../components/FloatingPostContainer/FloatingPostContainer';
 import SignUp from '../SignUp/SignUp';
 import UserProfile from '../UserProfile/UserProfile';
@@ -11,63 +9,70 @@ import Account from '../Account/Account';
 import Explore from '../Explore/Explore';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
+import Nav from '../../components/Nav/NavContainer';
 import { connect } from 'react-redux';
+import styles from './App.mod.scss'
+import ReduxToastr from 'react-redux-toastr'
+import { useLocation } from 'react-router-dom';
+import { selectIsAuthenticated } from '../../reducers/session';
 
-type Props = {
-  authenticate: () => void,
-  unauthenticate: () => void,
+type StoreProps = {
   isAuthenticated: boolean
 }
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: RootState): StoreProps {
   return {
-    isAuthenticated: state.session.isAuthenticated
+    isAuthenticated: selectIsAuthenticated(state),
   }
 }
 
-const App = ({authenticate, unauthenticate, isAuthenticated} : Props) => {
+const App = ({ isAuthenticated }: StoreProps) => {
+
+  const loc = useLocation();
+
+  const noNav = ['/login', '/signup']
+  const shouldShowNav = !noNav.includes(loc.pathname)
 
   return (
-        <div className="App">
-          {
-            isAuthenticated ?
-            <>
-            <FloatingPostContainer />
-              <header>
-                <div className='nav_container'>
-                  <NavBar/>
-                </div>
-              </header>
-              <main>
-              <Switch>
-                <Route path='/' exact component={Home}/>
-                <Route path='/home' exact component={Home}/>
-                <Route path='/user/:id' exact component={UserProfile}/>
-                <Route path='/inbox' exact component={Inbox}/>
-                <Route path='/explore' exact component={Explore}/>
-                <Route path='/account' exact component={Account}/>
-                <Route path="/signup" render={() => (
-                  isAuthenticated ? ( <Redirect to="/home"/> ) : ( <SignUp/> )
-                )}/>
-                <Route path="/login" render={() => (
-                  isAuthenticated ? ( <Redirect to="/home"/> ) : ( <Login/> )
-                )}/>
-                <Route component={NotFound}/>
-              </Switch>
-              </main>
-              </>
-              :
+    <div className={styles.app} id='scrollable'>
+      {
+        shouldShowNav ?
           <>
-          <Switch>
-            <Route path='/signup' exact component={SignUp}/>
-            <Route path='/login' exact component={Login}/>
-            <Route path="*" render={() => <Redirect to="/signup"/>}/>
-          </Switch>
-          </>
-        }
-
-        </div>
+            <FloatingPostContainer />
+            <header>
+              <div className={styles.navLayout}>
+                <Nav />
+              </div>
+            </header>
+          </> : <></>
+      }
+      <main>
+        <Switch>
+          <Route path='/' exact render={() => <Redirect to="/home" />} />
+          <Route path='/home' exact component={Home} />
+          <Route path='/user/:id' exact component={UserProfile} />
+          <Route path='/inbox/:tab' exact component={Inbox} />
+          <Route path="/inbox" render={() => <Redirect to="/inbox/messages" />} />
+          <Route path='/explore' exact component={Explore} />
+          <Route path='/account' exact component={Account} />
+          <Route path="/signup" render={
+            () => isAuthenticated ? <Redirect to="/home" /> : <SignUp />
+          } />
+          <Route path="/login" render={
+            () => isAuthenticated ? <Redirect to="/home" /> : <Login />
+          } />
+          <Route component={NotFound} />
+        </Switch>
+        <ReduxToastr
+          position="top-right"
+          preventDuplicates
+          closeOnToastrClick
+          // @ts-ignore
+          getState={(state: RootState) => state.toastrReducer}
+        />
+      </main>
+    </div>
   );
 }
 
-export default connect(mapStateToProps, {} )(App);
+export default connect(mapStateToProps, {})(App);

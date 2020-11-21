@@ -1,0 +1,47 @@
+@import "../../common/styles/colors";
+@import '../../common/theme/mixins.scss';
+
+$outline: lighten(#c9d6cd, 6%);
+
+.tabContainer {
+  display: flex;
+  position: fixed;
+  z-index: 50;
+  margin-top: 53px;
+  width: inherit;
+  max-width: inherit;
+  border-bottom: solid 1px $outline;
+  @include respond-to('mobile') {
+    
+  }
+  @include respond-to('small') {
+    max-width: inherit;
+  }
+  @include respond-to('medium') {
+    max-width: 598px;
+  }
+}
+
+.tabHeader {
+  display: flex;
+  flex: 1;
+  background: white;
+  border: solid $outline 1px;
+}
+
+.tabHeaderItem {
+  flex: 1;
+  padding: 13px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover{
+    background: #f0f5f5;
+  }
+}
+
+.tabHeaderItemFocused {
+  color: darken(green, 10%);
+  background: #f0f5f5;
+}

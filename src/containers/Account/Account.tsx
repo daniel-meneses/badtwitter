@@ -1,47 +1,43 @@
 import React from 'react'
-import './Account.scss'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/session'
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
 import ProfileEditImage from '../../components/ProfileEditImage/ProfileEditImage'
 import { useHistory } from 'react-router-dom'
+import MainContainer from '../MainContainer/MainContainer'
+import Header from '../../components/Header/Header';
+import styles from './Account.mod.scss'
+import Button, {BtnThemes} from '../../common/components/Button/Button'
 
 type Props = {
-  logout: (history: any) => void,
-  currentUser: any
+  logout: (history: any) => void
 }
 
-function mapStateToProps(state: any) {
-  return {
-    currentUser: state.session.currentUser
-  }
-}
-
-const Account = ({logout, currentUser} : Props) => {
+const Account = ({logout} : Props) => {
+  
   const history = useHistory();
 
   return (
-    <div className={'main_container'}>
-      <div className={'center_container'}>
-        <h2 className={'center_container_header'}>
-          Account
-          </h2>
-      <div className={'center_container_body'}>
-        <div className='edit_container'>
-          <div className='edit_item'>
-            <ProfileEditImage userAvatar={currentUser.avatar}/>
+    <MainContainer
+      mainCenter={
+        <>
+          <Header title={'Account'} />
+          <div className={styles.accountInfo}>
+            <ProfileEditImage />
+            <ProfileEditForm className={styles.accountName} />
+            <Button
+              className={styles.logoutButton}
+              theme={BtnThemes.PrimaryFill}
+              onClick={() => logout(history)}
+              >
+              {'Logout'}
+              </Button>
           </div>
-          <div className='edit_item'>
-            <ProfileEditForm />
-          </div>
-          <button className={'logout_button'}onClick={() => logout(history)}>
-            Log out
-          </button>
-        </div>
-        </div>
-      </div>
-    </div>
+        </>
+      }
+
+    />
   )
 }
 
-export default connect(mapStateToProps, {logout})(Account);
+export default connect(null, {logout})(Account);

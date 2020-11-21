@@ -1,66 +1,121 @@
 import React, { useEffect } from 'react'
-import './Inbox.scss'
+import { useParams, useHistory } from "react-router-dom";
 import { connect } from 'react-redux'
-import InboxNav from '../../components/InboxNav/InboxNav'
-import InboxMessages from '../../components/InboxMessages/InboxMessages'
-import InboxFollowers from '../../components/InboxFollowers/InboxFollowers'
-import InboxSubscriptions from '../../components/InboxSubscriptions/InboxSubscriptions'
-import { getFollowers, getPendingFollowRequests } from '../../actions/followers.js'
-import { getAcceptedSubscriptionRequests } from '../../actions/subscription.js'
-import * as nav from '../../constants/inboxNav'
+import { getFollowers, getPendingFollowRequests } from '../../actions/followers'
+import { getPendingSubscriptionRequests, getAcceptedSubscriptionRequests } from '../../actions/subscriptions'
+import MainContainer from '../MainContainer/MainContainer'
+import TabNavigation from '../../components/TabNavigation/TabNavigation'
+import Header from '../../components/Header/Header';
+import styles from './Inbox.mod.scss'
+import MessageList from '../../components/MessagesList/MessagesList';
+import FollowersList from '../../components/FollowersList/FollowersList';
+import Trending from '../../components/Trending/Trending';
+import { InboxActionTypes } from '../../reducers/ui';
+import SubscriptionsList from '../../components/SubscriptionsList/SubscriptionsList';
 
 type Props = {
-  getFollowers: () => void,
-  getPendingFollowRequests: () => void,
-  getAcceptedSubscriptionRequests: () => void,
-  focusedTab: string
+  getFollowers: () => void;
+  getPendingFollowRequests: () => void;
+  getAcceptedSubscriptionRequests: () => void;
+  getPendingSubscriptionRequests: () => void;
+  setFocusedTab: (tab: string) => void;
 }
 
-function mapStateToProps(state: any) {
-  return {
-    focusedTab: state.inbox.focusedTab
-  }
-}
+const setFocusedTab = (tab: string) => 
+    (dispatch: any) => dispatch({ type: InboxActionTypes.SET_INBOX_TAB_FOCUS, tab: tab })
 
-const Inbox = ({getFollowers,
-                getPendingFollowRequests,
-                getAcceptedSubscriptionRequests,
-                focusedTab} : Props) => {
+const Inbox: React.FC<Props> = (props) => {
+
+  const {
+    setFocusedTab,
+    getFollowers,
+    getPendingFollowRequests,
+    getPendingSubscriptionRequests,
+    getAcceptedSubscriptionRequests
+  } = props;
+
+  const history = useHistory()
+  const { tab } = useParams()
+  const isMessages = tab === 'messages'
+  const isFollowers = tab === 'followers'
+  const isSubscriptions = tab === 'subscriptions'
 
   useEffect(() => {
     getFollowers()
     getPendingFollowRequests()
+    getPendingSubscriptionRequests()
     getAcceptedSubscriptionRequests()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
+  }, [])
 
-   var view = null;
-   if (focusedTab===nav.INBOX_MESSAGES) {
-     view = <InboxMessages />
-   } else if (focusedTab===nav.INBOX_FOLLOWERS) {
-     view = <InboxFollowers />
-   } else if (focusedTab===nav.INBOX_SUBSCRIPTIONS) {
-     view = <InboxSubscriptions/ >
-   }
+  const inboxTabs = [
+    {
+      title: 'Messages',
+      onClick: () => {
+        setFocusedTab('messages')
+        history.push('/inbox/messages')
+      },
+      isFocused: isMessages,
+    },
+    {
+      title: 'Followers',
+      onClick: () => {
+        setFocusedTab('followers')
+        history.push('/inbox/followers')
+      },
+      isFocused: isFollowers,
+    },
+    {
+      title: 'Subscriptions',
+      onClick: () => {
+        setFocusedTab('subscriptions')
+        history.push('/inbox/subscriptions')
+      },
+      isFocused: isSubscriptions,
+    }
+  ]
 
-   return(
-     <div className={'main_container'}>
-       <div className={'center_container'}>
-       <h2 className={'center_container_header'}>
-        Inbox
-        </h2>
-       <div className={'center_container_body'}>
-         <InboxNav focusedTab={focusedTab}/>
-         {view}
-         </div>
-       </div>
-       <div className={'right_container'}>
-       </div>
-     </div>
-   )
+  return (
+    <MainContainer
+      mainCenter={
+        <>
+          <Header
+            title={'Inbox'}
+            onTitleClick={() => history.push('/inbox/messages')}
+          />
+          <TabNavigation tabs={inboxTabs} />
+          <div className={styles.inboxList}>
+            {
+              isMessages && <MessageList />
+            }
+            {
+              isFollowers && <FollowersList />
+            }
+            {
+              isSubscriptions && <SubscriptionsList />
+            }
+          </div>
+        </>
+      }
+      mainRight=
+      {
+        <div>
+          <Trending postId={1} />
+        </div>
+      }
+    />
+
+  )
+
 }
 
-export default connect(mapStateToProps,
-                        {getFollowers,
-                         getPendingFollowRequests,
-                         getAcceptedSubscriptionRequests})(Inbox)
+export default connect((state: any) => {
+  return { focusedTab: state.ui.inbox }
+},
+  {
+    getFollowers,
+    getPendingFollowRequests,
+    getAcceptedSubscriptionRequests,
+    getPendingSubscriptionRequests,
+    setFocusedTab,
+  })(Inbox)

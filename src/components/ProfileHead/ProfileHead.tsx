@@ -1,54 +1,64 @@
-import React, {useState} from "react"
-import './ProfileHead.scss'
+import React from "react"
 import { connect } from 'react-redux'
 import SubscribeButton from '../SubscribeButton/SubscribeButton'
-import FloatingImage from '../FloatingImageContainer/FloatingImage';
 import { useHistory } from 'react-router-dom'
+import Button, { BtnThemes } from '../../common/components/Button/Button'
+import styles from './ProfileHead.mod.scss'
+import { User } from '../../types/common'
+import Avatar from "../Avatar/Avatar";
+import { selectUserById } from "../../reducers/users";
+import { selectCurrenUserId } from "../../reducers/session";
 
 
-type Props = {
-  user: { user_id: number,
-          alias: string,
-          avatar: string,
-          first_name: string,
-          last_name: string,
-          bio: string
-    },
-  currentUserId: number
+type OwnProps = {
+  userId: number;
 }
 
-function mapStateToProps(state: any) {
-  let currentUser = state.session.currentUser
+type ConnectProps = {
+  user: User;
+  isCurrentUser: boolean;
+}
+
+function mapStateToProps(state: any, { userId }: OwnProps) {
   return {
-    currentUserId: currentUser.user_id
+    user: selectUserById(state, userId) || {},
+    isCurrentUser: selectCurrenUserId(state) === userId,
   }
 }
 
-const ProfileHead = ({user, currentUserId} : Props) => {
-  const [displayFloatingImage, setDisplayFloatingImage] = useState(false)
+const ProfileHead: React.FC<ConnectProps> = (props) => {
+
+  const { user, isCurrentUser } = props
   const history = useHistory()
 
-  return (
-    <div className={'profile'}>
-    <FloatingImage isDisplayed={displayFloatingImage}
-                   image={user.avatar}
-                   dismiss={() => setDisplayFloatingImage(false)}/>
-      <img className='profile_avatar'
-            src={user.avatar}
-            onClick={() => setDisplayFloatingImage(true)}
-            alt={'Profile Avatar'}/>
-      <span className='profile_alias'> {user.alias} </span>
-      <div className='profile_head_button'>
-        { currentUserId == user.user_id ?
-          <button className='subscribe_request_button' onClick={() => history.push('/account')}> Edit Profile </button>
-            :
-        <SubscribeButton userId={user.user_id} />
-        }
-      </div>
+  const { userId, avatar, alias='', firstName='', lastName='', bio='' } = user
+  const isValidUser = !!userId
 
-      <div className='profile_bio_container'>
-        <div className='profile_full_name'> {user.first_name + " " + user.last_name} </div>
-        <div className='profile_bio'>{user.bio}</div>
+  return (
+    <div className={styles.container}>
+    <div className={styles.topLine}></div>
+      <div className={styles.topRow}>
+        <Avatar image={avatar} className={styles.avatar} />
+        <div className={styles.topButton}>
+          {isCurrentUser ?
+            <Button
+              className={styles.editProfile}
+              theme={BtnThemes.PrimaryOutline}
+              onClick={() => history.push('/account')}
+            >
+              Edit Profile
+          </Button>
+            :
+            isValidUser && <SubscribeButton userId={userId} />
+          }
+        </div>
+      </div>
+      <div className={styles.middleRow}>
+        <h3 className={styles.fullName}> {firstName + " " + lastName} </h3>
+        <h4 className={styles.alias}> {alias && `@${alias}` } </h4>
+      </div>
+      <div className={styles.bottomRow}>
+        <div>{bio}</div>
       </div>
     </div>
   );

@@ -1,23 +1,27 @@
-import React from 'react'
-import './FloatingImage.scss'
-import {connect} from 'react-redux'
+import React from 'react';
+import styles from './FloatingImage.mod.scss';
 
 type Props = {
-  image: string
+  image: string,
   isDisplayed: boolean,
-  dismiss: any
+  dismiss: any,
+  onBackgroundHover: any,
 }
 
-const FloatingImage = ({image, isDisplayed, dismiss} : Props) => {
+const FloatingImage = ({image, isDisplayed, dismiss, onBackgroundHover} : Props) => {
+
   return (
-      <div className={isDisplayed ? 'floating-image-container' : 'isHidden' }>
-        <div className='floating-image'>
-          <img src={image} alt={'Profile Avatar'} />
+      <div className={isDisplayed ? styles.container : styles.isHidden }>
+        <div className={styles.imageLarge}>
+          <img src={image} alt={'Profile Avatar'} onClick={dismiss} />
         </div>
-        <div className={isDisplayed ? 'float-bg' : 'hidden'}
-              onClick={dismiss}/>
+        <div 
+            className={isDisplayed ? styles.fullscreenBackground : styles.isHidden}
+            onClick={dismiss}
+            onMouseEnter={onBackgroundHover}
+            />
       </div>
   )
 }
 
-export default connect(null, {})(FloatingImage)
+export default FloatingImage;

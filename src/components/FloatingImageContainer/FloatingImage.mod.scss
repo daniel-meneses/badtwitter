@@ -1,0 +1,40 @@
+@import '../../common//theme/mixins.scss';
+
+
+.container{
+  overflow: hidden;
+  .imageLarge{
+    position: absolute;
+    top: -100px;
+    left: 4px;
+    z-index: 400;
+    img{
+      border-radius: 25px;
+      z-index: 1000;
+      @include respond-to('mobile') {
+        height: 240px;
+        width: 240px;
+      }
+      @include respond-to('small') {
+        height: 300px;
+        width: 300px;
+      }
+    }
+  }
+}
+
+.fullscreenBackground {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  &:hover{
+    cursor: default;
+  }
+}
+
+.isHidden{
+  display: none;
+}

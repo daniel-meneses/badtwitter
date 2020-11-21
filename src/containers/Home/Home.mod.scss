@@ -1,0 +1,31 @@
+@import '../../common/theme/mixins.scss';
+
+
+
+
+.new_post_form {
+  background: lighten(#c9d6cd, 10%);
+  padding-bottom: 6px;
+  @include respond-to('mobile') {
+    display: none;
+  }
+  @include respond-to('medium') {
+    display: block;
+  }
+}
+
+.trending_container {
+  position: fixed;
+  height: 100vh;
+}
+
+.divider{
+  height: 8px;
+  background-color: #e6ece8;
+  border-top: #e6ece8;
+  border-bottom: solid #c9d6cd 1px;
+}
+
+.awd {
+  width: 100%;
+}

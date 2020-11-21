@@ -1,126 +1,128 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { connect } from 'react-redux'
-import './ProfileEditForm.scss'
-import {editProfileBio} from '../../actions/account.js'
+import classNames from 'classnames'
+import { editAccountInfo, AccountInfoPayload } from '../../actions/account'
+import TextField from '../Forms/TextField'
+import * as validate from '../Forms/FormValidations'
+import Button from '../../common/components/Button/Button'
+import styles from './ProfileEditForm.mod.scss'
+import { isEqual } from 'lodash'
+import { selectCurrentUser } from "../../reducers/users"
 
-type Props = {
+type OwnProps = {
+  className?: string
+};
+
+type ConnectProps = {
   currentUser: any,
-  editProfileBio: any
-}
+  editAccountInfo: (data: AccountInfoPayload) => void,
+};
 
-function mapStateToProps(state :any) {
-  return { currentUser: state.session.currentUser }
-}
+type Props = OwnProps & ConnectProps;
 
-const ProfileEditForm = ({currentUser, editProfileBio}: Props) => {
-  const [editObject, setEditObject] = useState({"first_name": currentUser.first_name, "last_name": currentUser.last_name, "bio" : currentUser.bio});
-  const [isFocused, setIsFocused] = useState({"first_name": false, "last_name": false, "bio" : false});
+const ProfileEditForm: React.FunctionComponent<Props> = (props) => {
 
-  const handleSubmit = (e: any) => {
-      e.preventDefault();
-      editProfileBio(editObject)
+  const { currentUser, editAccountInfo, className } = props;
+
+  const initial = {
+    first_name: currentUser.firstName,
+    last_name: currentUser.lastName,
+    bio: currentUser.bio
   }
 
-  const handleInputChange = (e: any) => {
-    setEditObject({...editObject,
-                [e.target.id]: e.target.value
-                });
+  const [isValid, setIsValid] = useState({
+    first_name: true,
+    last_name: true,
+    bio: true,
+  })
+
+  const [formData, setFormData] = useState(initial)
+  const [isEditable, setIsEditable] = useState(false)
+  const [enableSubmit, setEnableSubmit] = useState(false)
+
+  useEffect(() => {
+    setEnableSubmit(isEqual(initial, formData))
+  }, [formData])
+
+  const validateName = (text: string) => {
+    let label = 'Name'
+    let error = validate.cannotStartWithSpace(label, text)
+      || validate.cannotBeBlank(label, text)
+    setIsValid({ ...isValid, first_name: error ? false : true })
+    return error
   }
 
-  const validateInputOnBlur = (e: any) => {
-    let input = e.target.id;
-    let value = e.target.value;
-    if (value==="") {
-      setFocus(input, false);
-      return
-    }
-    switch (input) {
-      case 'first_name':
-        validateName(value)
-        break;
-      case 'last_name':
-        validateName(value)
-        break;
-      case 'bio':
-        validateBio(value)
-        break;
-      default: console.log("Something happened");
-    }
+  const validateBio = (text: string) => {
+    let label = 'Bio'
+    let error = validate.max200Characters(label, text)
+    setIsValid({ ...isValid, bio: error ? false : true })
+    return error
   }
 
-  const validateName = (value: string) => {
-    if (!/^[A-Za-z ]+$/.test(value)) {
-      console.log("Last name must contain letters only")
-    } else if (value.charAt(0) === " ") {
-      console.log("Last name cannot start with space")
-    } else if (value.length > 24 ) {
-      console.log("Toooo long")
+  const cancelEdit = () => {
+    setFormData(initial)
+    setIsEditable(false)
+  }
+
+  const handleOnClick = () => {
+    let isInvalid = Object.values(isValid).includes(false)
+    if (isInvalid) {
+      console.log('Unable to save changes');
     } else {
-      console.log("")
+      editAccountInfo(formData)
+      setIsEditable(false)
     }
   }
 
-  const validateBio = (value:  string) => {
-    if (value.length > 244) {
-      console.log("Toooo long")
-    }
-  }
-
-  const setFocus = (input: any, focus: any) => {
-    setIsFocused({...isFocused,
-                  [input]: focus
-                });
-  }
-
-  const disableSubmit = (editObject.first_name === currentUser.first_name &&
-                              editObject.last_name === currentUser.last_name &&
-                              editObject.bio === currentUser.bio)
+  const formClass = classNames(
+    styles.formDefault,
+    { [styles.editFormHover]: !isEditable },
+    { [styles.isEditing]: isEditable },
+    className
+  )
 
   return (
-    <form onSubmit={handleSubmit} className='profile_edit_form'>
-      <div className='edit_form_field_container'>
-      <div className='edit_field' id={isFocused.first_name ? "isFocused2" : ""}>
-        First Name
+    <div className={formClass} onClick={() => !isEditable && setIsEditable(true)}>
+      { isEditable &&
+        <div className={styles.overlay}
+          onClick={(e: any) => isEditable && cancelEdit()}>
         </div>
-          <input
-            id='first_name'
-            value={editObject.first_name}
-            type="text"
-            autoComplete="off"
-            onBlur={e => validateInputOnBlur(e)}
-            onChange={e => handleInputChange(e)}
-            onFocus={e => setFocus(e.target.id, true)}
-          />
-      <div className='edit_field' id={isFocused.last_name ? "isFocused2" : ""}>
-        Last Name
-      </div>
-          <input
-            id='last_name'
-            value={editObject.last_name}
-            type="text"
-            autoComplete="off"
-            onBlur={e => validateInputOnBlur(e)}
-            onChange={e => handleInputChange(e)}
-            onFocus={e => setFocus(e.target.id, true)}
-          />
-      <div className='edit_field' id={isFocused.bio ? "isFocused2" : ""}>
-        Bio
-      </div>
-          <input
-            id='bio'
-            value={editObject.bio}
-            type="text"
-            autoComplete="off"
-            onBlur={e => validateInputOnBlur(e)}
-            onChange={e => handleInputChange(e)}
-            onFocus={e => setFocus(e.target.id, true)}
-          />
-      <div className='form_submit'>
-        <button type="submit" className={disableSubmit ? 'hide' : 'green-button'} onClick={handleSubmit}>Submit</button>
-        </div>
-        </div>
-    </form>
+      }
+      <TextField
+        label={'First Name'}
+        value={formData.first_name}
+        setValue={(val: any) => setFormData({ ...formData, first_name: val })}
+        validateAndReturnError={validateName}
+      />
+      <TextField
+        label={'Last Name'}
+        value={formData.last_name}
+        setValue={(val: any) => setFormData({ ...formData, last_name: val })}
+        validateAndReturnError={validateName}
+      />
+      <TextField
+        label={'Bio'}
+        value={formData.bio}
+        setValue={(val: any) => setFormData({ ...formData, bio: val })}
+        validateAndReturnError={validateBio}
+      />
+      {
+        isEditable &&
+        <>
+          <Button
+            className={styles.acceptEdit}
+            onClick={handleOnClick}
+            isDisabled={enableSubmit}
+          >
+            {'Update'}
+          </Button>
+        </>
+      }
+    </div>
   );
 }
 
-export default connect(mapStateToProps, {editProfileBio})(ProfileEditForm)
+export default connect((state: RootState) => ({ 
+  currentUser: selectCurrentUser(state) || {}
+}),
+{ editAccountInfo })(ProfileEditForm);

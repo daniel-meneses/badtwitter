@@ -1,22 +1,33 @@
 import React from 'react';
-import InboxListItem from '../../components/InboxListItem/InboxListItem'
+import { connect } from 'react-redux';
+import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
+import { selectAcceptedSubscriptionRequests } from '../../reducers/subscriptions';
+import { Subscription } from '../../types/common';
+import SubscribeButton from '../SubscribeButton/SubscribeButton';
+import UserPreview from '../UserPreview/UserPreview';
 
-type Props = {
-  subscriptions: any
+type StoreProps = {
+    acceptedSubscriptions: Subscription[];
 }
 
-const SubscriptionsList = ({subscriptions} : Props) => {
-  return (
+const SubscriptionsList = ({ acceptedSubscriptions }: StoreProps) => (
+
     <div>
-      {
-       Object.values(subscriptions.subscriptionRequests).map( (subscription: any) =>
-       <InboxListItem key={subscription.id}
-                      user_id={subscription.subject_id}
-                      isFollowRequest={false}
-                      />
-     )}
+        { acceptedSubscriptions.length ?
+            acceptedSubscriptions.map((req: Subscription, i: number) =>
+                <UserPreview
+                    key={req.id}
+                    userId={req.subjectId}
+                    topButtons={<SubscribeButton userId={req.subjectId} />}
+                />
+            )
+            :
+            <ErrorMessage text={'No subscriptions to display'} />
+        }
     </div>
-  )
-}
+)
 
-export default SubscriptionsList;
+
+export default connect((state: RootState): StoreProps => ({
+    acceptedSubscriptions: Object.values(selectAcceptedSubscriptionRequests(state))
+}))(SubscriptionsList);

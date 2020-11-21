@@ -1,36 +1,31 @@
 import React from 'react';
-import './SignUp.scss'
-import SignUpForm from '../../components/SignUpForm/SignUpForm';
-import { signUp } from '../../actions/session.js';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
+import { parseQuery } from '../../common/helpers';
+import SignUpForm from '../../components/Forms/SignUpForm';
+import styles from './SignUp.mod.scss'
 
-type Props = {
-  signUp: (e: any, h: any) => void,
-  signupError: string
-}
+const SignUp = () => {
 
-function mapStateToProps(state: any) {
-  return {
-    signupError: state.session.error
-  }
-}
-
-const SignUp = ({signUp, signupError} : Props) => {
-  let history = useHistory()
+  const history = useHistory();
+  const { search } = useLocation();
+  const redirectUrl = parseQuery(search, 'redirect')
+  const fullUrl = redirectUrl ? `/login?redirect=${redirectUrl}` : '/login'
 
   return (
-    <div className='sign_up_container'>
-        <SignUpForm
-          handleLogIn={(e: any) => signUp(e, history)}
-          loginFailMessage={signupError}
-          />
-        <div className='alt_link'>
-          Have an account?
-          <span onClick={() => history.push('/login')}> Log in</span>
+    <div className={styles.loginContainer}>
+      <div className={styles.login}>
+        <h1>Sign Up</h1>
+        <div className={styles.loginForm}>
+          <SignUpForm />
+          </div>
+        <div className={styles.altLink}>
+            Have an account?
+            <span onClick={() => history.push(fullUrl)}>{` Sign In`}</span>
         </div>
+      </div>
     </div>
+
   );
 }
 
-export default connect(mapStateToProps, { signUp })(SignUp);
+export default SignUp;

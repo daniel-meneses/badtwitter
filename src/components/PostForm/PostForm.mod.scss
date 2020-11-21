@@ -1,0 +1,61 @@
+@import '../../common/theme/mixins.scss';
+$outline: lighten(#c9d6cd, 6%);
+
+.postForm {
+  display: flex;
+  flex-direction: column;
+  border-bottom: $outline solid 1px;
+  padding: 16px 10px 20px 10px;
+  .postFormContent {
+    display: flex;
+    align-self: stretch;
+    .postFormAvatar {
+      width: 60px;
+      height: 60px;
+      &:hover{
+        cursor: default;
+      }
+    }
+    .postFormInput {
+      flex: 1;
+      align-self: stretch;
+      max-width: 500px;
+      padding: 12px 0px 0px 10px;
+      overflow: visible;
+      word-wrap: break-word;
+      font-size: 18px;
+      &:empty:not(:focus):before{
+        font-size: 20px;
+        color: gray;
+        content:attr(data-text)
+      }
+      &:empty:focus:before{
+        font-size: 20px;
+        color: lighten(gray, 30%);
+        content:attr(data-text);
+      }
+      &:hover{
+        cursor: text;
+      }
+    }
+  }
+  .postFormFooter {
+    display: flex;
+    flex: 1;
+    align-self: stretch;
+    justify-content: flex-end;
+    margin: 12px 0px;
+  }
+  .postFormSubmit {
+    flex: 1;
+    align-self: flex-end;
+    max-width: 100px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.profile-image-alias{ 
+  display: flex;
+}

@@ -1,0 +1,56 @@
+@import '../../common/theme/mixins.scss';
+
+$outline: lighten(#c9d6cd, 6%);
+
+.userPost {
+  position:relative;
+  padding: 10px 8px;
+  border-bottom: $outline solid 1px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(240, 245, 245);
+  }
+}
+
+.userPostUserDetails {
+  display: flex;
+  .userPostAvatar {
+    height: 44px;
+    width: 44px;
+  }
+  .userPostName {
+    display: flex;
+    align-self: flex-end;
+    font-weight: 600;
+    margin-left: 6px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.userPostFooter {
+  display: flex;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.footerIconWithCount {
+  position:relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+}
+
+.footerIcon {
+  height: 17px;
+  width: 17px;
+  margin-right: 4px;
+}
+
+.footerTimestamp {
+  flex: 1;
+  align-self: flex-end;
+  text-align: right;
+}

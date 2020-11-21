@@ -1,0 +1,42 @@
+
+
+.loginContainer {
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  width: 98vw;
+  height: 98vh;
+}
+
+.login {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  max-height: 620px;
+  max-width: 620px;
+  border: solid 1px gray;
+  border-radius: 5px;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+.loginForm {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.altLink {
+  margin-top: 12px;
+  align-self: center;
+  flex: 0;
+  span {
+    &:hover{
+      cursor: pointer;
+    }
+    font-weight: 600;
+  }
+}
