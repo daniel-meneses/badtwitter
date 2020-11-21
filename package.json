@@ -52,8 +52,8 @@
     "prod:build:client": "NODE_ENV=production webpack --env production --config ./webpack/webpack.client.config.js",
     "prod:build:server": "NODE_ENV=production webpack --env production --config ./webpack/webpack.server.config.js",
     "prod:build": "npm-run-all -p prod:build:client prod:build:server",
-    "start": "node --max_old_space_size=2560 dist/app.server.js & wait-on http://localhost:3000",
-    "heroku-postbuild": "webpack -p --config ./webpack/webpack.client.config.js && webpack -p --config ./webpack/webpack.server.config.js"
+    "start": "node --max_old_space_size=2560 dist/app.server.js",
+    "heroku-postbuild": "webpack -p  --env production --config ./webpack/webpack.client.config.js && webpack -p --config ./webpack/webpack.server.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
