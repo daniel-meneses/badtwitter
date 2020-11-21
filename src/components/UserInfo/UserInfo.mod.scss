@@ -13,6 +13,7 @@
   .userInfoContentContainer {
     flex: 1;
     position: relative;
+    word-break: break-all;
     &:hover {
       cursor: pointer;
     }
@@ -32,7 +33,7 @@
     overflow-wrap: break-word;
     .userInfoName {
       overflow-wrap: break-word;
-      max-width: 400px;
+      max-width: 300px;
       font-size: 16px;
       font-weight: 600;
       margin-right: 4px;
@@ -42,7 +43,7 @@
       }
     }
     .userInfoAlias {
-      max-width: 400px;
+      max-width: 300px;
       font-size: 16px;
       font-weight: 350;
       &:hover{
