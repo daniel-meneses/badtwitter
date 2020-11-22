@@ -20,7 +20,7 @@ const About = () => {
         <div className={styles.container}>
             <BadTwitterLogo className={styles.logoIcon} />
             <div className={styles.aboutDescription}>
-                Welcome to Bad Twitter! It's like twitter, but <span style={{ color: 'green', fontWeight: 'bolder', fontFamily: 'cursive' }}>green</span>.
+                Welcome to Bad Twitter! It's like twitter, but <span style={{ color: 'green', fontSize: '24px', fontWeight: 'bolder', fontFamily: 'cursive' }}>green</span>.
             </div>
             <div className={styles.techStack}>
                 <h3>Frontend</h3>

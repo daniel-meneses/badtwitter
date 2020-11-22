@@ -47,10 +47,17 @@ const NavContainer: React.FC<Props> = (props) => {
     props.dispatch({ type: PostFormActionTypes.DISPLAY_FLOATING_POST_FORM })
   }
 
+
   const handleNavOnclick = (url: string, blockForGuest: boolean = false) => {
     if (blockForGuest && !isAuthenticated) { return }
-    location.pathname !== url &&
+    const isCurrentUrl = location.pathname === url
+    const isHome = url === '/home'
+    // If viewing home, Scroll to top of home
+    if (isCurrentUrl && isHome) {
+      document.getElementById('scrollable')?.scrollTo(0, 0);
+    } else if (!isCurrentUrl) {
       history.push(url)
+    }
   }
 
   const topNavLogo = 
