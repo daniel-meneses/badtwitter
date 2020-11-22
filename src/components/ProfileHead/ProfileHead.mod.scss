@@ -19,6 +19,7 @@ $outline: lighten(#c9d6cd, 6%);
   flex-direction: column;
   padding: 15px;
   border-bottom: $outline solid 1px;
+  min-height: 230px;
   .topLine {
     position: relative;
     background: #f2f5f3;

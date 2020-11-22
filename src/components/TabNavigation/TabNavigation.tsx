@@ -17,7 +17,7 @@ const TabNavigation = (props: props) => {
   )
 
   return (
-    <div className={styles.tabContainer}>
+    <div className={className}>
       {
         tabs.map( (item: any, i) =>
           <div className={styles.tabHeader} key={i}>

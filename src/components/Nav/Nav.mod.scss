@@ -4,9 +4,6 @@
 .navContainer {
   display: flex;
   position: fixed;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   @include respond-to('mobile') {
     align-items: center;
     flex-direction: row;

@@ -83,7 +83,10 @@ const Inbox: React.FC<Props> = (props) => {
             title={'Inbox'}
             onTitleClick={() => history.push('/inbox/messages')}
           />
-          <TabNavigation tabs={inboxTabs} />
+          <TabNavigation 
+            tabs={inboxTabs} 
+            className={styles.topTabs}
+            />
           <div className={styles.inboxList}>
             {
               isMessages && <MessageList />

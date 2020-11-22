@@ -1,12 +1,17 @@
-
-
-
+@import "../../common/styles/colors";
+@import '../../common/theme/mixins.scss';
 
 .accountInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
+  @include respond-to('mobile') {
+    padding-bottom: 70px;
+  }
+  @include respond-to('small') {
+      padding-bottom: 0px;
+  }
 }
 
 .accountName {

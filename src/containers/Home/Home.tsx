@@ -15,6 +15,7 @@ import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import { usePersistedScroll, scrollPosition } from '../../utils/hooks/useScroll';
 import { SrollPositionActionTypes } from '../../reducers/ui';
+import styles from './Home.mod.scss';
 
 
 type StoreProps = {
@@ -107,11 +108,16 @@ const Home = (props: StoreProps) => {
             errors={error}
           >
             {
-              timeline && timeline.map((postId: number, i: number) =>
-                <UserPost
+              timeline && timeline.map((postId: number, i: number) => {
+                const isLastItem = timeline.length === i + 1
+                return (
+                  <UserPost
                   key={i}
+                  className={isLastItem ? styles.addMarginToLastListItem : ''}
                   postId={postId}
                   />
+                )
+              }
               )}
           </LoadingWrapper>
         </>

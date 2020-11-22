@@ -1,3 +1,7 @@
+@import "../../common/styles/colors";
+@import '../../common/theme/mixins.scss';
+
+$outline: lighten(#c9d6cd, 6%);
 
 .inboxList {
   margin-top: 45px;
@@ -5,4 +9,23 @@
 
 .noHeaderBottomBord {
   border-bottom: none;
+}
+
+.topTabs {
+  display: flex;
+  position: fixed;
+  z-index: 50;
+  width: inherit;
+  max-width: inherit;
+  border-bottom: solid 1px $outline;
+  @include respond-to('mobile') {
+    margin-top: 32px
+  }
+  @include respond-to('small') {
+    margin-top: 53px;
+    max-width: inherit;
+  }
+  @include respond-to('medium') {
+    max-width: 598px;
+  }
 }

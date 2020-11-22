@@ -6,6 +6,7 @@ import moment from 'moment'
 import LikeButton from '../LikeButton/LikeButton'
 import { Post } from "../../types/common"
 import { selectPostById } from '../../reducers/posts';
+import classNames from 'classnames';
 
 type OwnProps = {
     postId: number;
@@ -20,13 +21,13 @@ type Props = OwnProps & StoreProps
 
 const UserPost: React.FC<Props> = (props) => {
 
-    const { post } = props;
+    const { post, className } = props;
     const { id: postId, likes, created, post: message, userId } = post
 
     const timeStamp = moment(created).format("MMM Do LT");
 
     return (
-        <div className={styles.userPost}>
+        <div className={classNames(styles.userPost, className)}>
             <UserInfo userId={userId}>
                 <div>
                 {message}

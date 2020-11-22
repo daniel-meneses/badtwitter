@@ -1,11 +1,13 @@
-
+@import '../../common/theme/mixins.scss';
 
 .loginContainer {
-  display: flex;
   padding: 16px;
   justify-content: center;
   width: 98vw;
   height: 98vh;
+  @include respond-to('small') {
+    display: flex;
+  }
 }
 
 .login {

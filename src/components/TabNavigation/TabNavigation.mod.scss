@@ -3,25 +3,6 @@
 
 $outline: lighten(#c9d6cd, 6%);
 
-.tabContainer {
-  display: flex;
-  position: fixed;
-  z-index: 50;
-  margin-top: 53px;
-  width: inherit;
-  max-width: inherit;
-  border-bottom: solid 1px $outline;
-  @include respond-to('mobile') {
-    
-  }
-  @include respond-to('small') {
-    max-width: inherit;
-  }
-  @include respond-to('medium') {
-    max-width: 598px;
-  }
-}
-
 .tabHeader {
   display: flex;
   flex: 1;

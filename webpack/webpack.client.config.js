@@ -48,6 +48,7 @@ module.exports = eve => {
               } 
             },
             { loader: "sass-loader" },
+            { loader: "postcss-loader"},
           ],
         },
         {

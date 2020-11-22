@@ -1,3 +1,6 @@
+@import "../../common/styles/colors";
+@import '../../common/theme/mixins.scss';
+
 $outline: lighten(#c9d6cd, 6%);
 
 .container {
@@ -9,6 +12,12 @@ $outline: lighten(#c9d6cd, 6%);
     padding-top: 26px;;
     padding-left: 20px;
     padding-right: 20px;
+    @include respond-to('mobile') {
+        padding-bottom: 70px;
+    }
+    @include respond-to('small') {
+        padding-bottom: 20px;
+    }
     .avatar {
         width: 200px;
         border-radius: 100px;;
@@ -65,6 +74,8 @@ $outline: lighten(#c9d6cd, 6%);
     height: 140px;
     fill: #009a00;
     margin-bottom: 20px;
+    min-height: 100px;
+    min-width: 100px;
 }
 
 .footer{

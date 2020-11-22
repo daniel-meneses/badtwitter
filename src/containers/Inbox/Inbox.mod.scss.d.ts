@@ -3,6 +3,7 @@
 interface CssExports {
   'inboxList': string;
   'noHeaderBottomBord': string;
+  'topTabs': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

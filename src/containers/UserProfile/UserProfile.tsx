@@ -11,6 +11,7 @@ import UserPost from "../../components/PostMini/UserPost";
 import { FetchRequest } from '../../types/common';
 import { selectFetchProfileReq, selectUserProfileById } from '../../reducers/userProfile';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
+import styles from '../Home/Home.mod.scss';
 
 type ConnectedProps = {
   profileFeed: {
@@ -70,10 +71,14 @@ const UserProfile: React.FC<Props> = (props) => {
             errors={getUserProfileReq.error}
           >
             {timeline.length ?
-              timeline.map((postId: number) =>
-                <UserPost key={postId}
-                  postId={postId}
-                />)
+              timeline.map((postId: number, i: number) => {
+                const isLastItem = timeline.length === i + 1
+                return (<UserPost 
+                          key={postId}
+                          className={isLastItem ? styles.addMarginToLastListItem : ''}
+                          postId={postId}
+                        />)
+              })
                 :
               getUserProfileReq.didSucceed && <ErrorMessage text={'No posts to display'} />
             }
