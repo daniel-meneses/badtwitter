@@ -15,6 +15,7 @@ import styles from './App.mod.scss'
 import ReduxToastr from 'react-redux-toastr'
 import { useLocation } from 'react-router-dom';
 import { selectIsAuthenticated } from '../../reducers/session';
+import { usePersistedScroll } from '../../utils/hooks/useScrollHooks';
 
 type StoreProps = {
   isAuthenticated: boolean
@@ -32,6 +33,8 @@ const App = ({ isAuthenticated }: StoreProps) => {
 
   const noNav = ['/login', '/signup']
   const shouldShowNav = !noNav.includes(loc.pathname)
+  
+  usePersistedScroll();
 
   return (
     <div className={styles.app} id='scrollable'>

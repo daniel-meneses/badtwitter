@@ -11,9 +11,9 @@ const TabNavigation = (props: props) => {
 
   const { className, tabs } = props
 
-  const focusedStyle = classNames(
+  const focusedStyle = (isFocused: boolean) => classNames(
     styles.tabHeaderItem,
-    styles.tabHeaderItemFocused
+    { [styles.tabHeaderItemFocused]: isFocused }
   )
 
   return (
@@ -24,7 +24,7 @@ const TabNavigation = (props: props) => {
             <div
               key={i}
               id={item.title}
-              className={item.isFocused ? focusedStyle : styles.tabHeaderItem}
+              className={focusedStyle(item.isFocused)}
               onClick={item.onClick}
               >
               {item.title}

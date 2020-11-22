@@ -13,9 +13,8 @@ import UserPost from '../../components/PostMini/UserPost';
 import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper'
 import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
-import { usePersistedScroll, scrollPosition } from '../../utils/hooks/useScroll';
-import { SrollPositionActionTypes } from '../../reducers/ui';
 import styles from './Home.mod.scss';
+import { useScrollCallback } from '../../utils/hooks/useScrollHooks'
 
 
 type StoreProps = {
@@ -26,8 +25,6 @@ type StoreProps = {
   timeline: number[],
   nextCursor: string | null,
   getGlobalFeedReq: any,
-  scrollPosition: number,
-  onScrollExit: (scrollRef: HTMLElement | null) => void,
   isAuthenticated: boolean,
 }
 
@@ -42,7 +39,6 @@ function mapStateToProps(state: any) {
   }
 }
 
-const onScrollExit = (scrollRef: HTMLElement | null) => ({ type: SrollPositionActionTypes.SET_HOME_SCROLL_POSITION, position: scrollRef?.scrollTop || 0 })
 
 const Home = (props: StoreProps) => {
 
@@ -51,16 +47,13 @@ const Home = (props: StoreProps) => {
     getAcceptedSubscriptionRequests,
     getAllLikes,
     getGlobalFeed,
-    scrollPosition,
     timeline,
     nextCursor,
     getGlobalFeedReq,
-    onScrollExit,
     isAuthenticated,
   } = props
 
   const history = useHistory();
-  const scrollRef: HTMLElement | null = typeof document !== "undefined" ? document.getElementById("scrollable") : null
 
   useEffect(() => {
     // Prevent duplicate data fetch on client rehydrate
@@ -76,21 +69,15 @@ const Home = (props: StoreProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onScroll = (pos: scrollPosition) => {
-    let percent = Math.round(((pos?.y || 0) / (pos?.total || 100)) * 100)
-    let shouldFetch = percent > 60
-    if (shouldFetch && nextCursor && !getGlobalFeedReq.isFetching) {
+  const fetcNextContentPage = (scrollPercent: number) => {
+    let shouldFetch = scrollPercent > 60
+    if (shouldFetch && nextCursor && !getGlobalFeedReq.isFetching) {      
       getGlobalFeed(nextCursor)
     }
   }
 
-  usePersistedScroll({
-    ref: scrollRef,
-    initPos: scrollPosition,
-    onScroll: onScroll,
-    onExit: onScrollExit
-  })
-
+  useScrollCallback(fetcNextContentPage);
+  
   const { isFetching, error } = getGlobalFeedReq;
 
   return (
@@ -151,5 +138,4 @@ export default connect(mapStateToProps,
     getAcceptedSubscriptionRequests,
     getGlobalFeed,
     getAllLikes,
-    onScrollExit,
   })(Home)
