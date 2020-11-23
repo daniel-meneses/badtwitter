@@ -46,7 +46,7 @@ export function postSubscriptionRequest(data: subscriptionPayload): AppThunk {
   let type = SubscriptionReqActionTypes.POST_SUBSCRIPTION_REQUEST
   return (dispatch: Dispatch) => {
     dispatch(actions.reqStart(type));
-    api.post('/subscription', { user_id: data })
+    api.post('/subscription', data)
       .then((response) => {
         dispatch(actions.reqSuccess(type));
         dispatch({ type: SubscriptionActionTypes.APPEND_SUBSCRIPTIONS, response });
