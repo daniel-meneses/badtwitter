@@ -12,7 +12,7 @@ const TabNavigation = (props: props) => {
   const { className, tabs } = props
 
   const focusedStyle = (isFocused: boolean) => classNames(
-    styles.tabHeaderItem,
+    styles.tabContent,
     { [styles.tabHeaderItemFocused]: isFocused }
   )
 
@@ -20,7 +20,7 @@ const TabNavigation = (props: props) => {
     <div className={className}>
       {
         tabs.map( (item: any, i) =>
-          <div className={styles.tabHeader} key={i}>
+          <div className={styles.tab} key={i}>
             <div
               key={i}
               id={item.title}
