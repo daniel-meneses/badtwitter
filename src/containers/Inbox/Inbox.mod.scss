@@ -4,7 +4,7 @@
 $outline: lighten(#c9d6cd, 6%);
 
 .inboxList {
-  margin-top: 45px;
+  margin-top: 0px;
 }
 
 .noHeaderBottomBord {
@@ -13,16 +13,16 @@ $outline: lighten(#c9d6cd, 6%);
 
 .topTabs {
   display: flex;
-  position: fixed;
+  position: sticky;
   z-index: 50;
   width: inherit;
   max-width: inherit;
   border-bottom: solid 1px $outline;
   @include respond-to('mobile') {
-    margin-top: 32px
+    top: 32px;
   }
   @include respond-to('small') {
-    margin-top: 53px;
+    top: 53px;
     max-width: inherit;
   }
   @include respond-to('medium') {

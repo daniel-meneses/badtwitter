@@ -10,6 +10,8 @@ $outline: lighten(#c9d6cd, 6%);
   max-height: 100vh;
   overflow-y: scroll;
   min-height: 100%;
+  min-height: -webkit-fill-available;
+  max-height: -webkit-fill-available;
   width: 100%;
 }
 body {
