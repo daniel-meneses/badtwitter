@@ -6,6 +6,7 @@ interface CssExports {
   'errorField': string;
   'errorText': string;
   'formFields': string;
+  'hideIcon': string;
   'label': string;
   'labelFocused': string;
   'signUpFieldColumns': string;

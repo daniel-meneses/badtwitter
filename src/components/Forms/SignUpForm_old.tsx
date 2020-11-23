@@ -7,7 +7,6 @@ import * as sessionActions from '../../actions/session';
 import { connect } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom'
 import { parseQuery } from '../../common/helpers';
-import  generate from 'project-name-generator';
 
 type Props = {
   dispatch: any;
@@ -23,13 +22,11 @@ export const SignUpForm = (props: Props) => {
 
   const redirectUrl = search && parseQuery(search, 'redirect')
   
-  const [firstName, lastName] = generate().raw;
-
   const [formData, setFormData] = useState({
     alias: '',
     email: '',
-    firstName: `${firstName}`,
-    lastName: `${lastName}`,
+    firstName: '',
+    lastName: '',
     password: '',
     passwordConfirm: ''
   })
@@ -37,13 +34,12 @@ export const SignUpForm = (props: Props) => {
   const [isValid, setIsValid] = useState({
     alias: false,
     email: false,
-    firstName: true,
-    lastName: true,
+    firstName: false,
+    lastName: false,
     password: false,
-    passwordConfirm: true
+    passwordConfirm: false
   })
 
-  console.log(formData)
   const [enableSubmit, setEnableSubmit] = useState(false)
 
   useEffect(()=> {
@@ -127,7 +123,6 @@ export const SignUpForm = (props: Props) => {
         <TextField
           className={styles.signUpFieldColumns}
           label={'Alias'}
-          autoFocus={true}
           value={formData.alias}
           setValue={(val: any) => setFormData({...formData, alias: val})}
           validateAndReturnError={validateAlias}
@@ -141,13 +136,33 @@ export const SignUpForm = (props: Props) => {
           />
         <TextField
           className={styles.signUpFieldColumns}
+          label={'First Name'}
+          value={formData.firstName}
+          setValue={(val: any) => setFormData({...formData, firstName: val})}
+          validateAndReturnError={validateFirstName}
+          />
+        <TextField
+          className={styles.signUpFieldColumns}
+          label={'Last Name'}
+          value={formData.lastName}
+          setValue={(val: any) => setFormData({...formData, lastName: val})}
+          validateAndReturnError={validateLastName}
+          />
+        <TextField
+          className={styles.signUpFieldColumns}
           label={'Password'}
           type={'password'}
           value={formData.password}
-          setValue={(val: any) => 
-            setFormData({...formData, password: val, passwordConfirm: val})
-          }
+          setValue={(val: any) => setFormData({...formData, password: val})}
           validateAndReturnError={validatePassword}
+          />
+        <TextField
+          className={styles.signUpFieldColumns}
+          label={'Password Confirmation'}
+          type={'password'}
+          value={formData.passwordConfirm}
+          setValue={(val: any) => setFormData({...formData, passwordConfirm: val})}
+          validateAndReturnError={validateConfrimation}
           />
         </div>
       <Button

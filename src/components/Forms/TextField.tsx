@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import classNames from 'classnames'
 import styles from './TextField.mod.scss'
+import { EyeIcon, EyeSlashIcon } from "../../common/components/SvgLib/HideEyeIcon";
 
 type Props ={
   value: string;
@@ -8,7 +9,8 @@ type Props ={
   className?: string;
   validateAndReturnError: (value: string) => string;
   setValue: (value: string) => void;
-  type?: string
+  type?: string;
+  autoFocus?: boolean;
 }
 
 /*
@@ -19,9 +21,10 @@ type Props ={
 const TextField: React.FC<Props> = (props) => {
 
   const [error, setError] = useState('')
+  const [isProtected, setIsProteced] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const [shouldDisplayError, setShouldDisplayError] = useState(false)
-  const { value, label, className, validateAndReturnError, setValue, type } = props;
+  const { value, label, className, validateAndReturnError, setValue, type, autoFocus } = props;
 
   // Text new value for validation errors
   useEffect(()=> {
@@ -52,6 +55,9 @@ const TextField: React.FC<Props> = (props) => {
     {[styles.errorField] : shouldDisplayError}
   )
 
+  const isPassword = type === 'password'
+  const isHidden = isPassword && isProtected
+
   return (
     <div className={textfieldStyle}>
       {label &&
@@ -62,13 +68,19 @@ const TextField: React.FC<Props> = (props) => {
         <input
           data-testid={'textfield'}
           value={value}
-          type={type || "text"}
+          type={isHidden ? 'password' : 'text'}
           className={cssStyle}
           onChange={handleOnChange}
           onFocus={() => setIsFocused(true)}
           onBlur={handleOnBlur}
+          autoFocus={autoFocus}
           />
-        { shouldDisplayError &&
+          { isPassword && (
+            isHidden
+              ? <EyeIcon className={styles.hideIcon} onClick={()=> setIsProteced(false)}/>
+              : <EyeSlashIcon className={styles.hideIcon} onClick={()=> setIsProteced(true)}/>
+          )}
+          { shouldDisplayError &&
           <div 
             data-testid={'textfield-error'}
             className={styles.errorText}>
