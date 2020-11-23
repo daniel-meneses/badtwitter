@@ -43,7 +43,6 @@ export const SignUpForm = (props: Props) => {
     passwordConfirm: true
   })
 
-  console.log(formData)
   const [enableSubmit, setEnableSubmit] = useState(false)
 
   useEffect(()=> {
