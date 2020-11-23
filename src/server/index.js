@@ -37,8 +37,9 @@ app.set('views', 'src/views')
 
 app.use('/static', express.static('dist', {
   setHeaders: function(res, req, path) {
-    if (!req.includes("main.css")) {
+    if (req.includes(".gz")) {
       res.set("Content-Encoding", "gzip")
+      res.set("Content-Type", "appapplication/javascript")
     }
     if (req.includes("main.css")) {
       res.set("Content-Type", "text/css")
