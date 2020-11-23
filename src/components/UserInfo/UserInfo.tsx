@@ -41,7 +41,8 @@ const UserInfo: React.FunctionComponent<Props> = (props) => {
     { [styles.flexCol]: isPreview }
   )
 
-  const handleMouseUp = (e: React.MouseEvent) => {
+  const handleMouseUp = (e: any) => {
+    if (e.target.nodeName === 'BUTTON') { return }
     const isDraggedClick = e.clientY !== mouseDownY
     !isDraggedClick && goToUserProfile();
   }
