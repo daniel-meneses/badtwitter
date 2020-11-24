@@ -28,7 +28,7 @@ type StoreProps = {
   isAuthenticated: boolean,
 }
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: RootState) {
   let { timeline, nextCursor } = state.feed.feed
   return {
     timeline,

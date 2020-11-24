@@ -17,7 +17,7 @@ export function getPendingSubscriptionRequests(): AppThunk {
         dispatch(actions.reqSuccess(type));
         dispatch({ type: UsersActionTypes.APPEND_USERS, response });
         dispatch({ type: SubscriptionActionTypes.APPEND_SUBSCRIPTIONS, response });
-        dispatch({ type: SubscriptionActionTypes.APPEND_PENDING_REQUEST_IDS, response });
+        dispatch({ type: SubscriptionActionTypes.SET_PENDING_SUBSCRIPTION_IDS, response });
       })
       .catch((error) => {
         dispatch(actions.reqFail(type, error));
@@ -34,7 +34,7 @@ export function getAcceptedSubscriptionRequests(): AppThunk {
         dispatch(actions.reqSuccess(type));
         dispatch({ type: UsersActionTypes.APPEND_USERS, response });
         dispatch({ type: SubscriptionActionTypes.APPEND_SUBSCRIPTIONS, response });
-        dispatch({ type: SubscriptionActionTypes.APPEND_ACCEPTED_REQUEST_IDS, response });
+        dispatch({ type: SubscriptionActionTypes.SET_ACCEPTED_SUBSCRIPTION_IDS, response });
       })
       .catch((error) => {
         dispatch(actions.reqFail(type, error));

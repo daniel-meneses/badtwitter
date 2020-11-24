@@ -12,7 +12,9 @@ export enum SubscriptionReqActionTypes {
 
 export enum SubscriptionActionTypes {
   APPEND_SUBSCRIPTIONS = 'APPEND_SUBSCRIPTIONS',
+  SET_PENDING_SUBSCRIPTION_IDS = 'SET_PENDING_SUBSCRIPTION_IDS',
   APPEND_PENDING_REQUEST_IDS = 'APPEND_PENDING_REQUEST_IDS',
+  SET_ACCEPTED_SUBSCRIPTION_IDS = 'SET_ACCEPTED_SUBSCRIPTION_IDS',
   APPEND_ACCEPTED_REQUEST_IDS = 'APPEND_ACCEPTED_REQUEST_IDS',
   REMOVE_SUBSCRIPTION = 'REMOVE_SUBSCRIPTION',
 }
@@ -92,6 +94,16 @@ const subscriptions = (state = initialState, action: any) => {
         ...state,
         byId: Object.assign({}, state.byId, formattedSubscriptions),
       };
+    case SubscriptionActionTypes.SET_PENDING_SUBSCRIPTION_IDS:
+      var { subscriptions } = action.response
+      var subs: any = Object.values(subscriptions || {})
+      var userIds = subs.map((sub: any) => sub.subject_id);
+      var subIds = subs.map((sub: any) => sub.id);
+      return {
+        ...state,
+        pendingReqIds: [...subIds],
+        pendingUserIds: [...userIds],
+      };
     case SubscriptionActionTypes.APPEND_PENDING_REQUEST_IDS:
       var { subscriptions } = action.response
       var subs: any = Object.values(subscriptions || {})
@@ -101,6 +113,16 @@ const subscriptions = (state = initialState, action: any) => {
         ...state,
         pendingReqIds: [...new Set([...state.pendingReqIds, ...subIds])],
         pendingUserIds: [...new Set([...state.acceptedUserIds, ...userIds])],
+      };
+    case SubscriptionActionTypes.SET_ACCEPTED_SUBSCRIPTION_IDS:
+      var { subscriptions } = action.response
+      var subs: any = Object.values(subscriptions || {})
+      var userIds = subs.map((sub: any) => sub.subject_id);
+      var subIds = subs.map((sub: any) => sub.id);
+      return {
+        ...state,
+        acceptedReqIds: [...subIds],
+        acceptedUserIds: [...userIds],
       };
     case SubscriptionActionTypes.APPEND_ACCEPTED_REQUEST_IDS:
       var { subscriptions } = action.response

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import * as subscriptionActions from '../../actions/subscriptions';
@@ -24,9 +24,13 @@ const SubscribeButton: React.FC<Props> = (props) => {
 
   const { isRequested, isAccepted, userId, isAuthenticated, dispatch } = props
   const { postSubscriptionRequest, deleteSubscription } = subscriptionActions;
-
+  
   const initialText = isAccepted ? "Following" : isRequested ? "Pending" : "Follow";
   const [buttonText, setButtonText] = useState(initialText)
+
+  useEffect( () => {
+    setButtonText(initialText)
+  }, [initialText])
 
   const btnStyle = classNames(
     styles.subscribeBtn,
@@ -52,9 +56,10 @@ const SubscribeButton: React.FC<Props> = (props) => {
   );
 }
 
-export default connect((state: RootState, { userId }: OwnProps) => ({
+export default connect((state: RootState, { userId }: OwnProps) => {
+  return {
     isRequested: selectPendingSubscriptionUsers(state).includes(userId),
     isAccepted: selectAcceptedSubscriptionUsers(state).includes(userId),
     isAuthenticated: selectIsAuthenticated(state)
-  }))
+  }})
 (SubscribeButton);
