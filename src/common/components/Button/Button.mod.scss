@@ -2,15 +2,10 @@
 
 .btn {
   position: relative;
-//  z-index: 5;
   border: none;
   border-radius: 25px;
-  &:enabled:hover{
+  &:hover{
     cursor: pointer;
-  }
-  &:disabled {
-    opacity: 0.4;
-    cursor: default;
   }
 }
 
@@ -52,14 +47,13 @@
 }
 
 .btnDisabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: default;
   &:hover {
-    opacity: 0.4;
+    opacity: 0.5;
     cursor: default;
   }
 }
-
 
 .stylePrimary {
   color: white;
@@ -77,14 +71,5 @@
   border: solid $primary 1.4px;
   &:hover{
     background-color: $bg-hover;
-  }
-}
-
-.btnDisabled {
-  opacity: 0.4;
-  cursor: default;
-  &:hover {
-    opacity: 0.4;
-    cursor: default;
   }
 }

@@ -25,6 +25,7 @@ const SubscribeButton: React.FC<Props> = (props) => {
   const { isRequested, isAccepted, userId, isAuthenticated, dispatch } = props
   const { postSubscriptionRequest, deleteSubscription } = subscriptionActions;
   
+  const isPending = isRequested && !isAccepted;
   const initialText = isAccepted ? "Following" : isRequested ? "Pending" : "Follow";
   const [buttonText, setButtonText] = useState(initialText)
 
@@ -34,7 +35,7 @@ const SubscribeButton: React.FC<Props> = (props) => {
 
   const btnStyle = classNames(
     styles.subscribeBtn,
-    {[styles.unsubscribe] : isAccepted}
+    {[styles.unsubscribe] : isAccepted},
   )
 
   const handleOnClick = () => {
@@ -50,6 +51,7 @@ const SubscribeButton: React.FC<Props> = (props) => {
       onClick={handleOnClick}
       onMouseEnter={() => isAccepted && setButtonText("Unfollow")}
       onMouseLeave={() => setButtonText(initialText)}
+      isDisabled={isPending}
       >
       {buttonText}
     </Button>
