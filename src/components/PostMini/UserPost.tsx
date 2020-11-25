@@ -26,12 +26,25 @@ const UserPost: React.FC<Props> = (props) => {
 
     const timeStamp = moment(created).format("MMM Do LT");
 
+    const tagHtml = (str: string) => (<span>
+        <a className={styles.tag} href={`/explore/tags/${str.slice(1)}`} role='link' target="_self">
+            {str + ' '}
+        </a>
+    </span>)
+
+    const formatTag = (str: string) => str.startsWith('#')
+        ? tagHtml(str)
+        : str + ' ';
+
+    const formatPostMessage = (message: string = "") =>
+        message.split(' ').map(word => formatTag(word));
+
     return (
         <div className={classNames(styles.userPost, className)}>
             <UserInfo userId={userId}>
                 <div>
-                {message}
-                    </div>
+                    {formatPostMessage(message)}
+                </div>
             </UserInfo>
             <div className={styles.userPostFooter}>
                 <div className={styles.footerIconWithCount}>
@@ -46,6 +59,6 @@ const UserPost: React.FC<Props> = (props) => {
     )
 }
 
-export default connect((state: RootState, { postId }: OwnProps) => ({ 
-    post: selectPostById(state, postId) 
+export default connect((state: RootState, { postId }: OwnProps) => ({
+    post: selectPostById(state, postId)
 }))(UserPost)

@@ -42,7 +42,7 @@ const UserInfo: React.FunctionComponent<Props> = (props) => {
   )
 
   const handleMouseUp = (e: any) => {
-    if (e.target.nodeName === 'BUTTON') { return }
+    if (e.target.nodeName === 'BUTTON' || e.target.nodeName ==='A') { return }
     const isDraggedClick = e.clientY !== mouseDownY
     !isDraggedClick && goToUserProfile();
   }
@@ -50,7 +50,7 @@ const UserInfo: React.FunctionComponent<Props> = (props) => {
   const goToUserProfile = () => {
     let destUrl = '/user/' + userId
     let isCurrentUrl = destUrl === location.pathname
-    !isCurrentUrl && history.push(destUrl)
+    !isCurrentUrl && history.push(destUrl, { from: location.pathname})
   };
 
   return (

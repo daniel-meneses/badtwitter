@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { connect } from 'react-redux';
 import { getUserProfile } from '../../actions/userProfile';
 import Trending from '../../components/Trending/Trending';
@@ -55,12 +55,20 @@ const UserProfile: React.FC<Props> = (props) => {
 
   const { timeline = [] } = profileFeed;
 
+  const loc = useLocation();
+  //@ts-ignore
+  const fromUrl = (loc.state || {}).from
+  const headerText = fromUrl 
+    ? fromUrl.split('/').pop()
+    : 'Back';
+  
+
   return (
     <MainContainer
       mainCenter={
         <>
           <Header
-            title={'Home'}
+            title={headerText}
             onBackClick={() => history.goBack()}
             onTitleClick={() => history.push('/home')}
             displayBackButton={true}

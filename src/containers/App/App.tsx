@@ -57,6 +57,7 @@ const App = ({ isAuthenticated }: StoreProps) => {
           <Route path='/inbox/:tab' exact component={Inbox} />
           <Route path="/inbox" render={() => <Redirect to="/inbox/messages" />} />
           <Route path='/explore' exact component={Explore} />
+          <Route path='/explore/tags/:id' exact component={Explore} />
           <Route path='/account' exact component={Account} />
           <Route path="/signup" render={
             () => isAuthenticated ? <Redirect to="/home" /> : <SignUp />

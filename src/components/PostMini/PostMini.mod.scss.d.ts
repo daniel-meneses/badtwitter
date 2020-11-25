@@ -4,6 +4,7 @@ interface CssExports {
   'footerIcon': string;
   'footerIconWithCount': string;
   'footerTimestamp': string;
+  'tag': string;
   'userPost': string;
   'userPostAvatar': string;
   'userPostFooter': string;

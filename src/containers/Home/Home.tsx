@@ -15,6 +15,7 @@ import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import styles from './Home.mod.scss';
 import { useScrollCallback } from '../../utils/hooks/useScrollHooks'
+import { getExploreContentWithTag } from '../../actions/explore'
 
 
 type StoreProps = {
@@ -26,9 +27,12 @@ type StoreProps = {
   nextCursor: string | null,
   getGlobalFeedReq: any,
   isAuthenticated: boolean,
+  getExploreContentWithTag: any,
 }
 
 function mapStateToProps(state: RootState) {
+  console.log(state);
+  
   let { timeline, nextCursor } = state.feed.feed
   return {
     timeline,
@@ -45,6 +49,7 @@ const Home = (props: StoreProps) => {
   const {
     getPendingSubscriptionRequests,
     getAcceptedSubscriptionRequests,
+    getExploreContentWithTag,
     getAllLikes,
     getGlobalFeed,
     timeline,
@@ -65,6 +70,7 @@ const Home = (props: StoreProps) => {
       getPendingSubscriptionRequests()
       getAcceptedSubscriptionRequests()
       getAllLikes()
+      getExploreContentWithTag('first_post')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -138,4 +144,5 @@ export default connect(mapStateToProps,
     getAcceptedSubscriptionRequests,
     getGlobalFeed,
     getAllLikes,
+    getExploreContentWithTag,
   })(Home)

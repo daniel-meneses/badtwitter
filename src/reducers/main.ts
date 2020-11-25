@@ -9,6 +9,7 @@ import account from './account';
 import userProfiles from './userProfile';
 import users from './users'
 import ui from './ui';
+import explore from './explore';
 import {reducer as toastrReducer} from 'react-redux-toastr';
 
 const mainReducer = combineReducers({
@@ -22,6 +23,7 @@ const mainReducer = combineReducers({
   post: posts,
   users,
   ui,
+  explore,
   toastrReducer
 });
 
