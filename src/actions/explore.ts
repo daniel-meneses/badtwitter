@@ -24,3 +24,20 @@ export function getExploreContentWithTag(tag: string): AppThunk {
             });
     }
 }
+
+export function getTrendingTags(): AppThunk {
+    let type = ExploreReqActionTypes.GET_TRENDING_TAGS;
+    return (dispatch: Dispatch) => {
+        dispatch(actions.reqStart(type))
+        return api.fetch(`/trending/tags`)
+            .then((response) => {
+                console.log(response);  
+                dispatch(actions.reqSuccess(type))
+                dispatch({ type: ExploreActionTypes.SET_TRENDING_TAGS, response})
+            })
+            .catch((error) => {
+                console.log(error)
+                dispatch(actions.reqFail(type, error))
+            });
+    }
+}

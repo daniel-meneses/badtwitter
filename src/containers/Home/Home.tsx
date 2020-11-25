@@ -15,7 +15,8 @@ import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import styles from './Home.mod.scss';
 import { useScrollCallback } from '../../utils/hooks/useScrollHooks'
-import { getExploreContentWithTag } from '../../actions/explore'
+import { getExploreContentWithTag, getTrendingTags } from '../../actions/explore'
+import { selectIsAuthenticated } from '../../reducers/session'
 
 
 type StoreProps = {
@@ -31,15 +32,12 @@ type StoreProps = {
 }
 
 function mapStateToProps(state: RootState) {
-  console.log(state);
-  
   let { timeline, nextCursor } = state.feed.feed
   return {
     timeline,
     nextCursor,
     getGlobalFeedReq: state.feed.getGlobalFeedReq,
-    scrollPosition: state.ui.scrollPosition.home,
-    isAuthenticated: state.session.session.isAuthenticated
+    isAuthenticated: selectIsAuthenticated(state)
   }
 }
 
@@ -49,7 +47,6 @@ const Home = (props: StoreProps) => {
   const {
     getPendingSubscriptionRequests,
     getAcceptedSubscriptionRequests,
-    getExploreContentWithTag,
     getAllLikes,
     getGlobalFeed,
     timeline,
@@ -70,7 +67,6 @@ const Home = (props: StoreProps) => {
       getPendingSubscriptionRequests()
       getAcceptedSubscriptionRequests()
       getAllLikes()
-      getExploreContentWithTag('first_post')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -128,7 +124,7 @@ const Home = (props: StoreProps) => {
           />
         }
         <div>
-          <Trending postId={1} />
+          <Trending />
         </div>
         </>
       }

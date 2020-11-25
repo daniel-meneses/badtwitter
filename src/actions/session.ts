@@ -64,7 +64,7 @@ export function logout(history: any): AppThunk {
         return api.delete('/accounts/session/delete', {})
             .then(() => {
                 dispatch({ type: SessionActionTypes.LOG_USER_OUT });
-                window.location.href = 'http://localhost:3000/home'
+                window.location.replace('..')
             })
     }
 }

@@ -4,7 +4,7 @@ interface CssExports {
   'item_category': string;
   'item_mentions': string;
   'item_title': string;
-  'trending': string;
+  'trendingContainer': string;
   'trending_item': string;
   'trending_show_more': string;
   'trending_title': string;
