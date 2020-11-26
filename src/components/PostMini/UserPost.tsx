@@ -7,6 +7,7 @@ import LikeButton from '../LikeButton/LikeButton'
 import { Post } from "../../types/common"
 import { selectPostById } from '../../reducers/posts';
 import classNames from 'classnames';
+import { random } from "lodash"
 
 type OwnProps = {
     postId: number;
@@ -26,24 +27,44 @@ const UserPost: React.FC<Props> = (props) => {
 
     const timeStamp = moment(created).format("MMM Do LT");
 
-    const tagHtml = (str: string) => (<span>
+    const tagHtml = (str: string) => (<span key={Math.random()}>
         <a className={styles.tag} href={`/explore/tags/${str.slice(1)}`} role='link' target="_self">
             {str + ' '}
         </a>
     </span>)
 
-    const formatTag = (str: string) => str.startsWith('#')
-        ? tagHtml(str)
-        : str + ' ';
+    const formantText = (message: string) => {
+        let strArr: any = [''];
+        let arr = message.split(' ')
+        arr.forEach((str: string, i: number) => {
+            const isLast = arr.length === i + 1
+            if (!str.startsWith('#')) {
+                let last = strArr.length - 1
+                strArr[last] = `${strArr[last]}${str}${isLast ? '' : ' '}`
+            } else {
+                strArr.push(`${str}${isLast ? '' : ' '}`)
+                strArr.push('')
+            }
+        })
+        return strArr;
+    }
 
-    const formatPostMessage = (message: string = "") =>
-        message.split(' ').map(word => formatTag(word));
+    const formatJsx = (message: string) => {
+        let arr = formantText(message)
+        return arr.filter(Boolean).map((str: string, i: number) => {
+            if (!str.startsWith('#')) {
+                return <React.Fragment key={Math.random()}>{str}</React.Fragment>
+            } else {
+                return tagHtml(str)
+            }
+        })
+    }
 
     return (
         <div className={classNames(styles.userPost, className)}>
             <UserInfo userId={userId}>
                 <div>
-                    {formatPostMessage(message)}
+                    {formatJsx(message)}
                 </div>
             </UserInfo>
             <div className={styles.userPostFooter}>

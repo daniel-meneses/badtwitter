@@ -12,7 +12,6 @@ export function getExploreContentWithTag(tag: string): AppThunk {
         dispatch(actions.reqStart(type))
         return api.fetch(`/explore/tag/${tag}`)
             .then((response) => {
-                console.log(response);  
                 dispatch(actions.reqSuccess(type))
                 dispatch({ type: UsersActionTypes.APPEND_USERS, response})
                 dispatch({ type: PostActionTypes.APPEND_POSTS, response})
@@ -31,7 +30,6 @@ export function getTrendingTags(): AppThunk {
         dispatch(actions.reqStart(type))
         return api.fetch(`/trending/tags`)
             .then((response) => {
-                console.log(response);  
                 dispatch(actions.reqSuccess(type))
                 dispatch({ type: ExploreActionTypes.SET_TRENDING_TAGS, response})
             })

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
@@ -29,7 +29,7 @@ const Explore: React.FC = (props: any) => {
   let { timeline = [] } = feed;
   const history = useHistory();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(getExploreContentWithTag(tag))
   }, [tag])
 
@@ -59,7 +59,7 @@ const Explore: React.FC = (props: any) => {
                         postId={postId}
                       />)
                     })
-                    : <ErrorMessage text={'No followers to display'} />
+                    : !feedFetchState.isFetching && <ErrorMessage text={'No explore posts to display'} />
                 }
               </LoadingWrapper>
 
