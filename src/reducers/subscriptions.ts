@@ -1,158 +1,166 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import { Subscription } from '../types/common';
 import { createReqReducer } from './common'
+import { mapKeys } from 'lodash';
+import { SubscriptionResponse } from '../types/responseData';
+import { Subscription } from '../types/common';
 
 export enum SubscriptionReqActionTypes {
-  GET_ALL_PENDING_SUBSCRIPTIONS = 'GET_ALL_PENDING_SUBSCRIPTIONS',
-  GET_ALL_ACCEPTED_SUBSCRIPTIONS = 'GET_ALL_ACCEPTED_SUBSCRIPTIONS',
-  POST_SUBSCRIPTION_REQUEST = 'POST_SUBSCRIPTION_REQUEST',
-  DELETE_SUBSCRIPTION_REQUEST = 'DELETE_SUBSCRIPTION_REQUEST',
+    GET_ALL_PENDING_SUBSCRIPTIONS = 'GET_ALL_PENDING_SUBSCRIPTIONS',
+    GET_ALL_ACCEPTED_SUBSCRIPTIONS = 'GET_ALL_ACCEPTED_SUBSCRIPTIONS',
+    GET_ALL_PENDING_FOLLOWERS = 'GET_ALL_PENDING_FOLLOWERS',
+    GET_ALL_ACCEPTED_FOLLOWERS = 'GET_ALL_ACCEPTED_FOLLOWERS',
+    POST_SUBSCRIPTION_REQUEST = 'POST_SUBSCRIPTION_REQUEST',
+    UPDATE_FOLLOW_REQUEST = 'UPDATE_FOLLOW_REQUEST',
+    DELETE_SUBSCRIPTION_REQUEST = 'DELETE_SUBSCRIPTION_REQUEST',
 }
 
 export enum SubscriptionActionTypes {
-  APPEND_SUBSCRIPTIONS = 'APPEND_SUBSCRIPTIONS',
-  SET_PENDING_SUBSCRIPTION_IDS = 'SET_PENDING_SUBSCRIPTION_IDS',
-  APPEND_PENDING_REQUEST_IDS = 'APPEND_PENDING_REQUEST_IDS',
-  SET_ACCEPTED_SUBSCRIPTION_IDS = 'SET_ACCEPTED_SUBSCRIPTION_IDS',
-  APPEND_ACCEPTED_REQUEST_IDS = 'APPEND_ACCEPTED_REQUEST_IDS',
-  REMOVE_SUBSCRIPTION = 'REMOVE_SUBSCRIPTION',
+    APPEND_PENDING_SUBSCRIPTIONS = 'APPEND_PENDING_SUBSCRIPTIONS',
+    APPEND_ACCEPTED_SUBSCRIPTIONS = 'APPEND_ACCEPTED_SUBSCRIPTIONS',
+    APPEND_PENDING_FOLLOWERS = 'APPEND_PENDING_FOLLOWERS',
+    APPEND_ACCEPTED_FOLLOWERS = 'APPEND_ACCEPTED_FOLLOWERS',
+    UPDATE_FOLLOW = 'UPDATE_FOLLOW',
+    DELETE_SUBSCRIPTION = 'DELETE_SUBSCRIPTION',
 }
 
-type SubscriptionResponse = {
-  id: number;
-  subject_id: number;
-  inserted_at: string;
-  updated_at: string;
-}
+export const selectAcceptedSubscriptions = (state: RootState): SubscriptionMap => state.subscriptions.byType.subscriptions.accepted;
+export const selectPendingSubscriptions = (state: RootState): SubscriptionMap => state.subscriptions.byType.subscriptions.pending;
+export const selectAcceptedFollowers = (state: RootState): SubscriptionMap => state.subscriptions.byType.followers.accepted;
+export const selectPendingFollowers = (state: RootState): SubscriptionMap => state.subscriptions.byType.followers.pending;
 
-interface SubscriptionRequest {
-  id: number,
-  subjectId: number
-}
+export const selectAcceptedSubscriptionUserIds = createSelector(
+    [selectAcceptedSubscriptions],
+    ( subscriptions ) => {
+        return Object.values(subscriptions).map( s => s.subjectId)
+    }
+)
 
-type initialState = {
-  byId: object | {
-    [reqId: string]: SubscriptionRequest | object
-  },
-  pendingReqIds: number[],
-  acceptedReqIds: number[],
-  pendingUserIds: number[],
-  acceptedUserIds: number[]
+export const selectPendingSubscriptionUserIds = createSelector(
+    [selectPendingSubscriptions],
+    ( subscriptions ) => {
+        return Object.values(subscriptions).map( s => s.subjectId)
+    }
+)
+
+var parseFeed = (subscription: SubscriptionResponse[]) => {
+    console.log(subscription)
+    let subArr = subscription.map(s => {
+        let { user, subject, created_at, ...rest} = s;
+        return ({ 
+            userId: user.id, 
+            subjectId: subject.id, 
+            createdAt: created_at, 
+            ...rest
+        });
+    });
+    
+    return mapKeys(subArr, "id");
 };
 
-const initialState: initialState = {
-  byId: {},
-  pendingReqIds: [],
-  acceptedReqIds: [],
-  pendingUserIds: [],
-  acceptedUserIds: []
+
+type SubscriptionMap = {
+    [id:string] : Subscription
 }
 
-function formatSubscriptionResponse(subscriptions: {[id: string]: SubscriptionResponse}) {
-  let subscriptionsState: {[id: string] : Subscription} = {}
-  Object.values(subscriptions).forEach( (sub: SubscriptionResponse) => {
-    subscriptionsState[`${sub.id}`] = formatSubscription(sub);
-  })
-  return subscriptionsState
+type InitialState = {
+    subscriptions: {
+        accepted: SubscriptionMap,
+        pending: SubscriptionMap,
+    },
+    followers: {
+        accepted: SubscriptionMap,
+        pending: SubscriptionMap,
+    },
+};
+
+const initialState: InitialState = {
+    subscriptions: {
+        accepted: {},
+        pending: {}
+    },
+    followers: {
+        accepted: {},
+        pending: {}
+    }
 }
 
-function formatSubscription(sub: SubscriptionResponse): Subscription {
-  const { id, subject_id: subjectId, inserted_at: insertedAt, updated_at: updatedAt } = sub
-  return ({
-    id, subjectId, insertedAt, updatedAt
-  })
-}
 
-export const selectSubscriptions = (state: RootState): any => state.subscriptions.subscriptions.byId;
-export const selectPendingSubscriptionIds = (state: RootState) => state.subscriptions.subscriptions.pendingReqIds;
-export const selectPendingSubscriptionUsers = (state: RootState) => state.subscriptions.subscriptions.pendingUserIds;
-export const selectAcceptedSubscriptionIds = (state: RootState) => state.subscriptions.subscriptions.acceptedReqIds;
-export const selectAcceptedSubscriptionUsers = (state: RootState) => state.subscriptions.subscriptions.acceptedUserIds;
-
-export const selectAcceptedSubscriptionRequests: any = createSelector(
-  [selectSubscriptions, selectAcceptedSubscriptionIds],
-  (subscriptions: { [id: string] : Subscription}, acceptedSubscriptionIds: number[]) => {
-    return acceptedSubscriptionIds.reduce((o, id) => ({ ...o, [id]: subscriptions[id]}), {})
-   }
-)
-
-
-export const selectPendingSubscriptionRequests = createSelector(
-  [selectSubscriptions, selectPendingSubscriptionIds],
-  (subscriptions: { [id: string] : Subscription}, pendingSubscriptionIds: number[]) => {
-    return [...pendingSubscriptionIds].map(id => subscriptions[id]);
-   }
-)
-
-const subscriptions = (state = initialState, action: any) => {
-  switch (action.type) {
-    case SubscriptionActionTypes.APPEND_SUBSCRIPTIONS:
-      var { subscriptions } = action.response;
-      var formattedSubscriptions = formatSubscriptionResponse(subscriptions);
-      return {
-        ...state,
-        byId: Object.assign({}, state.byId, formattedSubscriptions),
-      };
-    case SubscriptionActionTypes.SET_PENDING_SUBSCRIPTION_IDS:
-      var { subscriptions } = action.response
-      var subs: any = Object.values(subscriptions || {})
-      var userIds = subs.map((sub: any) => sub.subject_id);
-      var subIds = subs.map((sub: any) => sub.id);
-      return {
-        ...state,
-        pendingReqIds: [...subIds],
-        pendingUserIds: [...userIds],
-      };
-    case SubscriptionActionTypes.APPEND_PENDING_REQUEST_IDS:
-      var { subscriptions } = action.response
-      var subs: any = Object.values(subscriptions || {})
-      var userIds = subs.map((sub: any) => sub.subject_id);
-      var subIds = subs.map((sub: any) => sub.id);
-      return {
-        ...state,
-        pendingReqIds: [...new Set([...state.pendingReqIds, ...subIds])],
-        pendingUserIds: [...new Set([...state.acceptedUserIds, ...userIds])],
-      };
-    case SubscriptionActionTypes.SET_ACCEPTED_SUBSCRIPTION_IDS:
-      var { subscriptions } = action.response
-      var subs: any = Object.values(subscriptions || {})
-      var userIds = subs.map((sub: any) => sub.subject_id);
-      var subIds = subs.map((sub: any) => sub.id);
-      return {
-        ...state,
-        acceptedReqIds: [...subIds],
-        acceptedUserIds: [...userIds],
-      };
-    case SubscriptionActionTypes.APPEND_ACCEPTED_REQUEST_IDS:
-      var { subscriptions } = action.response
-      var subs: any = Object.values(subscriptions || {})
-      var userIds = subs.map((sub: any) => sub.subject_id);
-      var subIds = subs.map((sub: any) => sub.id);
-      return {
-        ...state,
-        acceptedReqIds: [...new Set([...state.acceptedReqIds, ...subIds])],
-        acceptedUserIds: [...new Set([...state.acceptedUserIds, ...userIds])],
-      };
-    case SubscriptionActionTypes.REMOVE_SUBSCRIPTION:
-      var { subscriptions } = action.response;
-      var sub: any = Object.values(subscriptions || {});
-      var userId = sub[0].subject_id;
-      var subId: any = sub[0].id;
-      return {
-        ...state,
-        acceptedReqIds: state.acceptedReqIds.filter(id => id !== subId),
-        acceptedUserIds: state.acceptedUserIds.filter(id => id !== userId),
-      };
-    default:
-      return state;
-  }
+const subscription = (state = initialState, action: any): any => {
+    switch (action.type) {
+        case SubscriptionActionTypes.APPEND_ACCEPTED_SUBSCRIPTIONS:
+            var { subscriptions } = action.response;
+            var accepted = state.subscriptions.accepted
+            return {
+                ...state,
+                subscriptions: {
+                    ...state.subscriptions,
+                    accepted: Object.assign({}, accepted, parseFeed(subscriptions)),
+                }
+            };
+        case SubscriptionActionTypes.APPEND_PENDING_SUBSCRIPTIONS:
+            var { subscriptions } = action.response
+            var pending = state.subscriptions.pending
+            return {
+                ...state,
+                subscriptions: {
+                    ...state.subscriptions,
+                    pending: Object.assign({}, pending, parseFeed(subscriptions)),
+                }
+            };
+        case SubscriptionActionTypes.APPEND_ACCEPTED_FOLLOWERS:
+            var { subscriptions } = action.response;
+            var accepted = state.followers.accepted
+            return {
+                ...state,
+                followers: {
+                    ...state.followers,
+                    accepted: Object.assign({}, accepted, parseFeed(subscriptions)),
+                }
+            };
+        case SubscriptionActionTypes.APPEND_PENDING_FOLLOWERS:
+            var { subscriptions } = action.response
+            var pending = state.followers.pending
+            return {
+                ...state,
+                followers: {
+                    ...state.followers,
+                    pending: Object.assign({}, pending, parseFeed(subscriptions)),
+                }
+            };
+        case SubscriptionActionTypes.UPDATE_FOLLOW:
+            var id = action.response.id;
+            var { [id] : _value, ...rest } = state.followers.pending;
+            return {
+                ...state,
+                followers: {
+                    ...state.followers,
+                    pending: {
+                        ...rest
+                    }
+                }
+            };
+        case SubscriptionActionTypes.DELETE_SUBSCRIPTION:
+            var id = action.response.id;
+            var { [id] : _value, ...rest } = state.subscriptions.accepted;
+            return {
+                ...state,
+                subscriptions: {
+                    ...state.subscriptions,
+                    accepted: {
+                        ...rest
+                    }
+                }
+            };
+        default:
+            return state;
+    }
 }
 
 export const subscriptionsReducer = combineReducers({
-  subscriptions,
-  getAcceptedSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_ACCEPTED_SUBSCRIPTIONS),
-  getPendingSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_PENDING_SUBSCRIPTIONS),
+    byType: subscription,
+    getAcceptedSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_ACCEPTED_SUBSCRIPTIONS),
+    getPendingSubscriptions: createReqReducer(SubscriptionReqActionTypes.GET_ALL_PENDING_SUBSCRIPTIONS),
 })
 
 export default subscriptionsReducer;

@@ -20,27 +20,16 @@ const inbox = (state = {focusedTab: 'messages'}, action: any) => {
     }
 }
 
-export enum SrollPositionActionTypes {
-    SET_HOME_SCROLL_POSITION = 'SET_HOME_SCROLL_POSITION',
-}
-
-const scrollPosition = (state = {home: 0}, action: any) => {
-    switch (action.type) {
-        case SrollPositionActionTypes.SET_HOME_SCROLL_POSITION:
-            return {
-                ...state,
-                home: action.position,
-            };
-        default:
-            return state;
-    }
-}
-
-
 export enum PostFormActionTypes {
     DISPLAY_FLOATING_POST_FORM = 'DISPLAY_FLOATING_POST_FORM',
     HIDE_FLOATING_POST_FORM = 'HIDE_FLOATING_POST_FORM',
     SET_POST_FORM_TEXT = 'SET_POST_FORM_TEXT',
+    SET_LINK_PREVIEW = 'SET_LINK_PREVIEW',
+}
+
+export enum PostFormReqTypes {
+    POST_NEW_POST = 'POST_NEW_POST',
+    GET_LINK_PREVIEW = 'GET_LINK_PREVIEW',
 }
 
 type postFormState = {
@@ -70,13 +59,17 @@ const postForm = (state: any = {}, action: any) => {
                 ...state,
                 postFormText: action.text,
             };
+        case PostFormActionTypes.SET_LINK_PREVIEW:
+            return {
+                ...state,
+                linkPreview: action.response,
+            };
         default:
             return state;
     }
 }
 
 export default combineReducers({
-    scrollPosition,
     inbox,
     postForm,
 })

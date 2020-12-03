@@ -9,7 +9,6 @@ import NotFound from '../containers/NotFound/NotFound';
 import { getGlobalFeed } from '../actions/feed'
 import { getUserProfile } from '../actions/userProfile';
 
-
 const routes = [
   {
     path: '/home',

@@ -4,7 +4,6 @@ import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import About from '../../components/About/About';
 import { getExploreContentWithTag } from '../../actions/explore';
-import { selectExploreByTag, selectFetchExploreByTagReq } from '../../reducers/explore';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
 import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper';
 import UserPost from '../../components/PostMini/UserPost';
@@ -12,14 +11,15 @@ import styles from '../Home/Home.mod.scss';
 import { useHistory } from 'react-router';
 import Trending from '../../components/Trending/Trending';
 import { selectIsAuthenticated } from '../../reducers/session';
+import { selectTagFeedByName } from '../../reducers/feeds';
 
 function mapProps(state: RootState, ownProps: any) {
   let { match: { params: { id: tag } } } = ownProps;
-  return {
+  return ({
     isAuthenticated: selectIsAuthenticated(state),
-    feed: selectExploreByTag(state, tag) || {},
-    feedFetchState: selectFetchExploreByTagReq(state)
-  }
+    feed: selectTagFeedByName(state, tag) || {},
+    feedFetchState: state.feeds.getTagFeedRequest,
+  })
 }
 
 const Explore: React.FC = (props: any) => {
@@ -86,4 +86,6 @@ const Explore: React.FC = (props: any) => {
   )
 }
 
-export default connect(mapProps)(Explore);
+const connectedComponent = connect(mapProps)(Explore);
+
+export default React.memo(connectedComponent);

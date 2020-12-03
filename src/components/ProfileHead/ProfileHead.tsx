@@ -6,7 +6,7 @@ import Button, { BtnThemes } from '../../common/components/Button/Button'
 import styles from './ProfileHead.mod.scss'
 import { User } from '../../types/common'
 import Avatar from "../Avatar/Avatar";
-import { selectUserById } from "../../reducers/users";
+import { selectUserById } from "../../reducers/globalObjects";
 import { selectCurrenUserId } from "../../reducers/session";
 
 
@@ -31,8 +31,8 @@ const ProfileHead: React.FC<ConnectProps> = (props) => {
   const { user, isCurrentUser } = props
   const history = useHistory()
 
-  const { userId, avatar, alias='', firstName='', lastName='', bio='' } = user
-  const isValidUser = !!userId
+  const { id, avatar, alias='', firstName='', lastName='', bio='' } = user
+  const isValidUser = !!id
 
   return (
     <div className={styles.container}>
@@ -49,7 +49,7 @@ const ProfileHead: React.FC<ConnectProps> = (props) => {
               Edit Profile
           </Button>
             :
-            isValidUser && <SubscribeButton userId={userId} />
+            isValidUser && <SubscribeButton userId={id} />
           }
         </div>
       </div>

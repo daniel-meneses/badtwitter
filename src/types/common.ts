@@ -1,31 +1,64 @@
 
 
-export type FetchRequest = {
-    isFetching?: boolean,
-    didSucceed?: boolean,
-    didFail?: boolean,
-    error?: null | { error: string }
-}
-
 export interface User {
+    id: number;
     alias: string;
     firstName: string;
     lastName: string;
     avatar: string;
     bio: string;
-    userId: number;
+    deviceId: string;
+    private: boolean;
 }
+
+export interface UserMap {
+    [id: string] : User;
+}
+
+export interface Tag {
+    name: string;
+    count: number;
+}
+
+export interface LikePreview {
+    title: string,
+    description: string,
+    image: string,
+    url: string,
+}
+
+export interface Subscription {
+    id: number;
+    accepted: boolean;
+    userId: number;
+    subjectId: number;
+    createdAt: string;
+}
+
+export interface SubscriptionMap {
+    [id: string] : Subscription;
+}
+
 
 export interface Post {
     id: number;
     likes: number;
     post: string;
     userId: number;
-    created: string;
+    createdAt: string;
+    linkPreview: LikePreview | null;
+    tags: Tag[] | null;
 }
 
-export interface Posts {
-    [id: string]: Post
+export interface PostMap {
+    [id: string] : Post;
+}
+
+export type FetchRequest = {
+    isFetching?: boolean,
+    didSucceed?: boolean,
+    didFail?: boolean,
+    error?: null | { error: string }
 }
 
 export interface Feed {
@@ -35,24 +68,4 @@ export interface Feed {
 
 export interface Likes {
     likes: number[]
-}
-
-export interface Follower {
-    id: number;
-    userId: number;
-}
-
-export interface Followers {
-    [id: string] : Follower;
-}
-
-export type Subscription = {
-    id: number;
-    subjectId: number;
-    insertedAt: string;
-    updatedAt: string;
-}
-
-export type Subscriptions = {
-    [id: string] : Subscription;
 }

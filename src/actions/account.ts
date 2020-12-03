@@ -1,11 +1,12 @@
 import { Dispatch } from 'redux';
-import { UsersActionTypes } from '../reducers/users'
-import { AccountActionTypes, AccountReqActionTypes } from '../reducers/account'
+import { AccountReqActionTypes } from '../reducers/account'
 import * as actions from './common'
 import api from '../api/api';
+import { SessionActionTypes, SessionReqActionTypes } from '../reducers/session';
+import { GlobalActionTypes } from '../reducers/globalObjects';
 
 type AvatarPayload = {
-    image: string
+    avatar: string
 }
 
 export type AccountInfoPayload = {
@@ -15,13 +16,13 @@ export type AccountInfoPayload = {
 }
 
 export function getPresignedUrl(): AppThunk {
-    let type: string = AccountReqActionTypes.GET_PRE_SIGNED_URL
+    let type: string = SessionReqActionTypes.GET_PRE_SIGNED_URL
     return (dispatch: Dispatch) => {
         dispatch(actions.reqStart(type))
-        api.fetch('/accounts/user/avatar/presigned')
+        api.fetch('/accounts/presigned')
             .then((response) => {
                 dispatch(actions.reqSuccess(type))
-                dispatch({ type: AccountActionTypes.SET_PRE_SIGNED_URL, response })
+                dispatch({ type: SessionActionTypes.SET_PRE_SIGNED_URL, response })
             })
             .catch((error) => {
                 dispatch(actions.reqFail(type, error))
@@ -30,13 +31,13 @@ export function getPresignedUrl(): AppThunk {
 }
 
 export function postImageToPresignedURL(url: string, data: string): AppThunk {
-    let type: string = AccountReqActionTypes.POST_TO_PRE_SIGNED_URL
+    let type: string = SessionReqActionTypes.POST_TO_PRE_SIGNED_URL
     return (dispatch: Dispatch) => {
         dispatch(actions.reqStart(type))
         return api.postImage(url, data)
             .then(() => {
                 dispatch(actions.reqSuccess(type))
-                let profileImage: AvatarPayload = { image: url.split("?")[0] }
+                let profileImage: AvatarPayload = { avatar: url.split("?")[0] }
                 return uploadNewAvatarImage(profileImage, dispatch)
             })
             .catch((error) => {
@@ -48,11 +49,11 @@ export function postImageToPresignedURL(url: string, data: string): AppThunk {
 function uploadNewAvatarImage(profileImage: AvatarPayload, dispatch: Dispatch): void {
     let type: string = AccountReqActionTypes.POST_ACCOUNT_AVATAR
     dispatch(actions.reqStart(type))
-    api.post('/accounts/user/avatar', profileImage)
+    api.patch('/accounts/user', profileImage)
         .then((response) => {
             dispatch(actions.reqSuccess(type))
-            dispatch({ type: AccountActionTypes.CLEAR_PRESIGNED_URLS });
-            dispatch({ type: UsersActionTypes.APPEND_USERS, response })
+            dispatch({ type: SessionActionTypes.CLEAR_PRESIGNED_URLS });
+            dispatch({ type: GlobalActionTypes.APPEND_USERS, response })
         })
         .catch((error) => {
             dispatch(actions.reqFail(type, error))
@@ -64,10 +65,10 @@ export function editAccountInfo(data: AccountInfoPayload): AppThunk {
     let type: string = AccountReqActionTypes.POST_ACCOUNT_INFO
     return (dispatch: Dispatch) => {
         dispatch(actions.reqStart(type))
-        api.post('/accounts/user/update', data)
+        api.patch('/accounts/user', data)
             .then((response) => {
                 dispatch(actions.reqSuccess(type))
-                dispatch({ type: UsersActionTypes.APPEND_USERS, response })
+                dispatch({ type: GlobalActionTypes.APPEND_USERS, response })
             })
             .catch((error) => {
                 dispatch(actions.reqFail(type, error))

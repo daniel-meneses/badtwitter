@@ -15,9 +15,10 @@ import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import styles from './Home.mod.scss';
 import { useScrollCallback } from '../../utils/hooks/useScrollHooks'
-import { getExploreContentWithTag, getTrendingTags } from '../../actions/explore'
+import { getExploreContentWithTag } from '../../actions/explore'
 import { selectIsAuthenticated } from '../../reducers/session'
-
+import { selectGlobalFeed, selectHomeFeed } from '../../reducers/feeds';
+import ToggleSwitch from '../../common/components/Toggle/Toggle'
 
 type StoreProps = {
   getPendingSubscriptionRequests: () => void,
@@ -32,11 +33,12 @@ type StoreProps = {
 }
 
 function mapStateToProps(state: RootState) {
-  let { timeline, nextCursor } = state.feed.feed
+  let { timeline, nextCursor } = selectGlobalFeed(state);
+  console.log(state)
   return {
     timeline,
     nextCursor,
-    getGlobalFeedReq: state.feed.getGlobalFeedReq,
+    getGlobalFeedReq: state.feeds.getGlobalFeedRequest,
     isAuthenticated: selectIsAuthenticated(state)
   }
 }
@@ -81,6 +83,7 @@ const Home = (props: StoreProps) => {
   useScrollCallback(fetcNextContentPage);
   
   const { isFetching, error } = getGlobalFeedReq;
+  
 
   return (
     <MainContainer
@@ -92,6 +95,7 @@ const Home = (props: StoreProps) => {
             onTitleClick={() => history.push('/home')}
           />
           <PostForm />
+          <ToggleSwitch className='n' />
           <LoadingWrapper
             isFetching={isFetching}
             errors={error}

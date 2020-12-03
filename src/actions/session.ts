@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import * as actions from './common'
 import api from '../api/api';
 import { SessionActionTypes, SessionReqActionTypes } from '../reducers/session'
-import { UsersActionTypes } from '../reducers/users'
+import { GlobalActionTypes } from '../reducers/globalObjects';
 
 type EmailRegisterPayload = {
     user: {
@@ -23,7 +23,7 @@ type EmailLoginPayload = {
 
 function setCurrentUser(dispatch: Dispatch, response: any) {
     dispatch({ type: SessionActionTypes.SET_CURRENT_USER, response });
-    dispatch({ type: UsersActionTypes.APPEND_USERS, response });
+    dispatch({ type: GlobalActionTypes.APPEND_USERS, response });
 }
 
 export function login(data: EmailLoginPayload, redirectOnSuccess: any): AppThunk {
@@ -61,7 +61,7 @@ export function signUp(data: any, redirectOnSuccess: any): AppThunk {
 
 export function logout(history: any): AppThunk {
     return (dispatch: Dispatch) => {
-        return api.delete('/accounts/session/delete', {})
+        return api.delete('/accounts/session', {})
             .then(() => {
                 dispatch({ type: SessionActionTypes.LOG_USER_OUT });
                 window.location.replace('..')

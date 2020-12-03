@@ -1,4 +1,3 @@
-
 type Request = {
   isFetching: boolean,
   didSucceed: boolean,

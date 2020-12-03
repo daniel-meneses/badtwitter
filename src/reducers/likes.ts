@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react';
 import { combineReducers } from 'redux';
 import { createReqReducer } from './common'
 
@@ -27,7 +28,7 @@ export const selectLikedPosts = (state: RootState): number[] => state.likes.like
 const likes = (state: ILikes = initial, action: any) => {
   switch (action.type) {
     case LikeActionTypes.SET_ALL_LIKES:
-      return Array.isArray(action.response) ? { postIds : action.response } : state
+      return { postIds: action.response.post_ids }
     case LikeActionTypes.APPEND_LIKE:
       return { postIds : [...state.postIds, action.response.post_id] }
     case LikeActionTypes.REMOVE_LIKE:

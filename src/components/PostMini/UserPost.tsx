@@ -5,7 +5,7 @@ import UserInfo from '../UserInfo/UserInfo'
 import moment from 'moment'
 import LikeButton from '../LikeButton/LikeButton'
 import { Post } from "../../types/common"
-import { selectPostById } from '../../reducers/posts';
+import { selectPostById } from '../../reducers/globalObjects';
 import classNames from 'classnames';
 import { random } from "lodash"
 
@@ -23,9 +23,9 @@ type Props = OwnProps & StoreProps
 const UserPost: React.FC<Props> = (props) => {
 
     const { post, className } = props;
-    const { id: postId, likes, created, post: message, userId } = post
+    const { id: postId, likes, createdAt, post: message, userId } = post
 
-    const timeStamp = moment(created).format("MMM Do LT");
+    const timeStamp = moment(createdAt).format("MMM Do LT");
 
     const tagHtml = (str: string) => (<span key={Math.random()}>
         <a className={styles.tag} href={`/explore/tags/${str.slice(1)}`} role='link' target="_self">
@@ -59,6 +59,7 @@ const UserPost: React.FC<Props> = (props) => {
             }
         })
     }
+    
 
     return (
         <div className={classNames(styles.userPost, className)}>

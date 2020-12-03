@@ -1,19 +1,26 @@
 import api from '../api/api';
 import { Dispatch } from 'redux';
 import * as actions from './common';
-import { FollowersActionTypes, FollowersReqActionTypes } from '../reducers/followers';
-import { UsersActionTypes } from '../reducers/users';
+import { GlobalActionTypes } from '../reducers/globalObjects';
+import { SubscriptionActionTypes, SubscriptionReqActionTypes } from '../reducers/subscriptions';
+import { SubscriptionResponse } from '../types/responseData';
 
+export function userFromSubscription(response: any) {
+    return { users: response.subscriptions.map( (r: SubscriptionResponse ) => {
+      const { user, subject } = r;
+      return [user, subject]
+    }).flat() }
+  }
+  
 export function getFollowers(): AppThunk {
-    let type = FollowersReqActionTypes.GET_ACCEPTED_FOLLOWERS
+    let type = SubscriptionReqActionTypes.GET_ALL_ACCEPTED_FOLLOWERS
     return (dispatch: Dispatch) => {
         dispatch(actions.reqStart(type));
-        api.fetch('/follower', { accepted: true })
+        api.fetch('/subscriptions?accepted=true&subscriber=false')
             .then((response) => {
                 dispatch(actions.reqSuccess(type));
-                dispatch({ type: UsersActionTypes.APPEND_USERS, response });
-                dispatch({ type: FollowersActionTypes.APPEND_FOLLOWWERS, response})
-                dispatch({ type: FollowersActionTypes.APPEND_ACCEPTED, response})
+                dispatch({ type: GlobalActionTypes.APPEND_USERS, response: userFromSubscription(response) });
+                dispatch({ type: SubscriptionActionTypes.APPEND_ACCEPTED_FOLLOWERS, response})
             })
             .catch((error) => {
                 dispatch(actions.reqFail(type, error));
@@ -22,15 +29,14 @@ export function getFollowers(): AppThunk {
 }
 
 export function getPendingFollowRequests(): AppThunk {
-    let type = FollowersReqActionTypes.GET_PENDING_FOLLOWERS
+    let type = SubscriptionReqActionTypes.GET_ALL_PENDING_FOLLOWERS
     return (dispatch: Dispatch) => {
         dispatch(actions.reqStart(type));
-        api.fetch('/follower', { accepted: "false" })
+        api.fetch('/subscriptions?accepted=false&subscriber=false')
             .then((response) => {
                 dispatch(actions.reqSuccess(type));
-                dispatch({ type: UsersActionTypes.APPEND_USERS, response });
-                dispatch({ type: FollowersActionTypes.APPEND_FOLLOWWERS, response})
-                dispatch({ type: FollowersActionTypes.APPEND_PENDING, response})
+                dispatch({ type: GlobalActionTypes.APPEND_USERS, response: userFromSubscription(response) });
+                dispatch({ type: SubscriptionActionTypes.APPEND_PENDING_FOLLOWERS, response})
             })
             .catch((error) => {
                 dispatch(actions.reqFail(type, error));
@@ -44,13 +50,14 @@ export type followRequestPayload = {
 }
 
 export function acceptFollowerRequest(payload: followRequestPayload): AppThunk {
-    let type = FollowersReqActionTypes.UPDATE_PENDING_FOLLOW_REQUEST
+    let type = SubscriptionReqActionTypes.UPDATE_FOLLOW_REQUEST
+    let { id } = payload
     return (dispatch: Dispatch): any => {
         dispatch(actions.reqStart(type));
-        api.post('/follower', payload)
+        api.patch(`/subscriptions/${id}`, payload)
             .then((response) => {
                 dispatch(actions.reqSuccess(type));
-                dispatch({ type: FollowersActionTypes.ACCEPT_FOLLOW, response })
+                dispatch({ type: SubscriptionActionTypes.UPDATE_FOLLOW, response })
             })
             .catch((error) => {
                 dispatch(actions.reqFail(type, error));
@@ -59,13 +66,14 @@ export function acceptFollowerRequest(payload: followRequestPayload): AppThunk {
 }
 
 export function rejectFollowerRequest(payload: followRequestPayload): AppThunk {
-    let type = FollowersReqActionTypes.UPDATE_PENDING_FOLLOW_REQUEST
+    let type = SubscriptionReqActionTypes.UPDATE_FOLLOW_REQUEST
+    let { id } = payload
     return (dispatch: Dispatch): any => {
         dispatch(actions.reqStart(type));
-        api.post('/follower', payload)
+        api.patch(`/subscriptions/${id}`, payload)
             .then((response) => {
                 dispatch(actions.reqSuccess(type));
-                dispatch({ type: FollowersActionTypes.REJECT_FOLLOW, response })
+                dispatch({ type: SubscriptionActionTypes.UPDATE_FOLLOW, response })
             })
             .catch((error) => {
                 dispatch(actions.reqFail(type, error));

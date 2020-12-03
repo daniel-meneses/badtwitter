@@ -9,14 +9,13 @@ import MainContainer from '../MainContainer/MainContainer';
 import Header from '../../components/Header/Header';
 import UserPost from "../../components/PostMini/UserPost";
 import { FetchRequest } from '../../types/common';
-import { selectFetchProfileReq, selectUserProfileById } from '../../reducers/userProfile';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
 import styles from '../Home/Home.mod.scss';
+import { selectUserProfileById } from '../../reducers/feeds';
 
 type ConnectedProps = {
-  profileFeed: {
-    timeline: number[];
-  };
+  timeline: number[];
+  nextCursor: string | null;
   getUserProfileReq: FetchRequest;
   getUserProfile: (id: number) => void;
   userId: number;
@@ -32,19 +31,21 @@ type OwnProps = {
 
 type Props = ConnectedProps & OwnProps;
 
-function mapStateToProps(state: any, ownProps: OwnProps) {
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
   let { match: { params: { id: userId } } } = ownProps;
   let formattedId = parseInt(userId) || 0;
+  let { timeline, nextCursor } = selectUserProfileById(state, userId) || {}
   return {
+    timeline,
+    nextCursor,
     userId: formattedId,
-    profileFeed: selectUserProfileById(state, formattedId) || {},
-    getUserProfileReq: selectFetchProfileReq(state),
+    getUserProfileReq: state.feeds.getUserProfileFeedRequest,
   }
 }
 
 const UserProfile: React.FC<Props> = (props) => {
 
-  const { userId, profileFeed, getUserProfile, getUserProfileReq } = props;
+  const { userId, timeline = [], nextCursor, getUserProfile, getUserProfileReq } = props;
   const history = useHistory()
   
   useEffect(() => {
@@ -53,8 +54,6 @@ const UserProfile: React.FC<Props> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { timeline = [] } = profileFeed;
-
   const loc = useLocation();
   //@ts-ignore
   const fromUrl = (loc.state || {}).from
@@ -62,7 +61,7 @@ const UserProfile: React.FC<Props> = (props) => {
     ? fromUrl.split('/').pop()
     : 'Back';
   
-
+  console.log(timeline)
   return (
     <MainContainer
       mainCenter={

@@ -5,7 +5,7 @@ import * as subscriptionActions from '../../actions/subscriptions';
 import Button, { BtnThemes } from '../../common/components/Button/Button';
 import styles from './SubscribeButton.mod.scss'
 import showGuestToast from "../Toast/GuestToast";
-import { selectPendingSubscriptionUsers, selectAcceptedSubscriptionUsers } from "../../reducers/subscriptions";
+import { selectAcceptedSubscriptionUserIds, selectPendingSubscriptionUserIds } from "../../reducers/subscriptions";
 import { selectIsAuthenticated } from "../../reducers/session";
 
 type OwnProps = {
@@ -60,8 +60,8 @@ const SubscribeButton: React.FC<Props> = (props) => {
 
 export default connect((state: RootState, { userId }: OwnProps) => {
   return {
-    isRequested: selectPendingSubscriptionUsers(state).includes(userId),
-    isAccepted: selectAcceptedSubscriptionUsers(state).includes(userId),
+    isRequested: selectPendingSubscriptionUserIds(state).includes(userId),
+    isAccepted: selectAcceptedSubscriptionUserIds(state).includes(userId),
     isAuthenticated: selectIsAuthenticated(state)
   }})
 (SubscribeButton);

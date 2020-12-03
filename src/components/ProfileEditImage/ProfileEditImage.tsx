@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { getPresignedUrl, postImageToPresignedURL } from '../../actions/account'
 import ProfileEditImageCrop from '../ProfileEditImageCrop/ProfileEditImageCrop'
 import Avatar from '../Avatar/Avatar'
-import { selectCurrentUser } from '../../reducers/users';
+import { selectCurrentUser } from '../../reducers/globalObjects';
 import PlusIcon from '../../common/components/SvgLib/PlusIcon'
 import styles from './ProfileEditImage.mod.scss';
 

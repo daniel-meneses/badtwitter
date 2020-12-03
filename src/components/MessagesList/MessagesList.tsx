@@ -2,13 +2,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
-import { selectPendingFollowRequests } from '../../reducers/followers';
-import { Follower } from '../../types/common';
+import { selectPendingFollowers } from '../../reducers/subscriptions';
+import { Subscription } from '../../types/common';
 import UserPreview from '../UserPreview/UserPreview';
 import FollowRequestButtons from './FollowRequestButtons';
 
 type StoreProps = {
-    pendingFollowRequests: Follower[],
+    pendingFollowRequests: Subscription[],
 }
 
 const MessagesList: React.FC<StoreProps> = ({ pendingFollowRequests }) => {
@@ -31,5 +31,5 @@ const MessagesList: React.FC<StoreProps> = ({ pendingFollowRequests }) => {
 }
 
 export default connect((state: RootState): StoreProps => ({
-    pendingFollowRequests: Object.values(selectPendingFollowRequests(state))
+    pendingFollowRequests: Object.values(selectPendingFollowers(state))
 }))(MessagesList);

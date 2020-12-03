@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
-import { selectAcceptedSubscriptionRequests } from '../../reducers/subscriptions';
+import { selectAcceptedSubscriptions } from '../../reducers/subscriptions';
 import { Subscription } from '../../types/common';
 import SubscribeButton from '../SubscribeButton/SubscribeButton';
 import UserPreview from '../UserPreview/UserPreview';
@@ -29,5 +29,5 @@ const SubscriptionsList = ({ acceptedSubscriptions }: StoreProps) => (
 
 
 export default connect((state: RootState): StoreProps => ({
-    acceptedSubscriptions: Object.values(selectAcceptedSubscriptionRequests(state))
+    acceptedSubscriptions: Object.values(selectAcceptedSubscriptions(state))
 }))(SubscriptionsList);

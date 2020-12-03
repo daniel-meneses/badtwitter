@@ -7,7 +7,7 @@ import * as validate from '../Forms/FormValidations'
 import Button from '../../common/components/Button/Button'
 import styles from './ProfileEditForm.mod.scss'
 import { isEqual } from 'lodash'
-import { selectCurrentUser } from "../../reducers/users"
+import { selectCurrentUser } from "../../reducers/globalObjects"
 
 type OwnProps = {
   className?: string
