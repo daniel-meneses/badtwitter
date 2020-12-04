@@ -25,6 +25,7 @@ export enum PostFormActionTypes {
     HIDE_FLOATING_POST_FORM = 'HIDE_FLOATING_POST_FORM',
     SET_POST_FORM_TEXT = 'SET_POST_FORM_TEXT',
     SET_LINK_PREVIEW = 'SET_LINK_PREVIEW',
+    CLEAR_LINK_PREVIEW = 'CLEAR_LINK_PREVIEW',
 }
 
 export enum PostFormReqTypes {
@@ -42,6 +43,9 @@ const postFormState: postFormState = {
     postFormText: '',
 }
 
+export const selectPersistedFormText = (state: RootState) => state.ui.postForm.postFormText;
+export const selectLinkPreview = (state: RootState) => state.ui.postForm.linkPreview;
+
 const postForm = (state: any = {}, action: any) => {
     switch (action.type) {
         case PostFormActionTypes.DISPLAY_FLOATING_POST_FORM:
@@ -57,12 +61,17 @@ const postForm = (state: any = {}, action: any) => {
         case PostFormActionTypes.SET_POST_FORM_TEXT:
             return {
                 ...state,
-                postFormText: action.text,
+                persistedFormText: action.text,
             };
         case PostFormActionTypes.SET_LINK_PREVIEW:
             return {
                 ...state,
                 linkPreview: action.response,
+            };
+        case PostFormActionTypes.CLEAR_LINK_PREVIEW:
+            return {
+                ...state,
+                linkPreview: null,
             };
         default:
             return state;

@@ -3,12 +3,14 @@
 $outline: lighten(#c9d6cd, 6%);
 
 .userPost {
+  display: flex;
+  flex-direction: column;
   position:relative;
   padding: 10px 8px;
   border-bottom: $outline solid 1px;
   &:hover {
     cursor: pointer;
-    background-color: rgb(240, 245, 245);
+    background-color: #f5f8f4;
   }
 }
 
@@ -33,7 +35,7 @@ $outline: lighten(#c9d6cd, 6%);
 .userPostFooter {
   display: flex;
   font-size: 14px;
-  margin-top: 5px;
+  margin-top: 16px;
 }
 
 .footerIconWithCount {

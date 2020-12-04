@@ -20,7 +20,7 @@ export interface Tag {
     count: number;
 }
 
-export interface LikePreview {
+export interface LinkPreview {
     title: string,
     description: string,
     image: string,
@@ -46,7 +46,7 @@ export interface Post {
     post: string;
     userId: number;
     createdAt: string;
-    linkPreview: LikePreview | null;
+    linkPreview: LinkPreview | null;
     tags: Tag[] | null;
 }
 
