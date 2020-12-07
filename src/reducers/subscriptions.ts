@@ -43,8 +43,7 @@ export const selectPendingSubscriptionUserIds = createSelector(
     }
 )
 
-var parseFeed = (subscription: SubscriptionResponse[]) => {
-    console.log(subscription)
+var parseFeed = (subscription: SubscriptionResponse[], isSubscriptionReq=true) => {
     let subArr = subscription.map(s => {
         let { user, subject, created_at, ...rest} = s;
         return ({ 
@@ -53,11 +52,9 @@ var parseFeed = (subscription: SubscriptionResponse[]) => {
             createdAt: created_at, 
             ...rest
         });
-    });
-    
-    return mapKeys(subArr, "id");
+    });    
+    return mapKeys(subArr, isSubscriptionReq ? "subjectId" : "userId");
 };
-
 
 type SubscriptionMap = {
     [id:string] : Subscription
@@ -95,7 +92,7 @@ const subscription = (state = initialState, action: any): any => {
                 ...state,
                 subscriptions: {
                     ...state.subscriptions,
-                    accepted: Object.assign({}, accepted, parseFeed(subscriptions)),
+                    accepted: Object.assign({}, accepted, parseFeed(subscriptions || [action.response])),
                 }
             };
         case SubscriptionActionTypes.APPEND_PENDING_SUBSCRIPTIONS:
@@ -105,7 +102,7 @@ const subscription = (state = initialState, action: any): any => {
                 ...state,
                 subscriptions: {
                     ...state.subscriptions,
-                    pending: Object.assign({}, pending, parseFeed(subscriptions)),
+                    pending: Object.assign({}, pending, parseFeed(subscriptions || [action.response])),
                 }
             };
         case SubscriptionActionTypes.APPEND_ACCEPTED_FOLLOWERS:
@@ -115,7 +112,7 @@ const subscription = (state = initialState, action: any): any => {
                 ...state,
                 followers: {
                     ...state.followers,
-                    accepted: Object.assign({}, accepted, parseFeed(subscriptions)),
+                    accepted: Object.assign({}, accepted, parseFeed(subscriptions, false)),
                 }
             };
         case SubscriptionActionTypes.APPEND_PENDING_FOLLOWERS:
@@ -125,11 +122,11 @@ const subscription = (state = initialState, action: any): any => {
                 ...state,
                 followers: {
                     ...state.followers,
-                    pending: Object.assign({}, pending, parseFeed(subscriptions)),
+                    pending: Object.assign({}, pending, parseFeed(subscriptions, false)),
                 }
             };
         case SubscriptionActionTypes.UPDATE_FOLLOW:
-            var id = action.response.id;
+            var id = action.response.user_id;
             var { [id] : _value, ...rest } = state.followers.pending;
             return {
                 ...state,
@@ -140,8 +137,8 @@ const subscription = (state = initialState, action: any): any => {
                     }
                 }
             };
-        case SubscriptionActionTypes.DELETE_SUBSCRIPTION:
-            var id = action.response.id;
+        case SubscriptionActionTypes.DELETE_SUBSCRIPTION:            
+            var id = action.response.subject_id;
             var { [id] : _value, ...rest } = state.subscriptions.accepted;
             return {
                 ...state,

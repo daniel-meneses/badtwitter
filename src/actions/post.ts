@@ -3,6 +3,8 @@ import { Dispatch } from 'redux';
 import * as actions from './common'
 import { PostFormActionTypes, PostFormReqTypes } from '../reducers/ui'
 import { LinkPreview } from '../types/common';
+import { GlobalActionTypes } from '../reducers/globalObjects';
+import { FeedActionTypes } from '../reducers/feeds';
 
 type Payload = {
   link_preview: LinkPreview | null;
@@ -15,7 +17,9 @@ export function postMessage(payload: Payload): AppThunk {
     dispatch(actions.reqStart(type))
     api.post('/posts', payload)
       .then((response) => {
+        dispatch({ type: GlobalActionTypes.APPEND_POSTS, response })
         dispatch({ type: PostFormActionTypes.HIDE_FLOATING_POST_FORM })
+        dispatch({ type: FeedActionTypes.APPEND_SINGLE_HOME_FEED, response })
         dispatch(actions.reqSuccess(type))
       })
       .catch((error) => {

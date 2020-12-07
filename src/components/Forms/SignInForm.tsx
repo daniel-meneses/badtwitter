@@ -13,7 +13,7 @@ type Props = {
 //  login: (payload: LoginPayload, redirectOnSuccess: () => void) => void;
   loginError?: any;
   className?: string;
-  dispatch: any;
+  dispatch: AppThunkDispatch;
 }
 
 type LoginPayload = {

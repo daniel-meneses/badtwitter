@@ -5,12 +5,6 @@ import { getTrendingTags } from '../../actions/explore';
 import { selectTrendingTags } from '../../reducers/explore';
 import styles from './Trending.mod.scss';
 
-const mapState = (state: RootState) => 
-  ({
-    trending: selectTrendingTags(state)
-  });
-
-
 const Trending = (props: any) => {
 
   const { trending = [], dispatch } = props;
@@ -35,12 +29,12 @@ const Trending = (props: any) => {
       <div  className={trendingContainer}>
         <div >
         <div className={trending_title}>Trending</div>
-          { trending.length &&
+          { 
             trending.map( (t: any, i: number) => {
               return trendingHtml({...t}, i)
             })
           }
-        <div className={styles.trending_show_more} onClick={() => history.push('/explore')}>
+        <div className={styles.trending_show_more} onClick={() => history.push('/explore/global')}>
           <div className={styles.trending_show_more}>Explore</div>
         </div>
         </div>
@@ -48,4 +42,8 @@ const Trending = (props: any) => {
   );
 }
 
-export default connect(mapState)(Trending)
+const connectedComponent = connect((state: RootState) => ({
+  trending: selectTrendingTags(state)
+}))(Trending)
+
+export default React.memo(connectedComponent);

@@ -9,3 +9,17 @@
     margin-bottom: 0px;
   }
 }
+
+.guestNotice{
+  padding: 12px;
+  font-size: 20px;
+}
+
+.guestNoticeLink{
+  font-weight: 600;
+  &:hover{
+    text-decoration: underline;
+    color: green;
+    cursor: pointer;
+  }
+}

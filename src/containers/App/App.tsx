@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect, Switch } from "react-router-dom";
 import Home from '../Home/Home';
 import FloatingPostContainer from '../../components/FloatingPostContainer/FloatingPostContainer';
@@ -16,9 +16,15 @@ import ReduxToastr from 'react-redux-toastr'
 import { useLocation } from 'react-router-dom';
 import { selectIsAuthenticated } from '../../reducers/session';
 import { usePersistedScroll } from '../../utils/hooks/useScrollHooks';
+import { getAllLikes } from '../../actions/likes';
+import { getPendingSubscriptionRequests, getAcceptedSubscriptionRequests } from '../../actions/subscriptions';
 
-type StoreProps = {
-  isAuthenticated: boolean
+interface StoreProps {
+  isAuthenticated: boolean;
+}
+
+interface Props extends StoreProps {
+  dispatch: AppThunkDispatch;
 }
 
 function mapStateToProps(state: RootState): StoreProps {
@@ -27,12 +33,20 @@ function mapStateToProps(state: RootState): StoreProps {
   }
 }
 
-const App = ({ isAuthenticated }: StoreProps) => {
+const App = ({ isAuthenticated, dispatch }: Props) => {
 
   const loc = useLocation();
 
   const noNav = ['/login', '/signup']
   const shouldShowNav = !noNav.includes(loc.pathname)
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getPendingSubscriptionRequests())
+      dispatch(getAcceptedSubscriptionRequests())
+      dispatch(getAllLikes())
+    }
+  }, [])
   
   usePersistedScroll();
 
@@ -56,8 +70,8 @@ const App = ({ isAuthenticated }: StoreProps) => {
           <Route path='/user/:id' exact component={UserProfile} />
           <Route path='/inbox/:tab' exact component={Inbox} />
           <Route path="/inbox" render={() => <Redirect to="/inbox/messages" />} />
-          <Route path='/explore' exact component={Explore} />
-          <Route path='/explore/tags/:id' exact component={Explore} />
+          <Route path='/explore/:subject' exact component={Explore} />
+          <Route path='/explore/:subject/:tagId' exact component={Explore} />
           <Route path='/account' exact component={Account} />
           <Route path="/signup" render={
             () => isAuthenticated ? <Redirect to="/home" /> : <SignUp />
@@ -79,4 +93,4 @@ const App = ({ isAuthenticated }: StoreProps) => {
   );
 }
 
-export default connect(mapStateToProps, {})(App);
+export default connect(mapStateToProps)(App);

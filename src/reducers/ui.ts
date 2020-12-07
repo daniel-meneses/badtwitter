@@ -8,6 +8,9 @@ export enum InboxActionTypes {
     SET_INBOX_TAB_FOCUS = 'SET_INBOX_TAB_FOCUS',
 }
 
+export const setFocusedInboxTab = (tab: string) => 
+    ({ type: InboxActionTypes.SET_INBOX_TAB_FOCUS, tab: tab });
+
 const inbox = (state = {focusedTab: 'messages'}, action: any) => {
     switch (action.type) {
         case InboxActionTypes.SET_INBOX_TAB_FOCUS:            

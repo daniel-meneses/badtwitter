@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
-import { Action } from 'redux'
+import { Action, AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import rootReducer from './reducers/main'
 import { Dispatch } from 'redux';
@@ -12,6 +12,8 @@ declare global {
         ReturnType,
         RootState,
         unknown,
-        Action<string>
+        AnyAction
         >
+  type AppThunkDispatch<ReturnType = void> = ThunkDispatch<RootState, ReturnType, AnyAction>
 }
+

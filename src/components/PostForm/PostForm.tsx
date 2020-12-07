@@ -16,7 +16,7 @@ type Props = {
   isAuthenticated: boolean,
   persistedFormText: string,
   linkPreview: null | PreviewType;
-  dispatch: any,
+  dispatch: AppThunkDispatch,
 }
 
 function mapStateToProps(state: RootState) {
@@ -114,4 +114,6 @@ const PostForm: React.FC<Props> = (props) => {
   );
 }
 
-export default connect(mapStateToProps)(PostForm);
+const connectedComponent = connect(mapStateToProps)(PostForm);
+
+export default React.memo(connectedComponent)

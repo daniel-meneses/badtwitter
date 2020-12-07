@@ -64,4 +64,4 @@ const ProfileHead: React.FC<ConnectProps> = (props) => {
   );
 }
 
-export default connect(mapStateToProps, {})(ProfileHead);
+export default connect(mapStateToProps)(ProfileHead);

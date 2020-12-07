@@ -63,6 +63,7 @@ const session = (state: any = initialState, action: ActionTypes): any => {
             }
         case SessionActionTypes.SET_PRE_SIGNED_URL:
             return {
+                ...state,
                 preSignedURL: action.response.url,
                 preSignedImage: null
             }

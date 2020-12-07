@@ -15,16 +15,16 @@ type OwnProps = {
 
 type ConnectProps = {
   currentUser: any,
-  editAccountInfo: (data: AccountInfoPayload) => void,
+  dispatch: AppThunkDispatch;
 };
 
 type Props = OwnProps & ConnectProps;
 
 const ProfileEditForm: React.FunctionComponent<Props> = (props) => {
 
-  const { currentUser, editAccountInfo, className } = props;
+  const { currentUser, className, dispatch } = props;
 
-  const initial = {
+  const initial: AccountInfoPayload = {
     first_name: currentUser.firstName,
     last_name: currentUser.lastName,
     bio: currentUser.bio
@@ -69,7 +69,7 @@ const ProfileEditForm: React.FunctionComponent<Props> = (props) => {
     if (isInvalid) {
       console.log('Unable to save changes');
     } else {
-      editAccountInfo(formData)
+      dispatch(editAccountInfo(formData))
       setIsEditable(false)
     }
   }
@@ -124,5 +124,4 @@ const ProfileEditForm: React.FunctionComponent<Props> = (props) => {
 
 export default connect((state: RootState) => ({ 
   currentUser: selectCurrentUser(state) || {}
-}),
-{ editAccountInfo })(ProfileEditForm);
+}))(ProfileEditForm);

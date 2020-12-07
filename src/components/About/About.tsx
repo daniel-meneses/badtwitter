@@ -38,7 +38,7 @@ const About = () => {
                         Webpack server and client builds
                     </li>
                     <li>
-                        Unit tests using jest and testing library
+                        Integration tests using jest and testing library
                     </li>
                     <li>
                         UI tests using cypress

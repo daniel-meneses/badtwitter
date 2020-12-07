@@ -23,7 +23,7 @@ type EmailLoginPayload = {
 
 function setCurrentUser(dispatch: Dispatch, response: any) {
     dispatch({ type: SessionActionTypes.SET_CURRENT_USER, response });
-    dispatch({ type: GlobalActionTypes.APPEND_USERS, response });
+    dispatch({ type: GlobalActionTypes.APPEND_CURRENT_USER, response });
 }
 
 export function login(data: EmailLoginPayload, redirectOnSuccess: any): AppThunk {

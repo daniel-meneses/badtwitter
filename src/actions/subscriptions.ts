@@ -7,6 +7,7 @@ import { SubscriptionResponse } from '../types/responseData';
 
 export type subscriptionPayload = {
   user_id: number
+  request_id?: number; 
 }
 
 type Response = {
@@ -59,7 +60,10 @@ export function postSubscriptionRequest(data: subscriptionPayload): AppThunk {
     api.post('/subscriptions', data)
       .then((response) => {
         dispatch(actions.reqSuccess(type));
-        dispatch({ type: SubscriptionActionTypes.APPEND_PENDING_SUBSCRIPTIONS, response });
+        const actionType = response.accepted 
+          ? SubscriptionActionTypes.APPEND_ACCEPTED_SUBSCRIPTIONS
+          : SubscriptionActionTypes.APPEND_PENDING_SUBSCRIPTIONS
+        dispatch({ type: actionType, response });
       })
       .catch((error) => {
         dispatch(actions.reqFail(type, error));
@@ -71,7 +75,7 @@ export function deleteSubscription(data: subscriptionPayload): AppThunk {
   let type = SubscriptionReqActionTypes.DELETE_SUBSCRIPTION_REQUEST
   return (dispatch: Dispatch) => {
     dispatch(actions.reqStart(type));
-    api.delete('/subscriptions/', data)
+    api.delete('/subscriptions/' + data.request_id, data)
     .then((response) => {
       dispatch(actions.reqSuccess(type));
        dispatch({ type: SubscriptionActionTypes.DELETE_SUBSCRIPTION, response })

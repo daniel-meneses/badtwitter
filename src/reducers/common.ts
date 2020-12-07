@@ -13,7 +13,7 @@ type RequestActions = {
 }
 
 export const createReqReducer = (actionType: string) =>
-  (state: RequestState = {}, action: RequestActions) => {
+  (state: RequestState = {}, action: RequestActions) => {    
     switch (action.type) {
       case `${actionType}_START`:
         return {

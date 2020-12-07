@@ -10,11 +10,10 @@ import PlusIcon from '../../common/components/SvgLib/PlusIcon'
 import styles from './ProfileEditImage.mod.scss';
 
 type Props = {
-  getPresignedUrl: () => void,
-  postImageToPresignedURL: (e: string, a: any) => void,
   userAvatar: string,
   presignedURL: string,
   preSignedImage: string,
+  dispatch: AppThunkDispatch;
 }
 
 function mapStateToProps(state: any, ownProps: any) {
@@ -28,22 +27,18 @@ function mapStateToProps(state: any, ownProps: any) {
   }
 }
 
-const ProfileEditImage = (props: Props) => {
-
-  const { getPresignedUrl, postImageToPresignedURL, userAvatar } = props;
+const ProfileEditImage: React.FC<Props> = ({ userAvatar, dispatch }) => {
 
   const [imageSrc, setImageSrc] = useState<string>("");
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: any) => {
       const reader = new FileReader()
-      reader.onabort = () => console.log('file reading was aborted')
-      reader.onerror = () => console.log('file reading has failed')
       reader.onload = () => {
         var dataURL = reader.result
         if (typeof dataURL == "string") {
-          setImageSrc(dataURL)
-          getPresignedUrl();
+          setImageSrc(dataURL);
+          dispatch(getPresignedUrl());
         }
       }
       reader.readAsDataURL(file)
@@ -55,7 +50,7 @@ const ProfileEditImage = (props: Props) => {
   const handleSubmit = (presignedURL: any, croppedImage: any) => {
     const formData = new FormData()
     formData.append('avatar', imageSrc)
-    postImageToPresignedURL(presignedURL.url, croppedImage)
+    dispatch(postImageToPresignedURL(presignedURL.url, croppedImage))
     setImageSrc("")
   }
 
@@ -78,4 +73,4 @@ const ProfileEditImage = (props: Props) => {
     </div>
   )
 }
-export default connect(mapStateToProps, { getPresignedUrl, postImageToPresignedURL })(ProfileEditImage);
+export default connect(mapStateToProps)(ProfileEditImage);

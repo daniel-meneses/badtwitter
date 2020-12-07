@@ -10,7 +10,7 @@ import { selectLikedPosts } from '../../reducers/likes';
 type StoreProps = {
   isLiked: boolean;
   isAuthenticated: boolean;
-  dispatch: any;
+  dispatch: AppThunkDispatch;
 }
 
 type OwnProps = {
@@ -30,16 +30,16 @@ export const LikeButton: React.FC<StoreProps & OwnProps> = (props) => {
 
   return (
     <>
-    <Selectable
-      testid={testIds.likeContainer}
-      className={className}
-      onClick={handlePostLikeClick}
+      <Selectable
+        testid={testIds.likeContainer}
+        className={className}
+        onClick={handlePostLikeClick}
       >
-      <LikeIcon 
-        data-testid={testIds.likeSVG}
-        stroke='green' 
-        fill={isLiked ? 'green' : 'white'} />
-    </Selectable>
+        <LikeIcon
+          data-testid={testIds.likeSVG}
+          stroke='green'
+          fill={isLiked ? 'green' : 'white'} />
+      </Selectable>
     </>
   );
 }
@@ -49,8 +49,8 @@ export const testIds = {
   likeSVG: 'like-button'
 }
 
-export default connect((state: RootState, { postId }: OwnProps) => ({ 
+export default connect((state: RootState, { postId }: OwnProps) => ({
   isLiked: selectLikedPosts(state).includes(postId),
   isAuthenticated: selectIsAuthenticated(state)
 }))
-(LikeButton);
+  (LikeButton);

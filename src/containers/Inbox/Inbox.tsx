@@ -10,41 +10,28 @@ import styles from './Inbox.mod.scss'
 import MessageList from '../../components/MessagesList/MessagesList';
 import FollowersList from '../../components/FollowersList/FollowersList';
 import Trending from '../../components/Trending/Trending';
-import { InboxActionTypes } from '../../reducers/ui';
+import { setFocusedInboxTab } from '../../reducers/ui';
 import SubscriptionsList from '../../components/SubscriptionsList/SubscriptionsList';
 
 type Props = {
-  getFollowers: () => void;
-  getPendingFollowRequests: () => void;
-  getAcceptedSubscriptionRequests: () => void;
-  getPendingSubscriptionRequests: () => void;
-  setFocusedTab: (tab: string) => void;
+  dispatch: AppThunkDispatch;
 }
-
-const setFocusedTab = (tab: string) => 
-    (dispatch: any) => dispatch({ type: InboxActionTypes.SET_INBOX_TAB_FOCUS, tab: tab })
 
 const Inbox: React.FC<Props> = (props) => {
 
-  const {
-    setFocusedTab,
-    getFollowers,
-    getPendingFollowRequests,
-    getPendingSubscriptionRequests,
-    getAcceptedSubscriptionRequests
-  } = props;
+  const { dispatch } = props;
 
   const history = useHistory()
-  const { tab } = useParams()
+  const { tab } = useParams<{tab: string}>()
   const isMessages = tab === 'messages'
   const isFollowers = tab === 'followers'
   const isSubscriptions = tab === 'subscriptions'
 
   useEffect(() => {
-    getFollowers()
-    getPendingFollowRequests()
-    getPendingSubscriptionRequests()
-    getAcceptedSubscriptionRequests()
+    dispatch(getFollowers())
+    dispatch(getPendingFollowRequests())
+    dispatch(getPendingSubscriptionRequests())
+    dispatch(getAcceptedSubscriptionRequests())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -52,7 +39,7 @@ const Inbox: React.FC<Props> = (props) => {
     {
       title: 'Messages',
       onClick: () => {
-        setFocusedTab('messages')
+        dispatch(setFocusedInboxTab('messages'))
         history.push('/inbox/messages')
       },
       isFocused: isMessages,
@@ -60,7 +47,7 @@ const Inbox: React.FC<Props> = (props) => {
     {
       title: 'Followers',
       onClick: () => {
-        setFocusedTab('followers')
+        dispatch(setFocusedInboxTab('followers'))
         history.push('/inbox/followers')
       },
       isFocused: isFollowers,
@@ -68,7 +55,7 @@ const Inbox: React.FC<Props> = (props) => {
     {
       title: 'Subscriptions',
       onClick: () => {
-        setFocusedTab('subscriptions')
+        dispatch(setFocusedInboxTab('subscriptions'))
         history.push('/inbox/subscriptions')
       },
       isFocused: isSubscriptions,
@@ -112,13 +99,5 @@ const Inbox: React.FC<Props> = (props) => {
 
 }
 
-export default connect((state: any) => {
-  return { focusedTab: state.ui.inbox }
-},
-  {
-    getFollowers,
-    getPendingFollowRequests,
-    getAcceptedSubscriptionRequests,
-    getPendingSubscriptionRequests,
-    setFocusedTab,
-  })(Inbox)
+export default connect((state: any) => 
+({ focusedTab: state.ui.inbox }))(Inbox)

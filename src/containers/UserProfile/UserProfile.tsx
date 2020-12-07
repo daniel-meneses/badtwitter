@@ -17,8 +17,8 @@ type ConnectedProps = {
   timeline: number[];
   nextCursor: string | null;
   getUserProfileReq: FetchRequest;
-  getUserProfile: (id: number) => void;
   userId: number;
+  dispatch: AppThunkDispatch;
 };
 
 type OwnProps = {
@@ -45,23 +45,21 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
 
 const UserProfile: React.FC<Props> = (props) => {
 
-  const { userId, timeline = [], nextCursor, getUserProfile, getUserProfileReq } = props;
+  const { userId, timeline = [], nextCursor, getUserProfileReq, dispatch } = props;
   const history = useHistory()
   
   useEffect(() => {
     // TODO: Prevent duplicate profile fetch on client rehydrate
-    getUserProfile(userId)
+    dispatch(getUserProfile(userId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const loc = useLocation();
-  //@ts-ignore
-  const fromUrl = (loc.state || {}).from
+  const location = useLocation<{from: string}>();
+  const fromUrl = ( location.state || {}).from
   const headerText = fromUrl 
     ? fromUrl.split('/').pop()
     : 'Back';
   
-  console.log(timeline)
   return (
     <MainContainer
       mainCenter={
@@ -73,10 +71,7 @@ const UserProfile: React.FC<Props> = (props) => {
             displayBackButton={true}
           />
           <ProfileHead userId={userId} />
-          <LoadingWrapper
-            isFetching={getUserProfileReq.isFetching}
-            errors={getUserProfileReq.error}
-          >
+          <LoadingWrapper {...getUserProfileReq}>
             {timeline.length ?
               timeline.map((postId: number, i: number) => {
                 const isLastItem = timeline.length === i + 1
@@ -94,7 +89,7 @@ const UserProfile: React.FC<Props> = (props) => {
       }
       mainRight={
         <div>
-          <Trending postId={1} />
+          <Trending />
         </div>
       }
     />
@@ -103,4 +98,4 @@ const UserProfile: React.FC<Props> = (props) => {
 
 }
 
-export default connect(mapStateToProps, { getUserProfile })(UserProfile);
+export default connect(mapStateToProps)(UserProfile);

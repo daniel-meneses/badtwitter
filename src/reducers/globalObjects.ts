@@ -1,4 +1,4 @@
-import { User, Post } from '../types/common';
+import { User, Post, UserMap, PostMap } from '../types/common';
 import { createSelector } from 'reselect'
 import { camelCase, mapKeys } from 'lodash';
 import { UserResponse, PostResponse } from '../types/responseData';
@@ -49,17 +49,17 @@ export const selectPosts = (state: RootState) => state.global.posts.byId
 
 export const selectUserById = createSelector(
     [selectUsers, (state: RootState, itemId: number) => itemId],
-    (users: any, userId: any) => users[userId]
+    (users: UserMap, userId: number) => users[userId]
 )
 
 export const selectCurrentUser = createSelector(
     [selectUsers, selectCurrentUserId],
-    (users: any, userId: any) => users[userId]
+    (users: UserMap, userId: number) => users[userId]
 )
 
 export const selectPostById = createSelector(
     [selectPosts, (state: RootState, id: number) => id],
-    (posts: any, id: any) => posts[id]
+    (posts: PostMap, id: number) => posts[id]
 )
 
 const initialState: InitialState = {
@@ -77,12 +77,12 @@ var formatToObject = (arr: any[]) =>
 const global = (state = initialState, action: any): any => {
     switch (action.type) {
         case GlobalActionTypes.APPEND_USERS:
-            var users = action.response.users;
+            var users = action.response.users;            
             var byId = state.users.byId;
             return {
                 ...state,
                 users: {
-                    byId: Object.assign({}, byId, formatToObject(users)),
+                    byId: Object.assign({}, byId, formatToObject(users || [action.response])),
                 },
             }
         case GlobalActionTypes.APPEND_POSTS:
@@ -92,7 +92,7 @@ const global = (state = initialState, action: any): any => {
             return {
                 ...state,
                 posts: {
-                    byId: Object.assign({}, byId, formatToObject(posts)),
+                    byId: Object.assign({}, byId, formatToObject(posts || [action.response])),
                 }
             }
         case GlobalActionTypes.APPEND_CURRENT_USER:

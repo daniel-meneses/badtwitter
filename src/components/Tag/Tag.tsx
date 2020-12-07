@@ -17,9 +17,7 @@ export enum TagTypes {
     java = 'java'
 }
 
-const Tag = (props: Props) => {
-
-    const { type, url } = props;
+const Tag: React.FC<Props> = ({ type, url }) => {
 
     const tagStyle = classNames(
         styles.tag,

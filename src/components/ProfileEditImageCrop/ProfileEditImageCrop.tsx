@@ -84,4 +84,4 @@ const ProfileEditImageCrop = ({ src, preSignedURL, handleSubmit} : Props) => {
          </div>
 }
 
-export default connect(mapStateToProps, {})(ProfileEditImageCrop);
+export default connect(mapStateToProps)(ProfileEditImageCrop);

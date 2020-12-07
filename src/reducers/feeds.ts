@@ -16,6 +16,7 @@ export enum FeedActionTypes {
     APPEND_USER_PROFILE_FEED = 'APPEND_USER_PROFILE_FEED',
     APPEND_TAG_FEED = 'APPEND_TAG_FEED',
     APPEND_HOME_FEED = 'APPEND_HOME_FEED',
+    APPEND_SINGLE_HOME_FEED = 'APPEND_SINGLE_HOME_FEED',
 }
 
 type Feed = {
@@ -44,25 +45,6 @@ const initialState: InitialState = {
     home: { ...feedInit },
     tag: { byName: {}, },
     userProfile: { byId: {} },
-}
-
-var parseFeedSave = (feed: FeedResponse) => {
-
-    let { posts = [], users = [], after_cursor } = feed;
-
-    let timeline: number[] = [];
-    let postArr = posts.map(p => {
-        timeline.push(p.id)
-        return mapKeys(p, (_v, k) => camelCase(k))
-    })
-
-    let userArr = users.map(u => mapKeys(u, (_v, k) => camelCase(k)));
-    return ({
-        timeline,
-        posts: mapKeys(postArr, "id"),
-        users: mapKeys(userArr, "id"),
-        nextCursor: after_cursor
-    })
 }
 
 var parseFeed = (feed: FeedResponse) => {
@@ -125,7 +107,7 @@ const feed = (state = initialState, action: ActionTypes): any => {
                 ...state,
                 global: {
                     timeline: appendTimeline(stateTimeline, timeline),
-                    nextCursor
+                    nextCursor: nextCursor
                 }
             }
         case FeedActionTypes.APPEND_HOME_FEED:
@@ -135,7 +117,17 @@ const feed = (state = initialState, action: ActionTypes): any => {
                 ...state,
                 home: {
                     timeline: appendTimeline(stateTimeline, timeline),
-                    nextCursor
+                    nextCursor: nextCursor
+                }
+            }
+        case FeedActionTypes.APPEND_SINGLE_HOME_FEED:
+            var stateTimeline = state.home.timeline;
+            return {
+                ...state,
+                home: {
+                    ...state.home,
+                    //@ts-expect-error
+                    timeline: [action.response.id, ...stateTimeline]
                 }
             }
         case FeedActionTypes.APPEND_TAG_FEED:
@@ -143,7 +135,7 @@ const feed = (state = initialState, action: ActionTypes): any => {
             var { timeline, nextCursor } = parseFeed(response);
             var tagFeed = { 
                 timeline: appendTimeline((state.tag.byName[tag] || {}).timeline, timeline),
-                nextCursor,
+                nextCursor: nextCursor
             }
             return {
                 ...state,
@@ -156,7 +148,7 @@ const feed = (state = initialState, action: ActionTypes): any => {
             var { timeline, nextCursor } = parseFeed(response)
             var profileFeed = { 
                 timeline: appendTimeline((state.userProfile.byId[userId] || {}).timeline, timeline),
-                nextCursor,
+                nextCursor: nextCursor
             }
             return {
                 ...state,
