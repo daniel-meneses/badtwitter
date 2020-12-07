@@ -53,7 +53,7 @@ const Home = (props: StoreProps) => {
   useEffect(() => {
     // Prevent duplicate data fetch on client rehydrate
     if (!getGlobalFeedReq.didSucceed) {
-      dispatch(getHomeFeed())
+      isAuthenticated && dispatch(getHomeFeed())
     }
   }, [])
 
