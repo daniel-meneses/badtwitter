@@ -10,11 +10,11 @@ import { parseQuery } from '../../common/helpers';
 import  generate from 'project-name-generator';
 
 type Props = {
-  dispatch: any;
+  dispatch: AppThunkDispatch;
   signupError: { error: any }
 }
 
-export const SignUpForm = (props: Props) => {
+export const SignUpForm: React.FC<Props> = (props) => {
 
   const { signupError, dispatch } = props
 

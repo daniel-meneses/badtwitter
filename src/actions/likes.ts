@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import * as actions from './common'
 import api from '../api/api';
 import { LikeActionTypes, LikeReqActionTypes } from '../reducers/likes'
-import { PostActionTypes } from '../reducers/posts';
+import { GlobalActionTypes } from '../reducers/globalObjects';
 
 export function likeUserPost(postId: number) {
   let data = { post_id: postId };
@@ -13,7 +13,7 @@ export function likeUserPost(postId: number) {
       .then((response) => {
         dispatch(actions.reqSuccess(type))
         dispatch({ type: LikeActionTypes.APPEND_LIKE, response });
-        dispatch({ type: PostActionTypes.INCREMENT_POST_LIKE, response });
+        dispatch({ type: GlobalActionTypes.INCREMENT_POST_LIKE, response });
       })
       .catch((error) => {
         dispatch(actions.reqFail(type, error))
@@ -45,7 +45,7 @@ export function unlikeUserPost(postId: number) {
     .then((response) => {
       dispatch(actions.reqSuccess(type))
       dispatch({ type: LikeActionTypes.REMOVE_LIKE, response });
-      dispatch({ type: PostActionTypes.DECREMENT_POST_LIKE, response });
+      dispatch({ type: GlobalActionTypes.DECREMENT_POST_LIKE, response });
     })
     .catch((error) => {
       dispatch(actions.reqFail(type, error))

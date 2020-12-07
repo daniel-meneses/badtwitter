@@ -9,17 +9,16 @@ import MainContainer from '../MainContainer/MainContainer';
 import Header from '../../components/Header/Header';
 import UserPost from "../../components/PostMini/UserPost";
 import { FetchRequest } from '../../types/common';
-import { selectFetchProfileReq, selectUserProfileById } from '../../reducers/userProfile';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
 import styles from '../Home/Home.mod.scss';
+import { selectUserProfileById } from '../../reducers/feeds';
 
 type ConnectedProps = {
-  profileFeed: {
-    timeline: number[];
-  };
+  timeline: number[];
+  nextCursor: string | null;
   getUserProfileReq: FetchRequest;
-  getUserProfile: (id: number) => void;
   userId: number;
+  dispatch: AppThunkDispatch;
 };
 
 type OwnProps = {
@@ -32,37 +31,35 @@ type OwnProps = {
 
 type Props = ConnectedProps & OwnProps;
 
-function mapStateToProps(state: any, ownProps: OwnProps) {
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
   let { match: { params: { id: userId } } } = ownProps;
   let formattedId = parseInt(userId) || 0;
+  let { timeline, nextCursor } = selectUserProfileById(state, userId) || {}
   return {
+    timeline,
+    nextCursor,
     userId: formattedId,
-    profileFeed: selectUserProfileById(state, formattedId) || {},
-    getUserProfileReq: selectFetchProfileReq(state),
+    getUserProfileReq: state.feeds.getUserProfileFeedRequest,
   }
 }
 
 const UserProfile: React.FC<Props> = (props) => {
 
-  const { userId, profileFeed, getUserProfile, getUserProfileReq } = props;
+  const { userId, timeline = [], nextCursor, getUserProfileReq, dispatch } = props;
   const history = useHistory()
   
   useEffect(() => {
     // TODO: Prevent duplicate profile fetch on client rehydrate
-    getUserProfile(userId)
+    dispatch(getUserProfile(userId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { timeline = [] } = profileFeed;
-
-  const loc = useLocation();
-  //@ts-ignore
-  const fromUrl = (loc.state || {}).from
+  const location = useLocation<{from: string}>();
+  const fromUrl = ( location.state || {}).from
   const headerText = fromUrl 
     ? fromUrl.split('/').pop()
     : 'Back';
   
-
   return (
     <MainContainer
       mainCenter={
@@ -74,10 +71,7 @@ const UserProfile: React.FC<Props> = (props) => {
             displayBackButton={true}
           />
           <ProfileHead userId={userId} />
-          <LoadingWrapper
-            isFetching={getUserProfileReq.isFetching}
-            errors={getUserProfileReq.error}
-          >
+          <LoadingWrapper {...getUserProfileReq}>
             {timeline.length ?
               timeline.map((postId: number, i: number) => {
                 const isLastItem = timeline.length === i + 1
@@ -95,7 +89,7 @@ const UserProfile: React.FC<Props> = (props) => {
       }
       mainRight={
         <div>
-          <Trending postId={1} />
+          <Trending />
         </div>
       }
     />
@@ -104,4 +98,4 @@ const UserProfile: React.FC<Props> = (props) => {
 
 }
 
-export default connect(mapStateToProps, { getUserProfile })(UserProfile);
+export default connect(mapStateToProps)(UserProfile);

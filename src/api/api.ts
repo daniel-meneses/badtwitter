@@ -17,7 +17,7 @@ function headers(data: any): any {
   }
 }
 
-function parseResponse(response: any) {
+export function parseResponse(response: any) {
   return response.json()
     .then((data: any) => {
       if (!response.ok) {

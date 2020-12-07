@@ -2,16 +2,12 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { getTrendingTags } from '../../actions/explore';
-import { selectTrending, Trending } from '../../reducers/explore';
+import { selectTrendingTags } from '../../reducers/explore';
 import styles from './Trending.mod.scss';
-
-const mapState = (state: RootState) => ({
-  trending: selectTrending(state)
-})
 
 const Trending = (props: any) => {
 
-  const { trending, dispatch } = props;
+  const { trending = [], dispatch } = props;
 
   let history = useHistory()
 
@@ -21,10 +17,10 @@ const Trending = (props: any) => {
     dispatch(getTrendingTags())
   }, [])
 
-  const trendingHtml: React.FC<Trending> = ( {title, count}: Trending, i: number) => (
-    <div key={i} className={trending_item} onClick={() => history.push('/explore/tags/' + title)}>
+  const trendingHtml: React.FC<any> = ( {name, count}: any, i: number) => (
+    <div key={i} className={trending_item} onClick={() => history.push('/explore/tags/' + name)}>
           <div className={item_category}>Trending in Australia</div>
-          <div className={item_title}>{title}</div>
+          <div className={item_title}>{name}</div>
           <div className={item_mentions}>{`${count} mention${count > 1 ? 's' : ''}`}</div>
         </div>
   )
@@ -33,12 +29,12 @@ const Trending = (props: any) => {
       <div  className={trendingContainer}>
         <div >
         <div className={trending_title}>Trending</div>
-          {
-            trending.map( (t: Trending, i: number) => {
+          { 
+            trending.map( (t: any, i: number) => {
               return trendingHtml({...t}, i)
             })
           }
-        <div className={styles.trending_show_more} onClick={() => history.push('/explore')}>
+        <div className={styles.trending_show_more} onClick={() => history.push('/explore/global')}>
           <div className={styles.trending_show_more}>Explore</div>
         </div>
         </div>
@@ -46,4 +42,8 @@ const Trending = (props: any) => {
   );
 }
 
-export default connect(mapState)(Trending)
+const connectedComponent = connect((state: RootState) => ({
+  trending: selectTrendingTags(state)
+}))(Trending)
+
+export default React.memo(connectedComponent);

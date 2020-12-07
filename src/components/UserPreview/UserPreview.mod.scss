@@ -5,7 +5,7 @@ $outline: lighten(#c9d6cd, 6%);
 .userPreview {
   display: flex;
   position:relative;
-  padding: 8px;
+  padding: 12px;
   border-bottom: $outline solid 1px;
   &:hover {
     cursor: pointer;

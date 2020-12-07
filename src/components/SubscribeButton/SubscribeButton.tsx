@@ -5,7 +5,7 @@ import * as subscriptionActions from '../../actions/subscriptions';
 import Button, { BtnThemes } from '../../common/components/Button/Button';
 import styles from './SubscribeButton.mod.scss'
 import showGuestToast from "../Toast/GuestToast";
-import { selectPendingSubscriptionUsers, selectAcceptedSubscriptionUsers } from "../../reducers/subscriptions";
+import { selectAcceptedSubscriptions, selectAcceptedSubscriptionUserIds, selectPendingSubscriptionUserIds } from "../../reducers/subscriptions";
 import { selectIsAuthenticated } from "../../reducers/session";
 
 type OwnProps = {
@@ -13,16 +13,17 @@ type OwnProps = {
 }
 
 type Props = {
+  subscriptionRequest?: any;
   userId: number;
   isRequested?: boolean,
   isAccepted?: boolean,
   isAuthenticated: boolean,
-  dispatch: any;
+  dispatch: AppThunkDispatch;
 }
 
 const SubscribeButton: React.FC<Props> = (props) => {
 
-  const { isRequested, isAccepted, userId, isAuthenticated, dispatch } = props
+  const { subscriptionRequest, isRequested, isAccepted, userId, isAuthenticated, dispatch } = props
   const { postSubscriptionRequest, deleteSubscription } = subscriptionActions;
   
   const isPending = isRequested && !isAccepted;
@@ -40,7 +41,7 @@ const SubscribeButton: React.FC<Props> = (props) => {
 
   const handleOnClick = () => {
     if (!isAuthenticated) { return showGuestToast() }
-    let payload = { user_id: userId }
+    let payload = isAccepted? { request_id: subscriptionRequest.id, user_id: userId } : { user_id: userId }
     dispatch(isAccepted ? deleteSubscription(payload) : postSubscriptionRequest(payload))
   }
 
@@ -60,8 +61,9 @@ const SubscribeButton: React.FC<Props> = (props) => {
 
 export default connect((state: RootState, { userId }: OwnProps) => {
   return {
-    isRequested: selectPendingSubscriptionUsers(state).includes(userId),
-    isAccepted: selectAcceptedSubscriptionUsers(state).includes(userId),
-    isAuthenticated: selectIsAuthenticated(state)
+    isRequested: selectPendingSubscriptionUserIds(state).includes(userId),
+    isAccepted: selectAcceptedSubscriptionUserIds(state).includes(userId),
+    isAuthenticated: selectIsAuthenticated(state),
+    subscriptionRequest: selectAcceptedSubscriptions(state)[userId]
   }})
 (SubscribeButton);

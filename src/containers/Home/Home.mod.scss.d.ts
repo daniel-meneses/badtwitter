@@ -2,6 +2,8 @@
 // Please do not change this file!
 interface CssExports {
   'addMarginToLastListItem': string;
+  'guestNotice': string;
+  'guestNoticeLink': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

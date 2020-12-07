@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { throttle } from 'lodash';
 import { useLocation } from 'react-router';
+import { useRef } from 'react';
 
 type pathnameScroll = {
     [pathname: string]: number;
@@ -34,7 +35,7 @@ export const useScrollY = () => {
     const isBrowser = typeof window !== 'undefined';
     if (!isBrowser) { return  { scrollY: null, scrollHeight: null} }
 
-    const scrollRef: HTMLElement | null = isBrowser && document.getElementById("scrollable");
+    const scrollRef: HTMLElement | null = isBrowser && document.getElementById("scrollable");    
     const [scrollY, setScrollY] = useState(0);
     const [scrollHeight, setScrollHeight] = useState(0);
 

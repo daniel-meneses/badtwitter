@@ -5,7 +5,7 @@ import Avatar from '../Avatar/Avatar'
 import styles from './UserInfo.mod.scss'
 import classNames from 'classnames'
 import { User } from "../../types/common"
-import { selectUserById } from "../../reducers/users"
+import { selectUserById } from "../../reducers/globalObjects"
 
 /*
     Base componenet for displaying user as feed / inbox list item
@@ -28,13 +28,15 @@ type Props = OwnProps & StoreProps;
 
 const UserInfo: React.FunctionComponent<Props> = (props) => {
 
+
+
   const history = useHistory();
   const location = useLocation();
   const [mouseDownY, setMouseDownY] = useState(0)
 
   const { user, isPreview, topButtons, children } = props;
-
-  const { alias, avatar, bio, firstName, lastName, userId } = user;
+  
+  const { alias, avatar, bio, firstName, lastName, id } = user;
 
   const userInfoNameAlias = classNames(
     styles.userInfoNameAlias,
@@ -48,7 +50,7 @@ const UserInfo: React.FunctionComponent<Props> = (props) => {
   }
 
   const goToUserProfile = () => {
-    let destUrl = '/user/' + userId
+    let destUrl = '/user/' + id
     let isCurrentUrl = destUrl === location.pathname
     !isCurrentUrl && history.push(destUrl, { from: location.pathname})
   };

@@ -7,17 +7,17 @@ type props = {
   className?: string;
   isFetching?: boolean;
   overrideError?: boolean;
-  errors?: { error: string } | null;
+  error?: { error: string } | null;
   children?: React.ReactNode;
 }
 
 const LoadingWrapper = (props: props) => {
+  
+  const { className, isFetching, overrideError, error, children } = props
 
-  const { className, isFetching, overrideError, errors, children } = props
-
-  const shouldDisplayError = !isFetching && !overrideError && errors
+  const shouldDisplayError = !isFetching && !overrideError && error
   // @ts-ignore
-  const errorMessage:string = (errors || {}).error ? (errors || {}).error : 'Failed to fetch'
+  const errorMessage:string = (error || {}).error ? (error || {}).error : 'Failed to fetch'
 
   return (
     <div className={styles.loadingWrapper}>
@@ -28,4 +28,4 @@ const LoadingWrapper = (props: props) => {
   )
 }
 
-export default LoadingWrapper;
+export default React.memo(LoadingWrapper);

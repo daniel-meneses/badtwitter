@@ -8,7 +8,7 @@ type Props = {
   onBackgroundHover: any,
 }
 
-const FloatingImage = ({image, isDisplayed, dismiss, onBackgroundHover} : Props) => {
+const FloatingImage: React.FC<Props> = ({image, isDisplayed, dismiss, onBackgroundHover}) => {
 
   return (
       <div className={isDisplayed ? styles.container : styles.isHidden }>

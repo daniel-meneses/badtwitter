@@ -9,7 +9,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { parseQuery } from '../../common/helpers';
 
 type Props = {
-  dispatch: any;
+  dispatch: AppThunkDispatch;
   signupError: { error: any }
 }
 

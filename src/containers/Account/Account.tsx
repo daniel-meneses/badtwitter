@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/session'
 import ProfileEditForm from '../../components/ProfileEditForm/ProfileEditForm'
@@ -10,10 +10,10 @@ import styles from './Account.mod.scss'
 import Button, {BtnThemes} from '../../common/components/Button/Button'
 
 type Props = {
-  logout: (history: any) => void
+  dispatch: AppThunkDispatch;
 }
 
-const Account = ({logout} : Props) => {
+const Account: React.FC<Props> = ({dispatch}) => {
   
   const history = useHistory();
 
@@ -28,7 +28,7 @@ const Account = ({logout} : Props) => {
             <Button
               className={styles.logoutButton}
               theme={BtnThemes.PrimaryFill}
-              onClick={() => logout(history)}
+              onClick={() => dispatch(logout(history))}
               >
               {'Logout'}
               </Button>
@@ -40,4 +40,6 @@ const Account = ({logout} : Props) => {
   )
 }
 
-export default connect(null, {logout})(Account);
+const connectedComponent = connect(null)(Account);
+
+export default React.memo(connectedComponent);

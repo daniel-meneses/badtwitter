@@ -80,7 +80,7 @@ const NavContainer: React.FC<Props> = (props) => {
       text: 'Explore',
       icon: <ExploreIcon  {...logoStyle} />,
       selected: isSelected('/explore'),
-      onClick: () => handleNavOnclick('/explore')
+      onClick: () => handleNavOnclick('/explore/global')
     },
     {
       text: 'Inbox',

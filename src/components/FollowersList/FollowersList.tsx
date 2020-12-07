@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
-import { selectAcceptedFollowRequests } from '../../reducers/followers';
-import { Follower } from '../../types/common';
+import { selectAcceptedFollowers } from '../../reducers/subscriptions';
+import { Subscription } from '../../types/common';
 import UserPreview from '../UserPreview/UserPreview';
 
 type StoreProps = {
-    acceptedFollowers: Follower[];
+    acceptedFollowers: Subscription[];
 }
 
 const FollowersList: React.FC<StoreProps> = ({ acceptedFollowers }) => {
@@ -15,7 +15,7 @@ const FollowersList: React.FC<StoreProps> = ({ acceptedFollowers }) => {
         <div>
         {
             acceptedFollowers.length ? 
-            acceptedFollowers.map( (req: Follower, i: number) =>
+            acceptedFollowers.map( (req: Subscription, i: number) =>
             <UserPreview
                 key={req.id}
                 userId={req.userId}
@@ -29,5 +29,5 @@ const FollowersList: React.FC<StoreProps> = ({ acceptedFollowers }) => {
 }
 
 export default connect((state: RootState): StoreProps => ({ 
-    acceptedFollowers: Object.values(selectAcceptedFollowRequests(state)) 
+    acceptedFollowers: Object.values(selectAcceptedFollowers(state)) 
 }))(FollowersList);

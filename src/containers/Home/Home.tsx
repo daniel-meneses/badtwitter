@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import {
-  getPendingSubscriptionRequests,
-  getAcceptedSubscriptionRequests
-} from '../../actions/subscriptions'
-import { getAllLikes } from '../../actions/likes'
-import { getGlobalFeed } from '../../actions/feed'
+import { getHomeFeed } from '../../actions/feed'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
 import Trending from '../../components/Trending/Trending';
@@ -15,72 +10,61 @@ import MainContainer from '../MainContainer/MainContainer'
 import Header from '../../components/Header/Header';
 import styles from './Home.mod.scss';
 import { useScrollCallback } from '../../utils/hooks/useScrollHooks'
-import { getExploreContentWithTag, getTrendingTags } from '../../actions/explore'
 import { selectIsAuthenticated } from '../../reducers/session'
-
+import { selectHomeFeed } from '../../reducers/feeds';
+import Suggested from '../../components/SuggestedSubscriptions/SuggestedSubscriptions';
 
 type StoreProps = {
-  getPendingSubscriptionRequests: () => void,
-  getAcceptedSubscriptionRequests: () => void,
-  getAllLikes: () => void,
-  getGlobalFeed: (cursor?: string | null) => void,
   timeline: number[],
   nextCursor: string | null,
   getGlobalFeedReq: any,
   isAuthenticated: boolean,
-  getExploreContentWithTag: any,
+  dispatch: AppThunkDispatch;
 }
 
 function mapStateToProps(state: RootState) {
-  let { timeline, nextCursor } = state.feed.feed
+  let { timeline, nextCursor } = selectHomeFeed(state);
   return {
     timeline,
     nextCursor,
-    getGlobalFeedReq: state.feed.getGlobalFeedReq,
+    getGlobalFeedReq: state.feeds.getHomeFeedRequest,
     isAuthenticated: selectIsAuthenticated(state)
   }
 }
 
+const GuestPrompt: React.FC = () => {
+
+  const history = useHistory();
+  return (
+    <div className={styles.guestNotice}>
+      <span className={styles.guestNoticeLink} onClick={() => history.push('/signup')}>{`Sign up `}</span> 
+      or 
+      <span className={styles.guestNoticeLink} onClick={() => history.push('/login')}> log in</span> to use home feed
+    </div>
+  )
+}
 
 const Home = (props: StoreProps) => {
 
-  const {
-    getPendingSubscriptionRequests,
-    getAcceptedSubscriptionRequests,
-    getAllLikes,
-    getGlobalFeed,
-    timeline,
-    nextCursor,
-    getGlobalFeedReq,
-    isAuthenticated,
-  } = props
+  const { timeline, nextCursor, getGlobalFeedReq, isAuthenticated, dispatch } = props
 
   const history = useHistory();
 
   useEffect(() => {
     // Prevent duplicate data fetch on client rehydrate
     if (!getGlobalFeedReq.didSucceed) {
-      getGlobalFeed()
+      isAuthenticated && dispatch(getHomeFeed())
     }
-    // These requests are made only on client rehydrate
-    if (isAuthenticated) {
-      getPendingSubscriptionRequests()
-      getAcceptedSubscriptionRequests()
-      getAllLikes()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetcNextContentPage = (scrollPercent: number) => {
     let shouldFetch = scrollPercent > 60
-    if (shouldFetch && nextCursor && !getGlobalFeedReq.isFetching) {      
-      getGlobalFeed(nextCursor)
+    if (shouldFetch && nextCursor && !getGlobalFeedReq.isFetching) {
+      dispatch(getHomeFeed(nextCursor))
     }
   }
 
   useScrollCallback(fetcNextContentPage);
-  
-  const { isFetching, error } = getGlobalFeedReq;
 
   return (
     <MainContainer
@@ -92,40 +76,45 @@ const Home = (props: StoreProps) => {
             onTitleClick={() => history.push('/home')}
           />
           <PostForm />
-          <LoadingWrapper
-            isFetching={isFetching}
-            errors={error}
-          >
+          {
+            isAuthenticated ?
+            <LoadingWrapper {...getGlobalFeedReq} >
             {
-              timeline && timeline.map((postId: number, i: number) => {
+              timeline.length ? timeline.map((postId: number, i: number) => {
                 const isLastItem = timeline.length === i + 1
                 return (
                   <UserPost
-                  key={i}
-                  className={isLastItem ? styles.addMarginToLastListItem : ''}
-                  postId={postId}
+                    key={i}
+                    className={isLastItem ? styles.addMarginToLastListItem : ''}
+                    postId={postId}
                   />
                 )
-              }
-              )}
+            })
+            :
+            getGlobalFeedReq.didSucceed && <Suggested />
+          }
           </LoadingWrapper>
+          :
+          <GuestPrompt />
+              
+          }
         </>
       }
 
       mainRight=
       {
         <>
-        {
-          !isAuthenticated && 
-          <Header
-            title={'Login/Register'}
-            isRightHeader={true}
-            onTitleClick={() => history.push('/signup')}
-          />
-        }
-        <div>
-          <Trending />
-        </div>
+          {
+            !isAuthenticated &&
+            <Header
+              title={'Login/Register'}
+              isRightHeader={true}
+              onTitleClick={() => history.push('/signup')}
+            />
+          }
+          <div>
+            <Trending />
+          </div>
         </>
       }
 
@@ -134,11 +123,4 @@ const Home = (props: StoreProps) => {
 
 }
 
-export default connect(mapStateToProps,
-  {
-    getPendingSubscriptionRequests,
-    getAcceptedSubscriptionRequests,
-    getGlobalFeed,
-    getAllLikes,
-    getExploreContentWithTag,
-  })(Home)
+export default connect(mapStateToProps)(Home)
