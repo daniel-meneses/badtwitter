@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { createReqReducer } from './common';
 
 /*
     Controls data related to persisting UI state
@@ -84,4 +85,5 @@ const postForm = (state: any = {}, action: any) => {
 export default combineReducers({
     inbox,
     postForm,
+    getPreviewLink: createReqReducer(PostFormReqTypes.GET_LINK_PREVIEW),
 })

@@ -118,8 +118,10 @@ const global = (state = initialState, action: any): any => {
         case GlobalActionTypes.DECREMENT_POST_LIKE:
             var postId = action.response.post_id
             var post = {...state.posts.byId[postId]}
-            var like: any = post.likes - 1
-            var update = {[post.id] : {...post, like}}
+            var likes: number = post.likes - 1
+            var update = {[post.id] : {...post, likes}}
+            console.log(update);
+            
             return {
                 ...state,
                 posts: {

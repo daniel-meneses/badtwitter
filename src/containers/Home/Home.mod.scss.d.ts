@@ -4,6 +4,7 @@ interface CssExports {
   'addMarginToLastListItem': string;
   'guestNotice': string;
   'guestNoticeLink': string;
+  'whoToFollow': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

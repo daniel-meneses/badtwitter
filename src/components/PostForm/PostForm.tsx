@@ -9,13 +9,14 @@ import { PostFormActionTypes, selectLinkPreview, selectPersistedFormText } from 
 import { selectIsAuthenticated } from "../../reducers/session"
 import { selectCurrentUser } from "../../reducers/globalObjects"
 import LinkPreview, { PreviewStyleTypes } from "../LinkPreview/LinkPreview"
-import { LinkPreview as PreviewType } from '../../types/common'
+import { FetchRequest, LinkPreview as PreviewType } from '../../types/common'
 
 type Props = {
   avatar: string,
   isAuthenticated: boolean,
   persistedFormText: string,
   linkPreview: null | PreviewType;
+  getPreviewLink: FetchRequest;
   dispatch: AppThunkDispatch,
 }
 
@@ -25,12 +26,13 @@ function mapStateToProps(state: RootState) {
     isAuthenticated: selectIsAuthenticated(state),
     persistedFormText: selectPersistedFormText(state),
     linkPreview: selectLinkPreview(state),
+    getPreviewLink: state.ui.getPreviewLink,
   }
 }
 
 const PostForm: React.FC<Props> = (props) => {
 
-  const { avatar, isAuthenticated, persistedFormText='', linkPreview, dispatch } = props
+  const { avatar, isAuthenticated, persistedFormText='', linkPreview, getPreviewLink, dispatch } = props
 
   const [ postText, setPostText ] = useState(persistedFormText);
   const inputEl = useRef<HTMLDivElement>(null);
@@ -52,6 +54,7 @@ const PostForm: React.FC<Props> = (props) => {
   }
 
   const resetFromState = () => {
+    dismissLinkPreview();
     setPostText("")
     inputEl.current!.innerText = ""
   }
@@ -63,8 +66,10 @@ const PostForm: React.FC<Props> = (props) => {
   }
 
   const handleOnPaste = (e: React.ClipboardEvent) => {
-    let pastedText = e.clipboardData!.getData('Text');
+    e.preventDefault();
+    let pastedText = e.clipboardData!.getData('text/plain');
     let isLink = pastedText && pastedText.startsWith('http');
+    document.execCommand('inserttext', false, pastedText);
     return isLink && dispatch(getLinkPreview(pastedText))
   }
 
@@ -103,7 +108,7 @@ const PostForm: React.FC<Props> = (props) => {
       <div className={styles.postFormFooter}>
         <Button
           onClick={handleSubmit}
-          isDisabled={postText.length === 0}
+          isDisabled={getPreviewLink.isFetching || postText.length === 0}
           className={styles.postFormSubmit}
           theme={BtnThemes.PrimaryFill}
         >

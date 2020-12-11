@@ -91,7 +91,7 @@ const Home = (props: StoreProps) => {
                 )
             })
             :
-            getGlobalFeedReq.didSucceed && <Suggested />
+            getGlobalFeedReq.didSucceed && <Suggested className={styles.whoToFollow}/>
           }
           </LoadingWrapper>
           :

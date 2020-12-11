@@ -51,13 +51,12 @@ const NavContainer: React.FC<Props> = (props) => {
   const handleNavOnclick = (url: string, blockForGuest: boolean = false) => {
     if (blockForGuest && !isAuthenticated) { return }
     const isCurrentUrl = location.pathname === url
-    const isHome = url === '/home'
-    // If viewing home, Scroll to top of home
-    if (isCurrentUrl && isHome) {
+    if (isCurrentUrl) {
       document.getElementById('scrollable')?.scrollTo(0, 0);
     } else if (!isCurrentUrl) {
       history.push(url)
     }
+    
   }
 
   const topNavLogo = 

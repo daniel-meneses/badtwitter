@@ -10,6 +10,7 @@ import UserPreview from '../UserPreview/UserPreview';
 import styles from './SuggestedSubscriptions.mod.scss';
 
 type Props = {
+    className?: string;
     users: UserMap;
     currentUserId: number | null;
     acceptedSubscriptions: number[];
@@ -22,14 +23,14 @@ const mapProps = (state: RootState) => ({
     acceptedSubscriptions: selectAcceptedSubscriptionUserIds(state)
 })
 
-const Suggested: React.FC<Props> = ({ users, currentUserId, acceptedSubscriptions, dispatch }) => {
+const Suggested: React.FC<Props> = ({ className, users, currentUserId, acceptedSubscriptions, dispatch }) => {
 
     React.useEffect( () => {
         dispatch(getGlobalFeed())
     }, [])
     
     return (
-        <div>
+        <div className={className}>
             <h3 className={styles.header}>Who to follow</h3>
         {
             Object.values(users).slice(0, 5).map( u => {
