@@ -15,6 +15,7 @@ import { selectGlobalFeed, selectTagFeedByName } from '../../reducers/feeds';
 import { FetchRequest } from '../../types/common';
 import { getGlobalFeed } from '../../actions/feed';
 import { useScrollCallback } from '../../utils/hooks/useScrollHooks';
+import FeedList from '../../components/FeedList/FeedList';
 
 type OwnProps = {
   match: any;
@@ -25,7 +26,7 @@ type ConnectedProps = {
   timeline: number[];
   nextCursor: string;
   tagId: string | null;
-  feedFetchState: FetchRequest;
+  fetchState: FetchRequest;
   dispatch: AppThunkDispatch;
 }
 
@@ -35,31 +36,31 @@ function mapProps(state: RootState, ownProps: OwnProps) {
   const isAuthenticated = selectIsAuthenticated(state);
   if (isGlobal) {
     let { timeline, nextCursor } = selectGlobalFeed(state);
-    let feedFetchState = state.feeds.getGlobalFeedRequest;
+    let fetchState = state.feeds.getGlobalFeedRequest;
     return {
       tagId: null,
       timeline,
       nextCursor,
       isAuthenticated,
-      feedFetchState
+      fetchState
     }
   } else {
     let tagId = ownProps.match.params.tagId
     let { timeline, nextCursor } = selectTagFeedByName(state, tagId) || {}
-    let feedFetchState = state.feeds.getTagFeedRequest;
+    let fetchState = state.feeds.getTagFeedRequest;
     return {
       tagId,
       timeline,
       nextCursor,
       isAuthenticated,
-      feedFetchState
+      fetchState
     }
   }
 }
 
 const Explore: React.FC<ConnectedProps & OwnProps> = (props) => {
 
-  const { isAuthenticated, timeline = [], nextCursor = '', feedFetchState, tagId, dispatch } = props;
+  const { isAuthenticated, timeline = [], nextCursor = '', fetchState, tagId, dispatch } = props;
 
   const history = useHistory();
 
@@ -71,7 +72,7 @@ const Explore: React.FC<ConnectedProps & OwnProps> = (props) => {
 
   const fetcNextContentPage = (scrollPercent: number) => {
     let shouldFetch = scrollPercent > 60
-    if (shouldFetch && nextCursor && !feedFetchState.isFetching) {
+    if (shouldFetch && nextCursor && !fetchState.isFetching) {
       dispatch(getGlobalFeed(nextCursor))
     }
   }
@@ -89,20 +90,7 @@ const Explore: React.FC<ConnectedProps & OwnProps> = (props) => {
             displayBackButton={tagId ? true : false}
           />
           {
-            <LoadingWrapper {...feedFetchState}>
-              {
-                timeline.length
-                  ? timeline.map((postId: number, i: number) => {
-                    const isLastItem = timeline.length === i + 1
-                    return (<UserPost
-                      key={postId}
-                      className={isLastItem ? styles.addMarginToLastListItem : ''}
-                      postId={postId}
-                    />)
-                  })
-                  : !feedFetchState.isFetching && <ErrorMessage text={'No explore posts to display'} />
-              }
-            </LoadingWrapper>
+            <FeedList {...props} />
           }
         </>
       }

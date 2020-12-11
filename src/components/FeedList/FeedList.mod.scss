@@ -1,0 +1,10 @@
+@import '../../common/theme/mixins.scss';
+
+.addMarginToLastListItem {
+    @include respond-to('mobile') {
+      margin-bottom: 52px;
+    }
+    @include respond-to('small') {
+      margin-bottom: 0px;
+    }
+  }
