@@ -5,9 +5,9 @@ interface CssExports {
   'item_mentions': string;
   'item_title': string;
   'trendingContainer': string;
-  'trending_item': string;
+  'trendingRightContainer': string;
+  'trending_item2': string;
   'trending_show_more': string;
-  'trending_title': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

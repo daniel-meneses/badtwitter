@@ -12,6 +12,7 @@ import FollowersList from '../../components/FollowersList/FollowersList';
 import Trending from '../../components/Trending/Trending';
 import { setFocusedInboxTab } from '../../reducers/ui';
 import SubscriptionsList from '../../components/SubscriptionsList/SubscriptionsList';
+import TrendingWidget from '../../components/Widget/TrendingWidget';
 
 type Props = {
   dispatch: AppThunkDispatch;
@@ -43,6 +44,7 @@ const Inbox: React.FC<Props> = (props) => {
         history.push('/inbox/messages')
       },
       isFocused: isMessages,
+      children: <MessageList />,
     },
     {
       title: 'Followers',
@@ -51,6 +53,7 @@ const Inbox: React.FC<Props> = (props) => {
         history.push('/inbox/followers')
       },
       isFocused: isFollowers,
+      children: <FollowersList />,
     },
     {
       title: 'Subscriptions',
@@ -59,6 +62,7 @@ const Inbox: React.FC<Props> = (props) => {
         history.push('/inbox/subscriptions')
       },
       isFocused: isSubscriptions,
+      children: <SubscriptionsList />,
     }
   ]
 
@@ -74,24 +78,11 @@ const Inbox: React.FC<Props> = (props) => {
             tabs={inboxTabs} 
             className={styles.topTabs}
             />
-          <div className={styles.inboxList}>
-            {
-              isMessages && <MessageList />
-            }
-            {
-              isFollowers && <FollowersList />
-            }
-            {
-              isSubscriptions && <SubscriptionsList />
-            }
-          </div>
         </>
       }
       mainRight=
       {
-        <div>
-          <Trending postId={1} />
-        </div>
+        <TrendingWidget />
       }
     />
 

@@ -22,7 +22,7 @@ type Props = OwnProps & StoreProps
 
 const tagHtml = (str: string, url = '') => (
     <span key={Math.random()}>
-        <a className={styles.tag} href={url ? url : `/explore/tags/${str.slice(1)}`} role='link' target={url ? "_blank" : "_self"}>
+        <a className={styles.tag} href={url ? url : `/explore/trending/${str.slice(1)}`} role='link' target={url ? "_blank" : "_self"}>
             {str + ' '}
         </a>
     </span>

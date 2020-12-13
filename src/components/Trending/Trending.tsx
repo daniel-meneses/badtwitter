@@ -1,49 +1,27 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import classNames from 'classnames';
+import React  from 'react'
 import { useHistory } from 'react-router-dom'
-import { getTrendingTags } from '../../actions/explore';
-import { selectTrendingTags } from '../../reducers/explore';
 import styles from './Trending.mod.scss';
+import { Trending } from '../../types/common';
 
-const Trending = (props: any) => {
 
-  const { trending = [], dispatch } = props;
+interface TrendingComp extends Trending {
+  className?: string;
+}
+
+const Trending: React.FC<TrendingComp> = ({ name, count, className }) => {
 
   let history = useHistory()
 
-  let { trendingContainer, trending_title, trending_item, item_category, item_title, item_mentions} = styles
-
-  useEffect( () => {
-    dispatch(getTrendingTags())
-  }, [])
-
-  const trendingHtml: React.FC<any> = ( {name, count}: any, i: number) => (
-    <div key={i} className={trending_item} onClick={() => history.push('/explore/tags/' + name)}>
-          <div className={item_category}>Trending in Australia</div>
-          <div className={item_title}>{name}</div>
-          <div className={item_mentions}>{`${count} mention${count > 1 ? 's' : ''}`}</div>
-        </div>
-  )
-
   return (
-      <div  className={trendingContainer}>
-        <div >
-        <div className={trending_title}>Trending</div>
-          { 
-            trending.map( (t: any, i: number) => {
-              return trendingHtml({...t}, i)
-            })
-          }
-        <div className={styles.trending_show_more} onClick={() => history.push('/explore/global')}>
-          <div className={styles.trending_show_more}>Explore</div>
-        </div>
-        </div>
-      </div>
-  );
-}
+    <div className={classNames(className, styles.trending_item2)}
+      onClick={() => history.push('/explore/trending/' + name)}
+      >
+      <div className={styles.item_category}>Trending in Australia</div>
+      <div className={styles.item_title}>{name}</div>
+      <div className={styles.item_mentions}>{`${count} mention${count > 1 ? 's' : ''}`}</div>
+    </div>
+  )
+};
 
-const connectedComponent = connect((state: RootState) => ({
-  trending: selectTrendingTags(state)
-}))(Trending)
-
-export default React.memo(connectedComponent);
+export default React.memo(Trending);

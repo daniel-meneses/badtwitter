@@ -1,0 +1,63 @@
+@import '../../common//theme/mixins.scss';
+
+
+.widgetContainer {
+  @include respond-to('small') {
+    width: 230px;
+  }
+  @include respond-to('medium') {
+    width: 275px;
+  }
+  @include respond-to('large') {
+    width: 275px;
+  }
+  @include respond-to('xlarge') {
+    width: 320px;
+  }
+  @include respond-to('xxlarge') {
+    width: 350px;
+  }
+}
+
+
+.widgetContainer {
+    position: fixed;
+    margin-top: 57px;
+    margin-left: 14px;
+    border-radius: 16px;
+    width: 350px; // set breakpoints for container items
+    background-color: lighten(#c9d6cd, 14%);
+    .title {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      line-height: 24px;
+      padding: 15px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      border-bottom: solid lighten(#c9d6cd, 5%) 1px;
+    }
+    .showMore {
+      background-color: lighten(#c9d6cd, 14%);
+      line-height: 46px;
+      padding-left: 15px;
+      color: green;
+      border-bottom-right-radius: 15px;
+      border-bottom-left-radius: 15px;
+      &:hover{
+        cursor: pointer;
+        background-color: lighten(#c9d6cd, 11%);
+        transition: background-color 0.2s linear;
+      }
+    }
+  }
+
+.itemHover {
+  background-color: lighten(#c9d6cd, 14%);
+  &:hover{
+    cursor: pointer;
+    background-color: lighten(#c9d6cd, 11%);
+    transition: background-color 0.2s linear;
+  }
+}

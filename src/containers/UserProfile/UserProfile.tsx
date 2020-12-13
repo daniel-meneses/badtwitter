@@ -12,6 +12,7 @@ import { FetchRequest } from '../../types/common';
 import ErrorMessage from '../../common/components/ErrorMessage/ErrorMessage';
 import styles from '../Home/Home.mod.scss';
 import { selectUserProfileById } from '../../reducers/feeds';
+import TrendingWidget from '../../components/Widget/TrendingWidget';
 
 type ConnectedProps = {
   timeline: number[];
@@ -88,9 +89,7 @@ const UserProfile: React.FC<Props> = (props) => {
         </>
       }
       mainRight={
-        <div>
-          <Trending />
-        </div>
+        <TrendingWidget />
       }
     />
 

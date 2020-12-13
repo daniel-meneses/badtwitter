@@ -20,6 +20,11 @@ export interface Tag {
     count: number;
 }
 
+export interface Trending {
+    name: string;
+    count: number;
+}
+
 export interface LinkPreview {
     title: string,
     description: string,

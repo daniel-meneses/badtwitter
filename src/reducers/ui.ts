@@ -1,6 +1,32 @@
 import { combineReducers } from 'redux';
 import { createReqReducer } from './common';
 
+export enum ExploreTabActions {
+    SET_EXPLORE_TAB_FOCUS = 'SET_EXPLORE_TAB_FOCUS',
+}
+
+export enum ExploreTabs {
+    GLOBAL = 'global',
+    TRENDING = 'trending',
+  }
+
+export const setFocusedExploreTab = (tab: ExploreTabs) => 
+    ({ type: ExploreTabActions.SET_EXPLORE_TAB_FOCUS, tab: tab });
+
+const explore = (state = {focusedTab: ExploreTabs.GLOBAL}, action: any) => {
+    switch (action.type) {
+        case ExploreTabActions.SET_EXPLORE_TAB_FOCUS:
+            console.log(action.tab);
+                   
+            return {
+                ...state,
+                focusedTab: action.tab,
+            };
+        default:
+            return state;
+    }
+}
+
 /*
     Controls data related to persisting UI state
     Example: focused inbox tab, home scroll posiiton
@@ -82,8 +108,11 @@ const postForm = (state: any = {}, action: any) => {
     }
 }
 
+
+
 export default combineReducers({
     inbox,
     postForm,
+    explore,
     getPreviewLink: createReqReducer(PostFormReqTypes.GET_LINK_PREVIEW),
 })

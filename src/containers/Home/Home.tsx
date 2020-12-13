@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { getHomeFeed } from '../../actions/feed'
 import { connect } from 'react-redux';
 import PostForm from '../../components/PostForm/PostForm';
-import Trending from '../../components/Trending/Trending';
 import UserPost from '../../components/PostMini/UserPost';
 import LoadingWrapper from '../../components/LoadingWrapper/LoadingWrapper'
 import MainContainer from '../MainContainer/MainContainer'
@@ -13,6 +12,7 @@ import { useScrollCallback } from '../../utils/hooks/useScrollHooks'
 import { selectIsAuthenticated } from '../../reducers/session'
 import { selectHomeFeed } from '../../reducers/feeds';
 import Suggested from '../../components/SuggestedSubscriptions/SuggestedSubscriptions';
+import TrendingWidget from '../../components/Widget/TrendingWidget';
 
 type StoreProps = {
   timeline: number[],
@@ -112,9 +112,7 @@ const Home = (props: StoreProps) => {
               onTitleClick={() => history.push('/signup')}
             />
           }
-          <div>
-            <Trending />
-          </div>
+          <TrendingWidget />
         </>
       }
 

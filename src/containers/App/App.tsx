@@ -70,8 +70,8 @@ const App = ({ isAuthenticated, dispatch }: Props) => {
           <Route path='/user/:id' exact component={UserProfile} />
           <Route path='/inbox/:tab' exact component={Inbox} />
           <Route path="/inbox" render={() => <Redirect to="/inbox/messages" />} />
-          <Route path='/explore/:subject' exact component={Explore} />
-          <Route path='/explore/:subject/:tagId' exact component={Explore} />
+          <Route path='/explore/:tab' exact component={Explore} />
+          <Route path='/explore/:tab/:tagId' exact component={Explore} />
           <Route path='/account' exact component={Account} />
           <Route path="/signup" render={
             () => isAuthenticated ? <Redirect to="/home" /> : <SignUp />

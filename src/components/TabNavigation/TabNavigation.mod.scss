@@ -3,30 +3,47 @@
 
 $outline: lighten(#c9d6cd, 6%);
 
+.tabbedView {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tabContainer {
+  position: sticky;
+  display: flex;
+  height: 46px;
+  width: 100%;
+  background: white;
+  border-bottom: solid $outline 1px;
+  z-index: 11;
+  @include respond-to('mobile') {
+    top: 32px;
+    height: 32px;
+  }
+  @include respond-to('small') {
+    top: 53px;
+    height: 46px;
+  }
+  :last-child {
+    border-right: none;
+  }
+
+}
+
 .tab {
   display: flex;
   flex: 1;
-  background: white;
-  border: solid $outline 1px;
-}
-
-.tabContent {
-  display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  padding-top: 11px;
-  padding-bottom: 11px;
+  border-right: solid $outline 1px;
   cursor: pointer;
   &:hover{
     background: #f0f5f5;
   }
 }
 
-.tabHeaderItemFocused {
+.focusedTab {
   color: darken(green, 10%);
   background: #f0f5f5;
 }
