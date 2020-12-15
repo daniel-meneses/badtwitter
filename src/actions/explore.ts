@@ -40,7 +40,7 @@ export function getTrendingTags(): AppThunk {
     }
 }
 
-const url = IS_PRODUCTION ? 'https://still-shelf-30581.herokuapp.com/api/feed' : 'http://localhost:3000/api/feed';
+const url = IS_PRODUCTION ? 'https://arcane-shelf-19658.herokuapp.com/api/feed' : 'http://localhost:3000/api/feed';
 
 export function getNewsArticles({page=1, limit=40 } = {}): AppThunk {
     let type = ExploreReqActionTypes.GET_NEWS_ARTICLES;
