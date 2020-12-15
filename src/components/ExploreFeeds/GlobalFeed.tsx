@@ -9,7 +9,10 @@ import { IFeedList } from "./types";
 
 const GlobalFeed: React.FC<IFeedList> = ({ nextCursor, dispatch, ...restProps }) => {
   const { fetchState } = restProps;
-  React.useEffect(() => {dispatch(getGlobalFeed())},[])
+  
+  React.useEffect(() => {
+    !fetchState.didSucceed && dispatch(getGlobalFeed())
+  },[])
   useScrollCallback((scrollPercent: number) => {
     const shouldFetch = scrollPercent > 60 && nextCursor && !fetchState.isFetching
     shouldFetch && dispatch(getGlobalFeed(nextCursor!))
