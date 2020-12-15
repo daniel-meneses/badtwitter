@@ -8,6 +8,7 @@ export enum ExploreTabActions {
 export enum ExploreTabs {
     GLOBAL = 'global',
     TRENDING = 'trending',
+    NEWS = 'news',
   }
 
 export const setFocusedExploreTab = (tab: ExploreTabs) => 
@@ -16,8 +17,6 @@ export const setFocusedExploreTab = (tab: ExploreTabs) =>
 const explore = (state = {focusedTab: ExploreTabs.GLOBAL}, action: any) => {
     switch (action.type) {
         case ExploreTabActions.SET_EXPLORE_TAB_FOCUS:
-            console.log(action.tab);
-                   
             return {
                 ...state,
                 focusedTab: action.tab,
@@ -73,7 +72,7 @@ const postFormState: postFormState = {
     postFormText: '',
 }
 
-export const selectPersistedFormText = (state: RootState) => state.ui.postForm.postFormText;
+export const selectPersistedFormText = (state: RootState) => state.ui.postForm.persistedFormText;
 export const selectLinkPreview = (state: RootState) => state.ui.postForm.linkPreview;
 
 const postForm = (state: any = {}, action: any) => {

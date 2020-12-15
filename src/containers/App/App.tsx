@@ -18,6 +18,7 @@ import { selectIsAuthenticated } from '../../reducers/session';
 import { usePersistedScroll } from '../../utils/hooks/useScrollHooks';
 import { getAllLikes } from '../../actions/likes';
 import { getPendingSubscriptionRequests, getAcceptedSubscriptionRequests } from '../../actions/subscriptions';
+import Article from '../Article/Article';
 
 interface StoreProps {
   isAuthenticated: boolean;
@@ -70,6 +71,7 @@ const App = ({ isAuthenticated, dispatch }: Props) => {
           <Route path='/user/:id' exact component={UserProfile} />
           <Route path='/inbox/:tab' exact component={Inbox} />
           <Route path="/inbox" render={() => <Redirect to="/inbox/messages" />} />
+          <Route path='/article/:id' exact component={Article} />
           <Route path='/explore/:tab' exact component={Explore} />
           <Route path='/explore/:tab/:tagId' exact component={Explore} />
           <Route path='/account' exact component={Account} />

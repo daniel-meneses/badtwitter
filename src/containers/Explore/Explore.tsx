@@ -11,6 +11,7 @@ import FollowWidget from '../../components/Widget/FollowWidget';
 import TrendingFeed from '../../components/ExploreFeeds/TrendingFeed';
 import GlobalFeed from '../../components/ExploreFeeds/GlobalFeed';
 import TagFeed from '../../components/ExploreFeeds/TagFeed';
+import NewsFeed from '../../components/ExploreFeeds/NewsFeed';
 
 type OwnProps = {
   match: any;
@@ -47,6 +48,14 @@ const Explore: React.FC<ConnectedProps & OwnProps> = (props) => {
       },
       isFocused: tab === ExploreTabs.TRENDING,
       children:  tagId ? <TagFeed {...props}/> : <TrendingFeed />
+    },
+    {
+      title: 'News',
+      onClick: () => {
+        history.push('/explore/news')
+      },
+      isFocused: tab === ExploreTabs.NEWS,
+      children:  <NewsFeed />
     }
   ]
 

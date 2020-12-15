@@ -37,3 +37,33 @@ export function getTrendingTags(): AppThunk {
             });
     }
 }
+
+export function getNewsArticles({page=1, limit=40 } = {}): AppThunk {
+    let type = ExploreReqActionTypes.GET_NEWS_ARTICLES;
+    return (dispatch: Dispatch) => {
+        dispatch(actions.reqStart(type))
+        return api.fetchFromUrl(`http://localhost:3000/api/feed/news?page=${page}&limit=${limit}`)
+            .then((response) => {
+                dispatch(actions.reqSuccess(type))
+                dispatch({ type: ExploreActionTypes.SET_NEWS_ARTICLES, response})
+            })
+            .catch((error) => {
+                dispatch(actions.reqFail(type, error))
+            });
+    }
+}
+
+export function getNewsArticleById(id: number): AppThunk {
+    let type = ExploreReqActionTypes.GET_NEWS_ARTICLES;
+    return (dispatch: Dispatch) => {
+        dispatch(actions.reqStart(type))
+        return api.fetchFromUrl(`http://localhost:3000/api/feed/article/${id}`)
+            .then((response) => {
+                dispatch(actions.reqSuccess(type))
+                dispatch({ type: ExploreActionTypes.SET_NEWS_ARTICLES, response})
+            })
+            .catch((error) => {
+                dispatch(actions.reqFail(type, error))
+            });
+    }
+}

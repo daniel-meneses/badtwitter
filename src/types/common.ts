@@ -32,6 +32,18 @@ export interface LinkPreview {
     url: string,
 }
 
+export interface NewsArticle {
+    id: string;
+    author: string;
+    title: string;
+    description: string;
+    imageLarge: string;
+    imageSmall: string;
+    url: string;
+    date: string;
+    tag: string;
+  }
+
 export interface Subscription {
     id: number;
     accepted: boolean;

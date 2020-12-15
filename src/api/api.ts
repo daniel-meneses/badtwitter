@@ -65,7 +65,14 @@ export default {
     })
     .then(parseResponse);
   },
-
+  fetchFromUrl(url: string, params = {}, header = {}) {
+    return fetch(`${url}${queryString(params)}`, {
+      method: 'GET',
+      headers: headers(header),
+      credentials: 'include',
+    })
+    .then(parseResponse);
+  },
   post(url: string, data: any) {
     const body = JSON.stringify(data);
 

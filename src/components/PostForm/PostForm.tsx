@@ -17,29 +17,31 @@ type Props = {
   persistedFormText: string,
   linkPreview: null | PreviewType;
   getPreviewLink: FetchRequest;
-  dispatch: AppThunkDispatch,
+  dispatch: AppThunkDispatch;
+  shouldDisplayPostForm: boolean;
 }
 
 function mapStateToProps(state: RootState) {
   return {
     avatar: (selectCurrentUser(state) || {}).avatar,
     isAuthenticated: selectIsAuthenticated(state),
-    persistedFormText: selectPersistedFormText(state),
+    persistedFormText: state.ui.postForm.persistedFormText,
     linkPreview: selectLinkPreview(state),
     getPreviewLink: state.ui.getPreviewLink,
+    shouldDisplayPostForm: state.ui.postForm.shouldDisplayPostForm,
   }
 }
 
 const PostForm: React.FC<Props> = (props) => {
 
-  const { avatar, isAuthenticated, persistedFormText='', linkPreview, getPreviewLink, dispatch } = props
+  const { avatar, isAuthenticated, persistedFormText='', linkPreview, getPreviewLink, shouldDisplayPostForm, dispatch } = props
 
   const [ postText, setPostText ] = useState(persistedFormText);
   const inputEl = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     inputEl.current!.innerText = persistedFormText
-  }, [])
+  }, [shouldDisplayPostForm])
 
   useEffect(() => {
     dispatch({ type: PostFormActionTypes.SET_POST_FORM_TEXT, text: postText })
@@ -121,4 +123,4 @@ const PostForm: React.FC<Props> = (props) => {
 
 const connectedComponent = connect(mapStateToProps)(PostForm);
 
-export default React.memo(connectedComponent)
+export default connectedComponent;// React.memo(connectedComponent)
