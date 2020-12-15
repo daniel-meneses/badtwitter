@@ -4,6 +4,8 @@ import * as actions from './common';
 import api from '../api/api';
 import { ExploreActionTypes, ExploreReqActionTypes } from '../reducers/explore';
 import { GlobalActionTypes } from '../reducers/globalObjects';
+import { IS_PRODUCTION } from '../constants/environment';
+
 
 export function getExploreContentWithTag(tag: string, cursor: string = ''): AppThunk {
     let type = FeedReqActionTypes.GET_TAG_FEED;
@@ -38,11 +40,13 @@ export function getTrendingTags(): AppThunk {
     }
 }
 
+const url = IS_PRODUCTION ? 'https://still-shelf-30581.herokuapp.com/api/feed' : 'http://localhost:3000/api/feed';
+
 export function getNewsArticles({page=1, limit=40 } = {}): AppThunk {
     let type = ExploreReqActionTypes.GET_NEWS_ARTICLES;
     return (dispatch: Dispatch) => {
         dispatch(actions.reqStart(type))
-        return api.fetchFromUrl(`http://localhost:3000/api/feed/news?page=${page}&limit=${limit}`)
+        return api.fetchFromUrl(`${url}/news?page=${page}&limit=${limit}`)
             .then((response) => {
                 dispatch(actions.reqSuccess(type))
                 dispatch({ type: ExploreActionTypes.SET_NEWS_ARTICLES, response})
@@ -57,7 +61,7 @@ export function getNewsArticleById(id: number): AppThunk {
     let type = ExploreReqActionTypes.GET_NEWS_ARTICLES;
     return (dispatch: Dispatch) => {
         dispatch(actions.reqStart(type))
-        return api.fetchFromUrl(`http://localhost:3000/api/feed/article/${id}`)
+        return api.fetchFromUrl(`${url}/article/${id}`)
             .then((response) => {
                 dispatch(actions.reqSuccess(type))
                 dispatch({ type: ExploreActionTypes.SET_NEWS_ARTICLES, response})
