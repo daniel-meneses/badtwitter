@@ -28,6 +28,7 @@ const TabbedView: React.FC<props> = (props) => {
               id={item.title}
               className={focusedStyle(item.isFocused)}
               onClick={item.onClick}
+              data-testid={'top-tab'}
             >
               {item.title}
             </div>

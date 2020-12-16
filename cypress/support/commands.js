@@ -23,7 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-
+import * as url from '../constants/urls';
 
 Cypress.Commands.add('stubLogin', () => {
   cy.route('POST', '/api/v1/accounts/session', 'fixture:login_success.json').as('stubLogin');
@@ -37,7 +37,6 @@ Cypress.Commands.add('stubLoginFailure', () => {
       response: 'fixture:login_failure.json',
   }).as('stubLoginFailure');
 });
-
 
 Cypress.Commands.add('stubPostLike', () => {
   cy.route({
@@ -55,10 +54,46 @@ Cypress.Commands.add('stubDeleteLike', () => {
   }).as('stubDeleteLike');
 });
 
-Cypress.Commands.add('stubGlobalFeed', () => {
-  cy.route('GET', '/api/v1/feed/global', 'fixture:global_feed.json').as('stubGlobalFeed');
+
+Cypress.Commands.add('stubLogin', () => {
+  cy.intercept('POST', url.LOGIN, { fixture: 'login_success.json' })
 });
 
-Cypress.Commands.add('stubUserProfile', () => {
-  cy.route('GET', '/api/v1/user/39', 'fixture:user_profile.json').as('stubUserProfile');
+Cypress.Commands.add('stubFetchHomeFeed', () => {
+  cy.intercept('GET', url.HOME_FEED, { fixture: 'home_feed.json' })
 });
+
+Cypress.Commands.add('stubFetchLikes', () => {
+  cy.intercept('GET', url.LIKES, { fixture: 'likes.json' })
+});
+
+Cypress.Commands.add('stubFetchTrendingTags', () => {
+  cy.intercept('GET', url.TAGS, { fixture: 'tags_group_by_title.json' })
+});
+
+Cypress.Commands.add('stubFetchGlobalFeed', () => {
+  cy.intercept('GET', url.GLOBAL_FEED, { fixture: 'global_feed.json' })
+});
+
+Cypress.Commands.add('stubFetchNewsFeed', () => {
+  cy.intercept('GET', url.NEWS_FEED, { fixture: 'news_feed.json' })
+});
+
+Cypress.Commands.add('stubFetchFollowers', () => {
+  cy.intercept('GET', url.FOLLOWERS, { fixture: 'followers.json' })
+});
+
+Cypress.Commands.add('stubFetchSubscriptions', () => {
+  cy.intercept('GET', url.SUBSCRIPTIONS, { fixture: 'subscriptions.json' })
+});
+
+Cypress.Commands.add('stubFetchSelfProfile', () => {
+  cy.intercept('GET', url.SELF_PROFILE, { fixture: 'self_profile_feed.json' })
+});
+
+Cypress.Commands.add('stubFetchUserProfileFeed', () => {
+  cy.intercept('GET', url.USER_PROFILE, { fixture: 'user_profile_feed.json' })
+});
+
+
+

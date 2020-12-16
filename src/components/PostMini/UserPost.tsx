@@ -66,7 +66,7 @@ const UserPost: React.FC<Props> = (props) => {
     const timeStamp = moment(createdAt).format("MMM Do LT");
 
     return (
-        <div className={classNames(styles.userPost, className)}>
+        <div data-testid={'user-post'} className={classNames(styles.userPost, className)}>
             <UserInfo userId={userId}>
                 <div>
                     { formatJsx(message) }

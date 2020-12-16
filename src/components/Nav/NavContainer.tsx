@@ -112,7 +112,7 @@ const NavContainer: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={styles.navContainer}>
+    <div data-testid={'nav-container'} className={styles.navContainer}>
       {
         topNavLogo
       }

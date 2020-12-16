@@ -27,7 +27,7 @@ const ArticleFull: React.FC<NewsArticle & Props> = (article) => {
   }
 
   return (
-    <div className={styles.articleContainer}>
+    <div data-testid={'article-container'} className={styles.articleContainer}>
       <img src={imageLarge || imageSmall} />
       <div className={styles.infoContainer}>
         <div>
@@ -36,7 +36,7 @@ const ArticleFull: React.FC<NewsArticle & Props> = (article) => {
         </div>
         <h1>{title}</h1>
         <p>{description}</p>
-        <div className={styles.bottomButtons}>
+        <div data-testid={'article-button-container'} className={styles.bottomButtons}>
           <a target="_blank" className={styles.abutton} href={url}>
           <Selectable
             colorStyle={'secondary'}

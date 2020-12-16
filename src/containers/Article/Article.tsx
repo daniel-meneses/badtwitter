@@ -8,6 +8,7 @@ import { selectExploreArticles } from '../../reducers/explore';
 import FollowWidget from '../../components/Widget/FollowWidget';
 import ArticleFull from '../../components/Article/ArticleFull';
 import { getNewsArticleById } from '../../actions/explore';
+import GuestHeader from '../../components/Header/GuestHeader';
 
 type OwnProps = {
   match: any;
@@ -48,12 +49,7 @@ const Explore: React.FC<ConnectedProps & OwnProps> = (props) => {
       mainRight={
         <>
           {
-            !isAuthenticated &&
-            <Header
-              title={'Login/Register'}
-              isRightHeader={true}
-              onTitleClick={() => history.push('/signup')}
-            />
+            !isAuthenticated && <GuestHeader />
           }
             <FollowWidget />
         </>

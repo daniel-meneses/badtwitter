@@ -94,12 +94,12 @@ client.connect().then(() => {
       let shouldMock = req.url !== '/login' && req.url !== '/signup'
       if (shouldMock) {
         store.dispatch({ type: "AUTHENTICATION_SUCCESS", response: sessionStub })
+        resolve(true)
       }
-      resolve()
+      resolve(false)
     })
 
     let session = getAppCookies(req)['_twitterclone_key'];
-    //var promise = false ? mockSession : store.dispatch(getSessionUser(req.headers))
     let promise = session ? store.dispatch(getSessionUser(req.headers)) : new Promise((res) => res(false))
 
     promise.then((isAuthenticated) => {

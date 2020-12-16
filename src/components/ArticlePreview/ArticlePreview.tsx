@@ -19,7 +19,7 @@ const ArticlePreview: React.FC<Article> = (article) => {
   const { id, title, imageSmall, imageLarge, author, date, tag } = article;
 
   return (
-    <div onClick={() => history.push('/article/' + id)} className={styles.articlePreview}>
+    <div data-testid={'article-list-post'} onClick={() => history.push('/article/' + id)} className={styles.articlePreview}>
       <div className={styles.infoContainer}>
         <div>
           <span className={styles.author}>{author}</span>

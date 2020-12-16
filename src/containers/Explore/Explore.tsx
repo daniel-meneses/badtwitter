@@ -12,6 +12,7 @@ import TrendingFeed from '../../components/ExploreFeeds/TrendingFeed';
 import GlobalFeed from '../../components/ExploreFeeds/GlobalFeed';
 import TagFeed from '../../components/ExploreFeeds/TagFeed';
 import NewsFeed from '../../components/ExploreFeeds/NewsFeed';
+import GuestHeader from '../../components/Header/GuestHeader';
 
 type OwnProps = {
   match: any;
@@ -76,12 +77,7 @@ const Explore: React.FC<ConnectedProps & OwnProps> = (props) => {
       mainRight={
         <>
           {
-            !isAuthenticated &&
-            <Header
-              title={'Login/Register'}
-              isRightHeader={true}
-              onTitleClick={() => history.push('/signup')}
-            />
+            !isAuthenticated && <GuestHeader />
           }
             <FollowWidget />
         </>

@@ -17,7 +17,7 @@ type ConnectedProps = {
   userList: any[];
 }
 
-const WhoToFollow: React.FC<OwnProps & ConnectedProps> = ({ userList }) => {
+const WhoToFollow: React.FC<OwnProps & ConnectedProps> = ({ userList=[] }) => {
 
   const history = useHistory();
 

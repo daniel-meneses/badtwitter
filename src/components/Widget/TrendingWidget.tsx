@@ -13,7 +13,7 @@ type Props = {
   dispatch: AppThunkDispatch;
 }
 
-const TrendingWidget: React.FC<Props> = ({trending, dispatch}) => {
+const TrendingWidget: React.FC<Props> = ({trending = [], dispatch}) => {
 
   const history = useHistory();
 
@@ -27,7 +27,7 @@ const TrendingWidget: React.FC<Props> = ({trending, dispatch}) => {
           onShowMoreClick={() => history.push('/explore/trending')}
       >
       { 
-        trending.map((t: TrendingType, i: number) =>  
+        trending && trending.map((t: TrendingType, i: number) =>  
           <Trending {...t} className={styles.itemHover} key={i} />)
       }
       </Widget>

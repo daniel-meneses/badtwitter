@@ -18,7 +18,7 @@ const ArticleHeader: React.FC<Article> = (article) => {
   const { id, title, imageSmall, imageLarge, author, date, tag } = article;
 
   return (
-    <div onClick={() => history.push('/article/' + id)} className={styles.articleHeader}>
+    <div data-testid={'article-top-post'} onClick={() => history.push('/article/' + id)} className={styles.articleHeader}>
       <img src={imageLarge || imageSmall} />
       <div className={styles.whiteTextBackground}></div>
       <div className={styles.infoContainer}>

@@ -13,6 +13,7 @@ import { selectIsAuthenticated } from '../../reducers/session'
 import { selectHomeFeed } from '../../reducers/feeds';
 import Suggested from '../../components/SuggestedSubscriptions/SuggestedSubscriptions';
 import TrendingWidget from '../../components/Widget/TrendingWidget';
+import GuestHeader from '../../components/Header/GuestHeader';
 
 type StoreProps = {
   timeline: number[],
@@ -36,7 +37,7 @@ const GuestPrompt: React.FC = () => {
 
   const history = useHistory();
   return (
-    <div className={styles.guestNotice}>
+    <div data-testid={'home-guest-text'} className={styles.guestNotice}>
       <span className={styles.guestNoticeLink} onClick={() => history.push('/signup')}>{`Sign up `}</span> 
       or 
       <span className={styles.guestNoticeLink} onClick={() => history.push('/login')}> log in</span> to use home feed
@@ -105,12 +106,7 @@ const Home = (props: StoreProps) => {
       {
         <>
           {
-            !isAuthenticated &&
-            <Header
-              title={'Login/Register'}
-              isRightHeader={true}
-              onTitleClick={() => history.push('/signup')}
-            />
+            !isAuthenticated && <GuestHeader />
           }
           <TrendingWidget />
         </>

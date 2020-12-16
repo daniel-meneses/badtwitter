@@ -1,10 +1,10 @@
 {
-  "user": {
-    "alias": "deep",
-    "avatar": "https://s3.ap-southeast-2.amazonaws.com/images-03/87049bd8-bc9d-46b1-ace8-cb935da46b9f",
-    "bio": "Hey",
-    "first_name": "Deep",
-    "last_name": "Fake",
-    "user_id": 39
-  }
+  "alias": "daniel",
+  "avatar": "https://s3.ap-southeast-2.amazonaws.com/images-03/3f7d48d1-a319-4bb5-b0aa-3fd89fea1f21",
+  "bio": "https://github.com/daniel-meneses",
+  "device_id": "5585617d-d4dd-4037-b7d4-b690a2fd760a",
+  "first_name": "Daniel",
+  "id": 1,
+  "last_name": "Meneses",
+  "private": false
 }

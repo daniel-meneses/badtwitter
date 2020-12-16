@@ -41,7 +41,7 @@ const Header = (props: Props) => {
           <BackArrow/>
         </Selectable>
       }
-      {title && <h2 onClick={onTitleClick}>{title}</h2>}
+      {title && <h2 data-testid={'header-text'} onClick={onTitleClick}>{title}</h2>}
       {subtitle && <h5>{subtitle}</h5>}
       {
         selectableIcon &&

@@ -14,7 +14,7 @@ const Trending: React.FC<TrendingComp> = ({ name, count, className }) => {
   let history = useHistory()
 
   return (
-    <div className={classNames(className, styles.trending_item2)}
+    <div datatest-id={'trending-list-item'} className={classNames(className, styles.trending_item2)}
       onClick={() => history.push('/explore/trending/' + name)}
       >
       <div className={styles.item_category}>Trending in Australia</div>

@@ -15,7 +15,7 @@ const AuthComponent = () => {
     const redirectUrl = 'redirect=' + pathname
 
     return (
-        <div className={styles.buttonContainer}>
+        <div data-testid={'guest-toast'} className={styles.buttonContainer}>
             <Button
                 className={styles.registerButton}
                 onClick={() => history.push('/signup?' + redirectUrl)}
@@ -32,7 +32,6 @@ const AuthComponent = () => {
         </div>
     )
 }
-<Link to="/courses?sort=name" />
 
 const toastrOptions: any = {
     icon: 'warning',

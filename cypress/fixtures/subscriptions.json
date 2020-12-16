@@ -1,0 +1,54 @@
+{
+  "subscriptions": [
+    {
+      "accepted": true,
+      "created_at": "2020-12-07T09:15:02",
+      "id": 1,
+      "subject": {
+        "alias": "mexico",
+        "avatar": "https://s3.ap-southeast-2.amazonaws.com/images-03/454bd02a-b962-4662-8e39-91693ac87676",
+        "bio": "",
+        "device_id": "5585617d-d4dd-4037-b7d4-b690a2fd760a",
+        "first_name": "Big",
+        "id": 4,
+        "last_name": "Nostrils",
+        "private": false
+      },
+      "user": {
+        "alias": "daniel",
+        "avatar": "https://s3.ap-southeast-2.amazonaws.com/images-03/3f7d48d1-a319-4bb5-b0aa-3fd89fea1f21",
+        "bio": "https://github.com/daniel-meneses",
+        "device_id": "5585617d-d4dd-4037-b7d4-b690a2fd760a",
+        "first_name": "Daniel",
+        "id": 1,
+        "last_name": "Meneses",
+        "private": false
+      }
+    },
+    {
+      "accepted": true,
+      "created_at": "2020-12-07T09:43:44",
+      "id": 12,
+      "subject": {
+        "alias": "chip",
+        "avatar": "https://s3.ap-southeast-2.amazonaws.com/images-03/681cb271-a5fe-4503-a7d9-9714f1361f78",
+        "bio": "Looking for my lava",
+        "device_id": "5585617d-d4dd-4037-b7d4-b690a2fd760a",
+        "first_name": "Sad",
+        "id": 5,
+        "last_name": "Cave",
+        "private": false
+      },
+      "user": {
+        "alias": "daniel",
+        "avatar": "https://s3.ap-southeast-2.amazonaws.com/images-03/3f7d48d1-a319-4bb5-b0aa-3fd89fea1f21",
+        "bio": "https://github.com/daniel-meneses",
+        "device_id": "5585617d-d4dd-4037-b7d4-b690a2fd760a",
+        "first_name": "Daniel",
+        "id": 1,
+        "last_name": "Meneses",
+        "private": false
+      }
+    }
+  ]
+}

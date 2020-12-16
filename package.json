@@ -104,7 +104,7 @@
     "babel-loader": "^8.0.6",
     "compression-webpack-plugin": "^5.0.2",
     "css-loader": "^4.3.0",
-    "cypress": "^5.0.0",
+    "cypress": "^6.1.0",
     "cypress-xpath": "^1.6.0",
     "eslint-plugin-jest-dom": "^3.2.4",
     "eslint-plugin-react-hooks": "^2.3.0",

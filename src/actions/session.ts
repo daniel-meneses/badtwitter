@@ -76,6 +76,7 @@ export function getSessionUser(reqHeaders = {}): AppThunk {
     return (dispatch: Dispatch) => {
         return api.fetch('/accounts/session', {}, reqHeaders)
             .then((response) => {
+                console.log(response)
                 setCurrentUser(dispatch, response)
                 return true
             })
