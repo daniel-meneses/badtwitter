@@ -16,7 +16,7 @@ const FloatingPostContainer: React.FC<Props> = ({ shouldDisplay, dispatch }) => 
     dispatch({ type: PostFormActionTypes.HIDE_FLOATING_POST_FORM });
 
   return (
-    <div className={styles.container}
+    <div data-testid={'floating-post-form'} className={styles.container}
       hidden={!shouldDisplay}>
       <div className={styles.fullscreenBackground}
         onClick={dismissForm}>

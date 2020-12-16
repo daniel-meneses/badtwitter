@@ -24,36 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import * as url from '../constants/urls';
-
-Cypress.Commands.add('stubLogin', () => {
-  cy.route('POST', '/api/v1/accounts/session', 'fixture:login_success.json').as('stubLogin');
-});
-
-Cypress.Commands.add('stubLoginFailure', () => {
-  cy.route({
-      method: 'POST',
-      url: '/api/v1/accounts/session',
-      status: 421,
-      response: 'fixture:login_failure.json',
-  }).as('stubLoginFailure');
-});
-
-Cypress.Commands.add('stubPostLike', () => {
-  cy.route({
-      method: 'POST',
-      url: '/api/v1/like',
-      response: 'fixture:like.json',
-  }).as('stubPostLike');
-});
-
-Cypress.Commands.add('stubDeleteLike', () => {
-  cy.route({
-      method: 'DELETE',
-      url: '/api/v1/like/delete',
-      response: 'fixture:like.json',
-  }).as('stubDeleteLike');
-});
-
+import el from '../constants/elements';
 
 Cypress.Commands.add('stubLogin', () => {
   cy.intercept('POST', url.LOGIN, { fixture: 'login_success.json' })
@@ -95,5 +66,43 @@ Cypress.Commands.add('stubFetchUserProfileFeed', () => {
   cy.intercept('GET', url.USER_PROFILE, { fixture: 'user_profile_feed.json' })
 });
 
+Cypress.Commands.add('stubPostFormRequest', () => {
+  cy.intercept('POST', url.POST_FORM, { fixture: 'post_form_success.json' })
+});
 
+Cypress.Commands.add('stubLinkPreviewAPI', () => {
+  cy.intercept('POST', url.API_LINK_PREVIEW, { fixture: 'post_form_link_preview.json' })
+});
 
+Cypress.Commands.add('stubDeleteSubscription', () => {
+  cy.intercept('DELETE', url.DELETE_SUBSCRIPTION, { fixture: 'delete_subscription.json' })
+});
+
+Cypress.Commands.add('launchAndLogIn', () => {
+  cy.visit('http://localhost:3000/login')
+  cy.get('input').eq(0).type('d1@1.com')
+  cy.get('input').eq(1).type('123123')
+  cy.contains('Submit').click()
+})
+
+Cypress.Commands.add('logIn', () => {
+  cy.get('input').eq(0).type('d1@1.com')
+  cy.get('input').eq(1).type('123123')
+  cy.contains('Submit').click()
+})
+
+Cypress.Commands.add('selectNavAtPosition', (position) => {
+  cy.get(el.navContainer).children('div').eq(position).click()
+})
+
+Cypress.Commands.add('selectTabAtPosition', (position) => {
+  cy.get(el.topTab).eq(position).click()
+})
+
+Cypress.Commands.add('getButtonWithtext', (text) => {
+  cy.get(el.btn).contains(text)
+})
+
+Cypress.Commands.add('getHeaderWithText', (text) => {
+  cy.get(el.headerText).contains(text)
+})

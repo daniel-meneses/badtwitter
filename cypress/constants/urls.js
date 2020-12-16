@@ -14,3 +14,6 @@ export const SUBSCRIPTIONS = `${BASE}/api/v1/subscriptions?accepted=true&subscri
 export const SELF_PROFILE = `${BASE}/api/v1/posts?user_id=1&limit=40`
 export const USER_PROFILE = `${BASE}/api/v1/posts?user_id=4&limit=40`
 export const LOGIN = `${BASE}/api/v1/accounts/session`
+export const POST_FORM = `${BASE}/api/v1/posts`
+export const API_LINK_PREVIEW = `https://api.linkpreview.net/?key=317510c11e6d6336d33793e4f8f1ed13&q=https://www.cypress.io/`
+export const DELETE_SUBSCRIPTION = `/subscriptions/1`

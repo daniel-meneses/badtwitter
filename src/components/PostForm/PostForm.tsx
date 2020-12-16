@@ -86,7 +86,7 @@ const PostForm: React.FC<Props> = (props) => {
           image={avatar}
           className={styles.postFormAvatar}
         />
-        <div className={styles.postFormInput}
+        <div data-testid={'post-form'} className={styles.postFormInput}
           onInput={handleInputChange}
           data-text={"What's happenning?"}
           data-value=""

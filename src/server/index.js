@@ -12,7 +12,6 @@ import { getSessionUser } from '../actions/session'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import serialize from 'serialize-javascript'
 import * as env from '../constants/environment'
-import sessionStub from '../../cypress/fixtures/login_success.json'
 import favicon from 'serve-favicon';
 import path from 'path'
 import storyRoutes from './news';
@@ -88,16 +87,6 @@ client.connect().then(() => {
     );
 
     const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
-
-    // Mocking authentication for cypress tests
-    let mockSession = new Promise(resolve => {
-      let shouldMock = req.url !== '/login' && req.url !== '/signup'
-      if (shouldMock) {
-        store.dispatch({ type: "AUTHENTICATION_SUCCESS", response: sessionStub })
-        resolve(true)
-      }
-      resolve(false)
-    })
 
     let session = getAppCookies(req)['_twitterclone_key'];
     let promise = session ? store.dispatch(getSessionUser(req.headers)) : new Promise((res) => res(false))

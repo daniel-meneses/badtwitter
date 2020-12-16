@@ -17,7 +17,7 @@ const UserPreview: React.FC<Props> = (props) => {
   const { userId, topButtons, className } = props;
 
   return (
-    <div className={classNames(className, styles.userPreview)}>
+    <div data-testid={'user-preview'} className={classNames(className, styles.userPreview)}>
       <UserInfo
         userId={userId}
         isPreview={true}
