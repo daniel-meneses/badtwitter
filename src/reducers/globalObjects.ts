@@ -74,7 +74,7 @@ const initialState: InitialState = {
 var formatToObject = (arr: any[]) =>
     mapKeys(arr.map((a: UserResponse | PostResponse) => mapKeys(a, (_v, k) => camelCase(k))), "id");
 
-const global = (state = initialState, action: any): any => {
+const globalObjects = (state = initialState, action: any): any => {
     switch (action.type) {
         case GlobalActionTypes.APPEND_USERS:
             var users = action.response.users;            
@@ -120,8 +120,6 @@ const global = (state = initialState, action: any): any => {
             var post = {...state.posts.byId[postId]}
             var likes: number = post.likes - 1
             var update = {[post.id] : {...post, likes}}
-            console.log(update);
-            
             return {
                 ...state,
                 posts: {
@@ -133,4 +131,4 @@ const global = (state = initialState, action: any): any => {
     }
 }
 
-export default global;
+export default globalObjects;
