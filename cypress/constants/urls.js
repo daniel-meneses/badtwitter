@@ -1,4 +1,4 @@
-export const BASE = 'http://localhost:3000'
+export const BASE = ''
 export const HOME_PAGE = `${BASE}/home`
 export const EXPLORE_PAGE = `${BASE}/explore`
 export const REGISTER_PAGE = `${BASE}/signup`
