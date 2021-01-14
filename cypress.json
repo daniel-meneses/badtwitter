@@ -1,3 +1,4 @@
 {
-  "experimentalFetchPolyfill": true
+  "experimentalFetchPolyfill": true,
+  "defaultCommandTimeout": 15000
 }
