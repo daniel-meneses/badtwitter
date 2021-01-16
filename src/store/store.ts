@@ -18,6 +18,7 @@ const storeFromState = () => {
   );
 }
 
+
 const store = storeFromState();
 
 export default store;
