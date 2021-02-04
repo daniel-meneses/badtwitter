@@ -26,6 +26,25 @@
 import * as url from '../constants/urls';
 import el from '../constants/elements';
 
+
+Cypress.Commands.add('childOf', (element, callback) => {
+  cy.get(element).within(() => {
+    callback();
+  })
+});
+
+Cypress.Commands.add('dataTestId', (id) => {
+  cy.get(`[data-testid=${id}]`)
+});
+
+Cypress.Commands.add('closestDataTestId', (base, query) => {
+  cy.get(`[data-testid=${base}]`).closest(`[data-testid=${query}]`)
+});
+
+Cypress.Commands.add('byTestId', (id) => {
+  cy.get(`[data-testid=${id}]`)
+});
+
 Cypress.Commands.add('stubLogin', () => {
   cy.intercept('POST', url.LOGIN, { fixture: 'login_success.json' })
 });

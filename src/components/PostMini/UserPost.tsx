@@ -68,7 +68,7 @@ const UserPost: React.FC<Props> = (props) => {
     return (
         <div data-testid={'user-post'} className={classNames(styles.userPost, className)}>
             <UserInfo userId={userId}>
-                <div>
+                <div data-testid={'user-post-message'}> 
                     { formatJsx(message) }
                 </div>
             </UserInfo>

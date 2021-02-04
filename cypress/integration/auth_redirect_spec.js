@@ -17,7 +17,7 @@ const stubAll = () => {
 }
 
 describe('Login redirect tests', () => {
-
+/*
   beforeEach(() => {
     cy.clearCookies()
     stubAll()
@@ -64,6 +64,7 @@ describe('Login redirect tests', () => {
     cy.get(elements.headerText).should('have.text', 'Explore')
     cy.get(elements.topTab).eq(1).should('have.css', 'background-color', 'rgb(240, 245, 245)')
   })
+  */
 /*
   it('Login from share article guest prompt redirects to article page', () => {
     cy.visit('http://localhost:3000/home')

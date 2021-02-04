@@ -1,4 +1,5 @@
 import elements from '../constants/elements';
+import PostForm from '../components/PostForm.js';
 
 const stubAll = () => {
   cy.stubFetchHomeFeed()
@@ -16,10 +17,28 @@ const stubAll = () => {
 
 describe('Post form tests', () => {
 
+  let postForm;
+  let userPost;
+
   beforeEach(() => {
     cy.clearCookies();
     stubAll()
+    postForm = PostForm();
   });
+
+  it('Submit post form from home feed', () => {
+    cy.launchAndLogIn()
+    cy.get('main').within(() => {
+      postForm.postIsNullState()
+      postForm.enterNewPost('test message')
+      postForm.postIsNullState()
+      cy.get(elements.userPost).eq(0).within(() => {
+        cy.contains('test message')
+      })
+    })
+  })
+
+  /*
 
   it('Submit post form from home feed', () => {
     cy.launchAndLogIn()
@@ -54,6 +73,6 @@ describe('Post form tests', () => {
       })
     })
   })
-
+*/
 })
 

@@ -15,7 +15,7 @@ const stubAll = () => {
   cy.stubLinkPreviewAPI()
   cy.stubDeleteSubscription()
 }
-
+/*
 describe('Subscribe button tests', () => {
 
   beforeEach(() => {
@@ -53,3 +53,4 @@ describe('Subscribe button tests', () => {
 
 })
 
+*/

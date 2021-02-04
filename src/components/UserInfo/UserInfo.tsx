@@ -61,7 +61,7 @@ const UserInfo: React.FunctionComponent<Props> = (props) => {
       onMouseDown={(e: React.MouseEvent) => setMouseDownY(e.clientY)}
       onMouseUp={handleMouseUp}
       >
-      <div className={styles.userInfoAvatarContainer}>
+      <div data-testid={'user-info-avatar'} className={styles.userInfoAvatarContainer}>
         <Avatar
           className={styles.avatar}
           image={avatar}
@@ -71,10 +71,10 @@ const UserInfo: React.FunctionComponent<Props> = (props) => {
       <div className={styles.userInfoContentContainer}>
         <div className={styles.userInfotopDetails}>
           <div className={userInfoNameAlias} >
-            <div className={styles.userInfoName}>
+            <div data-testid={'user-info-name'} className={styles.userInfoName}>
               {firstName} {lastName}
               </div>
-            <div className={styles.userInfoAlias}>
+            <div data-testid={'user-info-alias'} className={styles.userInfoAlias}>
               @{alias}
               </div>
             </div>
