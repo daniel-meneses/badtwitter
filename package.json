@@ -16,7 +16,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest-css-modules": "^2.1.0",
     "jest-transform-css": "^2.1.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "mongodb": "^3.6.3",
     "postcss-scss": "^3.0.4",
