@@ -9,7 +9,7 @@
     "css-modules-typescript-loader": "^4.0.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fetch-mock": "^9.10.7",
     "http-proxy-middleware": "^1.0.4",
     "identity-obj-proxy": "^3.0.0",
